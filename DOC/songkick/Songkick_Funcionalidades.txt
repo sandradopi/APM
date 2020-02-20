@@ -1,0 +1,29 @@
+ 
+Algunas de las funcionalidades principales de la aplicación songkick son las
+siguientes:
+
+    > Establecimiento de la ubicación o ubicaciones de interés (estáticas).
+    > Búsqueda de eventos cercanos a la ubicación establecida.
+    > Definición de asistencia o interés en un evento (mutuamente excluyentes).
+    > Seguir a artistas.
+    > Recomendación de artistas relacionados con aquellos a los que sigues.
+    > Recomendación de eventos en función de los artistas a los que sigues y
+      los eventos para los que has mostrado interés o confirmado asistencia.
+    > Incorporación de avisos de los eventos.
+    > Añadir eventos a los distintos calendarios provistos por las distintas
+      aplicaciones del teléfono (e.g. Google Calendar).
+    > Listado de eventos para los que se ha mostrado interés o para los que se
+      ha confirmado asistencia.
+    > Búsqueda de artistas. Obtención de artistas a seguir mediante la
+      comprobación de artistas escuchados en Spotify por el usuario y artistas
+      disponibles en la biblioteca musical del teléfono.
+    > Añadir información básica acerca de los eventos (título, lugar, fecha,
+      artistas y páginas de venta de entradas).
+    > Integración con Google Maps: posibilidad de abrir la ubicación del evento
+      en la aplicación de Google Maps. Se muestra un minimapa con la ubicación
+      del evento.
+    > Navegación integrada dentro de la aplicación para el acceso a las páginas
+      de venta de entradas de los eventos.
+    > Posibilidad de compartir el evento a través de otras aplicaciones, entre
+      las que se incluyen aplicaciones de mensajería y redes sociales.
+    > Visualización de los eventos de un artista.
