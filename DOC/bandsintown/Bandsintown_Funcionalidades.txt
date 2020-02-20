@@ -1,14 +1,16 @@
 Algunas de las funcionalidades principales de la aplicación Bandsintown son
 las siguientes:
 
-    > Establecimiento de la ubicación, con la posibilidad de utilizar la
-      ubicación actual (ubicación dinámica, en función de donde esté el
-      usuario).
-    > Búsqueda de eventos cercanos a la ubicación establecida.
+    > Aplicación en español.
+    > Establecer la ubicación, con la posibilidad de utilizar la ubicación
+      actual (ubicación dinámica, en función de donde esté el usuario).
+    > Buscar eventos cercanos a la ubicación establecida.
     > Escuchar parte de una canción representativa de un artista.
     > Definir asistencia o interés en un evento (mutuamente excluyentes).
     > Seguir a artistas.
     > Seguir a amigos.
+    > Invitar a amigos a un evento.
+    > Buscar amigos utilizando la información de los contactos del teléfono.
     > Recomendación de artistas relacionados con aquellos a los que sigue el
       usuario.
     > Incorporación de avisos de los eventos y creación de un calendario con
@@ -17,17 +19,16 @@ las siguientes:
       ha confirmado asistencia.
     > Publicación manual y automática de comentarios en un muro asociado al
       perfil.
-    > Búsqueda de eventos por género musical o alguna otra característica (e.g.
+    > Buscar eventos por género musical o alguna otra característica (e.g.
       popularidad).
-    > Comentarios acerca de los eventos, con posibilidad de incluir contenido
+    > Comentar acerca de los eventos, con posibilidad de incluir contenido
       multimedia.
     > Añadir información básica acerca de los eventos.
     > Integración con Waze y stay22 para la planificación del viaje y de la
       estancia en un lugar cercano a donde se produce el evento.
-    > Aplicación en español.
     > Integración con Google Maps: posibilidad de abrir la ubicación del evento
       en la aplicación de Google Maps. Se muestra un minimapa con la ubicación
       del evento.
-    > Valoración del evento.
-    > Información básica y enlaces de interés de los artistas.
-    > Visualización de los eventos de un artista.
+    > Valorar un evento (solo a posteriori).
+    > Visualuizar información básica y enlaces de interés de los artistas.
+    > Visualizar los eventos de un artista.
