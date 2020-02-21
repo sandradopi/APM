@@ -1,0 +1,1185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="1ff12084-3b99-4fb9-a1ca-27254ac2b7b0" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.mylyn/.taskListIndex/segments.gen" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.mylyn/.taskListIndex/segments_1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.mylyn/.tasks.xml.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.mylyn/repositories.xml.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.mylyn/tasks.xml.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/10/10a24ce753d100181474a9f01968288e" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/10/c0745e442bd10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/16/a05726555dd100181714e7d6357bac00" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/17/d0ad899024d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/21/1069a9e05ed100181fdf973f28d9841d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/29/70b806d526d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/2e/201634e35fd100181fdf973f28d9841d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/3/0018cc055fd100181fdf973f28d9841d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/3/703e9d7f5fd100181fdf973f28d9841d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/39/10cb92c227d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/3c/80788bd427d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/41/30585cbf27d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/45/4048771c23d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/4c/400d7a2b2ed10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/4c/90c77ca123d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/4c/b0f781a123d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/50/907e971f24d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/59/a0d3196d53d100181474a9f01968288e" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/5b/70ae1b4524d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/5b/d0e9eb6c27d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/5e/10aa723e24d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/6/d065bf8924d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/6/f0278c4924d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/60/808281a123d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/61/e08344b126d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/6b/70c02a9f53d100181474a9f01968288e" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/6f/602ab5322cd10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/6f/b002c6d72ad10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/6f/d0b68c855fd100181fdf973f28d9841d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/73/205c971c5fd100181fdf973f28d9841d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/77/60b90f1524d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/7a/30dda6432ed10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/7d/b065b4ca27d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/7e/20437f1227d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/7f/d010838424d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/8/6014c1712ed10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/8/c073c0f923d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/81/f014aaa12ad10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/83/204929b227d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/83/e07078292ed10018134bf565b1306f78" beforeDir="false" afterPath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/83/e07078292ed10018134bf565b1306f78" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/84/0034ff172bd10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/85/9025f77927d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/85/e0f1101524d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/8a/300909bb5fd100181fdf973f28d9841d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/8b/403d30482bd10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/8c/300fc69053d100181474a9f01968288e" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/8d/a0ad78af5fd100181fdf973f28d9841d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/8e/a0056dfa5ed100181fdf973f28d9841d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/8e/c0c7fcab27d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/9/f05026f127d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/92/b0dbc8fa26d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/98/10dfd0c527d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/9d/90513e8d5fd100181fdf973f28d9841d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/9f/209a40d253d100181474a9f01968288e" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/9f/20a7287827d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/a3/50b3f3585dd100181714e7d6357bac00" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/a6/7057c14b24d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/a7/30e668de22d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/a9/80322bdf27d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/ab/500d81a123d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/ac/90faf29454d100181474a9f01968288e" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/b/00d33ad623d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/b0/40ff799824d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/b1/8037566553d100181474a9f01968288e" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/b8/60c0c74c23d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/bb/90953d8727d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/be/60c37ea123d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/c/c026d1e622d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/c0/20807ad053d100181474a9f01968288e" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/c0/70cd54a52ad10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/c3/305f191d24d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/c4/20b1ebde2ad10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/ca/a08ec4005fd100181fdf973f28d9841d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/ce/409740b553d100181474a9f01968288e" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/d1/00ccd35224d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/d2/1086d45c54d100181474a9f01968288e" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/dc/6031ba0728d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/de/70075c7a5fd100181fdf973f28d9841d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/e1/803df16b24d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/e7/7080917f24d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/e9/40180ea65fd100181fdf973f28d9841d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/e9/40ad459c24d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/ea/10f9d9c522d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/ec/c0ba8f972ed10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/ee/907e6ad027d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/f1/b0ca9c9154d100181474a9f01968288e" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/f5/30395d4754d100181474a9f01968288e" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/f8/c06bf0225fd100181fdf973f28d9841d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/fa/9029b92227d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/fe/7094dd5624d10018134bf565b1306f78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.projects/ASIP1/.indexes/3e/7/e4/b9/22/ae/b4/ae/77/16/29/3c/history.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.projects/ASIP1/.indexes/3e/e4/b9/22/ae/b4/ae/77/16/29/3c/history.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.projects/ASIP1/.indexes/properties.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.projects/ASIP1/.location" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.projects/ASIP1/1.tree" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.projects/ASIP1/org.eclipse.egit.core/GitProjectData.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.projects/posts-answers/.indexes/properties.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.projects/posts-answers/.location" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.projects/posts-answers/.markers" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.projects/posts-answers/.markers.snap" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.projects/posts-answers/.syncinfo.snap" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.projects/posts-answers/org.eclipse.jdt.core/state.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.projects/rest-example-master/.indexes/7/af/history.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.projects/rest-example-master/.indexes/af/history.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.projects/rest-example-master/.indexes/e4/b9/22/ae/b4/ae/77/16/29/3c/history.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.projects/rest-example-master/.indexes/e4/b9/22/ae/b4/ae/77/16/29/4a/history.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.projects/rest-example-master/.indexes/e4/b9/22/ae/b4/ae/77/16/29/b5/history.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.projects/rest-example-master/.indexes/e4/b9/22/ae/b4/ae/77/16/54/history.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.projects/rest-example-master/.indexes/e4/b9/22/ae/b4/ae/77/16/history.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.projects/rest-example-master/.indexes/properties.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.projects/rest-example-master/.location" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.projects/rest-example-master/.markers" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.projects/rest-example-master/.markers.snap" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.projects/rest-example-master/.syncinfo.snap" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.projects/rest-example-master/org.eclipse.egit.core/GitProjectData.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.projects/spring-basic-boot-example/.indexes/properties.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.projects/spring-basic-boot-example/.location" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.projects/spring-basic-boot-example/.markers.snap" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.projects/spring-basic-boot-example/.syncinfo.snap" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.projects/spring-basic-boot-example/org.eclipse.jdt.core/state.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.root/.indexes/history.version" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.root/.indexes/properties.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.root/.indexes/properties.version" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.root/.markers.snap" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.root/4.tree" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/.safetable/org.eclipse.core.resources" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.resources/4.snap" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.runtime/.settings/com.collabnet.subversion.merge.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.core.resources.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.debug.ui.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.egit.core.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.epp.logging.aeri.ide.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.jdt.core.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.jdt.launching.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.jdt.ui.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.m2e.discovery.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.mylyn.context.core.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.mylyn.java.ui.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.mylyn.monitor.ui.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.mylyn.tasks.ui.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.team.ui.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.editors.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.ide.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.workbench.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.wst.sse.ui.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.tigris.subversion.subclipse.tools.usage.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.tigris.subversion.subclipse.ui.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_0.fdt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_0.fdx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_0.fnm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_0.frq" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_0.nrm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_0.tii" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_0.tis" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/segments.gen" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/segments_1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/write.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/remote-history/_1.fdt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/remote-history/_1.fdx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/remote-history/_1.fnm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/remote-history/_1.frq" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/remote-history/_1.nrm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/remote-history/_1.prx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/remote-history/_1.tii" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/remote-history/_1.tis" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/remote-history/segments.gen" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/remote-history/segments_2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/server-config.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1026829162.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1044104405.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1091548492.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1092359539.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1109942008.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1125409472.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1126995250.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1152621553.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1157849494.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1160862025.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1199184847.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1203814326.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1247352580.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1271342938.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1280545578.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1330869034.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/139742956.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1404670921.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1410239820.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1425717995.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/147137799.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1490913466.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1518672784.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1529181925.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1537530239.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1556049121.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1572710858.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1607332994.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1620811276.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1625940774.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1636484075.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1683354323.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1690513619.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1729805121.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1807680585.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1818041908.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1843545003.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/186217770.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1873078134.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1875795404.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1878327760.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1881466388.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1881943349.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1892545050.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1917870805.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1931402068.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2004046645.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2037367917.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/204893112.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/205471285.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2067053999.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2086828142.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2100532336.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2117113611.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2205726147.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2319195090.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2320229806.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2330463700.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/233405814.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2465022724.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2546101033.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2577276951.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2586046964.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2599256412.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2611464094.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2642403262.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/267930250.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2712649787.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2735204428.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2763200912.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2771864260.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/278500131.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2791849211.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/282063948.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2826204730.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2839661174.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2857607498.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2890506099.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2904961969.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2909146063.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/291901892.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2932191785.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2934967584.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2961944434.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2979435446.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3009621177.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3013006181.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3024522124.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3028656179.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3142289287.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3157663476.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3184324675.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3199073125.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3203325620.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3227702110.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3249493628.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3267648175.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3300379302.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3357321565.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3358580009.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3361156226.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3369408203.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3476657085.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3480651181.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3525802235.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3541578259.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3547836079.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/355374257.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3570530647.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/361139157.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3614191795.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3662077202.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3691320145.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3700568260.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3718776263.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3740250071.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3748403103.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3752739985.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3802680825.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/381969842.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3833280666.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/384534229.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3854484119.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3862692891.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3904522450.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3906639970.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3935491366.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3937125481.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/396255415.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/4033059231.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/4077923928.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/4084134465.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/4086365519.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/4101284583.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/4127490826.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/412920857.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/4132343383.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/4200726474.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/4273513053.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/4276160012.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/429503311.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/453636070.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/507831063.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/515739032.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/525013207.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/527849843.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/548715909.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/576073405.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/588429143.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/616739193.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/619471915.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/624708564.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/670443673.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/672275681.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/724888992.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/765135044.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/804320141.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/834386741.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/856197555.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/868993827.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/921794148.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/956015070.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/98001356.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/994329397.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/995153890.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/997503806.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/assumedExternalFilesCache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/externalFilesCache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/externalLibsTimeStamps" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/javaLikeNames.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/nonChainingJarsCache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/savedIndexNames.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.core/variablesAndContainers.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.launching/.install.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.launching/libraryInfos.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.ui/OpenTypeHistory.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.ui/QualifiedTypeNameHistory.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.ui/dialog_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.jdt.ui/jdt-images/0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/.workspace/2018/10/42/refactorings.history" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/.workspace/2018/10/42/refactorings.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/ASIP1/2018/10/42/refactorings.history" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/ASIP1/2018/10/42/refactorings.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/rest-example-master/2018/10/42/refactorings.history" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/rest-example-master/2018/10/42/refactorings.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.ltk.ui.refactoring/dialog_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core.ui/dialog_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/05b0fe8524860bd73cbb07ef30fb34cc/_0.cfs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/05b0fe8524860bd73cbb07ef30fb34cc/_0_1.del" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/05b0fe8524860bd73cbb07ef30fb34cc/_1.cfs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/05b0fe8524860bd73cbb07ef30fb34cc/_1_1.del" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/05b0fe8524860bd73cbb07ef30fb34cc/_2.cfs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/05b0fe8524860bd73cbb07ef30fb34cc/_2_1.del" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/05b0fe8524860bd73cbb07ef30fb34cc/_3.cfs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/05b0fe8524860bd73cbb07ef30fb34cc/_3_1.del" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/05b0fe8524860bd73cbb07ef30fb34cc/_4.cfs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/05b0fe8524860bd73cbb07ef30fb34cc/segments.gen" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/05b0fe8524860bd73cbb07ef30fb34cc/segments_6" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/05b0fe8524860bd73cbb07ef30fb34cc/write.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/3792f1e493d1ee9f115304fca7e02d74/_0.cfs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/3792f1e493d1ee9f115304fca7e02d74/_0_1.del" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/3792f1e493d1ee9f115304fca7e02d74/_1.cfs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/3792f1e493d1ee9f115304fca7e02d74/_1_1.del" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/3792f1e493d1ee9f115304fca7e02d74/_2.cfs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/3792f1e493d1ee9f115304fca7e02d74/_3.cfs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/3792f1e493d1ee9f115304fca7e02d74/_4.cfs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/3792f1e493d1ee9f115304fca7e02d74/_5.cfs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/3792f1e493d1ee9f115304fca7e02d74/_5_1.del" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/3792f1e493d1ee9f115304fca7e02d74/_6.cfs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/3792f1e493d1ee9f115304fca7e02d74/_6_1.del" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/3792f1e493d1ee9f115304fca7e02d74/_7.cfs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/3792f1e493d1ee9f115304fca7e02d74/segments.gen" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/3792f1e493d1ee9f115304fca7e02d74/segments_9" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/3792f1e493d1ee9f115304fca7e02d74/write.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/830bc118332e77292949ed1e6d2fabe0/_0.cfs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/830bc118332e77292949ed1e6d2fabe0/_0_1.del" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/830bc118332e77292949ed1e6d2fabe0/_1.cfs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/830bc118332e77292949ed1e6d2fabe0/_1_1.del" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/830bc118332e77292949ed1e6d2fabe0/_2.cfs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/830bc118332e77292949ed1e6d2fabe0/_3.cfs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/830bc118332e77292949ed1e6d2fabe0/_3_1.del" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/830bc118332e77292949ed1e6d2fabe0/_4.cfs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/830bc118332e77292949ed1e6d2fabe0/_4_1.del" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/830bc118332e77292949ed1e6d2fabe0/_5.cfs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/830bc118332e77292949ed1e6d2fabe0/_6.cfs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/830bc118332e77292949ed1e6d2fabe0/_6_1.del" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/830bc118332e77292949ed1e6d2fabe0/_7.cfs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/830bc118332e77292949ed1e6d2fabe0/_7_1.del" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/830bc118332e77292949ed1e6d2fabe0/_8.cfs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/830bc118332e77292949ed1e6d2fabe0/segments.gen" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/830bc118332e77292949ed1e6d2fabe0/segments_a" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/830bc118332e77292949ed1e6d2fabe0/write.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/rest-example-master.lifecyclemapping" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/workspaceState.ser" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.core/workspacestate.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.jdt/posts-answers.container" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.jdt/rest-example-master.container" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.jdt/spring-basic-boot-example.container" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.logback.configuration/0.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.m2e.logback.configuration/logback.1.7.0.20160603-1933.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.oomph.setup/workspace.setup" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.ui.editors/dialog_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.ui.ide/dialog_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.ui.intro/introstate" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.ui.workbench/dialog_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.ui.workbench/workingsets.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.wst.internet.cache/cache.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.wst.sse.core/task-tags.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.wst.sse.ui/dialog_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.wst.xml.core/default_catalog.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.eclipse.wst.xml.core/system_catalog.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/.plugins/org.tigris.subversion.subclipse.ui/dialog_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.metadata/version.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.recommenders/caches/identified-project-coordinates.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/.recommenders/caches/manual-mappings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.mylyn/.taskListIndex/segments.gen" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.mylyn/.taskListIndex/segments_1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.mylyn/.tasks.xml.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.mylyn/repositories.xml.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.mylyn/tasks.xml.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/1f/600fcdb41bd10018101eff2313e41896" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/1f/c06718fe19d10018101eff2313e41896" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/24/101f84a21bd10018101eff2313e41896" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/29/f0bc25e018d10018101eff2313e41896" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/2f/f02ab46b18d10018101eff2313e41896" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/3e/503bb2a218d10018101eff2313e41896" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/40/70d995f118d10018101eff2313e41896" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/5/b0ef8c1818d10018101eff2313e41896" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/51/c0c58b7b1bd10018101eff2313e41896" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/51/e03258bb18d10018101eff2313e41896" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/5e/00ea91a71bd10018101eff2313e41896" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/62/60c244761bd10018101eff2313e41896" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/95/20c5971818d10018101eff2313e41896" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/ae/005591071ad10018101eff2313e41896" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/b3/1040d0131ad10018101eff2313e41896" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/c6/40590c4c1bd10018101eff2313e41896" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/cc/a083de581bd10018101eff2313e41896" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/dd/b0f5ae151bd10018101eff2313e41896" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/f2/9065961818d10018101eff2313e41896" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.resources/.history/fd/c03af8851bd10018101eff2313e41896" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.resources/.projects/rest-example-master/.indexes/e4/b9/22/ae/b4/ae/77/16/29/3c/history.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.resources/.projects/rest-example-master/.indexes/e4/b9/22/ae/b4/ae/77/16/29/4a/history.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.resources/.projects/rest-example-master/.indexes/e4/b9/22/ae/b4/ae/77/16/29/b5/history.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.resources/.projects/rest-example-master/.indexes/properties.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.resources/.projects/rest-example-master/.location" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.resources/.projects/rest-example-master/.markers.snap" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.resources/.projects/rest-example-master/.syncinfo.snap" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.resources/.projects/rest-example-master/org.eclipse.egit.core/GitProjectData.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.resources/.projects/spring-basic-boot-example/org.eclipse.jdt.core/state.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.resources/.root/.indexes/history.version" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.resources/.root/.indexes/properties.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.resources/.root/.indexes/properties.version" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.resources/.root/.markers.snap" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.resources/.safetable/org.eclipse.core.resources" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.resources/0.snap" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.runtime/.settings/com.collabnet.subversion.merge.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.core.resources.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.debug.ui.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.egit.core.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.epp.logging.aeri.ide.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.jdt.core.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.jdt.launching.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.jdt.ui.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.m2e.discovery.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.mylyn.context.core.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.mylyn.monitor.ui.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.mylyn.tasks.ui.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.team.ui.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.editors.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.ide.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.workbench.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.tigris.subversion.subclipse.tools.usage.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.tigris.subversion.subclipse.ui.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_0.fdt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_0.fdx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_0.fnm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_0.frq" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_0.nrm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_0.tii" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/_0.tis" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/segments.gen" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/segments_1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/local-history/write.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/remote-history/_1.fdt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/remote-history/_1.fdx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/remote-history/_1.fnm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/remote-history/_1.frq" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/remote-history/_1.nrm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/remote-history/_1.prx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/remote-history/_1.tii" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/remote-history/_1.tis" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/remote-history/segments.gen" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/remote-history/segments_2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.epp.logging.aeri.ide/org.eclipse.epp.logging.aeri.ide.server/server-config.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1026829162.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1044104405.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1092359539.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1109942008.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1125409472.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1157849494.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1160862025.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1247352580.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1271342938.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1280545578.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1330869034.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/147137799.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1518672784.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1529181925.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1537530239.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1556049121.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1620811276.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1625940774.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1690513619.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1729805121.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1807680585.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1818041908.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1873078134.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1875795404.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1881466388.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/1931402068.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2004046645.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/204893112.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2067053999.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2100532336.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2117113611.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2205726147.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2319195090.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2320229806.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2465022724.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2546101033.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2577276951.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2586046964.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2599256412.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2642403262.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2712649787.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2763200912.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2890506099.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2904961969.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/291901892.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2932191785.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2934967584.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2961944434.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/2979435446.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3013006181.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3024522124.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3157663476.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3184324675.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3203325620.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3227702110.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3249493628.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3267648175.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3358580009.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3361156226.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3369408203.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/355374257.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3691320145.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3700568260.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3718776263.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3740250071.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3752739985.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3802680825.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/384534229.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3904522450.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/3906639970.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/396255415.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/4077923928.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/4084134465.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/4086365519.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/4127490826.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/412920857.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/4132343383.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/4200726474.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/4273513053.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/429503311.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/507831063.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/527849843.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/548715909.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/576073405.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/588429143.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/616739193.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/619471915.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/624708564.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/670443673.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/724888992.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/834386741.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/856197555.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/868993827.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/921794148.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/98001356.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/994329397.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/995153890.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/997503806.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/assumedExternalFilesCache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/externalFilesCache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/externalLibsTimeStamps" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/indexNamesMap.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/nonChainingJarsCache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/savedIndexNames.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.core/variablesAndContainers.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.launching/.install.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.launching/libraryInfos.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.ui/OpenTypeHistory.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.ui/QualifiedTypeNameHistory.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.ui/dialog_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.ui/jdt-images/0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.ui/jdt-images/1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.ui/jdt-images/2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.ui/jdt-images/3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.ui/jdt-images/4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.ui/jdt-images/5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.ui/jdt-images/6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.jdt.ui/jdt-images/7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/rest-example-master/2018/10/42/refactorings.history" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/rest-example-master/2018/10/42/refactorings.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/05b0fe8524860bd73cbb07ef30fb34cc/_0.cfs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/05b0fe8524860bd73cbb07ef30fb34cc/segments.gen" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/05b0fe8524860bd73cbb07ef30fb34cc/segments_2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/05b0fe8524860bd73cbb07ef30fb34cc/write.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/3792f1e493d1ee9f115304fca7e02d74/_0.cfs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/3792f1e493d1ee9f115304fca7e02d74/segments.gen" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/3792f1e493d1ee9f115304fca7e02d74/segments_2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/3792f1e493d1ee9f115304fca7e02d74/write.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/830bc118332e77292949ed1e6d2fabe0/_0.cfs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/830bc118332e77292949ed1e6d2fabe0/_1.cfs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/830bc118332e77292949ed1e6d2fabe0/_2.cfs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/830bc118332e77292949ed1e6d2fabe0/segments.gen" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/830bc118332e77292949ed1e6d2fabe0/segments_4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.m2e.core/nexus/830bc118332e77292949ed1e6d2fabe0/write.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.m2e.core/workspacestate.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.m2e.jdt/rest-example-master.container" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.m2e.logback.configuration/0.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.m2e.logback.configuration/logback.1.7.0.20160603-1933.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.oomph.setup/workspace.setup" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.ui.ide/dialog_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.ui.intro/introstate" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.ui.workbench/dialog_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.ui.workbench/workingsets.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/.plugins/org.eclipse.wst.sse.core/task-tags.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.metadata/version.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/.project" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/.editorconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/bin/.editorconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/bin/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/bin/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/bin/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/bin/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/bin/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/bin/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/bin/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/bin/src/main/java/es/udc/lbd/asi/restexample/EjemploRestApplication.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/bin/src/main/java/es/udc/lbd/asi/restexample/config/SecurityConfiguration.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/bin/src/main/java/es/udc/lbd/asi/restexample/model/domain/Post.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/bin/src/main/java/es/udc/lbd/asi/restexample/model/domain/User.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/bin/src/main/java/es/udc/lbd/asi/restexample/model/repository/InMemoryDB.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/bin/src/main/java/es/udc/lbd/asi/restexample/model/repository/PostDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/bin/src/main/java/es/udc/lbd/asi/restexample/model/repository/PostDAOMemory.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/bin/src/main/java/es/udc/lbd/asi/restexample/model/repository/UserDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/bin/src/main/java/es/udc/lbd/asi/restexample/model/repository/UserDAOMemory.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/bin/src/main/java/es/udc/lbd/asi/restexample/model/service/PostService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/bin/src/main/java/es/udc/lbd/asi/restexample/model/service/UserService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/bin/src/main/java/es/udc/lbd/asi/restexample/web/PostResource.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/bin/src/main/java/es/udc/lbd/asi/restexample/web/UserResource.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/bin/src/main/java/es/udc/lbd/asi/restexample/web/exception/IdAndBodyNotMatchingOnUpdateException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/bin/src/main/java/es/udc/lbd/asi/restexample/web/util/ErrorDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/bin/src/main/java/es/udc/lbd/asi/restexample/web/util/GlobalControllerExceptionHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/bin/src/main/resources/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/src/main/java/es/udc/lbd/asi/restexample/EjemploRestApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/src/main/java/es/udc/lbd/asi/restexample/config/SecurityConfiguration.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/src/main/java/es/udc/lbd/asi/restexample/model/domain/Movie.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/src/main/java/es/udc/lbd/asi/restexample/model/domain/Post.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/src/main/java/es/udc/lbd/asi/restexample/model/domain/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/src/main/java/es/udc/lbd/asi/restexample/model/repository/InMemoryDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/src/main/java/es/udc/lbd/asi/restexample/model/repository/InMemoryDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/src/main/java/es/udc/lbd/asi/restexample/model/repository/MovieDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/src/main/java/es/udc/lbd/asi/restexample/model/repository/MovieDAOMemory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/src/main/java/es/udc/lbd/asi/restexample/model/repository/PostDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/src/main/java/es/udc/lbd/asi/restexample/model/repository/PostDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/src/main/java/es/udc/lbd/asi/restexample/model/repository/PostDAOMemory.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/src/main/java/es/udc/lbd/asi/restexample/model/repository/PostDAOMemory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/src/main/java/es/udc/lbd/asi/restexample/model/repository/UserDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/src/main/java/es/udc/lbd/asi/restexample/model/repository/UserDAOMemory.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/src/main/java/es/udc/lbd/asi/restexample/model/repository/UserDAOMemory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/src/main/java/es/udc/lbd/asi/restexample/model/service/MovieService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/src/main/java/es/udc/lbd/asi/restexample/model/service/PostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/src/main/java/es/udc/lbd/asi/restexample/model/service/PostService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/src/main/java/es/udc/lbd/asi/restexample/model/service/UserService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/src/main/java/es/udc/lbd/asi/restexample/web/MovieResource.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/src/main/java/es/udc/lbd/asi/restexample/web/PostResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/src/main/java/es/udc/lbd/asi/restexample/web/PostResource.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/src/main/java/es/udc/lbd/asi/restexample/web/UserResource.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/src/main/java/es/udc/lbd/asi/restexample/web/exception/IdAndBodyNotMatchingOnUpdateException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/src/main/java/es/udc/lbd/asi/restexample/web/util/ErrorDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/src/main/java/es/udc/lbd/asi/restexample/web/util/GlobalControllerExceptionHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/rest-example-master/src/main/resources/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/vue-example-master/.Rhistory" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/vue-example-master/.editorconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/vue-example-master/.eslintrc.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/vue-example-master/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/vue-example-master/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/vue-example-master/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/vue-example-master/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/vue-example-master/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/vue-example-master/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/vue-example-master/src/app/App.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/vue-example-master/src/app/AppRouter.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/vue-example-master/src/app/common/http-common.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/vue-example-master/src/app/components/Home.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/vue-example-master/src/app/components/LoadingPage.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/vue-example-master/src/app/components/MenuBar.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/vue-example-master/src/app/entities/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/vue-example-master/src/app/entities/post/PostDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ASIP1/ASIP1/vue-example-master/src/app/entities/post/PostDetail.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/vue-example-master/src/app/entities/post/PostForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ASIP1/ASIP1/vue-example-master/src/app/entities/post/PostForm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/vue-example-master/src/app/entities/post/PostList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ASIP1/ASIP1/vue-example-master/src/app/entities/post/PostList.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/vue-example-master/src/main.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/vue-example-master/src/scss/main.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/ASIP1/vue-example-master/src/scss/reset.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ASIP1/vue-example-master/src/app/entities/movie/MovieList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ASIP1/vue-example-master/src/app/entities/movie/MovieList.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Buscar Evento dif.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Buscar Evento eq.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Buscar Evento ubi.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Buscar Evento.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Buscar eventos Resultados copy.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Buscar eventos Resultados.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/CREAR EVENTO.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Datos Personales copy 2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Datos Personales copy.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Datos Personales.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Diseño.bmpr" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Evento nuevo copy.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Evento nuevo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Eventos creados copy 2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Eventos creados copy.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Eventos creados.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Iniciar Sesión.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/NOTI.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Notisi.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Pagina Inicial Menú.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Pagina Inicial copy.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Pagina Inicial.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Partido1 Apuntarse.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Partido1 copy.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Partido1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Partidos jugados MENU.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Partidos jugados ORDEN.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Partidos jugados VICTORIAS.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Partidos jugados derrota.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Partidos jugados.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Próximos partidos Desapuntar jose.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Próximos partidos Desapuntar marta.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Próximos partidos Eliminado ALERTA MARTA.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Próximos partidos Eliminado Alerta jose.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Próximos partidos Eliminado VACIO menu.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Próximos partidos Eliminado VACIO.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Próximos partidos Eliminado jose.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Próximos partidos Eliminado marta.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Próximos partidos ORDEN.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Próximos partidos copy 2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Próximos partidos copy.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Próximos partidos.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Registrarse Opciones.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Registrarse.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Valoraciones Pendientes copy 2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Valoraciones Pendientes copy.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Valoraciones Pendientes.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Valorar copy.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/Valorar.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TFG/DISEÑO/jUGADOR INFO.png" beforeDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view />
+      </state>
+    </system>
+  </component>
+  <component name="FileEditorManager">
+    <leaf />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/content_main.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/findmyrhythm/Event.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/findmyrhythm/User.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/findmyrhythm/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/findmyrhythm/CreateEvent.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_create_event.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="y" value="23" />
+    <option name="width" value="1483" />
+    <option name="height" value="831" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="AndroidView" />
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="ProjectPane" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="android.sdk.path" value="$USER_HOME$/Library/Android/sdk" />
+    <property name="device.picker.selection" value="Nexus_5X_API_26" />
+    <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+  </component>
+  <component name="RecentsManager">
+    <key name="android.template.packageName">
+      <recent name="com.example.findmyrhythm" />
+    </key>
+    <key name="android.template.parentActivityClass">
+      <recent name="" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="&lt;template&gt;" type="Applet" default="true" selected="false">
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration name="&lt;template&gt;" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" default="true" selected="false">
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+    </configuration>
+    <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
+      <module name="app" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sample Java Methods" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="TestNG">
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1ff12084-3b99-4fb9-a1ca-27254ac2b7b0" name="Default Changelist" comment="" />
+      <created>1581586741518</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1581586741518</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="23" width="1483" height="831" extended-state="0" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" visible="true" weight="0.17904232" />
+      <window_info id="Structure" side_tool="true" />
+      <window_info id="Build Variants" side_tool="true" />
+      <window_info id="Image Layers" />
+      <window_info id="Designer" />
+      <window_info id="Resources Explorer" />
+      <window_info id="Capture Tool" />
+      <window_info id="Favorites" side_tool="true" />
+      <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Run" />
+      <window_info anchor="bottom" id="Logcat" />
+      <window_info anchor="bottom" id="Version Control" />
+      <window_info anchor="bottom" id="TODO" />
+      <window_info anchor="bottom" id="Android Profiler" />
+      <window_info anchor="bottom" id="Debug" />
+      <window_info anchor="bottom" id="Terminal" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="bottom" id="Build" visible="true" weight="0.32960895" />
+      <window_info anchor="right" id="Device File Explorer" side_tool="true" />
+      <window_info anchor="right" id="Capture Analysis" />
+      <window_info anchor="right" id="Gradle" />
+      <window_info anchor="right" id="Theme Preview" />
+      <window_info anchor="right" id="Palette&#9;" />
+      <window_info anchor="right" id="Preview" />
+    </layout>
+    <layout-to-restore>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.33333334" />
+      <window_info id="Structure" order="1" side_tool="true" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info id="Image Layers" order="3" />
+      <window_info id="Designer" order="4" />
+      <window_info id="Capture Tool" order="5" />
+      <window_info id="Build Variants" order="6" side_tool="true" />
+      <window_info id="Resources Explorer" order="7" />
+      <window_info id="Captures" order="8" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Version Control" order="0" />
+      <window_info anchor="bottom" id="TODO" order="1" />
+      <window_info anchor="bottom" id="Logcat" order="2" />
+      <window_info anchor="bottom" id="Terminal" order="3" />
+      <window_info anchor="bottom" id="Event Log" order="4" side_tool="true" />
+      <window_info anchor="bottom" id="Build" order="5" visible="true" weight="0.32960895" />
+      <window_info anchor="bottom" id="Android Profiler" order="6" show_stripe_button="false" />
+      <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
+      <window_info anchor="right" id="Capture Analysis" order="1" />
+      <window_info anchor="right" id="Gradle" order="2" />
+      <window_info anchor="right" id="Theme Preview" order="3" />
+      <window_info anchor="right" id="Palette&#9;" order="4" />
+    </layout-to-restore>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/5599bc26b5f91506a89f782033a56448/jars/classes.jar!/android/support/v7/app/AppCompatActivity.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1200">
+          <caret line="80" column="13" selection-start-line="80" selection-start-column="13" selection-end-line="80" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/APP/src/main/res/menu/menu_main.xml">
+      <provider selected="true" editor-type-id="android-designer2" />
+      <provider editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/APP/src/main/java/com/example/findmyrhythm/User.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="31" selection-start-line="13" selection-start-column="31" selection-end-line="13" selection-end-column="31" />
+          <folding>
+            <element signature="e#558#559#0" expanded="true" />
+            <element signature="e#585#586#0" expanded="true" />
+            <element signature="e#625#626#0" expanded="true" />
+            <element signature="e#657#658#0" expanded="true" />
+            <element signature="e#691#692#0" expanded="true" />
+            <element signature="e#721#722#0" expanded="true" />
+            <element signature="e#767#768#0" expanded="true" />
+            <element signature="e#805#806#0" expanded="true" />
+            <element signature="e#840#841#0" expanded="true" />
+            <element signature="e#871#872#0" expanded="true" />
+            <element signature="e#919#920#0" expanded="true" />
+            <element signature="e#959#960#0" expanded="true" />
+            <element signature="e#994#995#0" expanded="true" />
+            <element signature="e#1025#1026#0" expanded="true" />
+            <element signature="e#1073#1074#0" expanded="true" />
+            <element signature="e#1113#1114#0" expanded="true" />
+            <element signature="e#1148#1149#0" expanded="true" />
+            <element signature="e#1179#1180#0" expanded="true" />
+            <element signature="e#1227#1228#0" expanded="true" />
+            <element signature="e#1267#1268#0" expanded="true" />
+            <element signature="e#1299#1300#0" expanded="true" />
+            <element signature="e#1327#1328#0" expanded="true" />
+            <element signature="e#1369#1370#0" expanded="true" />
+            <element signature="e#1403#1404#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/APP/src/main/AndroidManifest.xml">
+      <provider editor-type-id="android-manifest" />
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/APP/src/main/java/com/example/findmyrhythm/Event.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="465">
+          <caret line="31" column="25" selection-start-line="31" selection-start-column="25" selection-end-line="31" selection-end-column="25" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#453#454#0" expanded="true" />
+            <element signature="e#480#481#0" expanded="true" />
+            <element signature="e#520#521#0" expanded="true" />
+            <element signature="e#552#553#0" expanded="true" />
+            <element signature="e#581#582#0" expanded="true" />
+            <element signature="e#608#609#0" expanded="true" />
+            <element signature="e#646#647#0" expanded="true" />
+            <element signature="e#678#679#0" expanded="true" />
+            <element signature="e#716#717#0" expanded="true" />
+            <element signature="e#743#744#0" expanded="true" />
+            <element signature="e#790#791#0" expanded="true" />
+            <element signature="e#822#823#0" expanded="true" />
+            <element signature="e#858#859#0" expanded="true" />
+            <element signature="e#890#891#0" expanded="true" />
+            <element signature="e#940#941#0" expanded="true" />
+            <element signature="e#982#983#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/APP/src/main/res/layout/content_main.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="42" lean-forward="true" selection-start-line="8" selection-start-column="42" selection-end-line="8" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/APP/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" selection-start-line="8" selection-end-line="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_create_event.xml">
+      <provider selected="true" editor-type-id="android-designer2" />
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="186">
+          <caret line="76" column="35" selection-start-line="76" selection-start-column="35" selection-end-line="76" selection-end-column="35" />
+          <folding>
+            <element signature="e#1433#1449#0" expanded="true" />
+            <element signature="e#2492#2507#0" expanded="true" />
+            <element signature="e#3554#3573#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+      <provider selected="true" editor-type-id="android-designer2" />
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="397">
+          <caret line="37" column="35" lean-forward="true" selection-start-line="37" selection-end-line="37" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/APP/src/main/java/com/example/findmyrhythm/CreateEvent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="7" column="44" selection-start-line="7" selection-start-column="44" selection-end-line="7" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/APP/src/main/java/com/example/findmyrhythm/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="675">
+          <caret line="48" selection-start-line="48" selection-end-line="48" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
