@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "304555561167",
+    "firebase_url": "https://findmyrhythm.firebaseio.com",
+    "project_id": "findmyrhythm",
+    "storage_bucket": "findmyrhythm.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:304555561167:android:834291ec25e720a17f27ba",
+        "android_client_info": {
+          "package_name": "com.example.findmyrhythm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "304555561167-bier2nu97qp8hgt28tj1hqpqomai0oqj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.findmyrhythm",
+            "certificate_hash": "3d1521ccdec0106a3b5db9ef96111c2be5125853"
+          }
+        },
+        {
+          "client_id": "304555561167-13pcbn8fscvmra4f4q2m3edtr86sb3pq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDoUjZ-mIeMBqumb22ITJAQ5AO-ZTlTMws"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "304555561167-13pcbn8fscvmra4f4q2m3edtr86sb3pq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
