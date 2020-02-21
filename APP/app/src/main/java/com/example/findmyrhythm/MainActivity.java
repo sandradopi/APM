@@ -17,10 +17,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.widget.Toast;
 import android.util.Log;
 
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     SignInButton button;
-    GoogleSignInClient mGoogleSignInClient;
     private static final String TAG = "MainActivity";
+    GoogleSignInClient mGoogleSignInClient;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .build();
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
 
         //Layout
         setContentView(R.layout.activity_main);
@@ -53,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onStart();
 
         //Login
+        //FirebaseUser user = mAuth.getCurrentUser();
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         updateUI(account);
     }
