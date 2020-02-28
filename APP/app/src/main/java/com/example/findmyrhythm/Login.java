@@ -25,9 +25,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.FirebaseApp;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class Login extends AppCompatActivity implements View.OnClickListener{
     SignInButton button;
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "Login";
     GoogleSignInClient mGoogleSignInClient;
 
     private FirebaseAuth mAuth;
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 signIn();
                 break;
             case R.id.action_addevent:
-                Intent i = new Intent(MainActivity.this, CreateEvent.class);
+                Intent i = new Intent(Login.this, CreateEvent.class);
                 startActivity(i);
                 break;
         }
