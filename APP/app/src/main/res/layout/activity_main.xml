@@ -25,19 +25,9 @@
 
     <include
         android:id="@+id/include"
-        layout="@layout/content_main" />
-
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/sign_in_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
-        android:orientation="vertical"
-        app:layout_anchorGravity="end|top"
-        app:layout_constrainedHeight="false"
-        app:layout_constrainedWidth="false"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="283dp" />
+        layout="@layout/content_main"
+        tools:layout_editor_absoluteX="43dp"
+        tools:layout_editor_absoluteY="-31dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/action_addevent"
@@ -51,6 +41,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_input_add" />
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/sign_in_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_anchorGravity="end|top"
+        app:layout_constrainedHeight="false"
+        app:layout_constrainedWidth="false"
+        tools:layout_editor_absoluteX="284dp"
+        tools:layout_editor_absoluteY="63dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
