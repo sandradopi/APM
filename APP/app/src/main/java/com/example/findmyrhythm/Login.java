@@ -1,7 +1,10 @@
 package com.example.findmyrhythm;
 
+import android.content.DialogInterface;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.view.View;
@@ -36,6 +39,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.FirebaseApp;
 
 public class Login extends AppCompatActivity implements View.OnClickListener{
+    private static final String NAME = "name";
+    private static final String EMAIL = "email";
+    private static final String PHOTO = "photo";
     private static final String TAG = "Login";
     GoogleSignInClient mGoogleSignInClient;
     private CallbackManager mCallbackManager;
@@ -104,13 +110,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
     {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
     }
 
-    public void  updateUI(FirebaseUser user){
 
-
-    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -141,17 +143,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             firebaseAuthWithGoogle(account);
             // Signed in successfully, show authenticated UI.
-            //updateUI(account);
         } catch (ApiException e) {
-            // The ApiException status code indicates the detailed failure reason.
-            // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
-            //updateUI(null);
         }
     }
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
-
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
 
 
@@ -163,12 +160,23 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser currentUser = task.getResult().getUser();
-                            updateUI(currentUser);
+                            final String name = currentUser.getDisplayName();
+                            final String email = currentUser.getEmail();
+                            final Uri photoUrl = currentUser.getPhotoUrl();
+
+                            Intent intent = new Intent(Login.this, OrgProfile.class);
+                            intent.putExtra(NAME, name);
+                            intent.putExtra(EMAIL, email);
+                            intent.putExtra(PHOTO, photoUrl.toString());
+                            startActivity(intent);
+
+
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            Snackbar.make(findViewById(R.id.include), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
-                            updateUI(null);
+                            Snackbar.make(findViewById(R.id.include), "Error de Autenticación", Snackbar.LENGTH_SHORT).show();
+
                         }
 
                     }
@@ -188,13 +196,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Snackbar.make(findViewById(R.id.include), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
-                            updateUI(null);
+
 
                         } else {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser currentUser = task.getResult().getUser();
-                            updateUI(currentUser);
+
 
                         }
                     }
