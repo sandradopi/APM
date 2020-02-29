@@ -49,6 +49,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         //Layout
         setContentView(R.layout.activity_main);
+        setTitle(R.string.titleLogin);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -107,6 +108,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
     }
 
     public void  updateUI(FirebaseUser user){
+
 
     }
     @Override
