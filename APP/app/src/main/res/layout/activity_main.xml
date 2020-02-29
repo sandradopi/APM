@@ -29,29 +29,34 @@
         tools:layout_editor_absoluteX="43dp"
         tools:layout_editor_absoluteY="-31dp" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/action_addevent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="1dp"
-        android:layout_marginRight="1dp"
-        android:layout_marginBottom="1dp"
-        android:clickable="true"
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="414dp"
+        android:layout_height="678dp"
+        android:layout_marginTop="53dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/sign_in_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_anchorGravity="end|top"
-        app:layout_constrainedHeight="false"
-        app:layout_constrainedWidth="false"
-        tools:layout_editor_absoluteX="284dp"
-        tools:layout_editor_absoluteY="63dp" />
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/sign_in_button"
+            android:layout_width="208dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="180pt"
+            android:orientation="vertical"
+            app:layout_anchorGravity="end|top"
+            app:layout_constrainedHeight="false"
+            app:layout_constrainedWidth="false" />
 
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/login_button_facebook"
+            android:layout_width="208dp"
+            android:layout_height="62dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+

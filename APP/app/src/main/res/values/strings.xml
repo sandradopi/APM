@@ -4,5 +4,6 @@
     <string name="nombre">Nombre</string>
     <string name="direccion">Direccion</string>
     <string name="fecha">Fecha</string>
+    <string name="facebook_app_id">134346024586492</string> <string name="fb_login_protocol_scheme">fb134346024586492</string>
 
 </resources>
