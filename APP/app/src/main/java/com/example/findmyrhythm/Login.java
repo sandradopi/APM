@@ -63,7 +63,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
         SignInButton signInButton = findViewById(R.id.sign_in_button);
         findViewById(R.id.sign_in_button).setOnClickListener(this);
         TextView textView = (TextView) signInButton.getChildAt(0);
-        textView.setText("Login with Google");
+        textView.setText("Continuar con Google");
 
         //Login with Facebook
         FacebookSdk.sdkInitialize(getApplicationContext());

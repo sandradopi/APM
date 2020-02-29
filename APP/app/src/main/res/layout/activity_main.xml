@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".Login">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -30,10 +31,23 @@
         tools:layout_editor_absoluteY="-31dp" />
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#00FFFFFF"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50pt"
+            android:src="@drawable/logo" />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="414dp"
         android:layout_height="678dp"
-        android:layout_marginTop="53dp"
+        android:layout_marginTop="56dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -43,7 +57,7 @@
             android:layout_width="208dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
-            android:layout_marginTop="180pt"
+            android:layout_marginTop="190pt"
             android:orientation="vertical"
             app:layout_anchorGravity="end|top"
             app:layout_constrainedHeight="false"
@@ -54,7 +68,7 @@
             android:layout_width="208dp"
             android:layout_height="62dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:layout_marginBottom="30dp" />
     </LinearLayout>
 
