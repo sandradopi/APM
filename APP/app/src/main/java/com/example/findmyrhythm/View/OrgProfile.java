@@ -1,16 +1,15 @@
-package com.example.findmyrhythm;
+package com.example.findmyrhythm.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.ListView;
 
-import com.google.android.gms.common.SignInButton;
+import com.example.findmyrhythm.R;
+
 
 public class OrgProfile extends AppCompatActivity {
 
@@ -19,7 +18,17 @@ public class OrgProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_org_profile);
 
+        ListView mListView;
+        mListView = (ListView) findViewById(R.id.eventlist);
+
+        String[] events = new String[] {"Viva Suecia", "Dani Fernández", "Antonio José"};
+        String[] dates = new String[] { "Sab, 3 Marzo | 22:30", "Viernes, 6 Marzo | 23:30", "Domingo, 4 Abril | 22:00" };
+        String[] prices = new String[] {"20€", "20€", "10€"};
+        mListView.setAdapter(new listAdapter(this, events, dates, prices));
+
+
         ImageView infoButton = findViewById(R.id.info);
+        infoButton.setClickable(true);
         infoButton.setOnClickListener(new View.OnClickListener(){
 
             @Override

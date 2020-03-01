@@ -1,14 +1,15 @@
-package com.example.findmyrhythm;
+package com.example.findmyrhythm.View;
 
-import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.content.Intent;
+
+import com.example.findmyrhythm.View.OrgProfile;
+import com.example.findmyrhythm.R;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -32,7 +33,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import androidx.annotation.NonNull;
 import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
