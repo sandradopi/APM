@@ -1,4 +1,4 @@
-package com.example.findmyrhythm;
+package com.example.findmyrhythm.Model;
 
 import java.time.LocalDateTime;
 import java.util.Date;

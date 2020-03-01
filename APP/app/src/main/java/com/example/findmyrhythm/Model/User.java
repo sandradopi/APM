@@ -1,4 +1,4 @@
-package com.example.findmyrhythm;
+package com.example.findmyrhythm.Model;
 
 public class User {
     private String name;
