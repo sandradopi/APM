@@ -7,7 +7,8 @@
     <string name="facebook_app_id">134346024586492</string>
     <string name="fb_login_protocol_scheme">fb134346024586492</string>
     <string name="titleLogin">Login</string>
-
+    <string name="descripPlaya">Sonidos eclécticos de vanguardia y música en directo en una discoteca y sala de conciertos abierta en 1957.</string>
+    <string name="dirPlaya">Discoteca Playa Club Andén de Riazor, S/n, 15011 A Coruña</string>
 
 
 </resources>
