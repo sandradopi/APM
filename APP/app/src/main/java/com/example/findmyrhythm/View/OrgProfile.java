@@ -24,7 +24,8 @@ public class OrgProfile extends AppCompatActivity {
         String[] events = new String[] {"Viva Suecia", "Dani Fernández", "Antonio José"};
         String[] dates = new String[] { "Sab, 3 Marzo | 22:30", "Viernes, 6 Marzo | 23:30", "Domingo, 4 Abril | 22:00" };
         String[] prices = new String[] {"20€", "20€", "10€"};
-        mListView.setAdapter(new listAdapter(this, events, dates, prices));
+        String[] rates = new String[] {};
+        mListView.setAdapter(new ListAdapter(this, events, dates, prices, rates));
 
 
         ImageView infoButton = findViewById(R.id.info);

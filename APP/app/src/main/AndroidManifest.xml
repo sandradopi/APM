@@ -55,6 +55,20 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".View.PerfilUsuario"
+            android:label="@string/title_activity_perfil_usuario_tabs"
+            android:theme="@style/AppTheme">
+
+        </activity>
+        <activity
+            android:name=".View.AjustesOrganizador"
+            android:label="@string/title_activity_ajustes_organizador"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".View.AjustesUsuario"
+            android:label="@string/title_activity_ajustes_usuario"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

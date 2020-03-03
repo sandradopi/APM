@@ -20,4 +20,18 @@
     <string name="menu_settings">Ajustes</string>
     <string name="email">maria.lopez@mail.com</string>
     <string name="title_activity_search">Map</string>
+
+    <string name="name">Nombre</string>
+    <string name="username">Nombre de usuario</string>
+    <string name="email2">Correo</string>
+    <string name="biography">Biografía</string>
+    <string name="birthdate">Fecha de nacimiento</string>
+    <string name="notifications">Notificaciones</string>
+    <string name="save">Guardar</string>
+    <string name="settings">Ajustes</string>
+    <string name="title_activity_ajustes_organizador">Ajustes_organizador</string>
+    <string name="title_activity_ajustes_usuario">Ajustes_usuario</string>
+    <string name="location">Localización de la organización</string>
+    <string name="title_activity_perfil_usuario">Perfil_usuario</string>
+    <string name="title_activity_perfil_usuario_tabs">PerfilUsuarioTabs</string>
 </resources>
