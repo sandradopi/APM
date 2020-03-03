@@ -10,5 +10,14 @@
     <string name="descripPlaya">Sonidos eclécticos de vanguardia y música en directo en una discoteca y sala de conciertos abierta en 1957.</string>
     <string name="dirPlaya">Discoteca Playa Club Andén de Riazor, S/n, 15011 A Coruña</string>
 
-
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title_click">Title click</string>
+    <string name="menu_profile">Perfil</string>
+    <string name="menu_recommended">Recomendados</string>
+    <string name="menu_search">Buscador</string>
+    <string name="menu_notifications">Notificaciones</string>
+    <string name="menu_settings">Ajustes</string>
+    <string name="email">maria.lopez@mail.com</string>
+    <string name="title_activity_search">Map</string>
 </resources>
