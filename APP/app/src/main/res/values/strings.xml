@@ -34,4 +34,12 @@
     <string name="location">Localización de la organización</string>
     <string name="title_activity_perfil_usuario">Perfil_usuario</string>
     <string name="title_activity_perfil_usuario_tabs">PerfilUsuarioTabs</string>
+    <string name="nombre_del_evento">Nombre del evento</string>
+    <string name="dia">Dia</string>
+    <string name="hora">Hora</string>
+    <string name="asistentes_max">Asistentes máximos</string>
+    <string name="precio">Precio</string>
+    <string name="euro">€</string>
+    <string name="crear">Crear</string>
+    <string name="recomendados_para_ti">Recomendados para ti</string>
 </resources>
