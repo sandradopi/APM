@@ -42,4 +42,36 @@
     <string name="euro">€</string>
     <string name="crear">Crear</string>
     <string name="recomendados_para_ti">Recomendados para ti</string>
+
+
+    <!-- Strings for the creation of the profile of the users -->
+
+    <string name="intro1">Bienvenid@ a</string>
+    <string name="intro2">FIND MY RHYTHM</string>
+    <string name="intro_login">Elige tu perfil:</string>
+    <string name="organizador">Organización</string>
+    <string name="organizador_text">Podrás buscar eventos, crearlos y ser valorado.</string>
+    <string name="user">Usuario</string>
+    <string name="usuario_text">Podrás buscar eventos, asistir a ellos y acceder
+ a un muro de comentarios con otros usuarios.</string>
+    <string name="location1">Selecciona tus</string>
+    <string name="location2">ubicaciones favoritas</string>
+    <string name="user_location">Ubicación</string>
+    <string name="selfLocation">Ubicación actual</string>
+    <string name="notprofile">Tal vez más tarde</string>
+    <string name="genres1">Selecciona tus estilos</string>
+    <string name="genres2">musicales favoritos</string>
+    <string name="pop">Pop</string>
+    <string name="rock">Rock</string>
+    <string name="hiphop">Hip-hop</string>
+    <string name="latin">Latina</string>
+    <string name="dance">Dance</string>
+    <string name="indie">Indie</string>
+    <string name="classic">Clásica</string>
+    <string name="reggae">Reggae</string>
+    <string name="trap">Trap</string>
+    <string name="log1">Ya queda poco...</string>
+    <string name="log2">Cuéntanos más sobre ti</string>
+    <string name="email1">Correo</string>
+    <string name="orglocation">Localización de la organización</string>
 </resources>

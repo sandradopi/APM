@@ -88,7 +88,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/lightgray"
-            android:text="@string/email"
+            android:text="@string/email2"
             android:textSize="12sp"/>
 
         <EditText

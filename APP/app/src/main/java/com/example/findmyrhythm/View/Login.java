@@ -164,10 +164,11 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
                             final String email = currentUser.getEmail();
                             final Uri photoUrl = currentUser.getPhotoUrl();
 
-                            Intent intent = new Intent(Login.this, OrgProfile.class);
+                            /*Intent intent = new Intent(Login.this, OrgProfile.class);
                             intent.putExtra(NAME, name);
                             intent.putExtra(EMAIL, email);
-                            intent.putExtra(PHOTO, photoUrl.toString());
+                            intent.putExtra(PHOTO, photoUrl.toString());*/
+                            Intent intent = new Intent(Login.this, Profile.class);
                             startActivity(intent);
 
 

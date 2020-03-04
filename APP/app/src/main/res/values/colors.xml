@@ -5,6 +5,11 @@
     <item name="primary" type="color">#232222</item>
     <item name="primaryDark" type="color">#000000</item>
     <color name="colorAccent">#D81B60</color>
-    <item name="white" type="color">#FFF</item>
+    <item name="white" type="color">#FFFFFF</item>
     <color name="lightgray">#D3D3D3</color>
+    <color name="black">#000000</color>
+    <color name="rose">#FFA9B1</color>
+    <color name="purple">#5A3F93</color>
+    <color name="blueish">#8492A6</color>
+    <color name="proftext">#8492A6</color>
 </resources>
