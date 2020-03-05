@@ -74,6 +74,9 @@
             android:name=".View.AjustesUsuario"
             android:label="@string/title_activity_ajustes_usuario"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".View.PerfilEvento"/>
+        <activity android:name=".View.PerfilEventoOrganizador"/>
+        <activity android:name=".View.PerfilEventoFinalizado"/>
     </application>
 
 </manifest>
