@@ -52,6 +52,9 @@ public class UserLog extends AppCompatActivity implements View.OnClickListener {
         //TODO: Introduce into database by getting the value of every field. Check Android Service.
 
         //TODO: Intent to new Activity
+
+        Intent intent = new Intent(this, PerfilUsuario.class);
+        startActivity(intent);
     }
 
     private boolean isEmpty(EditText text) {
