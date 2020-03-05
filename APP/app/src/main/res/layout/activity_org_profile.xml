@@ -185,8 +185,6 @@
             android:layout_width="match_parent"
             android:layout_height="332dp"
             android:layout_below="@+id/tabs">
-
-
         </ListView>
 
     </LinearLayout>
