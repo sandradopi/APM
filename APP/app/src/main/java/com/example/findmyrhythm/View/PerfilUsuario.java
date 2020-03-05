@@ -21,7 +21,7 @@ public class PerfilUsuario extends AppCompatActivity {
         getSupportActionBar().setCustomView(R.layout.actionbar_layout);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_settings);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);
 
         setContentView(R.layout.activity_perfil_usuario);
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());

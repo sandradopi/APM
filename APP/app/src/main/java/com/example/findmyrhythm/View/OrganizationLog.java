@@ -3,6 +3,7 @@ package com.example.findmyrhythm.View;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -56,6 +57,9 @@ public class OrganizationLog extends AppCompatActivity implements View.OnClickLi
         //TODO: Introduce into database by getting the value of every field. Check Android Service.
 
         //TODO: Intent to new Activity
+
+        Intent intent = new Intent(this, OrgProfile.class);
+        startActivity(intent);
     }
 
     private boolean isEmpty(EditText text) {
