@@ -29,18 +29,21 @@ public class HomeActivity extends AppCompatActivity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_home);
 
-    Toolbar toolbar = findViewById(R.id.toolbar);
+   // Toolbar toolbar = findViewById(R.id.toolbar);
 //    setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
     getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
     getSupportActionBar().setCustomView(R.layout.actionbar_layout);
 
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);
+
     drawerLayout = findViewById(R.id.drawer_layout);
-    ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+   /* ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
             this, drawerLayout, toolbar, R.string.navigation_drawer_open,
             R.string.navigation_drawer_close);
     drawerLayout.addDrawerListener(toggle);
-    toggle.syncState();
+    toggle.syncState();*/
 
     NavigationView navigationView = findViewById(R.id.navigation_view);
     navigationView.setNavigationItemSelectedListener(this);
@@ -125,6 +128,17 @@ public class HomeActivity extends AppCompatActivity
   @Override
   public void onDrawerStateChanged(int i) {
     //cambio de estado, puede ser STATE_IDLE, STATE_DRAGGING or STATE_SETTLING
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+
+    if (drawerLayout.isDrawerOpen(GravityCompat.START))
+      drawerLayout.closeDrawer(GravityCompat.START);
+    else
+      drawerLayout.openDrawer(GravityCompat.START);
+
+    return true;
   }
 
 }
