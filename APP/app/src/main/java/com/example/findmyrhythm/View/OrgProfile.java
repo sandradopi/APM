@@ -3,19 +3,26 @@ package com.example.findmyrhythm.View;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.findmyrhythm.R;
+import com.example.findmyrhythm.View.tabs.SectionsPagerAdapter;
+import com.example.findmyrhythm.View.tabs.SectionsPagerAdapteroOrg;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabLayout;
 
 
 public class OrgProfile extends AppCompatActivity {
+    private static final String TAG = "Perfil Organizador";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,15 +35,12 @@ public class OrgProfile extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);
 
-        ListView mListView;
-        mListView = (ListView) findViewById(R.id.eventlist);
 
-        String[] events = new String[]{"Viva Suecia", "Dani Fernández", "Antonio José"};
-        String[] dates = new String[]{"Sab, 3 Marzo | 22:30", "Viernes, 6 Marzo | 23:30", "Domingo, 4 Abril | 22:00"};
-        String[] prices = new String[]{"20€", "20€", "10€"};
-        String[] rates = new String[]{};
-        mListView.setAdapter(new ListAdapter(this, events, dates, prices, rates));
-
+        SectionsPagerAdapteroOrg sectionsPagerAdapter = new SectionsPagerAdapteroOrg(this, getSupportFragmentManager());
+        ViewPager viewPager = findViewById(R.id.view_pager);
+        viewPager.setAdapter(sectionsPagerAdapter);
+        TabLayout tabs = findViewById(R.id.tabs);
+        tabs.setupWithViewPager(viewPager);
 
         ImageView infoButton = findViewById(R.id.info);
         infoButton.setClickable(true);
@@ -44,11 +48,26 @@ public class OrgProfile extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
+                Log.w(TAG, "Ha clickeado en el dialogo de la información del local");
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 DialogInfoOrg dialogo = new DialogInfoOrg();
                 dialogo.show(fragmentManager, "tagAlerta");
+
             }
         });
+
+        ImageView editButton = findViewById(R.id.edit);
+        editButton.setClickable(true);
+        editButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Log.w(TAG, "Ha clickeado en ajustes del local");
+                Intent intent = new Intent(OrgProfile.this, AjustesOrganizador.class);
+                startActivity(intent);
+            }
+        });
+
 
         FloatingActionButton añadirEvento = findViewById(R.id.floatingActionButton4);
         añadirEvento.setClickable(true);
@@ -56,6 +75,7 @@ public class OrgProfile extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
+                Log.w(TAG, "Ha clickeado en añadir nuevo evento");
                 Intent intent = new Intent(OrgProfile.this, CrearEvento.class);
                 startActivity(intent);
             }

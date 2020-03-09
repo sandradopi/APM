@@ -58,8 +58,10 @@ public class ListAdapter extends BaseAdapter {
         event.setText(events[position]);
         TextView date = (TextView) vi.findViewById(R.id.date);
         date.setText(dates[position]);
-        TextView price = (TextView) vi.findViewById(R.id.price);
-        price.setText(prices[position]);
+        if (prices.length != 0) {
+            TextView price = (TextView) vi.findViewById(R.id.price);
+            price.setText(prices[position]);
+        }
         ImageView star = (ImageView) vi.findViewById(R.id.star);
         if (rates.length != 0) {
             if (rates[position] == "not_rated")

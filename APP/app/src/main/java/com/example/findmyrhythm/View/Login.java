@@ -33,27 +33,28 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import androidx.annotation.NonNull;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.FirebaseApp;
 
 public class Login extends AppCompatActivity implements View.OnClickListener{
-    private static final String NAME = "name";
-    private static final String EMAIL = "email";
-    private static final String PHOTO = "photo";
+    //private static final String NAME = "name";
+    //private static final String EMAIL = "email";
+    //private static final String PHOTO = "photo";
     private static final String TAG = "Login";
     GoogleSignInClient mGoogleSignInClient;
     private CallbackManager mCallbackManager;
     private FirebaseAuth mAuth;
-    private static final int RC_SIGN_IN = 9001;
+    private static final int RC_SIGN_IN = 1;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Layout
+        //Custom Layout for the Login
         setContentView(R.layout.activity_main);
         setTitle(R.string.titleLogin);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -70,7 +71,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
         SignInButton signInButton = findViewById(R.id.sign_in_button);
         findViewById(R.id.sign_in_button).setOnClickListener(this);
         TextView textView = (TextView) signInButton.getChildAt(0);
+        //signInButton.setSize(SignInButton.SIZE_STANDARD);
         textView.setText("Continuar con Google");
+
 
         //Login with Facebook
         FacebookSdk.sdkInitialize(getApplicationContext());
@@ -102,7 +105,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
         mAuth = FirebaseAuth.getInstance();
 
 
-
     }
 
     @Override
@@ -125,6 +127,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
+
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -134,17 +137,14 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
-        } else{
-            Log.e(TAG, "Google Sign In failed.");
         }
     }
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             firebaseAuthWithGoogle(account);
-            // Signed in successfully, show authenticated UI.
         } catch (ApiException e) {
-            Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
+            Log.w(TAG, "signInResult:falló,código=" + e.getStatusCode());
         }
     }
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
@@ -158,24 +158,21 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithCredential:success");
+                            Log.d(TAG, "Éxito en el acceso mediante Google");
                             FirebaseUser currentUser = task.getResult().getUser();
-                            final String name = currentUser.getDisplayName();
-                            final String email = currentUser.getEmail();
-                            final Uri photoUrl = currentUser.getPhotoUrl();
+                            //final String name = currentUser.getDisplayName();
+                            //final String email = currentUser.getEmail();
+                            //final Uri photoUrl = currentUser.getPhotoUrl();
 
-                            /*Intent intent = new Intent(Login.this, OrgProfile.class);
-                            intent.putExtra(NAME, name);
-                            intent.putExtra(EMAIL, email);
-                            intent.putExtra(PHOTO, photoUrl.toString());*/
+                            Toast.makeText(Login.this, getString(R.string.authExi),  Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(Login.this, Profile.class);
                             startActivity(intent);
 
 
                         } else {
                             // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            Snackbar.make(findViewById(R.id.include), "Error de Autenticación", Snackbar.LENGTH_SHORT).show();
+                            Log.d(TAG, "Fallo en el acceso mediante Google");
+                            Toast.makeText(Login.this, getString(R.string.authFail),  Toast.LENGTH_SHORT).show();
 
                         }
 
@@ -194,14 +191,19 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
                         Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
                         if (!task.isSuccessful()) {
                             // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            Snackbar.make(findViewById(R.id.include), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
+                            Log.w(TAG, "Fallo en el acceso mediante Facebook", task.getException());
+                            Toast.makeText(Login.this, getString(R.string.authFail),
+                                    Toast.LENGTH_SHORT).show();
 
 
                         } else {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithCredential:success");
+                            Log.d(TAG, "Éxito en el acceso mediante Facebook");
+                            Toast.makeText(Login.this, getString(R.string.authExi),  Toast.LENGTH_SHORT).show();
                             FirebaseUser currentUser = task.getResult().getUser();
+                            Intent intent = new Intent(Login.this, Profile.class);
+                            startActivity(intent);
+
 
 
                         }

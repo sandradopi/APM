@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:facebook="http://schemas.android.com/apk/res-auto"
     android:background="#FFFFFF"
     tools:context=".View.Login">
 
@@ -54,15 +55,18 @@
 
         <com.facebook.login.widget.LoginButton
             android:id="@+id/login_button_facebook"
-            android:layout_width="308dp"
-            android:layout_height="169dp"
+            android:layout_width="305dp"
+            android:layout_height="67dp"
             android:layout_gravity="center_horizontal"
-            android:background="#2E3746" />
+            android:background="@drawable/btn_facebook"
+            facebook:com_facebook_login_text="Continuar con Facebook"
+            facebook:com_facebook_logout_text="Continuar con Facebook"/>
 
         <com.google.android.gms.common.SignInButton
+
             android:id="@+id/sign_in_button"
             android:layout_width="315dp"
-            android:layout_height="17pt"
+            android:layout_height="37dp"
             android:layout_gravity="center"
             android:layout_marginTop="5pt"
             android:background="#00AFBFD0"
@@ -75,4 +79,3 @@
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-

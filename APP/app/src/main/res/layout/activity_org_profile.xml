@@ -81,7 +81,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:text="Organizador"
+                        android:text="@string/organizador"
                         android:textColor="#fff"
                         android:textSize="18sp" />
 
@@ -121,7 +121,7 @@
             <ImageView
                 android:id="@+id/header_cover_image"
                 android:layout_width="match_parent"
-                android:layout_height="192dp"
+                android:layout_height="179dp"
                 android:background="#AFBFD0"
                 android:scaleType="centerCrop" />
 
@@ -140,8 +140,8 @@
             <de.hdodenhof.circleimageview.CircleImageView
 
                 android:id="@+id/profile"
-                android:layout_width="201dp"
-                android:layout_height="170dp"
+                android:layout_width="203dp"
+                android:layout_height="151dp"
                 android:layout_below="@+id/header_cover_image"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center_horizontal"
@@ -162,30 +162,16 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#AFBFD0">
+            android:background="#AFBFD0"/>
 
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Próximos"/>
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Pasados"/>
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Valoraciones"/>
-        </com.google.android.material.tabs.TabLayout>
-
-        <ListView
-            android:id="@+id/eventlist"
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/view_pager"
             android:layout_width="match_parent"
-            android:layout_height="332dp"
-            android:layout_below="@+id/tabs">
-        </ListView>
+            android:layout_height="350dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+        </androidx.viewpager.widget.ViewPager>
 
     </LinearLayout>
 

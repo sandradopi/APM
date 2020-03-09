@@ -9,10 +9,10 @@ import android.widget.ListView;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.findmyrhythm.View.ListAdapter;
 import com.example.findmyrhythm.R;
+import com.example.findmyrhythm.View.ListAdapter;
 
-public class PastEventsFragment extends Fragment {
+public class PastEventsFragmentOrg extends Fragment {
 
     @Override
     @Nullable
@@ -26,7 +26,7 @@ public class PastEventsFragment extends Fragment {
         String[] events = new String[] {"Viva Suecia", "Dani Fernández", "Antonio José"};
         String[] dates = new String[] { "Sab, 3 Marzo | 22:30", "Viernes, 6 Marzo | 23:30", "Domingo, 4 Enero | 22:00" };
         String[] prices = new String[] {};
-        String[] rates = new String[] {"not_rated", "not_rated", "rated"};
+        String[] rates = new String[] {};
         mListView.setAdapter(new ListAdapter(this.requireContext(), events, dates, prices, rates));
 
         return view;

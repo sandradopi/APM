@@ -1,6 +1,10 @@
 package com.example.findmyrhythm.View;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.example.findmyrhythm.R;
 import com.google.android.material.tabs.TabLayout;
@@ -12,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.findmyrhythm.View.tabs.SectionsPagerAdapter;
 
 public class PerfilUsuario extends AppCompatActivity {
+    private static final String TAG = "Perfil Usuario";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +34,18 @@ public class PerfilUsuario extends AppCompatActivity {
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
+
+        ImageView editButton = findViewById(R.id.edit);
+        editButton.setClickable(true);
+        editButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Log.w(TAG, "Ha clickeado en ajustes del usuario");
+                Intent intent = new Intent(PerfilUsuario.this, AjustesOrganizador.class);
+                startActivity(intent);
+            }
+        });
 
     }
 }
