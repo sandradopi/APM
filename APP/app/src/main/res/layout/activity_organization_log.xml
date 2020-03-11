@@ -47,12 +47,16 @@
         android:orientation="vertical">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:text="Nombre del local"
+            android:layout_weight="0.5"
+            android:autoSizeTextType="uniform"
+            android:autoSizeMaxTextSize="20sp"
+            android:autoSizeStepGranularity="1sp"
+            android:autoSizeMinTextSize="10sp"
             android:textColor="@color/proftext"
-            android:textStyle="bold"
-            android:textSize="18sp">
+            android:textStyle="bold">
 
         </TextView>
 
@@ -60,6 +64,7 @@
             android:id="@+id/orgName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="14sp"
             android:backgroundTint="@color/proftext"/>
 
     </LinearLayout>
@@ -74,12 +79,16 @@
         android:orientation="vertical">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Usuario"
+            android:layout_weight="0.5"
+            android:autoSizeTextType="uniform"
+            android:autoSizeMaxTextSize="20sp"
+            android:autoSizeStepGranularity="1sp"
+            android:autoSizeMinTextSize="10sp"
             android:textColor="@color/proftext"
-            android:textStyle="bold"
-            android:textSize="18sp">
+            android:textStyle="bold">
 
         </TextView>
 
@@ -87,6 +96,7 @@
             android:id="@+id/orgNickName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="14sp"
             android:backgroundTint="@color/proftext"/>
 
     </LinearLayout>
@@ -101,9 +111,14 @@
         android:orientation="vertical">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:text="Correo"
+            android:layout_weight="0.5"
+            android:autoSizeTextType="uniform"
+            android:autoSizeMaxTextSize="20sp"
+            android:autoSizeStepGranularity="1sp"
+            android:autoSizeMinTextSize="10sp"
             android:textColor="@color/proftext"
             android:textStyle="bold"
             android:textSize="18sp">
@@ -114,6 +129,7 @@
             android:id="@+id/orgEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="14sp"
             android:backgroundTint="@color/proftext"/>
 
     </LinearLayout>
@@ -128,8 +144,13 @@
         android:orientation="vertical">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:autoSizeTextType="uniform"
+            android:autoSizeMaxTextSize="20sp"
+            android:autoSizeStepGranularity="1sp"
+            android:autoSizeMinTextSize="10sp"
             android:text="Biografía"
             android:textColor="@color/proftext"
             android:textStyle="bold"
@@ -141,6 +162,7 @@
             android:id="@+id/orgBiography"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="14sp"
             android:backgroundTint="@color/proftext"/>
 
     </LinearLayout>
@@ -155,8 +177,13 @@
         android:orientation="vertical">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:autoSizeTextType="uniform"
+            android:autoSizeMaxTextSize="20sp"
+            android:autoSizeStepGranularity="1sp"
+            android:autoSizeMinTextSize="10sp"
             android:text="Localización de la oganización"
             android:textColor="@color/proftext"
             android:textStyle="bold"
@@ -168,6 +195,7 @@
             android:id="@+id/orgLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="14sp"
             android:backgroundTint="@color/proftext"/>
 
     </LinearLayout>
