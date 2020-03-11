@@ -64,7 +64,7 @@ public class CrearEvento extends AppCompatActivity {
             public void onClick(View view) {
                 Log.w(TAG, "Se ha creado el evento con éxito");
                 Toast.makeText(CrearEvento.this, getString(R.string.notiCreationEve),  Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(CrearEvento.this, PerfilUsuario.class);
+                Intent intent = new Intent(CrearEvento.this, PerfilEventoOrganizador.class);
                 startActivity(intent);
             }
         });
