@@ -11,13 +11,12 @@ import android.widget.ListView;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.findmyrhythm.View.ListAdapter;
 import com.example.findmyrhythm.R;
-import com.example.findmyrhythm.View.PerfilEvento;
+import com.example.findmyrhythm.View.ListAdapter;
 import com.example.findmyrhythm.View.PerfilEventoOrganizador;
 
 
-public class NextEventsFragment extends Fragment {
+public class NextEventsFragmentOrg extends Fragment {
 
 
     @Override
@@ -39,7 +38,7 @@ public class NextEventsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
-                Intent intent = new Intent(getActivity(), PerfilEvento.class);
+                Intent intent = new Intent(getActivity(), PerfilEventoOrganizador.class);
                 getActivity().startActivity(intent);
 
 

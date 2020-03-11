@@ -11,13 +11,13 @@ import androidx.fragment.app.FragmentPagerAdapter;
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
-public class SectionsPagerAdapteroOrg extends FragmentPagerAdapter {
+public class SectionsPagerAdapterOrg extends FragmentPagerAdapter {
 
     //@StringRes
     //private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2};
     private final Context mContext;
 
-    public SectionsPagerAdapteroOrg(Context context, FragmentManager fm) {
+    public SectionsPagerAdapterOrg(Context context, FragmentManager fm) {
         super(fm);
         mContext = context;
     }
@@ -28,7 +28,7 @@ public class SectionsPagerAdapteroOrg extends FragmentPagerAdapter {
         // Return a PlaceholderFragment (defined as a static inner class below).
         switch (position) {
             case 0:
-                return new NextEventsFragment();
+                return new NextEventsFragmentOrg();
             case 1:
                 return new PastEventsFragmentOrg();
             case 2:
@@ -58,4 +58,5 @@ public class SectionsPagerAdapteroOrg extends FragmentPagerAdapter {
         // Show 2 total pages.
         return 3;
     }
+
 }

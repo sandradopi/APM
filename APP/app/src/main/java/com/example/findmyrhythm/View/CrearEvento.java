@@ -2,11 +2,15 @@ package com.example.findmyrhythm.View;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,17 +22,20 @@ import java.util.Calendar;
 
 public class CrearEvento extends AppCompatActivity {
 
+    private static final String TAG = "Crear Evento";
     private int mYear, mMonth, mDay, mHour, mMinute;
     private EditText fecha,hora;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-//    setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbar_layout);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);
+
         setContentView(R.layout.activity_crearevento);
 
 
@@ -47,6 +54,18 @@ public class CrearEvento extends AppCompatActivity {
             public void onClick(View view){
                 openDialogTime();
 
+            }
+        });
+
+        Button savebutton = findViewById(R.id.ok);
+        savebutton.setClickable(true);
+        savebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.w(TAG, "Se ha creado el evento con éxito");
+                Toast.makeText(CrearEvento.this, getString(R.string.notiCreationEve),  Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(CrearEvento.this, PerfilUsuario.class);
+                startActivity(intent);
             }
         });
 

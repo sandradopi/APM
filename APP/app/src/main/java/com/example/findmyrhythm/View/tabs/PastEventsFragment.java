@@ -1,9 +1,11 @@
 package com.example.findmyrhythm.View.tabs;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.annotation.Nullable;
@@ -11,6 +13,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.findmyrhythm.View.ListAdapter;
 import com.example.findmyrhythm.R;
+import com.example.findmyrhythm.View.PerfilEvento;
+import com.example.findmyrhythm.View.PerfilEventoFinalizado;
 
 public class PastEventsFragment extends Fragment {
 
@@ -29,6 +33,16 @@ public class PastEventsFragment extends Fragment {
         String[] rates = new String[] {"not_rated", "not_rated", "rated"};
         mListView.setAdapter(new ListAdapter(this.requireContext(), events, dates, prices, rates));
 
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+
+                Intent intent = new Intent(getActivity(), PerfilEventoFinalizado.class);
+                getActivity().startActivity(intent);
+
+
+            }
+        });
         return view;
     }
 }

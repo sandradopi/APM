@@ -42,7 +42,7 @@ public class PerfilUsuario extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.w(TAG, "Ha clickeado en ajustes del usuario");
-                Intent intent = new Intent(PerfilUsuario.this, AjustesOrganizador.class);
+                Intent intent = new Intent(PerfilUsuario.this, AjustesUsuario.class);
                 startActivity(intent);
             }
         });

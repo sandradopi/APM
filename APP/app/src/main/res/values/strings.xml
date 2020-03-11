@@ -14,8 +14,8 @@
 
 
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open">Abriendo menú</string>
+    <string name="navigation_drawer_close">Cerrando menú</string>
     <string name="title_click">Title click</string>
     <string name="menu_profile">Perfil</string>
     <string name="menu_recommended">Recomendados</string>
@@ -33,6 +33,9 @@
     <string name="notifications">Notificaciones</string>
     <string name="save">Guardar</string>
     <string name="settings">Ajustes</string>
+    <string name="guardar">Sus ajustes han sido guardados con éxito</string>
+    <string name="desnoti">Notificaciones desactivadas</string>
+    <string name="noti">Notificaciones activadas</string>
     <string name="title_activity_ajustes_organizador">Ajustes_organizador</string>
     <string name="title_activity_ajustes_usuario">Ajustes_usuario</string>
     <string name="location">Localización de la organización</string>
@@ -46,6 +49,7 @@
     <string name="euro">€</string>
     <string name="crear">Crear</string>
     <string name="recomendados_para_ti">Recomendados para ti</string>
+    <string name="notiCreationEve">Evento creado con éxito</string>
 
 
     <!-- Strings for the creation of the profile of the users -->
@@ -78,4 +82,6 @@
     <string name="log2">Cuéntanos más sobre ti</string>
     <string name="email1">Correo</string>
     <string name="orglocation">Localización de la organización</string>
+    <string name="notiCreation">Perfil creado con éxito</string>
+
 </resources>

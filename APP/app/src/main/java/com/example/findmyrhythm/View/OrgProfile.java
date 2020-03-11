@@ -9,14 +9,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.findmyrhythm.R;
-import com.example.findmyrhythm.View.tabs.SectionsPagerAdapter;
-import com.example.findmyrhythm.View.tabs.SectionsPagerAdapteroOrg;
+import com.example.findmyrhythm.View.tabs.SectionsPagerAdapterOrg;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
@@ -36,11 +32,13 @@ public class OrgProfile extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);
 
 
-        SectionsPagerAdapteroOrg sectionsPagerAdapter = new SectionsPagerAdapteroOrg(this, getSupportFragmentManager());
+        SectionsPagerAdapterOrg sectionsPagerAdapter = new SectionsPagerAdapterOrg(this, getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
+
+
 
         ImageView infoButton = findViewById(R.id.info);
         infoButton.setClickable(true);
@@ -80,5 +78,11 @@ public class OrgProfile extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+
+
+
+
     }
 }
