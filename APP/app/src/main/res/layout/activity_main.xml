@@ -139,8 +139,8 @@
                 facebook:com_facebook_login_text="Continuar con Facebook"
                 facebook:com_facebook_logout_text="Continuar con Facebook"
                 android:layout_marginTop="5dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
                 android:paddingTop="15dp"
                 android:paddingBottom="15dp" />
 
