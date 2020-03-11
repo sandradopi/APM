@@ -21,7 +21,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 /**
  * Created by dani on 28/12/16.
  */
-public class HomeContentFragment extends Fragment implements OnMapReadyCallback {
+public class HomeMenuContentFragment extends Fragment implements OnMapReadyCallback {
 
 
   private static final String TEXT = "text";
@@ -34,8 +34,8 @@ public class HomeContentFragment extends Fragment implements OnMapReadyCallback 
   private GoogleMap mMap;
   private ArrayAdapter adapter;
 
-  public static HomeContentFragment newInstance(String text) {
-    HomeContentFragment frag = new HomeContentFragment();
+  public static HomeMenuContentFragment newInstance(String text) {
+    HomeMenuContentFragment frag = new HomeMenuContentFragment();
 
     Bundle args = new Bundle();
 //    args.putString(TEXT, text);
@@ -47,7 +47,7 @@ public class HomeContentFragment extends Fragment implements OnMapReadyCallback 
   @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
           Bundle savedInstanceState) {
-    View layout = inflater.inflate(R.layout.home_fragment, container, false);
+    View layout = inflater.inflate(R.layout.home_menu_fragment, container, false);
 
     if (getArguments() != null) {
 //      ((TextView) layout.findViewById(R.id.text)).setText(getArguments().getString(TEXT));
