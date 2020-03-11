@@ -36,6 +36,10 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
+        <activity android:name=".View.EMenuActivity">
+
+        </activity>
+
         <activity
             android:name=".View.MenuActivity"
             android:exported="true" >
