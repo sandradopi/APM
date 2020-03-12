@@ -115,6 +115,10 @@ public class MenuDrawerActivity extends AppCompatActivity implements NavigationV
                     break;
                 case R.id.nav_notifications:
                     title = R.string.menu_notifications;
+                    // TODO: Implementar la función de visualización de las notificaciones
+                    Toast.makeText(MenuDrawerActivity.this,
+                            "Actividad de Notificaciones de los eventos por los que has mostrado interés.",
+                            Toast.LENGTH_LONG).show();
                     break;
                 case R.id.nav_settings:
                     startActivity(new Intent(this, AjustesUsuario.class));
