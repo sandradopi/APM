@@ -7,23 +7,23 @@
     android:background="#AFBFD0"
     tools:context=".View.PerfilEvento">
 
-    <ImageView
-        android:id="@+id/editEvent"
-        android:layout_width="50dp"
-        android:layout_height="35dp"
-        android:layout_marginTop="84dp"
-        android:layout_marginEnd="28dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:src="@drawable/edit"
+    <Button
+        android:id="@+id/editBtn"
+        android:layout_width="137dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="32dp"
+        android:background="#AFBFD0"
+        android:clickable="false"
+        android:text="Edit"
+        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/frameLayout"
         android:layout_width="414dp"
-        android:layout_height="320dp"
-        android:layout_marginBottom="276dp"
+        android:layout_height="338dp"
         android:background="@drawable/fondo"
         android:gravity="start"
         android:orientation="vertical"
@@ -32,8 +32,10 @@
         android:paddingEnd="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.666"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
 
         <LinearLayout
@@ -114,7 +116,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:background="@android:color/holo_purple"/>
+                android:background="@android:color/holo_purple" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -123,7 +125,7 @@
 
                 <ImageView
                     android:id="@+id/capacityIcon"
-                    android:layout_width="50dp"
+                    android:layout_width="40dp"
                     android:layout_height="30dp"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="9dp"
@@ -144,9 +146,9 @@
 
                 <ImageView
                     android:id="@+id/costIcon"
-                    android:layout_width="50dp"
-                    android:layout_height="27dp"
-                    android:src="@drawable/euro" />
+                    android:layout_width="40dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/money" />
 
                 <TextView
                     android:id="@+id/eventCost"
@@ -175,10 +177,8 @@
     <fragment
         android:id="@+id/eventMap"
         android:name="com.google.android.gms.maps.MapFragment"
-        android:layout_width="match_parent"
-        android:layout_height="280dp"
-        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="413dp"
+        android:layout_height="413dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
 

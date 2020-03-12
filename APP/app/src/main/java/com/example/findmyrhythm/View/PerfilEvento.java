@@ -1,35 +1,66 @@
 package com.example.findmyrhythm.View;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Chronometer;
 
 import com.example.findmyrhythm.R;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class PerfilEvento extends FragmentActivity implements OnMapReadyCallback {
+public class PerfilEvento extends AppCompatActivity implements OnMapReadyCallback {
+    private static boolean IS_JOINED = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.actionbar_layout);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);
+
         setContentView(R.layout.activity_perfil_evento);
 
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.eventMap);
         mapFragment.getMapAsync(this);
+
+        final Button joinButton = (Button) findViewById(R.id.joinBtn);
+        final Chronometer chronometer = (Chronometer) findViewById(R.id.eventClock);
+
+        joinButton.setOnClickListener( new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (!IS_JOINED) {
+                    joinButton.setText("Apuntado");
+                    IS_JOINED = true;
+                    joinButton.setClickable(false);
+                    joinButton.setBackgroundColor(Color.GREEN);
+                    chronometer.start();
+                }
+            }
+        });
     }
 
     @Override
     public void onMapReady(GoogleMap map) {
-        // Sets the map type to be "hybrid"
-        map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        LatLng latLong = new LatLng(43.3713500, -8.3960000);
         map.addMarker(new MarkerOptions()
-                .position(new LatLng(0, 0))
-                .title("Marker"));
+                .position(latLong)
+                .title("Viva Suecia"));
+        map.animateCamera(CameraUpdateFactory.newLatLng(latLong));
     }
 }
