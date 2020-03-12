@@ -31,6 +31,8 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.android.gms.tasks.OnCompleteListener;
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
+
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,28 +63,48 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
         setSupportActionBar(toolbar);
 
         //Login with google
-       /GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+       /*GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
 
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);*/
 
         SignInButton signInButton = findViewById(R.id.sign_in_button);
         findViewById(R.id.sign_in_button).setOnClickListener(this);
+        signInButton.setClickable(true);
+        signInButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Login.this, Profile.class);
+                startActivity(intent);
+
+            }
+        });
         TextView textView = (TextView) signInButton.getChildAt(0);
         //signInButton.setSize(SignInButton.SIZE_STANDARD);
         textView.setText("Continuar con Google");
 
 
         //Login with Facebook
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        mCallbackManager = CallbackManager.Factory.create();
+        //FacebookSdk.sdkInitialize(getApplicationContext());
+       // mCallbackManager = CallbackManager.Factory.create();
 
         LoginButton mFacebookSignInButton = (LoginButton) findViewById(R.id.login_button_facebook);
+        mFacebookSignInButton.setClickable(true);
+        mFacebookSignInButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Login.this, Profile.class);
+                startActivity(intent);
+
+            }
+        });
         //mFacebookSignInButton.setReadPermissions("email", "public_profile", "user_birthday", "user_friends");
 
-        mFacebookSignInButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+       /* mFacebookSignInButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Log.d(TAG, "facebook:onSuccess:" + loginResult);
@@ -102,12 +124,17 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
 
         // Initialize FirebaseAuth
         FirebaseApp.initializeApp(this);
-        mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();*/
 
 
     }
 
     @Override
+    public void onClick(View view) {
+
+    }
+
+    /*@Override
     protected void onStart()//Se ejecuta después del create
     {
 
@@ -214,5 +241,5 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
                         }
                     }
                 });
-    }
+    }*/
 }
