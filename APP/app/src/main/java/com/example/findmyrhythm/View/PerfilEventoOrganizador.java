@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.findmyrhythm.R;
@@ -38,14 +39,13 @@ public class PerfilEventoOrganizador extends AppCompatActivity implements OnMapR
                 .findFragmentById(R.id.eventMap);
         mapFragment.getMapAsync(this);
 
-        final Button editButton = (Button) findViewById(R.id.editBtn);
-
+        ImageView editButton = (ImageView) findViewById(R.id.editBtn);
         editButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 Context context = getApplicationContext();
-                CharSequence text = "Edit Event";
+                CharSequence text = "Editar evento";
                 int duration = Toast.LENGTH_LONG;
 
                 Toast toast = Toast.makeText(context, text, duration);

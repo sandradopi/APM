@@ -133,8 +133,8 @@
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/eventPager"
-        android:layout_width="416dp"
-        android:layout_height="213dp"
+        android:layout_width="417dp"
+        android:layout_height="225dp"
         android:background="@color/white"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintEnd_toEndOf="parent"

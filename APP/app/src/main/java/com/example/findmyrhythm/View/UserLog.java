@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -13,7 +14,7 @@ import android.widget.Toast;
 import com.example.findmyrhythm.R;
 
 public class UserLog extends AppCompatActivity implements View.OnClickListener {
-
+    private static final String TAG = "Creación Usuario";
     EditText name, nickname, email, biography, birthDate;
     ImageView next;
 
@@ -52,6 +53,9 @@ public class UserLog extends AppCompatActivity implements View.OnClickListener {
         //TODO: Introduce into database by getting the value of every field. Check Android Service.
 
         //TODO: Intent to new Activity
+        Log.w(TAG, "Creación de la cuenta del usuario");
+        Toast.makeText(UserLog.this, getString(R.string.notiCreation),  Toast.LENGTH_SHORT).show();
+
 
         Intent intent = new Intent(this, PerfilUsuario.class);
         startActivity(intent);
