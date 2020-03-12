@@ -1,6 +1,9 @@
 package com.example.findmyrhythm.View;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +19,7 @@ public class EventosRecomendados extends MenuDrawerActivity {
        // getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
      //   getSupportActionBar().setCustomView(R.layout.action_layout);
 
+        setMenuItemChecked(R.id.nav_recommended);
 
         ListView mListView;
         mListView = (ListView) findViewById(R.id.eventlist);
@@ -26,7 +30,14 @@ public class EventosRecomendados extends MenuDrawerActivity {
         String[] rates = new String[] {"5", "2", "4"};
         mListView.setAdapter(new ListAdapter(this, events, dates, prices,rates));
 
-        setMenuItemChecked(R.id.nav_recommended);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                startActivity(new Intent(EventosRecomendados.this, PerfilEvento.class));
+            }
+        });
 
 
     }}

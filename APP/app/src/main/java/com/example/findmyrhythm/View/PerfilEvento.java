@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
@@ -29,7 +30,7 @@ public class PerfilEvento extends AppCompatActivity implements OnMapReadyCallbac
         getSupportActionBar().setCustomView(R.layout.actionbar_layout);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);
+        // getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);
 
         setContentView(R.layout.activity_perfil_evento);
 
@@ -62,5 +63,11 @@ public class PerfilEvento extends AppCompatActivity implements OnMapReadyCallbac
                 .position(latLong)
                 .title("Viva Suecia"));
         map.animateCamera(CameraUpdateFactory.newLatLng(latLong));
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 }
