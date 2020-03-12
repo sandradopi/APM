@@ -3,6 +3,7 @@ package com.example.findmyrhythm.View;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -34,6 +35,8 @@ public class PerfilUsuario extends MenuDrawerActivity {
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
+
+        setMenuItemChecked(R.id.nav_profile);
 
         ImageView editButton = findViewById(R.id.edit);
         editButton.setClickable(true);

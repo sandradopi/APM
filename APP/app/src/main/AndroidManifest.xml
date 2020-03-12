@@ -81,7 +81,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
 
-        <activity android:name=".View.EventosRecomendados" />
+        <activity android:name=".View.EventosRecomendados"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".View.CrearEvento" />
         <activity
             android:name=".View.AjustesOrganizador"

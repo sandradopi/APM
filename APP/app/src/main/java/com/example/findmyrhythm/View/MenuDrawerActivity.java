@@ -30,6 +30,7 @@ public class MenuDrawerActivity extends AppCompatActivity implements NavigationV
     protected LinearLayout actContent;
     private DrawerLayout drawerLayout;
     private int menuItemID;
+    private Menu menu;
 
     @Override
     public void setContentView(final int layoutResID) {
@@ -63,10 +64,7 @@ public class MenuDrawerActivity extends AppCompatActivity implements NavigationV
         NavigationView navigationView = findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        MenuItem menuItem = navigationView.getMenu().getItem(0);
-        // onNavigationItemSelected(menuItem);
-        menuItem.setChecked(true);
-        menuItemID = menuItem.getItemId();
+        menu = navigationView.getMenu();
 
         drawerLayout.addDrawerListener(this);
 
@@ -90,6 +88,11 @@ public class MenuDrawerActivity extends AppCompatActivity implements NavigationV
         }
     }
 
+    public void setMenuItemChecked(int id) {
+        menu.findItem(id).setChecked(true);
+        menuItemID = id;
+    }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
@@ -101,7 +104,6 @@ public class MenuDrawerActivity extends AppCompatActivity implements NavigationV
                 case R.id.nav_profile:
                     title = R.string.menu_profile;
                     startActivity(new Intent(this, PerfilUsuario.class));
-                    //return true;
                     break;
                 case R.id.nav_recommended:
                     title = R.string.menu_recommended;
@@ -115,7 +117,7 @@ public class MenuDrawerActivity extends AppCompatActivity implements NavigationV
                     title = R.string.menu_notifications;
                     break;
                 case R.id.nav_settings:
-                    // startActivity(new Intent(this, AjustesUsuario.class));
+                    startActivity(new Intent(this, AjustesUsuario.class));
                     title = R.string.menu_settings;
                     break;
                 default:

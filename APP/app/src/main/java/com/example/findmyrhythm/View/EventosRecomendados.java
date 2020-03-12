@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.findmyrhythm.R;
 
-public class EventosRecomendados extends AppCompatActivity {
+public class EventosRecomendados extends MenuDrawerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +25,8 @@ public class EventosRecomendados extends AppCompatActivity {
         String[] prices = new String[] {"20€", "20€", "10€"};
         String[] rates = new String[] {"5", "2", "4"};
         mListView.setAdapter(new ListAdapter(this, events, dates, prices,rates));
+
+        setMenuItemChecked(R.id.nav_recommended);
 
 
     }}

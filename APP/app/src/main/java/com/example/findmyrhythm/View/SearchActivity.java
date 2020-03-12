@@ -38,6 +38,8 @@ public class SearchActivity extends MenuDrawerActivity implements OnMapReadyCall
         ListView listView = (ListView) findViewById(R.id.listview);
         listView.setAdapter(adapter);
 
+        setMenuItemChecked(R.id.nav_search);
+
     }
 
     @Override

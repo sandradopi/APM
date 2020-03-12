@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.example.findmyrhythm.R;
 
-public class AjustesUsuario extends AppCompatActivity {
+public class AjustesUsuario extends MenuDrawerActivity {
     private static final String TAG = "Ajustes Usuario";
 
     @Override
@@ -23,7 +23,7 @@ public class AjustesUsuario extends AppCompatActivity {
         setContentView(R.layout.activity_ajustes_usuario);
 
 
-
+        setMenuItemChecked(R.id.nav_settings);
 
         Button savebutton = findViewById(R.id.button);
         savebutton.setClickable(true);
