@@ -15,18 +15,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.findmyrhythm.View.tabs.SectionsPagerAdapter;
 
-public class PerfilUsuario extends AppCompatActivity {
+public class PerfilUsuario extends MenuDrawerActivity {
     private static final String TAG = "Perfil Usuario";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.actionbar_layout);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);
+//        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+//        getSupportActionBar().setCustomView(R.layout.actionbar_layout);
+//
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);
 
         setContentView(R.layout.activity_perfil_usuario);
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
