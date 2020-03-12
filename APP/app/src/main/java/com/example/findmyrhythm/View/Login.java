@@ -80,7 +80,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
         mCallbackManager = CallbackManager.Factory.create();
 
         LoginButton mFacebookSignInButton = (LoginButton) findViewById(R.id.login_button_facebook);
-        mFacebookSignInButton.setReadPermissions("email", "public_profile", "user_birthday", "user_friends");
+        //mFacebookSignInButton.setReadPermissions("email", "public_profile", "user_birthday", "user_friends");
 
         mFacebookSignInButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -110,8 +110,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
     @Override
     protected void onStart()//Se ejecuta después del create
     {
+
         super.onStart();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        if (account!=null){
+            //Pasar directamente a su pantalla de perfil sin necesidad de loguearse
+        }
+        //FirebaseUser currentUser = mAuth.getCurrentUser();
     }
 
 
