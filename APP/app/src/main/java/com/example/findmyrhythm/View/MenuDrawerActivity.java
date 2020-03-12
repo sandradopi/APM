@@ -1,5 +1,8 @@
 package com.example.findmyrhythm.View;
 
+import android.content.Intent;
+import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -26,6 +29,7 @@ public class MenuDrawerActivity extends AppCompatActivity implements NavigationV
     protected DrawerLayout fullLayout;
     protected LinearLayout actContent;
     private DrawerLayout drawerLayout;
+    private int menuItemID;
 
     @Override
     public void setContentView(final int layoutResID) {
@@ -60,8 +64,9 @@ public class MenuDrawerActivity extends AppCompatActivity implements NavigationV
         navigationView.setNavigationItemSelectedListener(this);
 
         MenuItem menuItem = navigationView.getMenu().getItem(0);
-        onNavigationItemSelected(menuItem);
+        // onNavigationItemSelected(menuItem);
         menuItem.setChecked(true);
+        menuItemID = menuItem.getItemId();
 
         drawerLayout.addDrawerListener(this);
 
@@ -89,29 +94,39 @@ public class MenuDrawerActivity extends AppCompatActivity implements NavigationV
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
         int title;
-        switch (menuItem.getItemId()) {
-            case R.id.nav_profile:
-                title = R.string.menu_profile;
-                break;
-            case R.id.nav_recommended:
-                title = R.string.menu_recommended;
-                break;
-            case R.id.nav_search:
-                title = R.string.menu_search;
-                break;
-            case R.id.nav_notifications:
-                title = R.string.menu_notifications;
-                break;
-            case R.id.nav_settings:
-                title = R.string.menu_settings;
-                break;
-            default:
-                throw new IllegalArgumentException("menu option not implemented!!");
+
+        // check if the current activity is the same as the one selected
+        if (menuItemID != menuItem.getItemId()) {
+            switch (menuItem.getItemId()) {
+                case R.id.nav_profile:
+                    title = R.string.menu_profile;
+                    startActivity(new Intent(this, PerfilUsuario.class));
+                    //return true;
+                    break;
+                case R.id.nav_recommended:
+                    title = R.string.menu_recommended;
+                    startActivity(new Intent(this, EventosRecomendados.class));
+                    break;
+                case R.id.nav_search:
+                    title = R.string.menu_search;
+                    startActivity(new Intent(this, SearchActivity.class));
+                    break;
+                case R.id.nav_notifications:
+                    title = R.string.menu_notifications;
+                    break;
+                case R.id.nav_settings:
+                    // startActivity(new Intent(this, AjustesUsuario.class));
+                    title = R.string.menu_settings;
+                    break;
+                default:
+                    throw new IllegalArgumentException("menu option not implemented!!");
+            }
         }
 
-        Fragment fragment = HomeMenuContentFragment.newInstance(getString(title));
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.home_content, fragment).commit();
+
+        // Fragment fragment = HomeMenuContentFragment.newInstance(getString(title));
+        // FragmentManager fragmentManager = getSupportFragmentManager();
+        // fragmentManager.beginTransaction().replace(R.id.home_content, fragment).commit();
 
         //setTitle(getString(title));
 

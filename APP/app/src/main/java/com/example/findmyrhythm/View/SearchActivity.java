@@ -1,0 +1,53 @@
+package com.example.findmyrhythm.View;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import androidx.annotation.Nullable;
+
+import com.example.findmyrhythm.R;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+public class SearchActivity extends MenuDrawerActivity implements OnMapReadyCallback {
+
+    private static final String TEXT = "text";
+    // Array of strings...
+    ListView simpleList;
+    String countryList[] = {"Concierto de Radiohead", "Concierto de Harrison Ford Fiesta",
+            "Concierto de David Gilmour", "Concierto de Viva Suecia",
+            "Concierto de Jarabe de Palo"};
+
+    private GoogleMap mMap;
+    private ArrayAdapter adapter;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.home_menu_fragment);
+
+        adapter = new ArrayAdapter<String>(SearchActivity.this,
+                R.layout.activity_listview, countryList);
+
+        ListView listView = (ListView) findViewById(R.id.listview);
+        listView.setAdapter(adapter);
+
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+        // Add a marker in Sydney and move the camera
+        LatLng sydney = new LatLng(-48, 151);
+        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+    }
+
+}
