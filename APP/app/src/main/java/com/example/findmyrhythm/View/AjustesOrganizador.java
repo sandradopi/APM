@@ -14,14 +14,14 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.findmyrhythm.R;
 
-public class AjustesOrganizador extends AppCompatActivity {
+public class AjustesOrganizador extends MenuDrawerActivity {
     private static final String TAG = "Ajustes Organizador";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ajustes_organizador);
 
-
+        setMenuItemChecked(R.id.nav_settings);
 
         Button savebutton = findViewById(R.id.button);
         savebutton.setClickable(true);

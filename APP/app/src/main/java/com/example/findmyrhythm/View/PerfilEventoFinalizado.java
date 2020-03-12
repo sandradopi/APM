@@ -31,7 +31,7 @@ public class PerfilEventoFinalizado extends AppCompatActivity {
         getSupportActionBar().setCustomView(R.layout.actionbar_layout);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);
+//        getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);
 
         setContentView(R.layout.activity_perfil_evento_finalizado);
 
@@ -55,5 +55,11 @@ public class PerfilEventoFinalizado extends AppCompatActivity {
                 toast.show();
             }
         });
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 }

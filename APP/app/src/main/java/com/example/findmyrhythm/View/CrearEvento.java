@@ -34,7 +34,7 @@ public class CrearEvento extends AppCompatActivity {
         getSupportActionBar().setCustomView(R.layout.actionbar_layout);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);
+//        getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);
 
         setContentView(R.layout.activity_crearevento);
 
@@ -115,6 +115,12 @@ public class CrearEvento extends AppCompatActivity {
                     }
                 }, mHour, mMinute, false);
         timePickerDialog.show();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 }
 

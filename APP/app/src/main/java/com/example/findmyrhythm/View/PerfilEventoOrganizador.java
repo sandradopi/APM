@@ -31,7 +31,7 @@ public class PerfilEventoOrganizador extends AppCompatActivity implements OnMapR
         getSupportActionBar().setCustomView(R.layout.actionbar_layout);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);
+//        getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);
 
         setContentView(R.layout.activity_perfil_evento_organizador);
 
@@ -62,4 +62,11 @@ public class PerfilEventoOrganizador extends AppCompatActivity implements OnMapR
                 .title("Viva Suecia"));
         map.animateCamera(CameraUpdateFactory.newLatLng(latLong));
     }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
+
 }

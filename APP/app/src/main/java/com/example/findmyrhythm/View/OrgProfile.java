@@ -17,7 +17,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 
-public class OrgProfile extends AppCompatActivity {
+public class OrgProfile extends MenuDrawerActivity {
     private static final String TAG = "Perfil Organizador";
 
     @Override
@@ -25,11 +25,13 @@ public class OrgProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_org_profile);
 
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.actionbar_layout);
+        setMenuItemChecked(R.id.nav_profile);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);
+//        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+//        getSupportActionBar().setCustomView(R.layout.actionbar_layout);
+//
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);
 
 
         SectionsPagerAdapterOrg sectionsPagerAdapter = new SectionsPagerAdapterOrg(this, getSupportFragmentManager());
@@ -78,10 +80,6 @@ public class OrgProfile extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
-
-
 
 
     }

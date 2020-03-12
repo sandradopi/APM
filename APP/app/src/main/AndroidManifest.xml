@@ -27,7 +27,8 @@
             android:name=".View.DialogInfoOrg"
             android:theme="@android:style/Theme.Dialog" />
 
-        <activity android:name=".View.OrgProfile">
+        <activity android:name=".View.OrgProfile"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
         <activity
