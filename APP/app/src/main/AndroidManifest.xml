@@ -12,16 +12,24 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".View.OrganizationLog"></activity>
+
         <activity android:name=".View.UserLog" />
+
         <activity android:name=".View.Genres" />
+
         <activity android:name=".View.Location" />
+
         <activity android:name=".View.Profile" android:theme="@style/AppTheme.NoActionBar"/>
+
         <activity
             android:name=".View.DialogInfoOrg"
             android:theme="@android:style/Theme.Dialog" />
+
         <activity android:name=".View.OrgProfile">
-    </activity>
+        </activity>
+
         <activity
             android:name=".View.Login"
             android:label="@string/app_name"
@@ -36,19 +44,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".View.EMenuActivity">
-
-        </activity>
-
-        <activity
-            android:name=".View.MenuActivity"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
@@ -57,6 +52,7 @@
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
+
         <activity
             android:name="com.facebook.CustomTabActivity"
             android:exported="true">
@@ -75,26 +71,31 @@
             android:label="@string/title_activity_perfil_usuario_tabs"
             android:theme="@style/AppTheme.NoActionBar" />
 
-
         <activity
             android:name=".View.SearchActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
-
         <activity android:name=".View.EventosRecomendados"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity android:name=".View.CrearEvento" />
+
         <activity
             android:name=".View.AjustesOrganizador"
             android:label="@string/title_activity_ajustes_organizador"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".View.AjustesUsuario"
             android:label="@string/title_activity_ajustes_usuario"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity android:name=".View.PerfilEvento"/>
+
         <activity android:name=".View.PerfilEventoOrganizador"/>
+
         <activity android:name=".View.PerfilEventoFinalizado"/>
+
     </application>
 
 </manifest>
