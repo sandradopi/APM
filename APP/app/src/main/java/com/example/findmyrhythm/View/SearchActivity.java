@@ -1,7 +1,9 @@
 package com.example.findmyrhythm.View;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -32,13 +34,22 @@ public class SearchActivity extends MenuDrawerActivity implements OnMapReadyCall
 
         setContentView(R.layout.home_menu_fragment);
 
+        setMenuItemChecked(R.id.nav_search);
+
         adapter = new ArrayAdapter<String>(SearchActivity.this,
                 R.layout.activity_listview, countryList);
 
         ListView listView = (ListView) findViewById(R.id.listview);
         listView.setAdapter(adapter);
 
-        setMenuItemChecked(R.id.nav_search);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                startActivity(new Intent(SearchActivity.this, PerfilEvento.class));
+            }
+        });
 
     }
 
