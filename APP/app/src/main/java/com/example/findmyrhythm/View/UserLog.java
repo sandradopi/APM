@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -16,7 +17,7 @@ import com.example.findmyrhythm.R;
 public class UserLog extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "Creación Usuario";
     EditText name, nickname, email, biography, birthDate;
-    ImageView next;
+    Button next;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +33,7 @@ public class UserLog extends AppCompatActivity implements View.OnClickListener {
         biography = (EditText) findViewById(R.id.userBiography);
         birthDate = (EditText) findViewById(R.id.userBirthdate);
 
-        next = (ImageView) findViewById(R.id.nextUserLog);
+        next = (Button) findViewById(R.id.next);
         next.setOnClickListener(this);
     }
 

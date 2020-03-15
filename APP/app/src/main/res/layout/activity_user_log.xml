@@ -201,22 +201,11 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="20dp"
         android:orientation="vertical"
-        android:gravity="bottom|center"
-        android:baselineAligned="false">
+        android:gravity="bottom|center">
 
-        <ImageView
-            android:id="@+id/nextUserLog"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="end"
-            android:src="@drawable/next"
-            android:background="@drawable/next_border"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="5dp"/>
+        <include
+            layout="@layout/navigation_bottom_bar" />
 
 
 

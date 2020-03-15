@@ -77,26 +77,20 @@
         android:gravity="bottom|center"
         android:baselineAligned="false">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/notprofile"
-            android:textColor="@color/white"
-            android:background="#66000000"
-            android:paddingStart="15dp"
-            android:paddingEnd="15dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"/>
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/notprofile"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:background="#66000000"-->
+<!--            android:paddingStart="15dp"-->
+<!--            android:paddingEnd="15dp"-->
+<!--            android:paddingTop="5dp"-->
+<!--            android:paddingBottom="5dp"/>-->
 
-        <ImageView
-            android:id="@+id/nextLocations"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="end"
-            android:src="@drawable/next"
-            android:background="@drawable/next_border"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="5dp"/>
+        <include
+            layout="@layout/navigation_bottom_bar" />
+
     </LinearLayout>
 
 </LinearLayout>
