@@ -32,7 +32,7 @@ public class SearchActivity extends MenuDrawerActivity implements OnMapReadyCall
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.home_menu_fragment);
+        setContentView(R.layout.activity_search);
 
         setMenuItemChecked(R.id.nav_search);
 
