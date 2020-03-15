@@ -7,6 +7,7 @@ import androidx.cardview.widget.CardView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.findmyrhythm.R;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 public class Genres extends AppCompatActivity implements View.OnClickListener {
 
     CardView pop, rock, hiphop, latin, dance, indie, classic, reggae, trap;
-    ImageView next;
+    Button next;
     ArrayList<String> selectedGenres = new ArrayList<>();
 
     @Override
@@ -45,7 +46,7 @@ public class Genres extends AppCompatActivity implements View.OnClickListener {
         reggae.setOnClickListener(this);
         trap = (CardView) findViewById(R.id.trap);
         trap.setOnClickListener(this);
-        next = (ImageView) findViewById(R.id.nextGenres);
+        next = (Button) findViewById(R.id.next);
         next.setOnClickListener(this);
 
     }

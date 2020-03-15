@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,7 +25,7 @@ public class Location extends AppCompatActivity implements AdapterView.OnItemCli
     AutoCompleteTextView provinces;
     ArrayList<String> selectedProvinces = new ArrayList<String>();
     GridLayout locations;
-    ImageView next;
+    Button next;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,7 @@ public class Location extends AppCompatActivity implements AdapterView.OnItemCli
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbar_layout);
 
-        next = (ImageView) findViewById(R.id.nextLocations);
+        next = (Button) findViewById(R.id.next);
         next.setOnClickListener(this);
 
         provinces = (AutoCompleteTextView) findViewById(R.id.auto_province);
