@@ -64,9 +64,9 @@ public class ListAdapter extends BaseAdapter {
         ImageView star = (ImageView) vi.findViewById(R.id.star);
         if (rates.length != 0) {
             if (rates[position] == "not_rated")
-                star.setImageResource(R.drawable.star1);
+                star.setImageResource(R.drawable.ic_star_border_24px);
             else if (rates[position] == "rated")
-                star.setImageResource(R.drawable.star2);
+                star.setImageResource(R.drawable.ic_star_24px);
         }
         return vi;
     }

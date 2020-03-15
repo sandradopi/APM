@@ -55,7 +55,7 @@
                         android:layout_marginBottom="20dp"
                         android:clickable="true"
                         android:foregroundGravity="right"
-                        android:src="@drawable/ic_info" />
+                        android:src="@drawable/ic_info_24px" />
 
                 </LinearLayout>
 
