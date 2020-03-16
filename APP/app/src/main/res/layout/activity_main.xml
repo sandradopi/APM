@@ -94,7 +94,7 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#B3C0D1"
+        android:background="@color/primary"
         android:theme="@style/AppTheme.AppBarOverlay"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -102,7 +102,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="#B3C0D1"
+            android:background="@color/primary"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -110,12 +110,12 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3.5">
+        android:layout_weight="2.5">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/logo" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logo" />
 
     </RelativeLayout>
 
@@ -145,7 +145,6 @@
                 android:paddingBottom="15dp" />
 
             <com.google.android.gms.common.SignInButton
-
                 android:id="@+id/sign_in_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -158,10 +157,6 @@
 
         </LinearLayout>
 
-
-
-
     </RelativeLayout>
-
 
 </LinearLayout>
