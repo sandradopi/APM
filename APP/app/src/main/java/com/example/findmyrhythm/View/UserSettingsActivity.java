@@ -1,8 +1,5 @@
 package com.example.findmyrhythm.View;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,13 +11,13 @@ import android.widget.Toast;
 
 import com.example.findmyrhythm.R;
 
-public class AjustesUsuario extends MenuDrawerActivity {
+public class UserSettingsActivity extends MenuDrawerActivity {
     private static final String TAG = "Ajustes Usuario";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ajustes_usuario);
+        setContentView(R.layout.activity_user_settings);
 
 
         setMenuItemChecked(R.id.nav_settings);
@@ -31,8 +28,8 @@ public class AjustesUsuario extends MenuDrawerActivity {
         @Override
         public void onClick(View view) {
             Log.w(TAG, "Ha clickeado en guardar ajustes");
-            Toast.makeText(AjustesUsuario.this, getString(R.string.guardar),  Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(AjustesUsuario.this, PerfilUsuario.class);
+            Toast.makeText(UserSettingsActivity.this, getString(R.string.guardar),  Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(UserSettingsActivity.this, UserProfileActivity.class);
             startActivity(intent);
         }
     });
@@ -43,10 +40,10 @@ public class AjustesUsuario extends MenuDrawerActivity {
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             if(isChecked){
                 Log.w(TAG, "Ha activado las notificaciones");
-                Toast.makeText(AjustesUsuario.this, getString(R.string.noti),  Toast.LENGTH_SHORT).show();
+                Toast.makeText(UserSettingsActivity.this, getString(R.string.noti),  Toast.LENGTH_SHORT).show();
             }else{
                 Log.w(TAG, "Ha desactivado las notificaciones");
-                Toast.makeText(AjustesUsuario.this, getString(R.string.desnoti),  Toast.LENGTH_SHORT).show();
+                Toast.makeText(UserSettingsActivity.this, getString(R.string.desnoti),  Toast.LENGTH_SHORT).show();
             }
         }
     });

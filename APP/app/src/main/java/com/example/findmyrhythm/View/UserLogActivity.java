@@ -9,12 +9,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.findmyrhythm.R;
 
-public class UserLog extends AppCompatActivity implements View.OnClickListener {
+public class UserLogActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "Creación Usuario";
     EditText name, nickname, email, biography, birthDate;
     Button next;
@@ -25,7 +24,7 @@ public class UserLog extends AppCompatActivity implements View.OnClickListener {
         setContentView(R.layout.activity_user_log);
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.actionbar_layout);
+        getSupportActionBar().setCustomView(R.layout.layout_actionbar_empty);
 
         name = (EditText) findViewById(R.id.userName);
         nickname = (EditText) findViewById(R.id.userNickname);
@@ -55,10 +54,10 @@ public class UserLog extends AppCompatActivity implements View.OnClickListener {
 
         //TODO: Intent to new Activity
         Log.w(TAG, "Creación de la cuenta del usuario");
-        Toast.makeText(UserLog.this, getString(R.string.notiCreation),  Toast.LENGTH_SHORT).show();
+        Toast.makeText(UserLogActivity.this, getString(R.string.notiCreation),  Toast.LENGTH_SHORT).show();
 
 
-        Intent intent = new Intent(this, PerfilUsuario.class);
+        Intent intent = new Intent(this, UserProfileActivity.class);
         startActivity(intent);
     }
 

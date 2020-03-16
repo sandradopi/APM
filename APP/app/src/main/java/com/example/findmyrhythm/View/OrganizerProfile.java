@@ -1,7 +1,5 @@
 package com.example.findmyrhythm.View;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
@@ -17,18 +15,18 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 
-public class OrgProfile extends MenuDrawerActivity {
+public class OrganizerProfile extends MenuDrawerActivity {
     private static final String TAG = "Perfil Organizador";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_org_profile);
+        setContentView(R.layout.activity_organizer_profile);
 
         setMenuItemChecked(R.id.nav_profile);
 
 //        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-//        getSupportActionBar().setCustomView(R.layout.actionbar_layout);
+//        getSupportActionBar().setCustomView(R.layout.layout_actionbar_empty);
 //
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);
@@ -50,7 +48,7 @@ public class OrgProfile extends MenuDrawerActivity {
             public void onClick(View view) {
                 Log.w(TAG, "Ha clickeado en el dialogo de la información del local");
                 FragmentManager fragmentManager = getSupportFragmentManager();
-                DialogInfoOrg dialogo = new DialogInfoOrg();
+                OrganizerInfoDialog dialogo = new OrganizerInfoDialog();
                 dialogo.show(fragmentManager, "tagAlerta");
 
             }
@@ -63,7 +61,7 @@ public class OrgProfile extends MenuDrawerActivity {
             @Override
             public void onClick(View view) {
                 Log.w(TAG, "Ha clickeado en ajustes del local");
-                Intent intent = new Intent(OrgProfile.this, AjustesOrganizador.class);
+                Intent intent = new Intent(OrganizerProfile.this, OrganizerSettingsActivity.class);
                 startActivity(intent);
             }
         });
@@ -76,7 +74,7 @@ public class OrgProfile extends MenuDrawerActivity {
             @Override
             public void onClick(View view) {
                 Log.w(TAG, "Ha clickeado en añadir nuevo evento");
-                Intent intent = new Intent(OrgProfile.this, CrearEvento.class);
+                Intent intent = new Intent(OrganizerProfile.this, CreateEventActivity.class);
                 startActivity(intent);
             }
         });

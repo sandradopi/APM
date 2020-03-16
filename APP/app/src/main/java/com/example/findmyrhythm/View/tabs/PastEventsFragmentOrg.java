@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.findmyrhythm.R;
 import com.example.findmyrhythm.View.ListAdapter;
-import com.example.findmyrhythm.View.PerfilEventoFinalizado;
+import com.example.findmyrhythm.View.FinishedEventInfoActivity;
 
 public class PastEventsFragmentOrg extends Fragment {
 
@@ -22,7 +22,7 @@ public class PastEventsFragmentOrg extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
 
-        View view = inflater.inflate(R.layout.past_events_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_past_events, container, false);
 
         ListView mListView;
         mListView = (ListView) view.findViewById(R.id.eventlist);
@@ -35,7 +35,7 @@ public class PastEventsFragmentOrg extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
-                Intent intent = new Intent(getActivity(), PerfilEventoFinalizado.class);
+                Intent intent = new Intent(getActivity(), FinishedEventInfoActivity.class);
                 getActivity().startActivity(intent);
 
 

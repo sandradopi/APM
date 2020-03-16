@@ -14,13 +14,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import com.example.findmyrhythm.R;
 
 import java.util.Calendar;
 
-public class CrearEvento extends AppCompatActivity {
+public class CreateEventActivity extends AppCompatActivity {
 
     private static final String TAG = "Crear Evento";
     private int mYear, mMonth, mDay, mHour, mMinute;
@@ -31,12 +30,12 @@ public class CrearEvento extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.actionbar_layout);
+        getSupportActionBar().setCustomView(R.layout.layout_actionbar_empty);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);
 
-        setContentView(R.layout.activity_crearevento);
+        setContentView(R.layout.activity_create_event);
 
 
         fecha = (EditText) findViewById(R.id.dia);
@@ -63,8 +62,8 @@ public class CrearEvento extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.w(TAG, "Se ha creado el evento con éxito");
-                Toast.makeText(CrearEvento.this, getString(R.string.notiCreationEve),  Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(CrearEvento.this, PerfilEventoOrganizador.class);
+                Toast.makeText(CreateEventActivity.this, getString(R.string.notiCreationEve),  Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(CreateEventActivity.this, OrganizerEventInfoActivity.class);
                 startActivity(intent);
             }
         });

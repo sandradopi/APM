@@ -5,25 +5,41 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#AFBFD0"
-    tools:context=".View.PerfilEvento">
+    tools:context=".View.EventInfoActivity">
 
     <Button
-        android:id="@+id/joinBtn"
+        android:id="@+id/passedBtn"
         android:layout_width="137dp"
         android:layout_height="41dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="32dp"
-        android:background="#AFBFD0"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginRight="28dp"
+        android:background="#ff0000"
         android:clickable="false"
-        android:text="Apuntarse"
+        android:text="Terminado"
+        android:textColor="#ffffff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/scoreBtn"
+        android:layout_width="137dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="82dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginRight="28dp"
+        android:background="#0088ff"
+        android:clickable="false"
+        android:text="Score 1/10"
         android:textColor="#ffffff"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/frameLayout"
-        android:layout_width="410dp"
-        android:layout_height="338dp"
+        android:layout_width="416dp"
+        android:layout_height="543dp"
+        android:layout_marginBottom="268dp"
         android:background="@drawable/fondo"
         android:gravity="start"
         android:orientation="vertical"
@@ -32,14 +48,14 @@
         android:paddingEnd="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
 
 
         <LinearLayout
             android:layout_width="355dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="250dp"
             android:orientation="vertical">
 
             <TextView
@@ -86,7 +102,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="76dp"
+            android:layout_height="97dp"
             android:orientation="vertical">
 
             <TextView
@@ -107,41 +123,23 @@
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="418dp"
-        android:layout_height="275dp"
-        android:layout_marginBottom="5dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/eventTabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#AFBFD0"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/eventPager"
+        android:layout_width="417dp"
+        android:layout_height="225dp"
+        android:background="@color/white"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout">
-
-        <fragment
-            android:id="@+id/eventMap"
-            android:name="com.google.android.gms.maps.MapFragment"
-            android:layout_width="421dp"
-            android:layout_height="296dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="409dp"
-        android:layout_height="114dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <Chronometer
-            android:id="@+id/eventClock"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/fondo"
-            android:gravity="center"
-            android:padding="30sp"
-            android:textSize="40sp" />
-    </LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/eventTabs" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

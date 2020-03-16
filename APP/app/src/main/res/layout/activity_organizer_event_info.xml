@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#AFBFD0"
-    tools:context=".View.PerfilEvento">
+    tools:context=".View.EventInfoActivity">
 
 
     <LinearLayout

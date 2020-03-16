@@ -47,7 +47,7 @@ public class SearchActivity extends MenuDrawerActivity implements OnMapReadyCall
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                startActivity(new Intent(SearchActivity.this, PerfilEvento.class));
+                startActivity(new Intent(SearchActivity.this, EventInfoActivity.class));
             }
         });
 

@@ -32,7 +32,7 @@ public class SectionsPagerAdapterOrg extends FragmentPagerAdapter {
             case 1:
                 return new PastEventsFragmentOrg();
             case 2:
-                return new ValorationEventsFragment();
+                return new EventsRatingsFragment();
              default:
                  return null;
         }

@@ -210,7 +210,7 @@
         android:baselineAligned="false">
 
         <include
-            layout="@layout/navigation_bottom_bar" />
+            layout="@layout/layout_navigation_bottom_bar" />
 
     </LinearLayout>
 
