@@ -33,7 +33,7 @@ public class GreetingsActivity extends AppCompatActivity implements View.OnClick
         if (v == orgLogin) {
 
             //TODO: Intent to the desired Activity. MAYBE PASS A VARIABLE DEFINING THE USER AS ORGANIZATION
-            Intent locationIntent = new Intent(this, OrganizationLog.class);
+            Intent locationIntent = new Intent(this, OrganizerLog.class);
             startActivity(locationIntent);
 
         } else {
