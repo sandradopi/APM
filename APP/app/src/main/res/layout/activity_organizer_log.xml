@@ -41,15 +41,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:textSize="16sp"
-                android:text="@string/name"
+                android:text="Nombre del local"
                 android:textStyle="bold">
             </TextView>
 
             <EditText
-                android:id="@+id/userName"
+                android:id="@+id/orgName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nombre"
+                android:hint="Nombre del local"
                 android:textSize="14sp"/>
 
 
@@ -63,7 +63,7 @@
             </TextView>
 
             <EditText
-                android:id="@+id/userNickname"
+                android:id="@+id/orgNickName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Usuario"
@@ -81,13 +81,11 @@
             </TextView>
 
             <EditText
-                android:id="@+id/userEmail"
+                android:id="@+id/orgEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Email"
                 android:textSize="14sp"/>
-
-
 
 
             <TextView
@@ -95,15 +93,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:textSize="16sp"
-                android:text="@string/birthdate"
+                android:text="Localización de la organización"
                 android:textStyle="bold">
             </TextView>
 
             <EditText
-                android:id="@+id/userBirthdate"
+                android:id="@+id/orgLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Fecha de nacimiento"
+                android:hint="Localización de la organización"
                 android:textSize="14sp"/>
 
 
@@ -118,7 +116,7 @@
             </TextView>
 
             <EditText
-                android:id="@+id/userBiography"
+                android:id="@+id/orgBiography"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Biografía"

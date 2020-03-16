@@ -8,6 +8,10 @@
                 android:top="0dip"
                 android:right="0dip"
                 android:bottom="0dip" />
+            <corners android:bottomRightRadius="3dp"
+                android:bottomLeftRadius="3dp"
+                android:topLeftRadius="3dp"
+                android:topRightRadius="3dp" />
         </shape>
     </item>
 
@@ -20,6 +24,10 @@
                 android:top="0dip"
                 android:right="0dip"
                 android:bottom="0dip" />
+            <corners android:bottomRightRadius="3dp"
+                android:bottomLeftRadius="3dp"
+                android:topLeftRadius="3dp"
+                android:topRightRadius="3dp" />
         </shape>
     </item>
 </selector>
