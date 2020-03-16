@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0d1117"
-    tools:context=".View.AjustesOrganizador">
+    tools:context=".View.UserSettingsActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -61,7 +61,7 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:textColor="@color/lightgray"
-            android:text="Playa Club"
+            android:text="Juan"
             android:textSize="16sp" />
 
         <TextView
@@ -80,7 +80,7 @@
             android:ems="10"
             android:textColor="@color/lightgray"
             android:inputType="textPersonName"
-            android:text="playaclubcoruña"
+            android:text="j.gomez.95"
             android:textSize="16sp" />
 
         <TextView
@@ -99,7 +99,7 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:textColor="@color/lightgray"
-            android:text="playaclub@playaclubadmin.es"
+            android:text="j.gomez@udc.es"
             android:textSize="16sp" />
 
         <TextView
@@ -117,7 +117,7 @@
             android:layout_marginBottom="10dp"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Sonidos electrónicos de vanguardia."
+            android:text="Me encanta la música y pasarlo bien"
             android:textColor="@color/lightgray"
             android:textSize="16sp" />
 
@@ -126,18 +126,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/lightgray"
-            android:text="@string/location"
+            android:text="@string/birthdate"
             android:textSize="12sp" />
 
         <EditText
             android:id="@+id/editText6"
             android:layout_width="match_parent"
             android:layout_height="40sp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="10dp"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Discoteca Playa Club Andén de Riazor"
             android:textColor="@color/lightgray"
+            android:inputType="textPersonName"
+            android:text="12/04/1995"
             android:textSize="16sp" />
 
         <LinearLayout

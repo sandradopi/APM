@@ -11,13 +11,13 @@ import androidx.fragment.app.FragmentPagerAdapter;
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
-public class ScoresAdapter extends FragmentPagerAdapter {
+public class RatingsAdapter extends FragmentPagerAdapter {
 
     //@StringRes
     //private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2};
     private final Context mContext;
 
-    public ScoresAdapter(Context context, FragmentManager fm) {
+    public RatingsAdapter(Context context, FragmentManager fm) {
         super(fm);
         mContext = context;
     }
@@ -26,7 +26,7 @@ public class ScoresAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
-        return new ValorationEventsFragment();
+        return new EventsRatingsFragment();
 
     }
 

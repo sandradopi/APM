@@ -13,8 +13,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.findmyrhythm.View.ListAdapter;
 import com.example.findmyrhythm.R;
-import com.example.findmyrhythm.View.PerfilEvento;
-import com.example.findmyrhythm.View.PerfilEventoOrganizador;
+import com.example.findmyrhythm.View.EventInfoActivity;
 
 
 public class NextEventsFragment extends Fragment {
@@ -25,7 +24,7 @@ public class NextEventsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
 
-        View view = inflater.inflate(R.layout.next_events_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_next_events, container, false);
 
         ListView mListView;
         mListView = (ListView) view.findViewById(R.id.eventlist);
@@ -39,7 +38,7 @@ public class NextEventsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
-                Intent intent = new Intent(getActivity(), PerfilEvento.class);
+                Intent intent = new Intent(getActivity(), EventInfoActivity.class);
                 getActivity().startActivity(intent);
 
 

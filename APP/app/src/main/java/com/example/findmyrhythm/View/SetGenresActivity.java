@@ -8,13 +8,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 
 import com.example.findmyrhythm.R;
 
 import java.util.ArrayList;
 
-public class Genres extends AppCompatActivity implements View.OnClickListener {
+public class SetGenresActivity extends AppCompatActivity implements View.OnClickListener {
 
     CardView pop, rock, hiphop, latin, dance, indie, classic, reggae, trap;
     Button next;
@@ -23,10 +22,10 @@ public class Genres extends AppCompatActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_genres);
+        setContentView(R.layout.activity_set_genres);
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.actionbar_layout);
+        getSupportActionBar().setCustomView(R.layout.layout_actionbar_empty);
 
         pop = (CardView) findViewById(R.id.pop);
         pop.setOnClickListener(this);
@@ -60,7 +59,7 @@ public class Genres extends AppCompatActivity implements View.OnClickListener {
                PASS TO THE FINAL VIEW THE ARRAY WITH THE LOCATIONS AND THE GENRES.
              */
 
-            Intent intent = new Intent(this, UserLog.class);
+            Intent intent = new Intent(this, UserLogActivity.class);
             startActivity(intent);
         } else {
 

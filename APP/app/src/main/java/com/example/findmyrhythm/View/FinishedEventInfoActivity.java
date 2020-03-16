@@ -2,7 +2,6 @@ package com.example.findmyrhythm.View;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
@@ -12,32 +11,26 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.findmyrhythm.R;
-import com.example.findmyrhythm.View.tabs.ScoresAdapter;
-import com.example.findmyrhythm.View.tabs.SectionsPagerAdapter;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.example.findmyrhythm.View.tabs.RatingsAdapter;
 import com.google.android.material.tabs.TabLayout;
 
-public class PerfilEventoFinalizado extends AppCompatActivity {
+public class FinishedEventInfoActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.actionbar_layout);
+        getSupportActionBar().setCustomView(R.layout.layout_actionbar_empty);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);
 
-        setContentView(R.layout.activity_perfil_evento_finalizado);
+        setContentView(R.layout.activity_finished_event_info);
 
-        ScoresAdapter scoresAdapter = new ScoresAdapter(this, getSupportFragmentManager());
+        RatingsAdapter ratingsAdapter = new RatingsAdapter(this, getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.eventPager);
-        viewPager.setAdapter(scoresAdapter);
+        viewPager.setAdapter(ratingsAdapter);
         TabLayout tabs = findViewById(R.id.eventTabs);
         tabs.setupWithViewPager(viewPager);
 

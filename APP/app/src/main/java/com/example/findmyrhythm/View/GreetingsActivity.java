@@ -9,7 +9,7 @@ import android.widget.Button;
 
 import com.example.findmyrhythm.R;
 
-public class Profile extends AppCompatActivity implements View.OnClickListener {
+public class GreetingsActivity extends AppCompatActivity implements View.OnClickListener {
 
     //Widgets
     Button orgLogin, userLogin;
@@ -17,7 +17,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_greetings);
 
         orgLogin = (Button) findViewById(R.id.orgLogin);
         orgLogin.setOnClickListener(this);
@@ -39,7 +39,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
         } else {
 
             //TODO: Intent to the desired Activity. MAYBE PASS A VARIABLE DEFINING THE USER AS USER.
-            Intent locationIntent = new Intent(this, Location.class);
+            Intent locationIntent = new Intent(this, SetLocationActivity.class);
             startActivity(locationIntent);
         }
     }

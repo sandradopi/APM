@@ -6,16 +6,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.findmyrhythm.R;
 
-public class EventosRecomendados extends MenuDrawerActivity {
+public class RecommendedEventsActivity extends MenuDrawerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recomendados);
+        setContentView(R.layout.activity_recommended_events);
        // getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
      //   getSupportActionBar().setCustomView(R.layout.action_layout);
 
@@ -35,7 +33,7 @@ public class EventosRecomendados extends MenuDrawerActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                startActivity(new Intent(EventosRecomendados.this, PerfilEvento.class));
+                startActivity(new Intent(RecommendedEventsActivity.this, EventInfoActivity.class));
             }
         });
 

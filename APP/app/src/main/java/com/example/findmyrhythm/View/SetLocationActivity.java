@@ -11,7 +11,6 @@ import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.GridLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,7 +19,7 @@ import com.example.findmyrhythm.R;
 
 import java.util.ArrayList;
 
-public class Location extends AppCompatActivity implements AdapterView.OnItemClickListener, CustomAutoCompleteAdapater.OnSelfLocationListener, View.OnClickListener {
+public class SetLocationActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, CustomAutoCompleteAdapater.OnSelfLocationListener, View.OnClickListener {
 
     AutoCompleteTextView provinces;
     ArrayList<String> selectedProvinces = new ArrayList<String>();
@@ -30,10 +29,10 @@ public class Location extends AppCompatActivity implements AdapterView.OnItemCli
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_location);
+        setContentView(R.layout.activity_set_location);
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.actionbar_layout);
+        getSupportActionBar().setCustomView(R.layout.layout_actionbar_empty);
 
         next = (Button) findViewById(R.id.next);
         next.setOnClickListener(this);
@@ -88,7 +87,7 @@ public class Location extends AppCompatActivity implements AdapterView.OnItemCli
         else if (view == next) {
 
             //TODO: PASS TO THE GENRES CLASS THE ARRAYlIST OF LOCATIONS AND WHEN ALL THE INFORMATION IS KNOWN ADD THE USER IN THE DATABASE.
-            Intent intent = new Intent(this, Genres.class);
+            Intent intent = new Intent(this, SetGenresActivity.class);
             startActivity(intent);
         }
     }

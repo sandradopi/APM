@@ -2,14 +2,10 @@ package com.example.findmyrhythm.View;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentActivity;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -21,19 +17,19 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class PerfilEventoOrganizador extends AppCompatActivity implements OnMapReadyCallback {
+public class OrganizerEventInfoActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.actionbar_layout);
+        getSupportActionBar().setCustomView(R.layout.layout_actionbar_empty);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);
 
-        setContentView(R.layout.activity_perfil_evento_organizador);
+        setContentView(R.layout.activity_organizer_event_info);
 
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.eventMap);

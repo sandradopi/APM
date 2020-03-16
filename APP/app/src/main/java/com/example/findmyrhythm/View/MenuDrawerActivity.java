@@ -1,11 +1,9 @@
 package com.example.findmyrhythm.View;
 
 import android.content.Intent;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -13,14 +11,11 @@ import com.example.findmyrhythm.R;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 
 public class MenuDrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
@@ -49,7 +44,7 @@ public class MenuDrawerActivity extends AppCompatActivity implements NavigationV
         // should behave and what must they do, so you won't be
         // needing to repeat it in every activity class
         // getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        //getSupportActionBar().setCustomView(R.layout.actionbar_layout);
+        //getSupportActionBar().setCustomView(R.layout.layout_actionbar_empty);
 
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);
@@ -103,11 +98,11 @@ public class MenuDrawerActivity extends AppCompatActivity implements NavigationV
             switch (menuItem.getItemId()) {
                 case R.id.nav_profile:
                     title = R.string.menu_profile;
-                    startActivity(new Intent(this, PerfilUsuario.class));
+                    startActivity(new Intent(this, UserProfileActivity.class));
                     break;
                 case R.id.nav_recommended:
                     title = R.string.menu_recommended;
-                    startActivity(new Intent(this, EventosRecomendados.class));
+                    startActivity(new Intent(this, RecommendedEventsActivity.class));
                     break;
                 case R.id.nav_search:
                     title = R.string.menu_search;
@@ -121,7 +116,7 @@ public class MenuDrawerActivity extends AppCompatActivity implements NavigationV
                             Toast.LENGTH_LONG).show();
                     break;
                 case R.id.nav_settings:
-                    startActivity(new Intent(this, AjustesUsuario.class));
+                    startActivity(new Intent(this, UserSettingsActivity.class));
                     title = R.string.menu_settings;
                     break;
                 default:

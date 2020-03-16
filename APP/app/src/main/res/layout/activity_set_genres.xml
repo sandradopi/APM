@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".View.Genres"
+    tools:context=".View.SetGenresActivity"
     android:orientation="vertical"
     android:background="@drawable/fondo">
 
@@ -355,6 +355,6 @@
     </RelativeLayout>
 
     <include
-        layout="@layout/navigation_bottom_bar" />
+        layout="@layout/layout_navigation_bottom_bar" />
 
 </LinearLayout>

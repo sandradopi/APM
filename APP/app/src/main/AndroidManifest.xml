@@ -15,24 +15,24 @@
 
         <activity android:name=".View.OrganizationLog"></activity>
 
-        <activity android:name=".View.UserLog" />
+        <activity android:name=".View.UserLogActivity" />
 
-        <activity android:name=".View.Genres" />
+        <activity android:name=".View.SetGenresActivity" />
 
-        <activity android:name=".View.Location" />
+        <activity android:name=".View.SetLocationActivity" />
 
-        <activity android:name=".View.Profile" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".View.GreetingsActivity" android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity
-            android:name=".View.DialogInfoOrg"
+            android:name=".View.OrganizerInfoDialog"
             android:theme="@android:style/Theme.Dialog" />
 
-        <activity android:name=".View.OrgProfile"
+        <activity android:name=".View.OrganizerProfile"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
         <activity
-            android:name=".View.Login"
+            android:name=".View.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -68,7 +68,7 @@
         </activity>
 
         <activity
-            android:name=".View.PerfilUsuario"
+            android:name=".View.UserProfileActivity"
             android:label="@string/title_activity_perfil_usuario_tabs"
             android:theme="@style/AppTheme.NoActionBar" />
 
@@ -76,26 +76,26 @@
             android:name=".View.SearchActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".View.EventosRecomendados"
+        <activity android:name=".View.RecommendedEventsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".View.CrearEvento" />
+        <activity android:name=".View.CreateEventActivity" />
 
         <activity
-            android:name=".View.AjustesOrganizador"
+            android:name=".View.OrganizerSettingsActivity"
             android:label="@string/title_activity_ajustes_organizador"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".View.AjustesUsuario"
+            android:name=".View.UserSettingsActivity"
             android:label="@string/title_activity_ajustes_usuario"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".View.PerfilEvento"/>
+        <activity android:name=".View.EventInfoActivity"/>
 
-        <activity android:name=".View.PerfilEventoOrganizador"/>
+        <activity android:name=".View.OrganizerEventInfoActivity"/>
 
-        <activity android:name=".View.PerfilEventoFinalizado"/>
+        <activity android:name=".View.FinishedEventInfoActivity"/>
 
     </application>
 

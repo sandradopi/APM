@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.findmyrhythm.R;
@@ -25,7 +24,7 @@ public class OrganizationLog extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_organization_log);
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.actionbar_layout);
+        getSupportActionBar().setCustomView(R.layout.layout_actionbar_empty);
 
         name = (EditText) findViewById(R.id.orgName);
         nickname = (EditText) findViewById(R.id.orgNickName);
@@ -62,7 +61,7 @@ public class OrganizationLog extends AppCompatActivity implements View.OnClickLi
         Log.w(TAG, "Creación de la cuenta del organizador");
         Toast.makeText(OrganizationLog.this, getString(R.string.notiCreation),  Toast.LENGTH_SHORT).show();
 
-        Intent intent = new Intent(this, OrgProfile.class);
+        Intent intent = new Intent(this, OrganizerProfile.class);
         startActivity(intent);
     }
 
