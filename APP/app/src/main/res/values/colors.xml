@@ -7,6 +7,7 @@
 
     <color name="primaryBackground">#EDE7F6</color>
     <color name="primaryBackgroundDark">#D1C4E9</color>
+    <color name="primary700">#512DA8</color>
 
     <color name="textColorPrimary">#000000</color>
 

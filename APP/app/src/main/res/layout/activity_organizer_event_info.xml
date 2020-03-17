@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#AFBFD0"
+    android:background="@color/primaryBackgroundDark"
     tools:context=".View.EventInfoActivity">
 
 
@@ -14,18 +14,11 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@drawable/fondo"
         android:gravity="start"
         android:orientation="vertical"
         android:paddingStart="20dp"
         android:paddingTop="8dp"
-        android:paddingEnd="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        android:paddingEnd="20dp">
 
 
         <LinearLayout
