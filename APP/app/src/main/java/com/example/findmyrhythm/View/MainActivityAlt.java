@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.findmyrhythm.Model.FUser;
 import com.example.findmyrhythm.R;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -17,6 +18,7 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -30,6 +32,8 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivityAlt extends AppCompatActivity implements View.OnClickListener{
     //private static final String NAME = "name";
@@ -128,24 +132,74 @@ public class MainActivityAlt extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onStart() {
         super.onStart();
+
+        // TODO: delete. Test lines (2)
+        FirebaseAuth.getInstance().signOut();
+        googleSignOut();
+
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
+        if (currentUser != null) {
+            // addNewUser(currentUser); // TODO: delete this line
+            startGreetings();
+        }
     }
 
 
     private void updateUI(FirebaseUser currentUser) {
         if (currentUser != null) {
-            Intent intent = new Intent(MainActivityAlt.this, GreetingsActivity.class);
-            startActivity(intent);
+            addNewUser(currentUser);
+            startGreetings();
         }
     }
 
 
-    private void signIn() {
+    private void startGreetings() {
+        // Log out to test with different accounts
+        FirebaseAuth.getInstance().signOut(); // TODO: delete
+        Intent intent = new Intent(MainActivityAlt.this, GreetingsActivity.class);
+        startActivity(intent);
+    }
+
+
+    private void addNewUser(FirebaseUser currentUser) {
+        DatabaseReference mDatabase;// ...
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        String name = currentUser.getDisplayName();
+        String email = currentUser.getEmail();
+        String userId = currentUser.getUid();
+
+        FUser user = new FUser(name, email);
+
+        mDatabase.child("users").child(userId).setValue(user);
+
+        // To update only the user name
+        // mDatabase.child("users").child(userId).child("username").setValue(name);
+
+    }
+
+
+    private void googleSignIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
+
+
+    /**
+     * Sign out of your Google account.
+     * Necessary to log in with a different account (accounts menu).
+     */
+    private void googleSignOut() {
+        mGoogleSignInClient.signOut()
+            .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    // ...
+                }
+            });
+    }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -196,14 +250,16 @@ public class MainActivityAlt extends AppCompatActivity implements View.OnClickLi
                 });
     }
 
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.sign_in_button:
-                signIn();
+                googleSignIn();
                 break;
             // ...
         }
     }
+
 
 }
