@@ -1,14 +1,18 @@
 package com.example.findmyrhythm.View;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.findmyrhythm.R;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -26,6 +30,8 @@ public class MenuDrawerActivity extends AppCompatActivity implements NavigationV
     private DrawerLayout drawerLayout;
     private int menuItemID;
     private Menu menu;
+    private FirebaseAuth mAuth;
+    FirebaseUser currentUser;
 
     @Override
     public void setContentView(final int layoutResID) {
@@ -71,6 +77,31 @@ public class MenuDrawerActivity extends AppCompatActivity implements NavigationV
                         Toast.LENGTH_SHORT).show();
             }
         });
+
+
+//        FirebaseAuth.AuthStateListener mAuthListener = new FirebaseAuth.AuthStateListener() {
+//            @Override
+//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+//                FirebaseUser user = firebaseAuth.getCurrentUser();
+//                if (user != null) {
+//                    // User is signed in
+//                    Log.d("TAG", "onAuthStateChanged:signed_in:" + user.getUid());
+//                } else {
+//                    // User is signed out
+//                    Log.d("TAG", "onAuthStateChanged:signed_out");
+//                }
+//                // ...
+//            }
+//        };
+
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
+        String name = currentFirebaseUser.getDisplayName();
+        //Log.e("TAG", name);
+
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = (TextView) headerView.findViewById(R.id.header_title);
+        navUsername.setText(name);
+
     }
 
 

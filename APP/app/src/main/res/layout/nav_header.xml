@@ -19,7 +19,6 @@
         android:drawablePadding="15dp"
         android:gravity="center_vertical"
         android:layout_marginBottom="5dp"
-        android:text="María López"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium.Inverse" />
 
     <TextView

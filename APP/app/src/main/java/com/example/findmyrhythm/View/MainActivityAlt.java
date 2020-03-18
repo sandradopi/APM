@@ -156,7 +156,7 @@ public class MainActivityAlt extends AppCompatActivity implements View.OnClickLi
 
     private void startGreetings() {
         // Log out to test with different accounts
-        FirebaseAuth.getInstance().signOut(); // TODO: delete
+        // FirebaseAuth.getInstance().signOut(); // TODO: delete
         Intent intent = new Intent(MainActivityAlt.this, GreetingsActivity.class);
         startActivity(intent);
     }

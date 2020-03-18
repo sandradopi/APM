@@ -15,7 +15,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 
-public class OrganizerProfile extends MenuDrawerActivity {
+public class OrganizerProfileActivity extends MenuDrawerActivity {
     private static final String TAG = "Perfil Organizador";
 
     @Override
@@ -61,7 +61,7 @@ public class OrganizerProfile extends MenuDrawerActivity {
             @Override
             public void onClick(View view) {
                 Log.w(TAG, "Ha clickeado en ajustes del local");
-                Intent intent = new Intent(OrganizerProfile.this, OrganizerSettingsActivity.class);
+                Intent intent = new Intent(OrganizerProfileActivity.this, OrganizerSettingsActivity.class);
                 startActivity(intent);
             }
         });
@@ -74,7 +74,7 @@ public class OrganizerProfile extends MenuDrawerActivity {
             @Override
             public void onClick(View view) {
                 Log.w(TAG, "Ha clickeado en añadir nuevo evento");
-                Intent intent = new Intent(OrganizerProfile.this, CreateEventActivity.class);
+                Intent intent = new Intent(OrganizerProfileActivity.this, CreateEventActivity.class);
                 startActivity(intent);
             }
         });

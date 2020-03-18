@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".View.OrganizerLog"></activity>
+        <activity android:name=".View.OrganizerLogActivity"></activity>
 
         <activity android:name=".View.UserLogActivity" />
 
@@ -27,7 +27,7 @@
             android:name=".View.OrganizerInfoDialog"
             android:theme="@android:style/Theme.Dialog" />
 
-        <activity android:name=".View.OrganizerProfile"
+        <activity android:name=".View.OrganizerProfileActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 

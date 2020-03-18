@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.example.findmyrhythm.R;
 
-public class OrganizerLog extends AppCompatActivity implements View.OnClickListener {
+public class OrganizerLogActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "Creación Organizador";
     EditText name, nickname, email, biography, location;
     Button next;
@@ -59,9 +59,9 @@ public class OrganizerLog extends AppCompatActivity implements View.OnClickListe
 
         //TODO: Intent to new Activity
         Log.w(TAG, "Creación de la cuenta del organizador");
-        Toast.makeText(OrganizerLog.this, getString(R.string.notiCreation),  Toast.LENGTH_SHORT).show();
+        Toast.makeText(OrganizerLogActivity.this, getString(R.string.notiCreation),  Toast.LENGTH_SHORT).show();
 
-        Intent intent = new Intent(this, OrganizerProfile.class);
+        Intent intent = new Intent(this, OrganizerProfileActivity.class);
         startActivity(intent);
     }
 
