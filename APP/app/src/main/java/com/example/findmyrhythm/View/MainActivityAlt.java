@@ -1,5 +1,7 @@
 package com.example.findmyrhythm.View;
 
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,6 +36,17 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 public class MainActivityAlt extends AppCompatActivity implements View.OnClickListener{
     //private static final String NAME = "name";
@@ -96,10 +109,73 @@ public class MainActivityAlt extends AppCompatActivity implements View.OnClickLi
         });
 
 
+        storeInfoJSON("hola", "hola.gmail");
+        readInfoJSON();
+
         /* / Initialize FirebaseAuth
         FirebaseApp.initializeApp(this);
         mAuth = FirebaseAuth.getInstance();*/
 
+    }
+
+
+    public void storeInfoJSON(String name, String email) {
+        JSONObject jo = new JSONObject();
+        try {
+            jo.put("name", name);
+            jo.put("email", email);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        mCreateAndSaveFile("user_info.json", jo.toString());
+
+    }
+
+    public JSONObject readInfoJSON() {
+        JSONObject jo = null;
+
+        // Read data from file as String
+        String userInfo = mReadJsonData("user_info.json");
+        Log.e("DEBUG", userInfo);
+
+        try {
+            jo = new JSONObject(userInfo);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jo;
+    }
+
+
+    public void mCreateAndSaveFile(String params, String mJsonResponse) {
+        try {
+            FileWriter file = new FileWriter("/data/data/" + getApplicationContext().getPackageName() + "/" + params);
+            file.write(mJsonResponse);
+            file.flush();
+            file.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public String mReadJsonData(String params) {
+        String mResponse = null;
+        try {
+            File f = new File("/data/data/" + getPackageName() + "/" + params);
+            FileInputStream is = new FileInputStream(f);
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            mResponse = new String(buffer);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return mResponse;
     }
 
 
