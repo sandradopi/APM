@@ -118,49 +118,12 @@ public class MainActivityAlt extends AppCompatActivity implements View.OnClickLi
         });
 
 
-        IOFiles.storeInfoJSON("hola", "hola.gmail", getPackageName());
-        IOFiles.readInfoJSON(getPackageName());
-
-
-        Bitmap bmp = null;
-        try {
-            bmp = new BitmapDownloaderTask().execute("https://i.imgur.com/jVe7ziL.jpeg").get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        IOFiles.saveToInternalStorage(bmp, getApplicationContext());
-
-        ImageView imageView = findViewById(R.id.logo);
-
-        Bitmap bmp2 = IOFiles.loadImageFromStorage(getApplicationContext());
-
-        imageView.setImageBitmap(bmp2);
-
         /* / Initialize FirebaseAuth
         FirebaseApp.initializeApp(this);
         mAuth = FirebaseAuth.getInstance();*/
 
     }
 
-
-    private class BitmapDownloaderTask extends AsyncTask<String, Void, Bitmap> {
-
-        @Override
-        protected Bitmap doInBackground(String... urls) {
-            URL url = null;
-            Bitmap image = null;
-            try {
-                url = new URL(urls[0]);
-                image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return image;
-        }
-    }
 
 
 //    private class BitmapDownloaderTask extends AsyncTask<String, Void, Bitmap> {
