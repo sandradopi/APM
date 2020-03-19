@@ -3,9 +3,13 @@ package com.example.findmyrhythm.View;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -43,12 +47,17 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.concurrent.ExecutionException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.example.findmyrhythm.Model.IOFiles;
 
-public class MainActivityAlt extends AppCompatActivity implements View.OnClickListener{
+
+public class MainActivityAlt extends AppCompatActivity implements View.OnClickListener {
     //private static final String NAME = "name";
     //private static final String EMAIL = "email";
     //private static final String PHOTO = "photo";
@@ -109,8 +118,26 @@ public class MainActivityAlt extends AppCompatActivity implements View.OnClickLi
         });
 
 
-        storeInfoJSON("hola", "hola.gmail");
-        readInfoJSON();
+        IOFiles.storeInfoJSON("hola", "hola.gmail", getPackageName());
+        IOFiles.readInfoJSON(getPackageName());
+
+
+        Bitmap bmp = null;
+        try {
+            bmp = new BitmapDownloaderTask().execute("https://i.imgur.com/jVe7ziL.jpeg").get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        IOFiles.saveToInternalStorage(bmp, getApplicationContext());
+
+        ImageView imageView = findViewById(R.id.logo);
+
+        Bitmap bmp2 = IOFiles.loadImageFromStorage(getApplicationContext());
+
+        imageView.setImageBitmap(bmp2);
 
         /* / Initialize FirebaseAuth
         FirebaseApp.initializeApp(this);
@@ -119,64 +146,145 @@ public class MainActivityAlt extends AppCompatActivity implements View.OnClickLi
     }
 
 
-    public void storeInfoJSON(String name, String email) {
-        JSONObject jo = new JSONObject();
-        try {
-            jo.put("name", name);
-            jo.put("email", email);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+    private class BitmapDownloaderTask extends AsyncTask<String, Void, Bitmap> {
 
-        mCreateAndSaveFile("user_info.json", jo.toString());
-
-    }
-
-    public JSONObject readInfoJSON() {
-        JSONObject jo = null;
-
-        // Read data from file as String
-        String userInfo = mReadJsonData("user_info.json");
-        Log.e("DEBUG", userInfo);
-
-        try {
-            jo = new JSONObject(userInfo);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return jo;
-    }
-
-
-    public void mCreateAndSaveFile(String params, String mJsonResponse) {
-        try {
-            FileWriter file = new FileWriter("/data/data/" + getApplicationContext().getPackageName() + "/" + params);
-            file.write(mJsonResponse);
-            file.flush();
-            file.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        @Override
+        protected Bitmap doInBackground(String... urls) {
+            URL url = null;
+            Bitmap image = null;
+            try {
+                url = new URL(urls[0]);
+                image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return image;
         }
     }
 
 
-    public String mReadJsonData(String params) {
-        String mResponse = null;
-        try {
-            File f = new File("/data/data/" + getPackageName() + "/" + params);
-            FileInputStream is = new FileInputStream(f);
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            mResponse = new String(buffer);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return mResponse;
-    }
+//    private class BitmapDownloaderTask extends AsyncTask<String, Void, Bitmap> {
+//
+//        @Override
+//        protected Bitmap doInBackground(String... urls) {
+//            URL url = null;
+//            Bitmap image = null;
+//            try {
+//                url = new URL(urls[0]);
+//                image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+//                saveToInternalStorage(image);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//            return image;
+//        }
+//    }
+//
+//
+//
+//
+//    private Bitmap loadImageFromStorage() {
+//        Bitmap bmp = null;
+//        try {
+//            ContextWrapper cw = new ContextWrapper(getApplicationContext());
+//            File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+//            // Create imageDir
+//            File f=new File(directory, "profile.jpg");
+//            bmp = BitmapFactory.decodeStream(new FileInputStream(f));
+//        }
+//        catch (FileNotFoundException e)
+//        {
+//            e.printStackTrace();
+//        }
+//        return bmp;
+//
+//    }
+//
+//
+//    private String saveToInternalStorage(Bitmap bitmapImage) {
+//        ContextWrapper cw = new ContextWrapper(getApplicationContext());
+//        // path to /data/data/yourapp/app_data/imageDir
+//        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+//        // Create imageDir
+//        File mypath=new File(directory,"profile.jpg");
+//
+//        FileOutputStream fos = null;
+//        try {
+//            fos = new FileOutputStream(mypath);
+//            // Use the compress method on the BitMap object to write image to the OutputStream
+//            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                fos.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        return directory.getAbsolutePath();
+//    }
+//
+//
+//
+//    public void storeInfoJSON(String name, String email) {
+//        JSONObject jo = new JSONObject();
+//        try {
+//            jo.put("name", name);
+//            jo.put("email", email);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//        mCreateAndSaveFile("user_info.json", jo.toString());
+//
+//    }
+//
+//    public JSONObject readInfoJSON() {
+//        JSONObject jo = null;
+//
+//        // Read data from file as String
+//        String userInfo = mReadJsonData("user_info.json");
+//        Log.e("DEBUG", userInfo);
+//
+//        try {
+//            jo = new JSONObject(userInfo);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return jo;
+//    }
+//
+//
+//    public void mCreateAndSaveFile(String params, String mJsonResponse) {
+//        try {
+//            FileWriter file = new FileWriter("/data/data/" + getApplicationContext().getPackageName() + "/" + params);
+//            file.write(mJsonResponse);
+//            file.flush();
+//            file.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//
+//    public String mReadJsonData(String params) {
+//        String mResponse = null;
+//        try {
+//            File f = new File("/data/data/" + getPackageName() + "/" + params);
+//            FileInputStream is = new FileInputStream(f);
+//            int size = is.available();
+//            byte[] buffer = new byte[size];
+//            is.read(buffer);
+//            is.close();
+//            mResponse = new String(buffer);
+//        } catch (IOException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+//        return mResponse;
+//    }
 
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
