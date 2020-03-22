@@ -1,14 +1,22 @@
 package com.example.findmyrhythm.View;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.findmyrhythm.Model.CropCircleTransformation;
 import com.example.findmyrhythm.R;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.squareup.picasso.Picasso;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -26,6 +34,8 @@ public class MenuDrawerActivity extends AppCompatActivity implements NavigationV
     private DrawerLayout drawerLayout;
     private int menuItemID;
     private Menu menu;
+    private FirebaseAuth mAuth;
+    FirebaseUser currentUser;
 
     @Override
     public void setContentView(final int layoutResID) {
@@ -38,16 +48,6 @@ public class MenuDrawerActivity extends AppCompatActivity implements NavigationV
         super.setContentView(fullLayout);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        //setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-
-        // here you can get your drawer buttons and define how they
-        // should behave and what must they do, so you won't be
-        // needing to repeat it in every activity class
-        // getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        //getSupportActionBar().setCustomView(R.layout.layout_actionbar_empty);
-
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);
 
         drawerLayout = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -71,6 +71,42 @@ public class MenuDrawerActivity extends AppCompatActivity implements NavigationV
                         Toast.LENGTH_SHORT).show();
             }
         });
+
+
+//        FirebaseAuth.AuthStateListener mAuthListener = new FirebaseAuth.AuthStateListener() {
+//            @Override
+//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+//                FirebaseUser user = firebaseAuth.getCurrentUser();
+//                if (user != null) {
+//                    // User is signed in
+//                    Log.d("TAG", "onAuthStateChanged:signed_in:" + user.getUid());
+//                } else {
+//                    // User is signed out
+//                    Log.d("TAG", "onAuthStateChanged:signed_out");
+//                }
+//                // ...
+//            }
+//        };
+
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
+        String name = currentFirebaseUser.getDisplayName();
+        String email = currentFirebaseUser.getEmail();
+        Uri photoUrl = currentFirebaseUser.getPhotoUrl();
+
+        Log.e("IMAGE", photoUrl.toString());
+
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = headerView.findViewById(R.id.header_title);
+        TextView navEmail = headerView.findViewById(R.id.header_email);
+        navUsername.setText(name);
+        navEmail.setText(email);
+
+        ImageView profilePicture = headerView.findViewById(R.id.profile_picture);
+
+        Picasso.get().load(photoUrl.toString())
+                .transform(new CropCircleTransformation())
+                .into(profilePicture);
+
     }
 
 
@@ -158,14 +194,4 @@ public class MenuDrawerActivity extends AppCompatActivity implements NavigationV
         //cambio de estado, puede ser STATE_IDLE, STATE_DRAGGING or STATE_SETTLING
     }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//
-//        if (drawerLayout.isDrawerOpen(GravityCompat.START))
-//            drawerLayout.closeDrawer(GravityCompat.START);
-//        else
-//            drawerLayout.openDrawer(GravityCompat.START);
-//
-//        return true;
-//    }
 }

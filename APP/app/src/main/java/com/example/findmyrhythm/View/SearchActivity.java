@@ -37,7 +37,7 @@ public class SearchActivity extends MenuDrawerActivity implements OnMapReadyCall
         setMenuItemChecked(R.id.nav_search);
 
         adapter = new ArrayAdapter<String>(SearchActivity.this,
-                R.layout.activity_listview, countryList);
+                R.layout.item_listview, countryList);
 
         ListView listView = (ListView) findViewById(R.id.listview);
         listView.setAdapter(adapter);

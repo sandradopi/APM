@@ -28,7 +28,7 @@ public class OrganizerSettingsActivity extends MenuDrawerActivity {
             public void onClick(View view) {
                 Log.w(TAG, "Ha clickeado en guardar ajustes");
                 Toast.makeText(OrganizerSettingsActivity.this, getString(R.string.guardar),  Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(OrganizerSettingsActivity.this, OrganizerProfile.class);
+                Intent intent = new Intent(OrganizerSettingsActivity.this, OrganizerProfileActivity.class);
                 startActivity(intent);
             }
         });
