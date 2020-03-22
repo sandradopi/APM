@@ -54,6 +54,8 @@
 
     <!-- Strings for the creation of the profile of the users -->
 
+    <string name="genresListID">SubscribedGenres</string>
+    <string name="locationsListID">SubscribedLocations</string>
     <string name="intro1">Bienvenid@ a</string>
     <string name="intro2">FIND MY RHYTHM</string>
     <string name="intro_login">Elige tu perfil:</string>

@@ -88,6 +88,7 @@ public class SetLocationActivity extends AppCompatActivity implements AdapterVie
 
         //TODO: PASS TO THE GENRES CLASS THE ARRAYlIST OF LOCATIONS AND WHEN ALL THE INFORMATION IS KNOWN ADD THE USER IN THE DATABASE.
         Intent intent = new Intent(this, SetGenresActivity.class);
+        intent.putExtra(getString(R.string.locationsListID), selectedProvinces);
         startActivity(intent);
 
     }
