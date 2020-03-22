@@ -2,6 +2,7 @@ package com.example.findmyrhythm.View;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -21,7 +22,7 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
     private static boolean IS_JOINED = false;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -67,5 +68,10 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
     public boolean onSupportNavigateUp() {
         finish();
         return true;
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
     }
 }
