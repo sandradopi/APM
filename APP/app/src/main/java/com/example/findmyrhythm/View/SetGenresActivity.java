@@ -6,17 +6,20 @@ import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 
 import com.example.findmyrhythm.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
 public class SetGenresActivity extends AppCompatActivity implements View.OnClickListener {
 
     CardView pop, rock, hiphop, latin, dance, indie, classic, reggae, trap;
-    Button next;
+    FloatingActionButton next;
     ArrayList<String> selectedGenres = new ArrayList<>();
 
     @Override
@@ -26,6 +29,7 @@ public class SetGenresActivity extends AppCompatActivity implements View.OnClick
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.layout_actionbar_empty);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         pop = (CardView) findViewById(R.id.pop);
         pop.setOnClickListener(this);
@@ -45,7 +49,7 @@ public class SetGenresActivity extends AppCompatActivity implements View.OnClick
         reggae.setOnClickListener(this);
         trap = (CardView) findViewById(R.id.trap);
         trap.setOnClickListener(this);
-        next = (Button) findViewById(R.id.next);
+        next = (FloatingActionButton) findViewById(R.id.next);
         next.setOnClickListener(this);
 
     }
@@ -75,5 +79,11 @@ public class SetGenresActivity extends AppCompatActivity implements View.OnClick
             }
         }
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        finish();
+        return true;
     }
 }

@@ -6,17 +6,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.findmyrhythm.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class UserLogActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "Creación Usuario";
     EditText name, nickname, email, biography, birthDate;
-    Button next;
+    FloatingActionButton next;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +27,7 @@ public class UserLogActivity extends AppCompatActivity implements View.OnClickLi
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.layout_actionbar_empty);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         name = (EditText) findViewById(R.id.userName);
         nickname = (EditText) findViewById(R.id.userNickname);
@@ -32,7 +35,7 @@ public class UserLogActivity extends AppCompatActivity implements View.OnClickLi
         biography = (EditText) findViewById(R.id.userBiography);
         birthDate = (EditText) findViewById(R.id.userBirthdate);
 
-        next = (Button) findViewById(R.id.next);
+        next = (FloatingActionButton) findViewById(R.id.next);
         next.setOnClickListener(this);
     }
 
@@ -64,5 +67,11 @@ public class UserLogActivity extends AppCompatActivity implements View.OnClickLi
     private boolean isEmpty(EditText text) {
 
         return text.getText().toString().equals("");
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        finish();
+        return true;
     }
 }

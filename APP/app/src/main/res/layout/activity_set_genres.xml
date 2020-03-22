@@ -6,36 +6,46 @@
     android:layout_height="match_parent"
     tools:context=".View.SetGenresActivity"
     android:orientation="vertical"
+    android:weightSum="11"
     android:background="@color/primaryBackground">
 
-    <TextView
-        android:layout_marginTop="30dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/genres1"
-        android:textColor="@color/black"
-        android:textSize="25sp"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.5"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:textStyle="bold"/>
+        android:layout_marginTop="10dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/genres2"
-        android:textColor="@color/black"
-        android:textSize="25sp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:textStyle="bold"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:text="@string/genres1"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/genres2"
+            android:textSize="25sp"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+
+    </LinearLayout>
+
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="11"
-        android:layout_marginTop="30dp"
+        android:layout_weight="8"
         android:paddingTop="20dp"
         android:paddingStart="20dp"
+        android:paddingBottom="20dp"
         android:paddingEnd="20dp">
 
         <GridLayout
@@ -253,7 +263,6 @@
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="20dp"
                 android:contentDescription="classic">
 
                 <FrameLayout
@@ -287,7 +296,6 @@
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="20dp"
                 android:contentDescription="reggae">
 
                 <FrameLayout
@@ -320,7 +328,6 @@
                 android:id="@+id/trap"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                android:layout_marginBottom="20dp"
                 android:contentDescription="trap">
 
                 <FrameLayout
@@ -354,7 +361,25 @@
 
     </RelativeLayout>
 
-    <include
-        layout="@layout/layout_navigation_bottom_bar" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:gravity="bottom|end"
+        android:baselineAligned="false"
+        android:layout_weight="1.5">
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/primary"
+            android:elevation="10dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp"
+            android:src="@drawable/arrow_forward_24px"/>
+
+    </RelativeLayout>
 
 </LinearLayout>
