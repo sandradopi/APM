@@ -1,21 +1,23 @@
 package com.example.findmyrhythm.Model;
 
-public class User {
-    private String name;
-    private String surname;
-    private String surname2;
-    private String username;
-    private String password;
-    private String email;
+import java.util.ArrayList;
+
+public class User extends Entity{
+
+   // private String password;
+    private String name, username, email, biography, birthdate;
+    private ArrayList<String> subscribedLocations = new ArrayList<String>();
+    private ArrayList<String> subscribedGenres = new ArrayList<String>();
 
 
-    public User(String name, String surname, String surname2, String username, String password, String email) {
+    public User(String name,String username, String email, String biography, String birthdate, ArrayList<String> subscribedLocations, ArrayList<String> subscribedGenres) {
         this.name = name;
-        this.surname = surname;
-        this.surname2 = surname2;
         this.username = username;
-        this.password = password;
         this.email = email;
+        this.biography = biography;
+        this.birthdate = birthdate;
+        this.subscribedLocations = subscribedLocations;
+        this.subscribedGenres = subscribedGenres;
     }
 
     public String getName() {
@@ -26,22 +28,6 @@ public class User {
         this.name = name;
     }
 
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public String getSurname2() {
-        return surname2;
-    }
-
-    public void setSurname2(String surname2) {
-        this.surname2 = surname2;
-    }
-
     public String getUsername() {
         return username;
     }
@@ -50,19 +36,43 @@ public class User {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getBiography() {
+        return biography;
+    }
+
+    public void setBiography(String biography) {
+        this.biography = biography;
+    }
+
+    public String getBirthdate() {
+        return birthdate;
+    }
+
+    public void setBirthdate(String birthdate) {
+        this.birthdate = birthdate;
+    }
+
+    public ArrayList<String> getSubscribedGenres() {
+        return subscribedGenres;
+    }
+
+    public void setSubscribedGenres(ArrayList<String> subscribedGenres) {
+        this.subscribedGenres = subscribedGenres;
+    }
+
+    public ArrayList<String> getSubscribedLocations() {
+        return subscribedLocations;
+    }
+
+    public void setSubscribedLocations(ArrayList<String> subscribedLocations) {
+        this.subscribedLocations = subscribedLocations;
     }
 }

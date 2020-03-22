@@ -21,6 +21,7 @@ public class SetGenresActivity extends AppCompatActivity implements View.OnClick
     CardView pop, rock, hiphop, latin, dance, indie, classic, reggae, trap;
     FloatingActionButton next;
     ArrayList<String> selectedGenres = new ArrayList<>();
+    ArrayList<String> selectedLocations = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,9 @@ public class SetGenresActivity extends AppCompatActivity implements View.OnClick
         next = (FloatingActionButton) findViewById(R.id.next);
         next.setOnClickListener(this);
 
+        //Get Locations Selected
+        Bundle b = getIntent().getExtras();
+        selectedLocations = b.getStringArrayList(getString(R.string.locationsListID));
     }
 
     @Override
@@ -64,7 +68,10 @@ public class SetGenresActivity extends AppCompatActivity implements View.OnClick
              */
 
             Intent intent = new Intent(this, UserLogActivity.class);
+            intent.putExtra(getString(R.string.locationsListID), selectedLocations);
+            intent.putExtra(getString(R.string.genresListID), selectedGenres);
             startActivity(intent);
+
         } else {
 
             String genre = view.getContentDescription().toString();
