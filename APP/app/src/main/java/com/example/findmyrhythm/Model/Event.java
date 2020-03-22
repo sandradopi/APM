@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Event {
+
     private String name;
     private Date date;
     private LocalDateTime hour;

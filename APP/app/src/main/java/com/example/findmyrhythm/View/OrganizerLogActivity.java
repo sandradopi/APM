@@ -13,13 +13,19 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.example.findmyrhythm.Model.Organizer;
 import com.example.findmyrhythm.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class OrganizerLogActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "Creación Organizador";
     EditText name, nickname, email, biography, location;
     FloatingActionButton next;
+    FirebaseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +44,11 @@ public class OrganizerLogActivity extends AppCompatActivity implements View.OnCl
 
         next = (FloatingActionButton) findViewById(R.id.next);
         next.setOnClickListener(this);
+
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        name.setText(currentUser.getDisplayName());
+        email.setText(currentUser.getEmail());
+
     }
 
     @Override
@@ -54,12 +65,13 @@ public class OrganizerLogActivity extends AppCompatActivity implements View.OnCl
          * IT WOULD MAKE EASIER THE CHECK OF EVENTS TO USERS AFTERWARDS.
          */
 
-//        if (isEmpty(name) || isEmpty(nickname) || isEmpty(email) || isEmpty(biography) || isEmpty(location)) {
-//            Toast.makeText(this, "Porfavor rellene todos los campos", Toast.LENGTH_LONG).show();
-//            return;
-//        }
+        if (isEmpty(name) || isEmpty(nickname) || isEmpty(email) || isEmpty(biography) || isEmpty(location)) {
+            Toast.makeText(this, "Porfavor rellene todos los campos", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         //TODO: Introduce into database by getting the value of every field. Check Android Service.
+        createOrganizer();
 
         //TODO: Intent to new Activity
         Log.w(TAG, "Creación de la cuenta del organizador");
@@ -67,6 +79,15 @@ public class OrganizerLogActivity extends AppCompatActivity implements View.OnCl
 
         Intent intent = new Intent(this, OrganizerProfileActivity.class);
         startActivity(intent);
+    }
+
+    public void createOrganizer() {
+
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        Organizer organizer = new Organizer(name.getText().toString(), nickname.getText().toString(), email.getText().toString(), location.getText().toString(), biography.getText().toString());
+
+        mDatabase.child("organizers").child(currentUser.getUid()).setValue(organizer);
+
     }
 
     private boolean isEmpty(EditText text) {
