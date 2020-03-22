@@ -129,8 +129,24 @@
     </ScrollView>
 
 
-    <include
-        android:id="@+id/bottom_bar"
-        layout="@layout/layout_navigation_bottom_bar"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="bottom|end"
+        android:baselineAligned="false">
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/primary"
+            android:elevation="10dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp"
+            android:src="@drawable/arrow_forward_24px"/>
+
+    </LinearLayout>
 
 </RelativeLayout>

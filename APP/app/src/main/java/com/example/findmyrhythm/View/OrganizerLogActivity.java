@@ -6,17 +6,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.example.findmyrhythm.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class OrganizerLogActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "Creación Organizador";
     EditText name, nickname, email, biography, location;
-    Button next;
+    FloatingActionButton next;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +28,7 @@ public class OrganizerLogActivity extends AppCompatActivity implements View.OnCl
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.layout_actionbar_empty);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         name = (EditText) findViewById(R.id.orgName);
         nickname = (EditText) findViewById(R.id.orgNickName);
@@ -32,7 +36,7 @@ public class OrganizerLogActivity extends AppCompatActivity implements View.OnCl
         biography = (EditText) findViewById(R.id.orgBiography);
         location = (EditText) findViewById(R.id.orgLocation);
 
-        next = (Button) findViewById(R.id.next);
+        next = (FloatingActionButton) findViewById(R.id.next);
         next.setOnClickListener(this);
     }
 
@@ -68,5 +72,11 @@ public class OrganizerLogActivity extends AppCompatActivity implements View.OnCl
     private boolean isEmpty(EditText text) {
 
         return text.getText().toString().equals("");
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        finish();
+        return true;
     }
 }

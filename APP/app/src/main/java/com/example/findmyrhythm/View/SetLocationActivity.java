@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.findmyrhythm.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -24,7 +27,7 @@ public class SetLocationActivity extends AppCompatActivity implements AdapterVie
     AutoCompleteTextView provinces;
     ArrayList<String> selectedProvinces = new ArrayList<String>();
     GridLayout locations;
-    Button next;
+    FloatingActionButton next;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +36,9 @@ public class SetLocationActivity extends AppCompatActivity implements AdapterVie
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.layout_actionbar_empty);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        next = (Button) findViewById(R.id.next);
+        next = (FloatingActionButton) findViewById(R.id.next);
         next.setOnClickListener(this);
 
         provinces = (AutoCompleteTextView) findViewById(R.id.auto_province);
@@ -46,7 +50,6 @@ public class SetLocationActivity extends AppCompatActivity implements AdapterVie
         provinces.setThreshold(0);
         provinces.setAdapter(adapter);
         provinces.setOnItemClickListener(this);
-        provinces.setOnClickListener(this);
 
         locations = (GridLayout) findViewById(R.id.locations);
     }
@@ -76,19 +79,23 @@ public class SetLocationActivity extends AppCompatActivity implements AdapterVie
 
         locations.addView(text);
 
+        provinces.setText("");
+
     }
 
     @Override
     public void onClick(View view) {
 
-        if (view == provinces)
-            provinces.setText("");
+        //TODO: PASS TO THE GENRES CLASS THE ARRAYlIST OF LOCATIONS AND WHEN ALL THE INFORMATION IS KNOWN ADD THE USER IN THE DATABASE.
+        Intent intent = new Intent(this, SetGenresActivity.class);
+        startActivity(intent);
 
-        else if (view == next) {
+    }
 
-            //TODO: PASS TO THE GENRES CLASS THE ARRAYlIST OF LOCATIONS AND WHEN ALL THE INFORMATION IS KNOWN ADD THE USER IN THE DATABASE.
-            Intent intent = new Intent(this, SetGenresActivity.class);
-            startActivity(intent);
-        }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        finish();
+        return true;
     }
 }
