@@ -67,6 +67,7 @@
     <string name="user_location">Ubicación</string>
     <string name="selfLocation">Ubicación actual</string>
     <string name="notprofile">Tal vez más tarde</string>
+    <string name="genres">Selecciona tus estilos musicales favoritos</string>
     <string name="genres1">Selecciona tus estilos</string>
     <string name="genres2">musicales favoritos</string>
     <string name="pop">Pop</string>
