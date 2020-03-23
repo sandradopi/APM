@@ -10,7 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.findmyrhythm.R;
-import com.example.findmyrhythm.View.ListAdapterRatings;
 
 
 public class EventsRatingsFragment extends Fragment {

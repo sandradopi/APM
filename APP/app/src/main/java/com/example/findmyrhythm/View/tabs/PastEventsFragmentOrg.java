@@ -12,7 +12,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.findmyrhythm.R;
-import com.example.findmyrhythm.View.ListAdapter;
 import com.example.findmyrhythm.View.FinishedEventInfoActivity;
 
 public class PastEventsFragmentOrg extends Fragment {
@@ -28,9 +27,8 @@ public class PastEventsFragmentOrg extends Fragment {
         mListView = (ListView) view.findViewById(R.id.eventlist);
         String[] events = new String[] {"Viva Suecia", "Dani Fernández", "Antonio José"};
         String[] dates = new String[] { "Sab, 3 Marzo | 22:30", "Viernes, 6 Marzo | 23:30", "Domingo, 4 Enero | 22:00" };
-        String[] prices = new String[] {};
-        String[] rates = new String[] {};
-        mListView.setAdapter(new ListAdapter(this.requireContext(), events, dates, prices, rates));
+        String[] rates = new String[] {"not_rated", "not_rated", "rated"};
+        mListView.setAdapter(new ListAdapterPast(this.requireContext(), events, dates, rates));
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {

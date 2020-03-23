@@ -11,7 +11,6 @@ import android.widget.ListView;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.findmyrhythm.View.ListAdapter;
 import com.example.findmyrhythm.R;
 import com.example.findmyrhythm.View.EventInfoActivity;
 
@@ -31,8 +30,7 @@ public class NextEventsFragment extends Fragment {
         String[] events = new String[] {"Viva Suecia", "Dani Fernández", "Antonio José"};
         String[] dates = new String[] { "Sab, 28 Agosto | 22:30", "Viernes, 6 Julio | 23:30", "Domingo, 4 Abril | 22:00" };
         String[] prices = new String[] {"20€", "20€", "10€"};
-        String[] rates = new String[] {};
-        mListView.setAdapter(new ListAdapter(this.requireContext(), events, dates, prices, rates));
+        mListView.setAdapter(new ListAdapterNext(this.requireContext(), events, dates, prices));
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override

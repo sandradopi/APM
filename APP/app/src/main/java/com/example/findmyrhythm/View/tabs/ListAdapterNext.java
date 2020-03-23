@@ -1,4 +1,4 @@
-package com.example.findmyrhythm.View;
+package com.example.findmyrhythm.View.tabs;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,22 +10,20 @@ import android.widget.TextView;
 
 import com.example.findmyrhythm.R;
 
-public class ListAdapter extends BaseAdapter {
+public class ListAdapterNext extends BaseAdapter {
 
     Context context;
     String[] events;
     String[] dates;
     String[] prices;
-    String[] rates;
     private static LayoutInflater inflater = null;
 
-    public ListAdapter(Context context, String[] events, String[] dates, String[] prices, String[] rates) {
+    public ListAdapterNext(Context context, String[] events, String[] dates, String[] prices) {
         // TODO Auto-generated constructor stub
         this.context = context;
         this.events = events;
         this.dates = dates;
         this.prices = prices;
-        this.rates = rates;
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -52,7 +50,7 @@ public class ListAdapter extends BaseAdapter {
         // TODO Auto-generated method stub
         View vi = convertView;
         if (vi == null)
-            vi = inflater.inflate(R.layout.list_row, null);
+            vi = inflater.inflate(R.layout.list_row_next, null);
         TextView event = (TextView) vi.findViewById(R.id.event);
         event.setText(events[position]);
         TextView date = (TextView) vi.findViewById(R.id.date);
@@ -60,13 +58,6 @@ public class ListAdapter extends BaseAdapter {
         if (prices.length != 0) {
             TextView price = (TextView) vi.findViewById(R.id.price);
             price.setText(prices[position]);
-        }
-        ImageView star = (ImageView) vi.findViewById(R.id.star);
-        if (rates.length != 0) {
-            if (rates[position] == "not_rated")
-                star.setImageResource(R.drawable.ic_star_border_24px);
-            else if (rates[position] == "rated")
-                star.setImageResource(R.drawable.ic_star_24px);
         }
         return vi;
     }

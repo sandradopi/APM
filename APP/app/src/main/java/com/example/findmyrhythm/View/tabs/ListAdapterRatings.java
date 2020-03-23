@@ -1,4 +1,4 @@
-package com.example.findmyrhythm.View;
+package com.example.findmyrhythm.View.tabs;
 
 import android.content.Context;
 import android.view.LayoutInflater;
