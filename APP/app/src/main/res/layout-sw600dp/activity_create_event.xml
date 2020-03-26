@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#D1C4E9"
+    tools:context=".View.CreateEventActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/nombre_evento_titulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="4dp"
+                android:text="@string/nombre_del_evento"
+                android:importantForAutofill="no"
+                android:textSize="18sp"
+                android:textStyle="bold|italic"/>
+
+            <EditText
+                android:id="@+id/nombre_evento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:hint="@string/nombre_del_evento"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/Dia_titulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="4dp"
+                android:text="@string/dia"
+                android:importantForAutofill="no"
+                android:textSize="18sp"
+                android:textStyle="bold|italic"/>
+
+            <EditText
+                android:id="@+id/dia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:hint="@string/dia"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/Hora_titulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="4dp"
+                android:text="@string/hora"
+                android:importantForAutofill="no"
+                android:textSize="18sp"
+                android:textStyle="bold|italic"/>
+
+            <EditText
+                android:id="@+id/hora"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:hint="@string/hora"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/Direccion_titulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="4dp"
+                android:text="@string/direccion"
+                android:importantForAutofill="no"
+                android:textSize="18sp"
+                android:textStyle="bold|italic"/>
+
+            <EditText
+                android:id="@+id/direccion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:hint="@string/direccion"
+                android:inputType="textPostalAddress"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/Asistentes_titulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="4dp"
+                android:text="@string/asistentes_max"
+                android:importantForAutofill="no"
+                android:textSize="18sp"
+                android:textStyle="bold|italic"/>
+
+            <EditText
+                android:id="@+id/max_asistentes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:hint="@string/asistentes_max"
+                android:inputType="number"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/Precio_titulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="13dp"
+                android:layout_marginBottom="4dp"
+                android:text="@string/precio"
+                android:importantForAutofill="no"
+                android:textSize="18sp"
+                android:textStyle="bold|italic" />
+
+            <EditText
+                android:id="@+id/precio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:hint="@string/euro"
+                android:inputType="numberDecimal"
+                android:textSize="16sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/ok"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:layout_alignParentEnd="true"
+                    android:background="@color/primary"
+                    android:textColor="@color/white"
+                    android:text="@string/crear" />
+            </RelativeLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
