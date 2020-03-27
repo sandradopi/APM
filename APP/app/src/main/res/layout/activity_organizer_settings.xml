@@ -236,6 +236,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColorHint="@color/lightgray"
+                android:textColor="@color/lightgray"
                 android:hint="Playa Club"
                 android:textSize="14sp"/>
 
@@ -254,6 +255,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColorHint="@color/lightgray"
+                android:textColor="@color/lightgray"
                 android:hint="playaclubcoruña"
                 android:textSize="14sp"/>
 
@@ -272,6 +274,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColorHint="@color/lightgray"
+                android:textColor="@color/lightgray"
                 android:hint="playaclub@playaclubadmin.es"
                 android:textSize="14sp"/>
 
@@ -290,6 +293,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColorHint="@color/lightgray"
+                android:textColor="@color/lightgray"
                 android:hint="Sonidos electrónicos de vanguardia"
                 android:textSize="14sp"/>
 
@@ -307,6 +311,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColorHint="@color/lightgray"
+                android:textColor="@color/lightgray"
                 android:hint="Discoteca Playa Club Andén de Riazor"
                 android:textSize="14sp"/>
 

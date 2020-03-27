@@ -236,6 +236,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColorHint="@color/lightgray"
+                android:textColor="@color/lightgray"
                 android:hint="Juan"
                 android:textSize="14sp"/>
 
@@ -254,6 +255,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColorHint="@color/lightgray"
+                android:textColor="@color/lightgray"
                 android:hint="j.gomez.95"
                 android:textSize="14sp"/>
 
@@ -272,6 +274,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColorHint="@color/lightgray"
+            android:textColor="@color/lightgray"
             android:hint="j.gomez@udc.es"
             android:textSize="14sp"/>
 
@@ -290,6 +293,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColorHint="@color/lightgray"
+            android:textColor="@color/lightgray"
             android:hint="Me encanta la música y pasarlo bien"
             android:textSize="14sp"/>
 
@@ -307,6 +311,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColorHint="@color/lightgray"
+            android:textColor="@color/lightgray"
             android:hint="12/04/1995"
             android:textSize="14sp"/>
 
