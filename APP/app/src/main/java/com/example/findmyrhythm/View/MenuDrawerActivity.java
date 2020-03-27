@@ -155,6 +155,12 @@ public class MenuDrawerActivity extends AppCompatActivity implements NavigationV
                     startActivity(new Intent(this, UserSettingsActivity.class));
                     title = R.string.menu_settings;
                     break;
+                case R.id.nav_logout:
+                    FirebaseAuth.getInstance().signOut();
+                    // googleSignOut();
+                    startActivity(new Intent(this, MainActivityAlt.class));
+                    title = R.string.menu_settings;
+                    break;
                 default:
                     throw new IllegalArgumentException("menu option not implemented!!");
             }
