@@ -163,12 +163,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:weightSum="8">
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:weightSum="5">
 
             <de.hdodenhof.circleimageview.CircleImageView
-
                 android:id="@+id/profile"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
@@ -176,19 +175,20 @@
                 android:layout_gravity="center_horizontal"
                 android:clickable="true"
                 android:focusable="true"
-                android:elevation="5dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/woman"
+                android:src="@drawable/ic_logo"
                 app:civ_border_color="#FFFFFFFF"
-                app:civ_border_width="3dp" />
+                app:civ_border_width="2dp" />
 
 
 
             <TextView
+                android:id="@+id/user_name"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:layout_marginTop="10dp"
                 android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="26sp"
                 android:autoSizeStepGranularity="1sp"
@@ -198,6 +198,7 @@
                 android:text="María López" />
 
             <TextView
+                android:id="@+id/user_location"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"

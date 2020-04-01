@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.util.Log;
 
 import org.json.JSONException;
@@ -15,30 +16,28 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
+import java.util.concurrent.ExecutionException;
 
 
 public class IOFiles {
 
-    public static Bitmap loadImageFromStorage(Context context) {
+    public static Bitmap loadImageFromStorage(Context context) throws FileNotFoundException {
         Bitmap bmp = null;
-        try {
-            // getApplicationContext()
-            ContextWrapper cw = new ContextWrapper(context);
-            File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
-            // Create imageDir
-            File f=new File(directory, "profile.jpg");
-            bmp = BitmapFactory.decodeStream(new FileInputStream(f));
-        }
-        catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-        }
+
+        // getApplicationContext()
+        ContextWrapper cw = new ContextWrapper(context);
+        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+        // Create imageDir
+        File f=new File(directory, "profile.jpg");
+        bmp = BitmapFactory.decodeStream(new FileInputStream(f));
+
         return bmp;
 
     }
 
 
-    public static String saveToInternalStorage(Bitmap bitmapImage, Context context) {
+    private static String saveToInternalStorage(Bitmap bitmapImage, Context context) {
         // getApplicationContext()
         ContextWrapper cw = new ContextWrapper(context);
         // path to /data/data/yourapp/app_data/imageDir
@@ -95,7 +94,7 @@ public class IOFiles {
     }
 
 
-    public static void mCreateAndSaveFile(String params, String mJsonResponse, String contextPackageName) {
+    private static void mCreateAndSaveFile(String params, String mJsonResponse, String contextPackageName) {
         try {
             // getApplicationContext().getPackageName()
             FileWriter file = new FileWriter("/data/data/" + contextPackageName + "/" + params);
@@ -108,7 +107,7 @@ public class IOFiles {
     }
 
 
-    public static String mReadJsonData(String params, String packageName) {
+    private static String mReadJsonData(String params, String packageName) {
         String mResponse = null;
         try {
             // getPackageName()
@@ -124,6 +123,20 @@ public class IOFiles {
             e.printStackTrace();
         }
         return mResponse;
+    }
+
+
+    public static void downloadSaveBmp(Uri url, Context applicationContext) {
+        Bitmap bmp = null;
+        try {
+            bmp = new BitmapDownloaderTask().execute(url.toString()).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        IOFiles.saveToInternalStorage(bmp, applicationContext);
     }
 
 
