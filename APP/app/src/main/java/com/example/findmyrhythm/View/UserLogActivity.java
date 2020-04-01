@@ -63,10 +63,10 @@ public class UserLogActivity extends AppCompatActivity implements View.OnClickLi
            Create the intent to go to the next Activity
          */
 
-        if (isEmpty(name) || isEmpty(nickname) || isEmpty(email) || isEmpty(biography) || isEmpty(birthDate)) {
-           Toast.makeText(this, "Please cover every field shown in the screen", Toast.LENGTH_LONG).show();
-           return;
-        }
+//        if (isEmpty(name) || isEmpty(nickname) || isEmpty(email) || isEmpty(biography) || isEmpty(birthDate)) {
+//           Toast.makeText(this, "Please cover every field shown in the screen", Toast.LENGTH_LONG).show();
+//           return;
+//        }
 
         //TODO: Introduce into database by getting the value of every field. Check Android Service.
         createUser();
