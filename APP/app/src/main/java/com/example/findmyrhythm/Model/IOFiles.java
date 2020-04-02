@@ -77,7 +77,7 @@ public class IOFiles {
 
     }
 
-    public static JSONObject readInfoJSON(String packageName) {
+    public static JSONObject readInfoJSON(String packageName) throws IOException {
         JSONObject jo = null;
 
         // Read data from file as String
@@ -107,21 +107,17 @@ public class IOFiles {
     }
 
 
-    private static String mReadJsonData(String params, String packageName) {
+    private static String mReadJsonData(String params, String packageName) throws IOException {
         String mResponse = null;
-        try {
-            // getPackageName()
-            File f = new File("/data/data/" + packageName + "/" + params);
-            FileInputStream is = new FileInputStream(f);
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            mResponse = new String(buffer);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        // getPackageName()
+        File f = new File("/data/data/" + packageName + "/" + params);
+        FileInputStream is = new FileInputStream(f);
+        int size = is.available();
+        byte[] buffer = new byte[size];
+        is.read(buffer);
+        is.close();
+        mResponse = new String(buffer);
+
         return mResponse;
     }
 

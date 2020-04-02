@@ -4,23 +4,30 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.findmyrhythm.Model.FUser;
+import com.example.findmyrhythm.Model.IOFiles;
 import com.example.findmyrhythm.Model.User;
 import com.example.findmyrhythm.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class UserLogActivity extends AppCompatActivity implements View.OnClickListener {
@@ -79,6 +86,7 @@ public class UserLogActivity extends AppCompatActivity implements View.OnClickLi
         startActivity(intent);
     }
 
+
     public void createUser() {
 
         DatabaseReference mDatabase;// ...
@@ -97,6 +105,30 @@ public class UserLogActivity extends AppCompatActivity implements View.OnClickLi
         User user = new User(name, nickname.getText().toString(), email, biography.getText().toString(), birthDate.getText().toString(), locations, genres);
 
         mDatabase.child("users2").child(userId).setValue(user);
+
+        /* TODO: esto se está ejecutando cada vez que se inicia la actividad. Lo ideal parece que
+         *   sería crear una actividad de carga con el logo o algo así que se ejecutara una única
+         *   vez. Es bastante común en las aplicaciones. */
+
+        IOFiles.storeInfoJSON(name, email, getPackageName());
+
+        Uri photoUrl = currentUser.getPhotoUrl();
+
+        for (UserInfo profile : currentUser.getProviderData()) {
+            System.out.println(profile.getProviderId());
+            // check if the provider id matches "facebook.com"
+            if (profile.getProviderId().equals("facebook.com")) {
+
+                String facebookUserId = profile.getUid();
+
+                photoUrl = Uri.parse("https://graph.facebook.com/" + facebookUserId + "/picture?height=500");
+
+            } else if (profile.getProviderId().equals("google.com")) {
+                photoUrl = Uri.parse(photoUrl.toString().replace("s96-c", "s700-c"));
+            }
+        }
+
+        IOFiles.downloadSaveBmp(photoUrl, getApplicationContext());
 
     }
 
