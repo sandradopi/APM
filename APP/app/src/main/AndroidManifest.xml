@@ -13,7 +13,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".View.OrganizerLogActivity"></activity>
+        <activity
+            android:name=".View.SplashActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".View.OrganizerLogActivity" />
 
         <activity android:name=".View.UserLogActivity" />
 
@@ -21,22 +31,23 @@
 
         <activity android:name=".View.SetLocationActivity" />
 
-        <activity android:name=".View.GreetingsActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".View.GreetingsActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name=".View.OrganizerInfoDialog"
             android:theme="@android:style/Theme.Dialog" />
-
-        <activity android:name=".View.OrganizerProfileActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-
+        <activity
+            android:name=".View.OrganizerProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".View.MainActivityAlt"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -44,7 +55,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
@@ -53,7 +63,6 @@
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
-
         <activity
             android:name="com.facebook.CustomTabActivity"
             android:exported="true">
@@ -66,37 +75,28 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".View.UserProfileActivity"
             android:label="@string/title_activity_perfil_usuario_tabs"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".View.SearchActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity android:name=".View.RecommendedEventsActivity"
+        <activity
+            android:name=".View.RecommendedEventsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity android:name=".View.CreateEventActivity" />
-
         <activity
             android:name=".View.OrganizerSettingsActivity"
             android:label="@string/title_activity_ajustes_organizador"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".View.UserSettingsActivity"
             android:label="@string/title_activity_ajustes_usuario"
             android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity android:name=".View.EventInfoActivity"/>
-
-        <activity android:name=".View.OrganizerEventInfoActivity"/>
-
-        <activity android:name=".View.FinishedEventInfoActivity"/>
-
+        <activity android:name=".View.EventInfoActivity" />
+        <activity android:name=".View.OrganizerEventInfoActivity" />
+        <activity android:name=".View.FinishedEventInfoActivity" />
     </application>
 
 </manifest>
