@@ -1,6 +1,7 @@
 package com.example.findmyrhythm.View;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.util.Log;
 import android.view.Menu;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.findmyrhythm.Model.CropCircleTransformation;
+import com.example.findmyrhythm.Model.IOFiles;
 import com.example.findmyrhythm.R;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,6 +26,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 
 public class MenuDrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
@@ -88,24 +96,38 @@ public class MenuDrawerActivity extends AppCompatActivity implements NavigationV
 //            }
 //        };
 
-        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
-        String name = currentFirebaseUser.getDisplayName();
-        String email = currentFirebaseUser.getEmail();
-        Uri photoUrl = currentFirebaseUser.getPhotoUrl();
-
-        Log.e("IMAGE", photoUrl.toString());
+//        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
+//        String name = currentFirebaseUser.getDisplayName();
+//        String email = currentFirebaseUser.getEmail();
+//        Uri photoUrl = currentFirebaseUser.getPhotoUrl();
+//
+//        Log.e("IMAGE", photoUrl.toString());
 
         View headerView = navigationView.getHeaderView(0);
         TextView navUsername = headerView.findViewById(R.id.header_title);
         TextView navEmail = headerView.findViewById(R.id.header_email);
-        navUsername.setText(name);
-        navEmail.setText(email);
+//        navUsername.setText(name);
+//        navEmail.setText(email);
+
+
+        try {
+            JSONObject jsonInfo = IOFiles.readInfoJSON(getPackageName());
+            String userName = jsonInfo.getString("name");
+            String userEmail = jsonInfo.getString("email");
+            navUsername.setText(userName);
+            navEmail.setText(userEmail);
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+
 
         ImageView profilePicture = headerView.findViewById(R.id.profile_picture);
-
-        Picasso.get().load(photoUrl.toString())
-                .transform(new CropCircleTransformation())
-                .into(profilePicture);
+        try {
+            Bitmap bmp2 = IOFiles.loadImageFromStorage(getApplicationContext());
+            profilePicture.setImageBitmap(bmp2);
+        } catch (FileNotFoundException e) {
+            profilePicture.setImageDrawable(getResources().getDrawable(R.drawable.ic_logo));
+        }
 
     }
 

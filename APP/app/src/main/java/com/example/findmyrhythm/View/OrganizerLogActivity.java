@@ -65,10 +65,10 @@ public class OrganizerLogActivity extends AppCompatActivity implements View.OnCl
          * IT WOULD MAKE EASIER THE CHECK OF EVENTS TO USERS AFTERWARDS.
          */
 
-        if (isEmpty(name) || isEmpty(nickname) || isEmpty(email) || isEmpty(biography) || isEmpty(location)) {
-            Toast.makeText(this, "Porfavor rellene todos los campos", Toast.LENGTH_LONG).show();
-            return;
-        }
+//        if (isEmpty(name) || isEmpty(nickname) || isEmpty(email) || isEmpty(biography) || isEmpty(location)) {
+//            Toast.makeText(this, "Porfavor rellene todos los campos", Toast.LENGTH_LONG).show();
+//            return;
+//        }
 
         //TODO: Introduce into database by getting the value of every field. Check Android Service.
         createOrganizer();

@@ -36,57 +36,6 @@ public class GreetingsActivity extends AppCompatActivity implements View.OnClick
         userLogin = (Button) findViewById(R.id.userLogin);
         userLogin.setOnClickListener(this);
 
-
-
-        //##########################################################################################
-        // TODO: Aquí habría quizás que poner un spiner o algún elemento visual de carga.
-        // Pantalla de carga solo con el logotipo, pues esta alternativa de haceer la carga
-        // en los greetings solo vale para nuevos usuarios
-
-
-        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        String name = currentFirebaseUser.getDisplayName();
-        String email = currentFirebaseUser.getEmail();
-        Uri photoUrl = currentFirebaseUser.getPhotoUrl();
-
-        IOFiles.storeInfoJSON(name, email, getPackageName());
-        IOFiles.readInfoJSON(getPackageName());
-
-
-        Bitmap bmp = null;
-        try {
-            bmp = new GreetingsActivity.BitmapDownloaderTask().execute(photoUrl.toString()).get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        IOFiles.saveToInternalStorage(bmp, getApplicationContext());
-
-        // ImageView imageView = findViewById(R.id.test_image);
-
-        Bitmap bmp2 = IOFiles.loadImageFromStorage(getApplicationContext());
-
-        // imageView.setImageBitmap(bmp2);
-
-    }
-
-
-    private class BitmapDownloaderTask extends AsyncTask<String, Void, Bitmap> {
-
-        @Override
-        protected Bitmap doInBackground(String... urls) {
-            URL url = null;
-            Bitmap image = null;
-            try {
-                url = new URL(urls[0]);
-                image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return image;
-        }
     }
 
 
