@@ -21,7 +21,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 public class UserProfileActivity extends MenuDrawerActivity {
@@ -59,40 +63,18 @@ public class UserProfileActivity extends MenuDrawerActivity {
         });
 
 
-
-        /* TODO: esto se está ejecutando cada vez que se inicia la actividad. Lo ideal parece que
-        *   sería crear una actividad de carga con el logo o algo así que se ejecutara una única
-        *   vez. Es bastante común en las aplicaciones. */
-
-        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        String name = currentFirebaseUser.getDisplayName();
-        String email = currentFirebaseUser.getEmail();
-
-        IOFiles.storeInfoJSON(name, email, getPackageName());
-
-        TextView userNameView = findViewById(R.id.user_name);
+        try {
+            JSONObject jsonInfo = IOFiles.readInfoJSON(getPackageName());
+            String userName = jsonInfo.getString("name");
+            String userEmail = jsonInfo.getString("email");
+            TextView userNameView = findViewById(R.id.user_name);
 //        TextView userLocationView = findViewById(R.id.user_location);
 //        userLocationView.setText();
-        userNameView.setText(name);
-
-
-        Uri photoUrl = currentFirebaseUser.getPhotoUrl();
-
-        for (UserInfo profile : currentFirebaseUser.getProviderData()) {
-            System.out.println(profile.getProviderId());
-            // check if the provider id matches "facebook.com"
-            if (profile.getProviderId().equals("facebook.com")) {
-
-                String facebookUserId = profile.getUid();
-
-                photoUrl = Uri.parse("https://graph.facebook.com/" + facebookUserId + "/picture?height=500");
-
-            } else if (profile.getProviderId().equals("google.com")) {
-                photoUrl = Uri.parse(photoUrl.toString().replace("s96-c", "s700-c"));
-            }
+            userNameView.setText(userName);
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
         }
 
-        IOFiles.downloadSaveBmp(photoUrl, getApplicationContext());
 
         ImageView imageView = findViewById(R.id.profile);
         try {

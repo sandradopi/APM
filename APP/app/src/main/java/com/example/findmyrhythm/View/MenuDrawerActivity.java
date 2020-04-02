@@ -31,6 +31,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 
 public class MenuDrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
@@ -108,15 +109,15 @@ public class MenuDrawerActivity extends AppCompatActivity implements NavigationV
 //        navUsername.setText(name);
 //        navEmail.setText(email);
 
-        JSONObject jsonInfo = IOFiles.readInfoJSON(getPackageName());
 
         try {
+            JSONObject jsonInfo = IOFiles.readInfoJSON(getPackageName());
             String userName = jsonInfo.getString("name");
             String userEmail = jsonInfo.getString("email");
             navUsername.setText(userName);
             navEmail.setText(userEmail);
-        } catch (JSONException e) {
-            // e.printStackTrace();
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
         }
 
 
