@@ -3,18 +3,18 @@ package com.example.findmyrhythm.Model;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-public class Event {
+public class Event extends Entity{
 
     private String name;
     private Date date;
     private LocalDateTime hour;
-    private String ubication;
+    private String location, organizerId, price;
 
-    public Event(String name, Date date, LocalDateTime hour, String ubication) {
+    public Event(String name, Date date, LocalDateTime hour, String location, String organizerId, String price) {
         this.name = name;
         this.date = date;
         this.hour = hour;
-        this.ubication = ubication;
+        this.location = location;
     }
 
     public String getName() {
@@ -41,12 +41,28 @@ public class Event {
         this.hour = hour;
     }
 
-    public String getUbication() {
-        return ubication;
+    public String getLocation() {
+        return location;
     }
 
-    public void setUbication(String ubication) {
-        this.ubication = ubication;
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getOrganizerId() {
+        return organizerId;
+    }
+
+    public void setOrganizerId(String organizerId) {
+        this.organizerId = organizerId;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
     }
 }
 

@@ -2,54 +2,19 @@ package com.example.findmyrhythm.Model;
 
 import java.util.ArrayList;
 
-public class User extends Entity{
+public class User extends GeneralUser {
 
    // private String password;
-    private String name, username, email, biography, birthdate;
+    private String birthdate;
     private ArrayList<String> subscribedLocations = new ArrayList<String>();
     private ArrayList<String> subscribedGenres = new ArrayList<String>();
 
 
-    public User(String name,String username, String email, String biography, String birthdate, ArrayList<String> subscribedLocations, ArrayList<String> subscribedGenres) {
-        this.name = name;
-        this.username = username;
-        this.email = email;
-        this.biography = biography;
+    public User(String name, String username, String email, String biography, String birthdate, ArrayList<String> subscribedLocations, ArrayList<String> subscribedGenres) {
+        super(name, username, email, biography);
         this.birthdate = birthdate;
         this.subscribedLocations = subscribedLocations;
         this.subscribedGenres = subscribedGenres;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getBiography() {
-        return biography;
-    }
-
-    public void setBiography(String biography) {
-        this.biography = biography;
     }
 
     public String getBirthdate() {

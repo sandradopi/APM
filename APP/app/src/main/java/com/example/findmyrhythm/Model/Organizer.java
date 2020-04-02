@@ -1,40 +1,22 @@
 package com.example.findmyrhythm.Model;
 
-public class Organizer extends Entity {
+public class Organizer extends GeneralUser {
 
-    private String name, username, email, location, biography;
+    private String rating, location;
 
-    public Organizer(String name, String username, String email, String location, String biography) {
+    public Organizer(String name, String username, String email, String biography, String rating, String location) {
 
-        this.name = name;
-        this.username = username;
-        this.email = email;
+        super(name, username, email, biography);
+        this.rating = rating;
         this.location = location;
-        this.biography = biography;
     }
 
-    public String getName() {
-        return name;
+    public String getRating() {
+        return rating;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setRating(String rating) {
+        this.rating = rating;
     }
 
     public String getLocation() {
@@ -45,11 +27,4 @@ public class Organizer extends Entity {
         this.location = location;
     }
 
-    public String getBiography() {
-        return biography;
-    }
-
-    public void setBiography(String biography) {
-        this.biography = biography;
-    }
 }

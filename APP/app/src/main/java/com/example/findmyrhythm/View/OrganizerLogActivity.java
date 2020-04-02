@@ -83,10 +83,10 @@ public class OrganizerLogActivity extends AppCompatActivity implements View.OnCl
 
     public void createOrganizer() {
 
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        /*DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         Organizer organizer = new Organizer(name.getText().toString(), nickname.getText().toString(), email.getText().toString(), location.getText().toString(), biography.getText().toString());
 
-        mDatabase.child("organizers").child(currentUser.getUid()).setValue(organizer);
+        mDatabase.child("organizers").child(currentUser.getUid()).setValue(organizer);*/
 
     }
 

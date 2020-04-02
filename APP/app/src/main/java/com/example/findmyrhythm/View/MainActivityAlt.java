@@ -285,14 +285,16 @@ public class MainActivityAlt extends AppCompatActivity implements View.OnClickLi
         super.onStart();
 
         // TODO: delete. Test lines (2)
-        FirebaseAuth.getInstance().signOut();
-        googleSignOut();
+        //FirebaseAuth.getInstance().signOut();
+        //googleSignOut();
 
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
-            // addNewUser(currentUser); // TODO: delete this line
-            startGreetings();
+
+            //TODO: Mirar si es organizador o usuario
+            /*Intent intent = new Intent(this, UserProfileActivity.class);
+            startActivity(intent);*/
         }
     }
 

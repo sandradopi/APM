@@ -8,11 +8,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.findmyrhythm.Model.FUser;
 import com.example.findmyrhythm.Model.User;
 import com.example.findmyrhythm.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
