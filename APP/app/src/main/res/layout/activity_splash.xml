@@ -6,6 +6,7 @@
     android:background="@color/white"
     tools:context=".View.SplashActivity">
 
+
     <pl.droidsonroids.gif.GifImageView
         android:layout_width="240dp"
         android:layout_height="240dp"
