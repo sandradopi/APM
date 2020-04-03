@@ -12,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.findmyrhythm.Model.CropCircleTransformation;
 import com.example.findmyrhythm.Model.IOFiles;
 import com.example.findmyrhythm.R;
 import com.google.android.material.navigation.NavigationView;
