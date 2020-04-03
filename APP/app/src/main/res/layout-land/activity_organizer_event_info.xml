@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:background="@color/primaryBackgroundDark"
     tools:context=".View.EventInfoActivity">
 
 
     <LinearLayout
         android:id="@+id/frameLayout"
-        android:layout_width="359dp"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
         android:gravity="start"
         android:orientation="vertical"
         android:paddingStart="20dp"
@@ -125,7 +125,6 @@
                     android:id="@+id/capacityIcon"
                     android:layout_width="32dp"
                     android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
                     android:padding="4dp"
                     android:src="@drawable/ic_group_24px" />
 
@@ -164,22 +163,15 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="326dp"
+
+
+    <fragment
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_alignParentRight="true"
-        android:orientation="vertical">
-
-        <fragment
-            android:id="@+id/eventMap"
-            android:name="com.google.android.gms.maps.MapFragment"
-            android:layout_width="match_parent"
-            android:layout_height="340dp"
-            android:layout_weight="0.75"
-            app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
-
-    </LinearLayout>
+        android:layout_weight="1"
+        android:id="@+id/eventMap"
+        android:name="com.google.android.gms.maps.MapFragment"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
 
 
-
-</RelativeLayout>
+</LinearLayout>
