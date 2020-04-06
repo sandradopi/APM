@@ -1,5 +1,7 @@
 package com.example.findmyrhythm.Model;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.example.findmyrhythm.Model.Exceptions.DuplicatedInstanceException;
@@ -11,6 +13,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.concurrent.CountDownLatch;
 
 public class GenericDAO <T extends Entity> {
 
@@ -65,18 +68,37 @@ public class GenericDAO <T extends Entity> {
         // Placeholder for the data retrieved from the DB
         final ArrayList<T> entity = new ArrayList<T>();
 
+        //Lock to wait for the data
+        final CountDownLatch lock = new CountDownLatch(1);
+
         table.child(entityId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 entity.add(dataSnapshot.getValue(genericType));
+                // Data retrieved, release lock
+                lock.countDown();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                // Cancelled, release lock
+                lock.countDown();
             }
         });
 
+        try {
+            lock.await();
+
+        } catch (InterruptedException e) {
+            Log.e(TAG, "findById thread interrupted");
+        }
+
+        // Check that some data was retrieved
+        if (entity.get(0) == null) {
+            throw new InstanceNotFoundException();
+        }
+
+        // Return entity
         return entity.get(0);
     }
 

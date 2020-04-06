@@ -4,7 +4,10 @@ public class GeneralUser extends Entity {
 
     private String name, username, email, biography;
 
-    public GeneralUser(String name, String username, String email, String biography) {
+    public GeneralUser() {}
+
+    public GeneralUser(String id, String name, String username, String email, String biography) {
+        setId(id);
         this.name = name;
         this.username = username;
         this.email = email;

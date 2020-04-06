@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import com.example.findmyrhythm.Model.FUser;
 import com.example.findmyrhythm.Model.IOFiles;
 import com.example.findmyrhythm.Model.User;
+import com.example.findmyrhythm.Model.UserService;
 import com.example.findmyrhythm.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -69,13 +71,13 @@ public class UserLogActivity extends AppCompatActivity implements View.OnClickLi
            Create the intent to go to the next Activity
          */
 
-//        if (isEmpty(name) || isEmpty(nickname) || isEmpty(email) || isEmpty(biography) || isEmpty(birthDate)) {
-//           Toast.makeText(this, "Please cover every field shown in the screen", Toast.LENGTH_LONG).show();
-//           return;
-//        }
+        if (isEmpty(name) || isEmpty(nickname) || isEmpty(email) || isEmpty(biography) || isEmpty(birthDate)) {
+           Toast.makeText(this, "Please cover every field shown in the screen", Toast.LENGTH_LONG).show();
+           return;
+        }
 
         //TODO: Introduce into database by getting the value of every field. Check Android Service.
-        createUser();
+        new CreateUserTask().execute();
 
         //TODO: Intent to new Activity
         Log.w(TAG, "Creación de la cuenta del usuario");
@@ -86,7 +88,7 @@ public class UserLogActivity extends AppCompatActivity implements View.OnClickLi
     }
 
 
-    public void createUser() {
+    /*public void createUser() {
 
         DatabaseReference mDatabase;// ...
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -101,15 +103,15 @@ public class UserLogActivity extends AppCompatActivity implements View.OnClickLi
         locations = b.getStringArrayList(getString(R.string.locationsListID));
         genres = b.getStringArrayList(getString(R.string.genresListID));
 
-        User user = new User(name, nickname.getText().toString(), email, biography.getText().toString(), birthDate.getText().toString(), locations, genres);
+       /* User user = new User(name, nickname.getText().toString(), email, biography.getText().toString(), birthDate.getText().toString(), locations, genres);
 
-        mDatabase.child("users2").child(userId).setValue(user);
+        mDatabase.child("users2").child(userId).setValue(user);/*
 
         /* TODO: esto se está ejecutando cada vez que se inicia la actividad. Lo ideal parece que
          *   sería crear una actividad de carga con el logo o algo así que se ejecutara una única
          *   vez. Es bastante común en las aplicaciones. */
 
-        IOFiles.storeInfoJSON(name, email, getPackageName());
+        /*IOFiles.storeInfoJSON(name, email, getPackageName());
 
         Uri photoUrl = currentUser.getPhotoUrl();
 
@@ -129,7 +131,7 @@ public class UserLogActivity extends AppCompatActivity implements View.OnClickLi
 
         IOFiles.downloadSaveBmp(photoUrl, getApplicationContext());
 
-    }
+    }*/
 
     private boolean isEmpty(EditText text) {
 
@@ -140,5 +142,56 @@ public class UserLogActivity extends AppCompatActivity implements View.OnClickLi
     public boolean onOptionsItemSelected(MenuItem item) {
         finish();
         return true;
+    }
+
+    private class CreateUserTask extends AsyncTask<Void,Void,Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            ArrayList<String> genres, locations;
+
+            Bundle b = getIntent().getExtras();
+            locations = b.getStringArrayList(getString(R.string.locationsListID));
+            genres = b.getStringArrayList(getString(R.string.genresListID));
+
+           // User user = new User(currentUser.getUid(), name.getText().toString(), nickname.getText().toString(), email.getText().toString(), biography.getText().toString(), birthDate.getText().toString(), locations, genres);
+
+            UserService userService = new UserService();
+            userService.createUser(currentUser.getUid(), name.getText().toString(), nickname.getText().toString(), email.getText().toString(), biography.getText().toString(), birthDate.getText().toString(), locations, genres);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            IOFiles.storeInfoJSON(name.getText().toString(), email.getText().toString(), getPackageName());
+
+            Uri photoUrl = currentUser.getPhotoUrl();
+
+            for (UserInfo profile : currentUser.getProviderData()) {
+                System.out.println(profile.getProviderId());
+                // check if the provider id matches "facebook.com"
+                if (profile.getProviderId().equals("facebook.com")) {
+
+                    String facebookUserId = profile.getUid();
+
+                    photoUrl = Uri.parse("https://graph.facebook.com/" + facebookUserId + "/picture?height=500");
+
+                } else if (profile.getProviderId().equals("google.com")) {
+                    photoUrl = Uri.parse(photoUrl.toString().replace("s96-c", "s700-c"));
+                }
+            }
+
+            IOFiles.downloadSaveBmp(photoUrl, getApplicationContext());
+            //setResult(RESULT_OK);
+            finish();
+        }
     }
 }

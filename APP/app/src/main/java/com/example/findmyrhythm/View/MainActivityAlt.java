@@ -301,7 +301,7 @@ public class MainActivityAlt extends AppCompatActivity implements View.OnClickLi
 
     private void updateUI(FirebaseUser currentUser) {
         if (currentUser != null) {
-            addNewUser(currentUser);
+            //addNewUser(currentUser);
             startGreetings();
         }
     }

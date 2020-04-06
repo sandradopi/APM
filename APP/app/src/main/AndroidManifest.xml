@@ -29,7 +29,7 @@
 
         <activity android:name=".View.SetGenresActivity" />
 
-        <activity android:name=".View.SetLocationActivity" />
+        <activity android:name=".View.SetLocationActivity" android:windowSoftInputMode="adjustResize"/>
 
         <activity
             android:name=".View.GreetingsActivity"

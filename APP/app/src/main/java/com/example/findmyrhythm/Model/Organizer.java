@@ -4,9 +4,11 @@ public class Organizer extends GeneralUser {
 
     private String rating, location;
 
-    public Organizer(String name, String username, String email, String biography, String rating, String location) {
+    public Organizer() {}
 
-        super(name, username, email, biography);
+    public Organizer(String id, String name, String username, String email, String biography, String rating, String location) {
+
+        super(id, name, username, email, biography);
         this.rating = rating;
         this.location = location;
     }
