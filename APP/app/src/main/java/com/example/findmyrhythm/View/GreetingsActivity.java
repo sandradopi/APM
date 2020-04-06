@@ -54,6 +54,7 @@ public class GreetingsActivity extends AppCompatActivity implements View.OnClick
             //TODO: Intent to the desired Activity. MAYBE PASS A VARIABLE DEFINING THE USER AS USER.
             Intent locationIntent = new Intent(this, SetLocationActivity.class);
             startActivity(locationIntent);
+
         }
     }
 }

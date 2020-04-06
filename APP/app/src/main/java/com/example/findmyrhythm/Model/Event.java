@@ -12,7 +12,7 @@ public class Event extends Entity{
 
     public Event() {}
 
-    public Event(String name, Date date, LocalDateTime hour, String location, String genre, String organizerId, String price) {
+    /*public Event(String name, Date date, LocalDateTime hour, String location, String genre, String organizerId, String price) {
         this.name = name;
         this.date = date;
         this.hour = hour;
@@ -20,6 +20,11 @@ public class Event extends Entity{
         this.genre = genre;
         this.organizerId = organizerId;
         this.price = price;
+    }*/
+
+    public Event(String location, String genre) {
+        this.location = location;
+        this.genre = genre;
     }
 
     public String getName() {

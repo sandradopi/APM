@@ -10,7 +10,6 @@ public class EventService {
     private static final String TAG = "EventService";
 
     private EventDAO eventDAO = new EventDAO();
-    private UserDAO userDAO = new UserDAO();
 
     public Event getEvent(String eventId) {
 
@@ -43,7 +42,7 @@ public class EventService {
         eventDAO.delete(eventId);
     }
 
-    public void getRecommendedEvents() {
-        eventDAO.getRecommendedEvents();
+    public void getRecommendedEvents(User user) {
+        eventDAO.getRecommendedEvents(user);
     }
 }

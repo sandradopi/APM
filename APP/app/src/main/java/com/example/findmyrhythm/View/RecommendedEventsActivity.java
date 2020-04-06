@@ -1,13 +1,20 @@
 package com.example.findmyrhythm.View;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.example.findmyrhythm.Model.Event;
+import com.example.findmyrhythm.Model.EventService;
+import com.example.findmyrhythm.Model.Exceptions.InstanceNotFoundException;
+import com.example.findmyrhythm.Model.User;
+import com.example.findmyrhythm.Model.UserService;
 import com.example.findmyrhythm.R;
 import com.example.findmyrhythm.View.tabs.ListAdapterRecomended;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class RecommendedEventsActivity extends MenuDrawerActivity {
 
@@ -38,5 +45,40 @@ public class RecommendedEventsActivity extends MenuDrawerActivity {
             }
         });
 
+    }
 
-    }}
+    @Override
+    protected void onResume() {
+        super.onResume();
+        new getEvents().execute();
+    }
+
+    private class getEvents extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            EventService eventService = new EventService();
+            UserService userService = new UserService();
+            try {
+                User user = userService.getUser(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+                System.out.println(user.getSubscribedLocations() + "\n");
+                System.out.println(user.getSubscribedGenres() + "\n");
+                eventService.getRecommendedEvents(user);
+            } catch (InstanceNotFoundException e) {
+                System.out.println("PUTO TONTO");
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+        }
+    }
+}
