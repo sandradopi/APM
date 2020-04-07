@@ -50,6 +50,8 @@
     <string name="crear">Crear</string>
     <string name="recomendados_para_ti">Recomendados para ti</string>
     <string name="notiCreationEve">Evento creado con éxito</string>
+    <string name="genresSettings">Géneros seleccionados</string>
+    <string name="locationsSettings">Ubicaciones seleccionadas</string>
 
 
     <!-- Strings for the creation of the profile of the users -->

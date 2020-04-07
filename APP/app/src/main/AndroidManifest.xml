@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity android:name=".View.LocationsSettingsActivity"></activity>
+        <activity android:name=".View.GenresSettingsActivity" />
         <activity
             android:name=".View.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -22,25 +23,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".View.OrganizerLogActivity" />
-
         <activity android:name=".View.UserLogActivity" />
-
         <activity android:name=".View.SetGenresActivity" />
-
-        <activity android:name=".View.SetLocationActivity" android:windowSoftInputMode="adjustResize"/>
-
+        <activity
+            android:name=".View.SetLocationActivity"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".View.GreetingsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".View.OrganizerInfoDialog"
             android:theme="@android:style/Theme.Dialog" />
         <activity
             android:name=".View.OrganizerProfileActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".View.MainActivityAlt"
             android:label="@string/app_name"

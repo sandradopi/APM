@@ -10,6 +10,7 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.findmyrhythm.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class UserSettingsActivity extends MenuDrawerActivity {
     private static final String TAG = "Ajustes Usuario";
@@ -22,7 +23,30 @@ public class UserSettingsActivity extends MenuDrawerActivity {
 
         setMenuItemChecked(R.id.nav_settings);
 
-        Button savebutton = findViewById(R.id.button);
+        Button genres = findViewById(R.id.genres);
+        genres.setClickable(true);
+        genres.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.w(TAG, "Ha clickeado en Editar Géneros");
+                Intent intent = new Intent(UserSettingsActivity.this, GenresSettingsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button locations = findViewById(R.id.locations);
+        locations.setClickable(true);
+        locations.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.w(TAG, "Ha clickeado en Editar Localidades");
+                Intent intent = new Intent(UserSettingsActivity.this, LocationsSettingsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+        FloatingActionButton savebutton = (FloatingActionButton) findViewById(R.id.save);
         savebutton.setClickable(true);
         savebutton.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -32,7 +56,7 @@ public class UserSettingsActivity extends MenuDrawerActivity {
             Intent intent = new Intent(UserSettingsActivity.this, UserProfileActivity.class);
             startActivity(intent);
         }
-    });
+        });
 
         Switch notification = findViewById(R.id.switch1);
         notification.setClickable(true);
@@ -46,6 +70,6 @@ public class UserSettingsActivity extends MenuDrawerActivity {
                 Toast.makeText(UserSettingsActivity.this, getString(R.string.desnoti),  Toast.LENGTH_SHORT).show();
             }
         }
-    });
+        });
     }
 }
