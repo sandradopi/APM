@@ -3,9 +3,11 @@ package com.example.findmyrhythm.View;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.findmyrhythm.Model.Event;
 import com.example.findmyrhythm.Model.EventService;
@@ -45,12 +47,17 @@ public class RecommendedEventsActivity extends MenuDrawerActivity {
             }
         });
 
+        TextView toolbarTitle = findViewById(R.id.tvTitle);
+        toolbarTitle.setText("Recomendados");
+//        toolbarTitle.setGravity(Gravity.CENTER_HORIZONTAL);
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        new getEvents().execute();
+        // TODO: Esto peta
+        // new getEvents().execute();
     }
 
     private class getEvents extends AsyncTask<Void, Void, Void> {

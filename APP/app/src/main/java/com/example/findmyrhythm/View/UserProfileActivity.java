@@ -63,6 +63,9 @@ public class UserProfileActivity extends MenuDrawerActivity {
         });
 
 
+        TextView toolbarTitle = findViewById(R.id.tvTitle);
+        toolbarTitle.setText("Perfil");
+
         try {
             JSONObject jsonInfo = IOFiles.readInfoJSON(getPackageName());
             String userName = jsonInfo.getString("name");

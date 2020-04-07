@@ -1,9 +1,9 @@
 package com.example.findmyrhythm.View;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
-import android.util.Log;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,13 +14,19 @@ import android.widget.Toast;
 
 import com.example.findmyrhythm.Model.IOFiles;
 import com.example.findmyrhythm.R;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.squareup.picasso.Picasso;
+import com.google.firebase.auth.UserInfo;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -43,6 +49,9 @@ public class MenuDrawerActivity extends AppCompatActivity implements NavigationV
     private Menu menu;
     private FirebaseAuth mAuth;
     FirebaseUser currentUser;
+    private GoogleSignInClient mGoogleSignInClient;
+    private GoogleSignInOptions gso;
+    private String provider = null;
 
     @Override
     public void setContentView(final int layoutResID) {
@@ -80,27 +89,18 @@ public class MenuDrawerActivity extends AppCompatActivity implements NavigationV
         });
 
 
-//        FirebaseAuth.AuthStateListener mAuthListener = new FirebaseAuth.AuthStateListener() {
-//            @Override
-//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-//                FirebaseUser user = firebaseAuth.getCurrentUser();
-//                if (user != null) {
-//                    // User is signed in
-//                    Log.d("TAG", "onAuthStateChanged:signed_in:" + user.getUid());
-//                } else {
-//                    // User is signed out
-//                    Log.d("TAG", "onAuthStateChanged:signed_out");
-//                }
-//                // ...
-//            }
-//        };
+        for (UserInfo user: FirebaseAuth.getInstance().getCurrentUser().getProviderData()) {
+            provider = user.getProviderId();
+            if (provider.equals("google.com")) {
+                gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestIdToken(getString(R.string.default_web_client_id))
+                        .requestEmail()
+                        .build();
+                mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+            }
+        }
 
-//        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
-//        String name = currentFirebaseUser.getDisplayName();
-//        String email = currentFirebaseUser.getEmail();
-//        Uri photoUrl = currentFirebaseUser.getPhotoUrl();
-//
-//        Log.e("IMAGE", photoUrl.toString());
+//        FirebaseAuth.AuthStateListener mAuthListener = new FirebaseAuth.AuthStateListener() {...}
 
         View headerView = navigationView.getHeaderView(0);
         TextView navUsername = headerView.findViewById(R.id.header_title);
@@ -147,26 +147,20 @@ public class MenuDrawerActivity extends AppCompatActivity implements NavigationV
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
-        int title;
 
         // check if the current activity is the same as the one selected
         if (menuItemID != menuItem.getItemId()) {
             switch (menuItem.getItemId()) {
                 case R.id.nav_profile:
-                    title = R.string.menu_profile;
                     startActivity(new Intent(this, UserProfileActivity.class));
                     break;
                 case R.id.nav_recommended:
-                    title = R.string.menu_recommended;
                     startActivity(new Intent(this, RecommendedEventsActivity.class));
                     break;
                 case R.id.nav_search:
-                    title = R.string.menu_search;
-                    startActivity(new Intent(this, SearchActivity.class));
+                    startActivity(new Intent(this, SearchEventsActivity.class));
                     break;
                 case R.id.nav_notifications:
-                    title = R.string.menu_notifications;
                     // TODO: Implementar la función de visualización de las notificaciones
                     Toast.makeText(MenuDrawerActivity.this,
                             "Actividad de Notificaciones de los eventos por los que has mostrado interés.",
@@ -174,29 +168,51 @@ public class MenuDrawerActivity extends AppCompatActivity implements NavigationV
                     break;
                 case R.id.nav_settings:
                     startActivity(new Intent(this, UserSettingsActivity.class));
-                    title = R.string.menu_settings;
                     break;
                 case R.id.nav_logout:
-                    FirebaseAuth.getInstance().signOut();
-                    // googleSignOut();
-                    startActivity(new Intent(this, MainActivityAlt.class));
-                    title = R.string.menu_settings;
+                    showExitDialog();
                     break;
                 default:
                     throw new IllegalArgumentException("menu option not implemented!!");
             }
         }
 
-
-        // Fragment fragment = HomeMenuContentFragment.newInstance(getString(title));
-        // FragmentManager fragmentManager = getSupportFragmentManager();
-        // fragmentManager.beginTransaction().replace(R.id.home_content, fragment).commit();
-
-        //setTitle(getString(title));
-
         drawerLayout.closeDrawer(GravityCompat.START);
 
         return true;
+    }
+
+
+    private void showExitDialog() {
+        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setTitle("Cerrar sesión");
+        alertDialog.setMessage("¿Seguro que quieres cerrar sesión?");
+        final String finalProvider = provider;
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Sí",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        FirebaseAuth.getInstance().signOut();
+                        // Google sign out
+                        if (finalProvider.equals("google.com")) {
+                            mGoogleSignInClient.signOut().addOnCompleteListener(MenuDrawerActivity.this,
+                                    new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            startActivity(new Intent(MenuDrawerActivity.this, MainActivityAlt.class));
+                                        }
+                                    });
+                        }
+
+                    }
+                });
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
     }
 
     @Override

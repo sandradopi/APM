@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.findmyrhythm.R;
@@ -22,6 +23,9 @@ public class UserSettingsActivity extends MenuDrawerActivity {
 
 
         setMenuItemChecked(R.id.nav_settings);
+
+        TextView toolbarTitle = findViewById(R.id.tvTitle);
+        toolbarTitle.setText("Ajustes");
 
         Button genres = findViewById(R.id.genres);
         genres.setClickable(true);
