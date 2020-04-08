@@ -18,7 +18,7 @@ import com.example.findmyrhythm.R;
 import com.example.findmyrhythm.View.tabs.ListAdapterRecomended;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class RecommendedEventsActivity extends MenuDrawerActivity {
+public class RecommendedEventsActivity extends UserMenuDrawerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

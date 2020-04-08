@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.example.findmyrhythm.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class UserSettingsActivity extends MenuDrawerActivity {
+public class UserSettingsActivity extends UserMenuDrawerActivity {
     private static final String TAG = "Ajustes Usuario";
 
     @Override

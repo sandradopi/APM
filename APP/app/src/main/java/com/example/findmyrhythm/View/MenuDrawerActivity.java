@@ -39,13 +39,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 
-public class MenuDrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
+public abstract class MenuDrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         DrawerLayout.DrawerListener {
 
     protected DrawerLayout fullLayout;
     protected LinearLayout actContent;
-    private DrawerLayout drawerLayout;
-    private int menuItemID;
+    protected DrawerLayout drawerLayout;
+    protected int menuItemID;
     private Menu menu;
     private FirebaseAuth mAuth;
     FirebaseUser currentUser;
@@ -56,8 +56,8 @@ public class MenuDrawerActivity extends AppCompatActivity implements NavigationV
     @Override
     public void setContentView(final int layoutResID) {
         // Your base layout here
-        fullLayout= (DrawerLayout) getLayoutInflater().inflate(R.layout.activity_menu, null);
-        actContent= (LinearLayout) fullLayout.findViewById(R.id.home_content);
+        fullLayout = (DrawerLayout) getLayoutInflater().inflate(R.layout.activity_menu, null);
+        actContent = (LinearLayout) fullLayout.findViewById(R.id.home_content);
 
         // Setting the content of layout your provided to the act_content frame
         getLayoutInflater().inflate(layoutResID, actContent, true);
@@ -73,6 +73,11 @@ public class MenuDrawerActivity extends AppCompatActivity implements NavigationV
         toggle.syncState();
 
         NavigationView navigationView = findViewById(R.id.navigation_view);
+
+        navigationView.getMenu().clear();
+
+        inflateMenu(navigationView);
+
         navigationView.setNavigationItemSelectedListener(this);
 
         menu = navigationView.getMenu();
@@ -131,6 +136,9 @@ public class MenuDrawerActivity extends AppCompatActivity implements NavigationV
     }
 
 
+    protected abstract void inflateMenu(NavigationView navigationView);
+
+
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -146,44 +154,10 @@ public class MenuDrawerActivity extends AppCompatActivity implements NavigationV
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
-        // check if the current activity is the same as the one selected
-        if (menuItemID != menuItem.getItemId()) {
-            switch (menuItem.getItemId()) {
-                case R.id.nav_profile:
-                    startActivity(new Intent(this, UserProfileActivity.class));
-                    break;
-                case R.id.nav_recommended:
-                    startActivity(new Intent(this, RecommendedEventsActivity.class));
-                    break;
-                case R.id.nav_search:
-                    startActivity(new Intent(this, SearchEventsActivity.class));
-                    break;
-                case R.id.nav_notifications:
-                    // TODO: Implementar la función de visualización de las notificaciones
-                    Toast.makeText(MenuDrawerActivity.this,
-                            "Actividad de Notificaciones de los eventos por los que has mostrado interés.",
-                            Toast.LENGTH_LONG).show();
-                    break;
-                case R.id.nav_settings:
-                    startActivity(new Intent(this, UserSettingsActivity.class));
-                    break;
-                case R.id.nav_logout:
-                    showExitDialog();
-                    break;
-                default:
-                    throw new IllegalArgumentException("menu option not implemented!!");
-            }
-        }
-
-        drawerLayout.closeDrawer(GravityCompat.START);
-
-        return true;
-    }
+    public abstract boolean onNavigationItemSelected(@NonNull MenuItem menuItem);
 
 
-    private void showExitDialog() {
+    public void showExitDialog() {
         AlertDialog alertDialog = new AlertDialog.Builder(this).create();
         alertDialog.setTitle("Cerrar sesión");
         alertDialog.setMessage("¿Seguro que quieres cerrar sesión?");

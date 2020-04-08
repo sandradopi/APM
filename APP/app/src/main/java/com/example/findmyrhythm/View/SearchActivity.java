@@ -17,7 +17,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class SearchActivity extends MenuDrawerActivity implements OnMapReadyCallback {
+public class SearchActivity extends UserMenuDrawerActivity implements OnMapReadyCallback {
 
     private static final String TEXT = "text";
     // Array of strings...
