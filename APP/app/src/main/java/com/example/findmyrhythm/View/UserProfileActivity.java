@@ -1,6 +1,7 @@
 package com.example.findmyrhythm.View;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -66,17 +67,13 @@ public class UserProfileActivity extends UserMenuDrawerActivity {
         TextView toolbarTitle = findViewById(R.id.tvTitle);
         toolbarTitle.setText("Perfil");
 
-        try {
-            JSONObject jsonInfo = IOFiles.readInfoJSON(getPackageName());
-            String userName = jsonInfo.getString("name");
-            String userEmail = jsonInfo.getString("email");
-            TextView userNameView = findViewById(R.id.user_name);
+        SharedPreferences preferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
+        String userName = preferences.getString("name", null);
+        String userEmail = preferences.getString("email", null);
+        TextView userNameView = findViewById(R.id.user_name);
 //        TextView userLocationView = findViewById(R.id.user_location);
 //        userLocationView.setText();
-            userNameView.setText(userName);
-        } catch (IOException | JSONException e) {
-            e.printStackTrace();
-        }
+        userNameView.setText(userName);
 
 
         ImageView imageView = findViewById(R.id.profile);

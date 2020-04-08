@@ -2,6 +2,7 @@ package com.example.findmyrhythm.View;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 
 import android.view.Menu;
@@ -114,15 +115,11 @@ public abstract class MenuDrawerActivity extends AppCompatActivity implements Na
 //        navEmail.setText(email);
 
 
-        try {
-            JSONObject jsonInfo = IOFiles.readInfoJSON(getPackageName());
-            String userName = jsonInfo.getString("name");
-            String userEmail = jsonInfo.getString("email");
-            navUsername.setText(userName);
-            navEmail.setText(userEmail);
-        } catch (IOException | JSONException e) {
-            e.printStackTrace();
-        }
+        SharedPreferences preferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
+        String userName = preferences.getString("name", null);
+        String userEmail = preferences.getString("email", null);
+        navUsername.setText(userName);
+        navEmail.setText(userEmail);
 
 
         ImageView profilePicture = headerView.findViewById(R.id.profile_picture);
