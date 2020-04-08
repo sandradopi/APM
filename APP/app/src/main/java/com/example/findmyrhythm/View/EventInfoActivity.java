@@ -66,12 +66,14 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
                     joinButton.setText("Apuntarse");
                     joinButton.setBackgroundColor(Color.BLUE);
                     chronometer.stop();
+                    id_Joined= false;
 
                 }else{
                     spectatorService.createSpectator("FJkjdJFIOEHb7895", "PLCfp0OsCMN3MG14kcuMZoPHnwA3");
                     joinButton.setText("Apuntado");
                     joinButton.setBackgroundColor(Color.GREEN);
                     chronometer.start();
+                    id_Joined= true;
 
                 }
 
