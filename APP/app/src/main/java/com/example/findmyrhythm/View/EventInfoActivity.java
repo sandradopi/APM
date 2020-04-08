@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
 
+import com.example.findmyrhythm.Model.Spectator;
+import com.example.findmyrhythm.Model.SpectatorService;
 import com.example.findmyrhythm.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -19,7 +21,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCallback {
-    private static boolean IS_JOINED = false;
+    Boolean id_Joined = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,20 +39,42 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
                 .findFragmentById(R.id.eventMap);
         mapFragment.getMapAsync(this);
 
-        final Button joinButton = (Button) findViewById(R.id.joinBtn);
         final Chronometer chronometer = (Chronometer) findViewById(R.id.eventClock);
+        final Button joinButton = (Button) findViewById(R.id.joinBtn);
+
+        final SpectatorService spectatorService = new SpectatorService();
+
+        final Spectator spectator = spectatorService.findSpectatorByIds("FJkjdJFIOEHb7895", "PLCfp0OsCMN3MG14kcuMZoPHnwA3");
+
+        if (spectator != null){
+            id_Joined=true;
+        }
+
+           if (id_Joined) {
+                joinButton.setText("Apuntado");
+                joinButton.setBackgroundColor(Color.GREEN);
+                chronometer.start();
+            }
+
 
         joinButton.setOnClickListener( new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                if (!IS_JOINED) {
+                if(id_Joined){
+                    spectatorService.deleteSpectator(spectator);
+                    joinButton.setText("Apuntarse");
+                    joinButton.setBackgroundColor(Color.BLUE);
+                    chronometer.stop();
+
+                }else{
+                    spectatorService.createSpectator("FJkjdJFIOEHb7895", "PLCfp0OsCMN3MG14kcuMZoPHnwA3");
                     joinButton.setText("Apuntado");
-                    IS_JOINED = true;
-                    joinButton.setClickable(false);
                     joinButton.setBackgroundColor(Color.GREEN);
                     chronometer.start();
+
                 }
+
             }
         });
     }
