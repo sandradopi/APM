@@ -86,7 +86,6 @@ public class UserLogActivity extends AppCompatActivity implements View.OnClickLi
         editor.putString("name", name.getText().toString());
         editor.putString("email", email.getText().toString());
         editor.putString("nickname", nickname.getText().toString());
-        editor.putString("biography", biography.getText().toString());
         editor.putString("account_type", "user");
 
         editor.commit(); // or apply

@@ -94,7 +94,6 @@ public class OrganizerLogActivity extends AppCompatActivity implements View.OnCl
         editor.putString("email", email.getText().toString());
         editor.putString("nickname", nickname.getText().toString());
         editor.putString("location", location.getText().toString());
-        editor.putString("biography", biography.getText().toString());
         editor.putString("account_type", "organizer");
 
         editor.commit(); // or apply
