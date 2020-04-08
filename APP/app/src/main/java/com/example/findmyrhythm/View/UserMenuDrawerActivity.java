@@ -14,7 +14,7 @@ public class UserMenuDrawerActivity extends MenuDrawerActivity {
 
     @Override
     public void inflateMenu(NavigationView navigationView) {
-        navigationView.inflateMenu(R.menu.activity_organizer_home_navigation_drawer);
+        navigationView.inflateMenu(R.menu.activity_home_navigation_drawer);
     }
 
     @Override
