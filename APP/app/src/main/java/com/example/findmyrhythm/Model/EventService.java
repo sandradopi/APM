@@ -5,6 +5,8 @@ import android.util.Log;
 import com.example.findmyrhythm.Model.Exceptions.DuplicatedInstanceException;
 import com.example.findmyrhythm.Model.Exceptions.InstanceNotFoundException;
 
+import java.util.ArrayList;
+
 public class EventService {
 
     private static final String TAG = "EventService";
@@ -42,7 +44,7 @@ public class EventService {
         eventDAO.delete(eventId);
     }
 
-    public void getRecommendedEvents(User user) {
-        eventDAO.getRecommendedEvents(user);
+    public ArrayList<Event> getRecommendedEvents(User user) {
+        return eventDAO.getRecommendedEvents(user);
     }
 }

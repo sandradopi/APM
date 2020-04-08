@@ -70,7 +70,7 @@ public class SplashActivity extends AppCompatActivity {
                     startActivity(finalIntent);
                     finish();
                 }
-            }, 1600);
+            }, 1000);
 
 
         } else {
@@ -81,7 +81,7 @@ public class SplashActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 }
-            }, 1600);
+            }, 1000);
         }
 
 

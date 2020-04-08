@@ -18,12 +18,12 @@
             android:textSize="24sp"
             android:textStyle="bold|italic" />
 
+
         <ListView
-            android:id="@+id/eventlist2"
+            android:id="@+id/eventslist2"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="4"
-            android:layout_below="@+id/titulo"
             android:layout_marginTop="30dp" />
 
 </LinearLayout>
