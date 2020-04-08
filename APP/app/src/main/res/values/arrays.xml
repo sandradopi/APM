@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="categories">
+        <item>Rock</item>
+        <item>Pop</item>
+        <item>Jazz</item>
+        <item>Clásica</item>
+        <item>Hip-hop</item>
+        <item>Blues</item>
+    </string-array>
+</resources>
