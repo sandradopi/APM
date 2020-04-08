@@ -28,7 +28,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
-public class UserProfileActivity extends MenuDrawerActivity {
+public class UserProfileActivity extends UserMenuDrawerActivity {
     private static final String TAG = "Perfil Usuario";
 
     @Override

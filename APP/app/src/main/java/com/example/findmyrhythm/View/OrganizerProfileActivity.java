@@ -15,7 +15,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 
-public class OrganizerProfileActivity extends MenuDrawerActivity {
+public class OrganizerProfileActivity extends OrganizerMenuDrawerActivity {
     private static final String TAG = "Perfil Organizador";
 
     @Override
@@ -67,9 +67,9 @@ public class OrganizerProfileActivity extends MenuDrawerActivity {
         });
 
 
-        FloatingActionButton añadirEvento = findViewById(R.id.floatingActionButton4);
-        añadirEvento.setClickable(true);
-        añadirEvento.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton addEvent = findViewById(R.id.floatingActionButton4);
+        addEvent.setClickable(true);
+        addEvent.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {

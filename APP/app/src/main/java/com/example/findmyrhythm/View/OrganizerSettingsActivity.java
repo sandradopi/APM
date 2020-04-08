@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.example.findmyrhythm.R;
 
-public class OrganizerSettingsActivity extends MenuDrawerActivity {
+public class OrganizerSettingsActivity extends OrganizerMenuDrawerActivity {
     private static final String TAG = "Ajustes Organizador";
 
     protected void onCreate(Bundle savedInstanceState) {
