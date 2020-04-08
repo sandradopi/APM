@@ -3,7 +3,9 @@ package com.example.findmyrhythm.View;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -82,6 +84,20 @@ public class OrganizerLogActivity extends AppCompatActivity implements View.OnCl
     }
 
     public void createOrganizer() {
+
+        SharedPreferences sharedpreferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+
+        editor.putString("fb_name", currentUser.getDisplayName());
+        editor.putString("fb_email", currentUser.getEmail());
+        editor.putString("name", name.getText().toString());
+        editor.putString("email", email.getText().toString());
+        editor.putString("nickname", nickname.getText().toString());
+        editor.putString("location", location.getText().toString());
+        editor.putString("biography", biography.getText().toString());
+        editor.putString("account_type", "organizer");
+
+        editor.commit(); // or apply
 
         /*DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         Organizer organizer = new Organizer(name.getText().toString(), nickname.getText().toString(), email.getText().toString(), location.getText().toString(), biography.getText().toString());

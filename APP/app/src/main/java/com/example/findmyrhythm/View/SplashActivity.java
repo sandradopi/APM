@@ -3,20 +3,16 @@ package com.example.findmyrhythm.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 
 import com.example.findmyrhythm.Model.IOFiles;
-import com.example.findmyrhythm.Model.User;
 import com.example.findmyrhythm.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.ArrayList;
 
 
 public class SplashActivity extends AppCompatActivity {
@@ -55,11 +51,23 @@ public class SplashActivity extends AppCompatActivity {
             IOFiles.downloadSaveBmp(photoUrl, getApplicationContext());
 
 
+            SharedPreferences preferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
+            String accountType = preferences.getString("account_type", null);
+
+            Intent intent;
+            if (accountType.equals("organizer")) {
+                intent = new Intent(SplashActivity.this, OrganizerProfileActivity.class);
+            } else if (accountType.equals("user")) {
+                intent = new Intent(SplashActivity.this, UserProfileActivity.class);
+            } else {
+                throw new IllegalArgumentException("Unknown user type.");
+            }
+
+            final Intent finalIntent = intent;
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Intent intent = new Intent(SplashActivity.this, UserProfileActivity.class);
-                    startActivity(intent);
+                    startActivity(finalIntent);
                     finish();
                 }
             }, 1600);
@@ -69,7 +77,7 @@ public class SplashActivity extends AppCompatActivity {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Intent intent = new Intent(SplashActivity.this, MainActivityAlt.class);
+                    Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
                     startActivity(intent);
                     finish();
                 }

@@ -4,6 +4,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -75,6 +76,20 @@ public class UserLogActivity extends AppCompatActivity implements View.OnClickLi
 //           Toast.makeText(this, "Please cover every field shown in the screen", Toast.LENGTH_LONG).show();
 //           return;
 //        }
+
+
+        SharedPreferences sharedpreferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+
+        editor.putString("fb_name", currentUser.getDisplayName());
+        editor.putString("fb_email", currentUser.getEmail());
+        editor.putString("name", name.getText().toString());
+        editor.putString("email", email.getText().toString());
+        editor.putString("nickname", nickname.getText().toString());
+        editor.putString("biography", biography.getText().toString());
+        editor.putString("account_type", "user");
+
+        editor.commit(); // or apply
 
         //TODO: Introduce into database by getting the value of every field. Check Android Service.
         new CreateUserTask().execute();

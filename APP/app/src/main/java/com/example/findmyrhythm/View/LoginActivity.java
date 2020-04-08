@@ -1,15 +1,9 @@
 package com.example.findmyrhythm.View;
 
-import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +19,6 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -43,23 +36,8 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.concurrent.ExecutionException;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.example.findmyrhythm.Model.IOFiles;
-
-
-public class MainActivityAlt extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     //private static final String NAME = "name";
     //private static final String EMAIL = "email";
     //private static final String PHOTO = "photo";
@@ -145,7 +123,7 @@ public class MainActivityAlt extends AppCompatActivity implements View.OnClickLi
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            Toast.makeText(MainActivityAlt.this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
 
@@ -185,7 +163,7 @@ public class MainActivityAlt extends AppCompatActivity implements View.OnClickLi
     private void startGreetings() {
         // Log out to test with different accounts
         // FirebaseAuth.getInstance().signOut(); // TODO: delete
-        Intent intent = new Intent(MainActivityAlt.this, GreetingsActivity.class);
+        Intent intent = new Intent(LoginActivity.this, GreetingsActivity.class);
         startActivity(intent);
     }
 
@@ -268,7 +246,7 @@ public class MainActivityAlt extends AppCompatActivity implements View.OnClickLi
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            Toast.makeText(MainActivityAlt.this, "Authentication failed.",
+                            Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
