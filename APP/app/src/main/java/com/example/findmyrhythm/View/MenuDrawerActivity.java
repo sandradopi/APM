@@ -173,7 +173,7 @@ public abstract class MenuDrawerActivity extends AppCompatActivity implements Na
                                     new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
-                                            startActivity(new Intent(MenuDrawerActivity.this, MainActivityAlt.class));
+                                            startActivity(new Intent(MenuDrawerActivity.this, LoginActivity.class));
                                         }
                                     });
                         }
