@@ -49,20 +49,17 @@ public class OrganizerEventInfoActivity extends AppCompatActivity implements OnM
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            Event event = new Event();
             if (extras.containsKey("EVENT")) {
                 String eventJson = extras.getString("EVENT");
                 Log.e("DEBUG", eventJson);
                 Gson gson = new Gson();
-                event = gson.fromJson(eventJson, Event.class);
+                Event event = gson.fromJson(eventJson, Event.class);
                 showEventInfo(event);
 
             } else if (extras.containsKey("ID")) {
                 String eventId = extras.getString("ID");
                 new OrganizerEventInfoActivity.getEvent().execute(eventId);
             }
-
-
 
         }
 
@@ -130,11 +127,7 @@ public class OrganizerEventInfoActivity extends AppCompatActivity implements OnM
 
         @Override
         protected void onPostExecute(Event event) {
-            // super.onPostExecute(events);
-            Log.e("DEBUG", event.toString());
-
             showEventInfo(event);
-
         }
     }
 

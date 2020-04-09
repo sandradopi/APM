@@ -9,10 +9,13 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.example.findmyrhythm.Model.IOFiles;
+import com.example.findmyrhythm.Model.PersistentUserInfo;
 import com.example.findmyrhythm.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
+
+import java.util.ArrayList;
 
 
 public class SplashActivity extends AppCompatActivity {
@@ -32,7 +35,14 @@ public class SplashActivity extends AppCompatActivity {
                     String email = currentUser.getEmail();
                     String userId = currentUser.getUid();
 
-                    IOFiles.storeInfoJSON(name, email, getPackageName());
+                    // IOFiles.storeInfoJSON(name, email, getPackageName());
+
+                    ArrayList<String> eventsToAttend = new ArrayList<String>();
+                    eventsToAttend.add("Rock in Cambre");
+
+                    PersistentUserInfo persistentUserInfo = new PersistentUserInfo(eventsToAttend, "My biography");
+
+                    IOFiles.setPersistentUserInfo(getApplicationContext(), persistentUserInfo);
 
                     Uri photoUrl = currentUser.getPhotoUrl();
 

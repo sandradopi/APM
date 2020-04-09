@@ -100,9 +100,9 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
-                    Intent intent = new Intent(RecommendedEventsActivity.this, OrganizerEventInfoActivity.class);
+                    Intent intent = new Intent(RecommendedEventsActivity.this, EventInfoActivity.class);
                     Log.e("DEBUG", ids[0]);
-                    intent.putExtra("ID", ids[0]);
+                    intent.putExtra("ID", ids[(int) id]);
                     RecommendedEventsActivity.this.startActivity(intent);
 
                 }

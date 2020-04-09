@@ -130,7 +130,7 @@ public class UserLogActivity extends AppCompatActivity implements View.OnClickLi
 
         Uri photoUrl = currentUser.getPhotoUrl();
 
-        for (UserInfo profile : currentUser.getProviderData()) {
+        for (PersistentUserInfo profile : currentUser.getProviderData()) {
             System.out.println(profile.getProviderId());
             // check if the provider id matches "facebook.com"
             if (profile.getProviderId().equals("facebook.com")) {
@@ -186,7 +186,7 @@ public class UserLogActivity extends AppCompatActivity implements View.OnClickLi
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            IOFiles.storeInfoJSON(name.getText().toString(), email.getText().toString(), getPackageName());
+            // IOFiles.storeInfoJSON(name.getText().toString(), email.getText().toString(), getPackageName());
 
             Uri photoUrl = currentUser.getPhotoUrl();
 
