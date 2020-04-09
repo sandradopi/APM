@@ -23,55 +23,52 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         if (currentUser != null) {
-            String name = currentUser.getDisplayName();
-            String email = currentUser.getEmail();
-            String userId = currentUser.getUid();
-
-            IOFiles.storeInfoJSON(name, email, getPackageName());
-
-            Uri photoUrl = currentUser.getPhotoUrl();
-
-            for (UserInfo profile : currentUser.getProviderData()) {
-                System.out.println(profile.getProviderId());
-                // check if the provider id matches "facebook.com"
-                if (profile.getProviderId().equals("facebook.com")) {
-
-                    String facebookUserId = profile.getUid();
-
-                    photoUrl = Uri.parse("https://graph.facebook.com/" + facebookUserId + "/picture?height=500");
-
-                } else if (profile.getProviderId().equals("google.com")) {
-                    photoUrl = Uri.parse(photoUrl.toString().replace("s96-c", "s700-c"));
-                }
-            }
-
-            IOFiles.downloadSaveBmp(photoUrl, getApplicationContext());
-
-
-            SharedPreferences preferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
-            String accountType = preferences.getString("account_type", null);
-
-            Intent intent;
-            if (accountType.equals("organizer")) {
-                intent = new Intent(SplashActivity.this, OrganizerProfileActivity.class);
-            } else if (accountType.equals("user")) {
-                intent = new Intent(SplashActivity.this, UserProfileActivity.class);
-            } else {
-                throw new IllegalArgumentException("Unknown user type.");
-            }
-
-            final Intent finalIntent = intent;
-            new Handler().postDelayed(new Runnable() {
-                @Override
+            (new Thread() {
                 public void run() {
-                    startActivity(finalIntent);
-                    finish();
-                }
-            }, 1000);
+                    String name = currentUser.getDisplayName();
+                    String email = currentUser.getEmail();
+                    String userId = currentUser.getUid();
 
+                    IOFiles.storeInfoJSON(name, email, getPackageName());
+
+                    Uri photoUrl = currentUser.getPhotoUrl();
+
+                    for (UserInfo profile : currentUser.getProviderData()) {
+                        System.out.println(profile.getProviderId());
+                        // check if the provider id matches "facebook.com"
+                        if (profile.getProviderId().equals("facebook.com")) {
+
+                            String facebookUserId = profile.getUid();
+
+                            photoUrl = Uri.parse("https://graph.facebook.com/" + facebookUserId + "/picture?height=500");
+
+                        } else if (profile.getProviderId().equals("google.com")) {
+                            photoUrl = Uri.parse(photoUrl.toString().replace("s96-c", "s700-c"));
+                        }
+                    }
+
+                    IOFiles.downloadSaveBmp(photoUrl, getApplicationContext());
+
+
+                    SharedPreferences preferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
+                    String accountType = preferences.getString("account_type", null);
+
+                    Intent intent;
+                    if (accountType.equals("organizer")) {
+                        intent = new Intent(SplashActivity.this, OrganizerProfileActivity.class);
+                    } else if (accountType.equals("user")) {
+                        intent = new Intent(SplashActivity.this, UserProfileActivity.class);
+                    } else {
+                        throw new IllegalArgumentException("Unknown user type.");
+                    }
+
+                    startActivity(intent);
+
+                }
+            }).start();
 
         } else {
             new Handler().postDelayed(new Runnable() {

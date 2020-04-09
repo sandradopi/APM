@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.findmyrhythm.Model.FUser;
 import com.example.findmyrhythm.R;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -165,24 +164,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         // FirebaseAuth.getInstance().signOut(); // TODO: delete
         Intent intent = new Intent(LoginActivity.this, GreetingsActivity.class);
         startActivity(intent);
-    }
-
-
-    private void addNewUser(FirebaseUser currentUser) {
-        DatabaseReference mDatabase;// ...
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-
-        String name = currentUser.getDisplayName();
-        String email = currentUser.getEmail();
-        String userId = currentUser.getUid();
-
-        FUser user = new FUser(name, email);
-
-        mDatabase.child("users").child(userId).setValue(user);
-
-        // To update only the user name
-        // mDatabase.child("users").child(userId).child("username").setValue(name);
-
     }
 
 

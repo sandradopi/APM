@@ -10,15 +10,15 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
 
-public class SpectatorDAO extends GenericDAO<Spectator>{
+public class AttendeeDAO extends GenericDAO<Attendee>{
 
-    Spectator spectatorCheck = new Spectator();
+    Attendee attendeeCheck = new Attendee();
 
-    public SpectatorDAO() {
-        super(Spectator.class, "spectators");
+    public AttendeeDAO() {
+        super(Attendee.class, "attendees");
     }
 
-    public Spectator findSpectatorByIds (final String idEvent, final String idUser) {
+    public Attendee findAttendeeByIds (final String idEvent, final String idUser) {
         DatabaseReference table = getTable();
 
         // Lock
@@ -30,10 +30,10 @@ public class SpectatorDAO extends GenericDAO<Spectator>{
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    Spectator spectator = child.getValue(Spectator.class);
+                    Attendee attendee = child.getValue(Attendee.class);
                     // Event title contains title and event is not deleted
-                    if (spectator.getIdEvent().contains(idEvent) && spectator.getIdEvent().contains(idUser)) {
-                        spectatorCheck = spectator;
+                    if (attendee.getIdEvent().contains(idEvent) && attendee.getIdEvent().contains(idUser)) {
+                        attendeeCheck = attendee;
                     }
                 }
                 lock.countDown();
@@ -51,6 +51,6 @@ public class SpectatorDAO extends GenericDAO<Spectator>{
         catch (InterruptedException e) {
         //Log.e(TAG, "Thread was interrupted while waiting for syncronisation with Firebase call");
     }
-        return spectatorCheck;
+        return attendeeCheck;
 }
 }

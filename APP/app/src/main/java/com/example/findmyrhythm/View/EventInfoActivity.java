@@ -2,7 +2,6 @@ package com.example.findmyrhythm.View;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -11,10 +10,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
 
-import com.example.findmyrhythm.Model.EventService;
+import com.example.findmyrhythm.Model.AttendeeService;
 import com.example.findmyrhythm.Model.Exceptions.InstanceNotFoundException;
-import com.example.findmyrhythm.Model.Spectator;
-import com.example.findmyrhythm.Model.SpectatorService;
+import com.example.findmyrhythm.Model.Attendee;
 import com.example.findmyrhythm.Model.User;
 import com.example.findmyrhythm.Model.UserService;
 import com.example.findmyrhythm.R;
@@ -28,7 +26,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCallback {
     Boolean id_Joined = false;
-    SpectatorService spectatorService = new SpectatorService();
+    AttendeeService attendeeService = new AttendeeService();
     UserService userService = new UserService();
 
     @Override
@@ -60,14 +58,14 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
             @Override
             public void onClick(View v) {
                 if(id_Joined){
-                    //spectatorService.deleteSpectator(spectator);
+                    //attendeeService.deleteAttendee(attendee);
                     joinButton.setText("Apuntarse");
                     joinButton.setBackgroundColor(0xFFB3A1CE);
                     chronometer.stop();
                     id_Joined= false;
 
                 }else{
-                    spectatorService.createSpectator("FJkjdJFIOEHb7895", "PLCfp0OsCMN3MG14kcuMZoPHnwA3");
+                    attendeeService.createAttendee("FJkjdJFIOEHb7895", "PLCfp0OsCMN3MG14kcuMZoPHnwA3");
                     joinButton.setText("Apuntado");
                     joinButton.setBackgroundColor(0xFF673AB7);
                     chronometer.start();
@@ -114,12 +112,12 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
             System.out.println("aqui1");
             try {
                 User user = userService.getUser(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                Spectator spectator = spectatorService.findSpectatorByIds("FJkjdJFIOEHb7895", user.getId());
-                if (spectator != null){
+                Attendee attendee = attendeeService.findAttendeeByIds("FJkjdJFIOEHb7895", user.getId());
+                if (attendee != null){
                     id_Joined=true;
                 }
-                System.out.println(spectator.getIdEvent() + "\n");
-                System.out.println(spectator.getIdUser() + "\n");
+                System.out.println(attendee.getIdEvent() + "\n");
+                System.out.println(attendee.getIdUser() + "\n");
             } catch (InstanceNotFoundException e) {
 
             }

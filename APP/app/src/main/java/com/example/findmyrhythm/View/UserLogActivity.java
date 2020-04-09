@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.findmyrhythm.Model.FUser;
 import com.example.findmyrhythm.Model.IOFiles;
 import com.example.findmyrhythm.Model.User;
 import com.example.findmyrhythm.Model.UserService;

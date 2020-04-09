@@ -7,10 +7,16 @@
     tools:context=".View.SplashActivity">
 
 
-    <pl.droidsonroids.gif.GifImageView
-        android:layout_width="240dp"
-        android:layout_height="240dp"
-        android:src="@drawable/logo_gif"
+    <ImageView
+        android:layout_width="260dp"
+        android:layout_height="260dp"
+        android:src="@drawable/logo_white"
         android:layout_centerInParent="true"/>
+
+<!--    <pl.droidsonroids.gif.GifImageView-->
+<!--        android:layout_width="240dp"-->
+<!--        android:layout_height="240dp"-->
+<!--        android:src="@drawable/logo_gif"-->
+<!--        android:layout_centerInParent="true"/>-->
 
 </RelativeLayout>

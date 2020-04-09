@@ -1,16 +1,16 @@
 package com.example.findmyrhythm.Model;
 
-public class Spectator extends Entity {
+public class Attendee extends Entity {
 
     private  String idEvent;
     private  String idUser;
 
-    public Spectator(String idEvent, String idUser) {
+    public Attendee(String idEvent, String idUser) {
         this.idEvent = idEvent;
         this.idUser = idUser;
     }
 
-    public Spectator() {
+    public Attendee() {
 
     }
 
