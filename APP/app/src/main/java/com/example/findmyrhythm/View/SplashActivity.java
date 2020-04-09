@@ -42,7 +42,7 @@ public class SplashActivity extends AppCompatActivity {
 
                     PersistentUserInfo persistentUserInfo = new PersistentUserInfo(eventsToAttend, "My biography");
 
-                    IOFiles.setPersistentUserInfo(getApplicationContext(), persistentUserInfo);
+                    PersistentUserInfo.setPersistentUserInfo(getApplicationContext(), persistentUserInfo);
 
                     Uri photoUrl = currentUser.getPhotoUrl();
 

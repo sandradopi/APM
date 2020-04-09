@@ -83,26 +83,4 @@ public class IOFiles {
         IOFiles.saveToInternalStorage(bmp, applicationContext);
     }
 
-
-    public static PersistentUserInfo getPersistentUserInfo(Context context) {
-        Gson gson = new Gson();
-        PersistentUserInfo persistentUserInfo = null;
-        try {
-            persistentUserInfo = gson.fromJson(new FileReader(context.getFilesDir().getPath() + "user_persistent_info.json"), PersistentUserInfo.class);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return persistentUserInfo;
-    }
-
-    public static void setPersistentUserInfo(Context context, PersistentUserInfo persistentUserInfo) {
-        try (Writer writer = new FileWriter(context.getFilesDir().getPath() + "user_persistent_info.json")) {
-            Gson gson = new GsonBuilder().create();
-            gson.toJson(persistentUserInfo, writer);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
 }
