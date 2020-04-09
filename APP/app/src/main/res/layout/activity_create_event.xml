@@ -19,7 +19,6 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/nombre_evento_titulo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
@@ -30,7 +29,7 @@
                 android:textStyle="bold|italic"/>
 
             <EditText
-                android:id="@+id/nombre_evento"
+                android:id="@+id/event_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -41,7 +40,6 @@
                 android:textSize="16sp"/>
 
             <TextView
-                android:id="@+id/Dia_titulo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -52,7 +50,7 @@
                 android:textStyle="bold|italic"/>
 
             <EditText
-                android:id="@+id/dia"
+                android:id="@+id/day"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -61,7 +59,6 @@
                 android:textSize="16sp"/>
 
             <TextView
-                android:id="@+id/Hora_titulo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -72,7 +69,7 @@
                 android:textStyle="bold|italic"/>
 
             <EditText
-                android:id="@+id/hora"
+                android:id="@+id/hour"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -81,7 +78,6 @@
                 android:textSize="16sp"/>
 
             <TextView
-                android:id="@+id/Direccion_titulo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -92,7 +88,7 @@
                 android:textStyle="bold|italic"/>
 
             <EditText
-                android:id="@+id/direccion"
+                android:id="@+id/address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -102,7 +98,6 @@
                 android:textSize="16sp"/>
 
             <TextView
-                android:id="@+id/Asistentes_titulo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -113,7 +108,7 @@
                 android:textStyle="bold|italic"/>
 
             <EditText
-                android:id="@+id/max_asistentes"
+                android:id="@+id/max_attendees"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -123,7 +118,6 @@
                 android:textSize="16sp"/>
 
             <TextView
-                android:id="@+id/Precio_titulo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="13dp"
@@ -134,7 +128,7 @@
                 android:textStyle="bold|italic" />
 
             <EditText
-                android:id="@+id/precio"
+                android:id="@+id/price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -144,7 +138,6 @@
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/Categoría"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="13dp"
@@ -155,7 +148,7 @@
                 android:textStyle="bold|italic" />
 
             <Spinner
-                android:id="@+id/seleccion_categoria"
+                android:id="@+id/genre_selection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -163,7 +156,6 @@
                 android:entries="@array/categories" />
 
             <TextView
-                android:id="@+id/Solicitar_foto_evento"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="13dp"
@@ -174,12 +166,12 @@
                 android:textStyle="bold|italic" />
 
             <ImageView
-                android:id="@+id/foto_evento"
+                android:id="@+id/event_photo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"/>
             <Button
-                android:id="@+id/buttonLoadPicture"
+                android:id="@+id/button_load_picture"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"

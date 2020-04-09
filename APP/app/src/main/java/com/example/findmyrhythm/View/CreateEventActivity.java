@@ -25,17 +25,17 @@ import android.net.Uri;
 import com.example.findmyrhythm.Model.Event;
 import com.example.findmyrhythm.Model.EventService;
 import com.example.findmyrhythm.R;
+import com.google.gson.Gson;
+
 import android.widget.ImageView;
 import java.util.Calendar;
 
-/**
- * Provides a
- */
+
 public class CreateEventActivity extends AppCompatActivity {
 
     private static final String TAG = "Crear Evento";
     private int mYear, mMonth, mDay, mHour, mMinute;
-    private EditText date, hour, address, maxSpectators, genre, name;
+    private EditText date, hour, address, maxAttendees, genre, name, price;
     Uri imageUri;
     private static final int PICK_IMAGE = 100;
     static final Integer READ_EXST = 0x4;
@@ -48,54 +48,36 @@ public class CreateEventActivity extends AppCompatActivity {
         getSupportActionBar().setCustomView(R.layout.layout_actionbar_empty);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);
 
         setContentView(R.layout.activity_create_event);
 
-        address = findViewById(R.id.direccion);
-        maxSpectators = findViewById(R.id.max_asistentes);
-        name = findViewById(R.id.nombre_evento);
+        // Reference to the different EditText containing the event info
+        address = findViewById(R.id.address);
+        maxAttendees = findViewById(R.id.max_attendees);
+        price = findViewById(R.id.price);
+        name = findViewById(R.id.event_name);
+        date = findViewById(R.id.day);
+        hour = findViewById(R.id.hour);
+        // Button to confirm the event creation
+        Button saveButton = findViewById(R.id.ok);
+        saveButton.setClickable(true);
+        // Load picture button
+        Button buttonPhoto = findViewById(R.id.button_load_picture);
 
-        date = (EditText) findViewById(R.id.dia);
         date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
                 openDialogDate();
-
             }
         });
 
-        hour = (EditText) findViewById(R.id.hora);
         hour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
                 openDialogTime();
-
             }
         });
 
-        Button savebutton = findViewById(R.id.ok);
-        savebutton.setClickable(true);
-        savebutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                SharedPreferences preferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
-                String organizerId = preferences.getString("fb_id", null);
-
-                Event event = new Event();
-                event.setName(name.getText().toString());
-                event.setOrganizerId(organizerId);
-                EventService eventService = new EventService();
-                eventService.createEvent(event);
-
-                Log.w(TAG, "Se ha creado el evento con éxito");
-                Toast.makeText(CreateEventActivity.this, getString(R.string.notiCreationEve),  Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(CreateEventActivity.this, OrganizerEventInfoActivity.class);
-                startActivity(intent);
-            }
-        });
-        Button buttonPhoto = (Button)findViewById(R.id.buttonLoadPicture);
         buttonPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,7 +85,48 @@ public class CreateEventActivity extends AppCompatActivity {
             }
         });
 
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                createEvent();
+            }
+        });
+
     }
+
+
+    /**
+     * Gets the data of the event and calls to EventService to add the event to the database.
+     * Then, changes the activity to the one used to show the event info.
+     */
+    private void createEvent() {
+        // Get the id of the organizer
+        SharedPreferences preferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
+        String organizerId = preferences.getString("fb_id", null);
+
+        // Create the event
+        Event event = new Event();
+        event.setName(name.getText().toString());
+        String dateStr =  date.getText().toString();
+
+        event.setPrice(Integer.parseInt(price.getText().toString()));
+        event.setMaxAttendees(Integer.parseInt(maxAttendees.getText().toString()));
+        event.setOrganizerId(organizerId);
+
+        // Call to EventService to add the event to the database
+        EventService eventService = new EventService();
+        eventService.createEvent(event);
+
+        Log.w(TAG, "Se ha creado el evento con éxito");
+        Toast.makeText(CreateEventActivity.this, getString(R.string.notiCreationEve),  Toast.LENGTH_SHORT).show();
+
+         String eventJson = (new Gson()).toJson(event);
+        // Start the activity to show the event info
+        Intent intent = new Intent(CreateEventActivity.this, OrganizerEventInfoActivity.class);
+        intent.putExtra("EVENT", eventJson);
+        startActivity(intent);
+    }
+
 
     public void openDialogDate(){
 

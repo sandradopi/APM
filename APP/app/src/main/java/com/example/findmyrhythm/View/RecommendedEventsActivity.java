@@ -1,6 +1,7 @@
 package com.example.findmyrhythm.View;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,30 +32,10 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recommended_events);
-       // getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-     //   getSupportActionBar().setCustomView(R.layout.action_layout);
 
         setMenuItemChecked(R.id.nav_recommended);
 
-        mListView = (ListView) findViewById(R.id.eventslist2);
-
-//        ListView mListView;
-//        mListView = (ListView) findViewById(R.id.eventlist2);
-//
-//        String[] events = new String[] {"Viva Suecia", "Dani Fernández", "Antonio José"};
-//        String[] dates = new String[] { "Sab, 3 Marzo | 22:30", "Viernes, 6 Marzo | 23:30", "Domingo, 4 Abril | 22:00" };
-//        String[] prices = new String[] {"20€", "20€", "10€"};
-//        String[] rates = new String[] {"5", "2", "4"};
-//        mListView.setAdapter(new ListAdapterRecomended(this,events, dates, prices));
-//
-//        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-//        {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view,
-//                                    int position, long id) {
-//                startActivity(new Intent(RecommendedEventsActivity.this, EventInfoActivity.class));
-//            }
-//        });
+        mListView = findViewById(R.id.eventslist2);
 
         TextView toolbarTitle = findViewById(R.id.tvTitle);
         toolbarTitle.setText("Recomendados");
@@ -67,7 +48,6 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        // TODO: Esto peta
         new getEvents().execute();
     }
 
@@ -83,13 +63,14 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
             UserService userService = new UserService();
             ArrayList<Event> events = new ArrayList<>();
             try {
-                User user = userService.getUser(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                SharedPreferences preferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
+                User user = userService.getUser(preferences.getString("fb_id", null));
 
                 System.out.println(user.getSubscribedLocations() + "\n");
                 System.out.println(user.getSubscribedGenres() + "\n");
                 events = eventService.getRecommendedEvents(user);
             } catch (InstanceNotFoundException e) {
-                Log.e("DEBUG", "PUTO TONTO");
+                Log.e("DEBUG", "InstanceNotFoundException");
             }
 
             return events;
@@ -100,15 +81,15 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
             // super.onPostExecute(events);
             Log.e("DEBUG", events.toString());
 
-            String[] names = new String[events.size()]; //= new String[] {"Viva Suecia", "Dani Fernández", "Antonio José"};
-            String[] dates = new String[events.size()]; //= new String[] { "Sab, 28 Agosto | 22:30", "Viernes, 6 Julio | 23:30", "Domingo, 4 Abril | 22:00" };
-            String[] prices = new String[events.size()]; // = new String[] {"20€", "20€", "10€"};
+            String[] names = new String[events.size()];
+            String[] dates = new String[events.size()];
+            String[] prices = new String[events.size()];
 
             int i = 0;
             for (Event event : events) {
                 names[i] = event.getName();
                 dates[i] = "fecha";
-                prices[i] = event.getPrice();
+                prices[i] = String.valueOf(event.getPrice());
                 i++;
             }
             mListView.setAdapter(new ListAdapterNext(RecommendedEventsActivity.this, names, dates, prices));

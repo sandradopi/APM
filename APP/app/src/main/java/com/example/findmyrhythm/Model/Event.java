@@ -8,23 +8,20 @@ public class Event extends Entity{
     private String name;
     private Date date;
     private LocalDateTime hour;
-    private String location, genre, organizerId, price;
+    private String location, genre, organizerId;
+    private int maxAttendees, price;
 
     public Event() {}
 
-    /*public Event(String name, Date date, LocalDateTime hour, String location, String genre, String organizerId, String price) {
+    public Event(String name, Date date, LocalDateTime hour, String location, String genre, String organizerId, int maxAttendees, int price) {
         this.name = name;
         this.date = date;
         this.hour = hour;
         this.location = location;
         this.genre = genre;
         this.organizerId = organizerId;
+        this.maxAttendees = maxAttendees;
         this.price = price;
-    }*/
-
-    public Event(String location, String genre) {
-        this.location = location;
-        this.genre = genre;
     }
 
     public String getName() {
@@ -75,12 +72,20 @@ public class Event extends Entity{
         this.organizerId = organizerId;
     }
 
-    public String getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(int price) {
         this.price = price;
+    }
+
+    public int getMaxAttendees() {
+        return maxAttendees;
+    }
+
+    public void setMaxAttendees(int maxAttendees) {
+        this.maxAttendees = maxAttendees;
     }
 }
 
