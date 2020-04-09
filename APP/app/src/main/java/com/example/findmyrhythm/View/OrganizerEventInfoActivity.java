@@ -8,9 +8,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.findmyrhythm.Model.Event;
+import com.example.findmyrhythm.Model.EventService;
 import com.example.findmyrhythm.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -36,14 +38,29 @@ public class OrganizerEventInfoActivity extends AppCompatActivity implements OnM
         setContentView(R.layout.activity_organizer_event_info);
 
         Bundle extras = getIntent().getExtras();
-        if(extras != null) {
-            String eventJson = extras.getString("EVENT");
-            Log.e("DEBUG", eventJson);
-            Gson gson = new Gson();
-            event = gson.fromJson(eventJson, Event.class);
+        if (extras != null) {
+
+            if (extras.containsKey("EVENT")) {
+                String eventJson = extras.getString("EVENT");
+                Log.e("DEBUG", eventJson);
+                Gson gson = new Gson();
+                event = gson.fromJson(eventJson, Event.class);
+
+            } else if (extras.containsKey("ID")) {
+                String eventId = extras.getString("ID");
+                EventService eventService = new EventService();
+                event = eventService.getEvent(eventId);
+            }
+
+            TextView eventName = findViewById(R.id.eventName);
+            TextView eventMaxAttendees = findViewById(R.id.eventCapacity);
+            TextView eventPrice = findViewById(R.id.eventCost);
+
+            eventName.setText(event.getName());
+            eventMaxAttendees.setText(String.valueOf(event.getMaxAttendees()));
+            eventPrice.setText(String.valueOf(event.getPrice())+"€");
+
         }
-
-
 
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.eventMap);
