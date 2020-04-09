@@ -84,15 +84,30 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
             String[] names = new String[events.size()];
             String[] dates = new String[events.size()];
             String[] prices = new String[events.size()];
+            final String[] ids = new String[events.size()];
 
             int i = 0;
             for (Event event : events) {
+                ids[i] = event.getId();
                 names[i] = event.getName();
                 dates[i] = "fecha";
                 prices[i] = String.valueOf(event.getPrice());
                 i++;
             }
             mListView.setAdapter(new ListAdapterNext(RecommendedEventsActivity.this, names, dates, prices));
+
+            mListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+
+                    Intent intent = new Intent(RecommendedEventsActivity.this, OrganizerEventInfoActivity.class);
+                    Log.e("DEBUG", ids[0]);
+                    intent.putExtra("ID", ids[0]);
+                    RecommendedEventsActivity.this.startActivity(intent);
+
+                }
+            });
+
         }
     }
 }
