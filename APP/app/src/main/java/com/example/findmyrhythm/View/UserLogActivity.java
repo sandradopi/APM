@@ -83,6 +83,8 @@ public class UserLogActivity extends AppCompatActivity implements View.OnClickLi
 
         editor.putString("fb_name", currentUser.getDisplayName());
         editor.putString("fb_email", currentUser.getEmail());
+        editor.putString("fb_id", currentUser.getUid());
+
         editor.putString("name", name.getText().toString());
         editor.putString("email", email.getText().toString());
         editor.putString("nickname", nickname.getText().toString());

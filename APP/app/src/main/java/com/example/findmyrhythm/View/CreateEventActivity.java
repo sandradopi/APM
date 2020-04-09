@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,15 +21,21 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.net.Uri;
+
+import com.example.findmyrhythm.Model.Event;
+import com.example.findmyrhythm.Model.EventService;
 import com.example.findmyrhythm.R;
 import android.widget.ImageView;
 import java.util.Calendar;
 
+/**
+ * Provides a
+ */
 public class CreateEventActivity extends AppCompatActivity {
 
     private static final String TAG = "Crear Evento";
     private int mYear, mMonth, mDay, mHour, mMinute;
-    private EditText fecha,hora;
+    private EditText date, hour, address, maxSpectators, genre, name;
     Uri imageUri;
     private static final int PICK_IMAGE = 100;
     static final Integer READ_EXST = 0x4;
@@ -45,9 +52,12 @@ public class CreateEventActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_create_event);
 
+        address = findViewById(R.id.direccion);
+        maxSpectators = findViewById(R.id.max_asistentes);
+        name = findViewById(R.id.nombre_evento);
 
-        fecha = (EditText) findViewById(R.id.dia);
-        fecha.setOnClickListener(new View.OnClickListener() {
+        date = (EditText) findViewById(R.id.dia);
+        date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
                 openDialogDate();
@@ -55,8 +65,8 @@ public class CreateEventActivity extends AppCompatActivity {
             }
         });
 
-        hora = (EditText) findViewById(R.id.hora);
-        hora.setOnClickListener(new View.OnClickListener() {
+        hour = (EditText) findViewById(R.id.hora);
+        hour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
                 openDialogTime();
@@ -69,6 +79,16 @@ public class CreateEventActivity extends AppCompatActivity {
         savebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                SharedPreferences preferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
+                String organizerId = preferences.getString("fb_id", null);
+
+                Event event = new Event();
+                event.setName(name.getText().toString());
+                event.setOrganizerId(organizerId);
+                EventService eventService = new EventService();
+                eventService.createEvent(event);
+
                 Log.w(TAG, "Se ha creado el evento con éxito");
                 Toast.makeText(CreateEventActivity.this, getString(R.string.notiCreationEve),  Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(CreateEventActivity.this, OrganizerEventInfoActivity.class);
@@ -101,7 +121,7 @@ public class CreateEventActivity extends AppCompatActivity {
                     public void onDateSet(DatePicker view, int year,
                                           int monthOfYear, int dayOfMonth) {
 
-                        fecha.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                        date.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
 
                     }
                 }, mYear, mMonth, mDay);
@@ -124,7 +144,7 @@ public class CreateEventActivity extends AppCompatActivity {
                     public void onTimeSet(TimePicker view, int hourOfDay,
                                           int minute) {
 
-                        hora.setText(hourOfDay + ":" + minute);
+                        hour.setText(hourOfDay + ":" + minute);
                     }
                 }, mHour, mMinute, false);
         timePickerDialog.show();
