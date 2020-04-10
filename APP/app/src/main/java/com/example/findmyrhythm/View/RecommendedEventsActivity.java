@@ -20,6 +20,7 @@ import com.example.findmyrhythm.R;
 import com.example.findmyrhythm.View.tabs.ListAdapterNext;
 import com.example.findmyrhythm.View.tabs.ListAdapterRecomended;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -77,7 +78,7 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
         }
 
         @Override
-        protected void onPostExecute(ArrayList<Event> events) {
+        protected void onPostExecute(final ArrayList<Event> events) {
             // super.onPostExecute(events);
             Log.e("DEBUG", events.toString());
 
@@ -101,8 +102,9 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
                 public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
                     Intent intent = new Intent(RecommendedEventsActivity.this, EventInfoActivity.class);
-                    Log.e("DEBUG", ids[0]);
-                    intent.putExtra("ID", ids[(int) id]);
+                    String eventJson = (new Gson()).toJson(events.get((int) id));
+                    // intent.putExtra("ID", ids[(int) id]);
+                    intent.putExtra("EVENT", eventJson);
                     RecommendedEventsActivity.this.startActivity(intent);
 
                 }

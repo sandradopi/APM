@@ -120,7 +120,7 @@ public class CreateEventActivity extends AppCompatActivity {
         Log.w(TAG, "Se ha creado el evento con éxito");
         Toast.makeText(CreateEventActivity.this, getString(R.string.notiCreationEve),  Toast.LENGTH_SHORT).show();
 
-         String eventJson = (new Gson()).toJson(event);
+        String eventJson = (new Gson()).toJson(event);
         // Start the activity to show the event info
         Intent intent = new Intent(CreateEventActivity.this, OrganizerEventInfoActivity.class);
         intent.putExtra("EVENT", eventJson);
