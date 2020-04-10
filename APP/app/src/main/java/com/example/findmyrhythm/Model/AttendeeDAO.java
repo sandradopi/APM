@@ -32,8 +32,9 @@ public class AttendeeDAO extends GenericDAO<Attendee>{
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     Attendee attendee = child.getValue(Attendee.class);
                     // Event title contains title and event is not deleted
-                    if (attendee.getIdEvent().contains(idEvent) && attendee.getIdEvent().contains(idUser)) {
+                    if (attendee.getIdEvent().contains(idEvent) && attendee.getIdUser().contains(idUser)) {
                         attendeeCheck = attendee;
+                        break;
                     }
                 }
                 lock.countDown();

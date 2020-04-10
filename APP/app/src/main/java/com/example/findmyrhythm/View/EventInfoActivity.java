@@ -47,9 +47,9 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
         final Button joinButton = (Button) findViewById(R.id.joinBtn);
 
            if (id_Joined) {
-                joinButton.setText("Apuntado");
-                joinButton.setBackgroundColor(Color.GREEN);
-                chronometer.start();
+               joinButton.setText("Apuntado");
+               joinButton.setBackgroundColor(0xFF673AB7);
+               chronometer.start();
            }
 
 
