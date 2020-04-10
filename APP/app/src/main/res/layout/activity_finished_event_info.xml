@@ -8,116 +8,18 @@
     android:background="@color/primaryBackgroundDark"
     tools:context=".View.EventInfoActivity">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_weight="2"
-        android:layout_height="0dp"
-        android:layout_above="@+id/eventTabs">
+        android:layout_height="300dp"
+        android:layout_alignParentTop="true">
 
-        <LinearLayout
+        <fragment
+            android:id="@+id/finishedEventInfo"
+            android:name="com.example.findmyrhythm.View.tabs.FinishedEventInfoFragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="15dp">
+            android:layout_height="match_parent" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/eventName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Viva Suecia"
-                    android:layout_centerVertical="true"
-                    android:textSize="25sp"
-                    android:textStyle="bold" />
-
-                <Button
-                    android:id="@+id/passedBtn"
-                    android:layout_width="100dp"
-                    android:layout_height="41dp"
-                    android:background="#ff0000"
-                    android:layout_centerVertical="true"
-                    android:clickable="false"
-                    android:text="Terminado"
-                    android:textColor="@color/white"
-                    android:layout_alignParentEnd="true" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp">
-
-                <TextView
-                    android:id="@+id/eventDate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="Sab, Marzo 3 | 23:00"
-                    android:textColor="#707070"
-                    android:textSize="18sp" />
-
-                <Button
-                    android:id="@+id/scoreBtn"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:background="#0088ff"
-                    android:clickable="false"
-                    android:text="Score 1/10"
-                    android:textColor="@color/white"
-                    android:layout_alignParentEnd="true" />
-            </RelativeLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/eventDesc"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Descripción"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/eventDescContent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Suecia es un grupo de Indie Rock con toques Shoegaze originario de la ciudad de Murcia (España) y formado en 2013."
-                    android:textSize="15sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/eventLocation"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:text="Ubicación"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/eventLocationContent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Discoteca Playa Club Andén de Riazor, S/n,15011 A Coruña"
-                    android:textSize="15sp" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </ScrollView>
+    </LinearLayout>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/eventTabs"
