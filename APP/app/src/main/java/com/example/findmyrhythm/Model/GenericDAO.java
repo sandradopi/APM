@@ -70,14 +70,10 @@ public class GenericDAO <T extends Entity> {
 
         //Lock to wait for the data
         final CountDownLatch lock = new CountDownLatch(1);
-        Log.e(TAG, "findById await finished");
-        Log.e(TAG, entityId);
-        Log.e(TAG, tableName);
 
         table.child(entityId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.e(TAG, "findById await finished");
                 entity.add(dataSnapshot.getValue(genericType));
                 // Data retrieved, release lock
                 lock.countDown();
@@ -85,7 +81,6 @@ public class GenericDAO <T extends Entity> {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e(TAG, "findById await finished");
                 // Cancelled, release lock
                 lock.countDown();
             }
@@ -93,7 +88,6 @@ public class GenericDAO <T extends Entity> {
 
         try {
             lock.await();
-            Log.e(TAG, "findById await finished");
         } catch (InterruptedException e) {
             Log.e(TAG, "findById thread interrupted");
         }

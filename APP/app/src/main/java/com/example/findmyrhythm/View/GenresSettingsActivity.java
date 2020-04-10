@@ -76,6 +76,12 @@ public class GenresSettingsActivity extends AppCompatActivity implements View.On
     }
 
     @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
+
+    @Override
     public void onClick(View view) {
 
         if (view == save) {
