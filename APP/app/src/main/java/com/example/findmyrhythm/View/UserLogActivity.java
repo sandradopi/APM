@@ -17,7 +17,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.findmyrhythm.Model.Event;
 import com.example.findmyrhythm.Model.IOFiles;
+import com.example.findmyrhythm.Model.PersistentUserInfo;
 import com.example.findmyrhythm.Model.User;
 import com.example.findmyrhythm.Model.UserService;
 import com.example.findmyrhythm.R;
@@ -90,6 +92,18 @@ public class UserLogActivity extends AppCompatActivity implements View.OnClickLi
         editor.putString("account_type", "user");
 
         editor.commit(); // or apply
+
+
+        ArrayList<String> genres, locations;
+        Bundle b = getIntent().getExtras();
+        locations = b.getStringArrayList(getString(R.string.locationsListID));
+        genres = b.getStringArrayList(getString(R.string.genresListID));
+
+        PersistentUserInfo persistentUserInfo = new PersistentUserInfo(currentUser.getUid(),name.getText().toString(),
+                nickname.getText().toString(),email.getText().toString(), biography.getText().toString(),
+                new ArrayList<Event>(), birthDate.getText().toString(), locations, genres);
+
+        PersistentUserInfo.setPersistentInfo(getApplicationContext(), persistentUserInfo);
 
         //TODO: Introduce into database by getting the value of every field. Check Android Service.
         new CreateUserTask().execute();

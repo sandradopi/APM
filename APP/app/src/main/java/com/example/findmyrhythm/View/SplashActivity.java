@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 
 import com.example.findmyrhythm.Model.IOFiles;
 import com.example.findmyrhythm.Model.PersistentUserInfo;
@@ -40,9 +41,12 @@ public class SplashActivity extends AppCompatActivity {
                     ArrayList<String> eventsToAttend = new ArrayList<String>();
                     eventsToAttend.add("Rock in Cambre");
 
-                    PersistentUserInfo persistentUserInfo = new PersistentUserInfo(eventsToAttend, "My biography");
+                    // TODO: cargar los eventos en el JSON desde la base de datos
 
-                    PersistentUserInfo.setPersistentUserInfo(getApplicationContext(), persistentUserInfo);
+
+                    PersistentUserInfo persistentUserInfo = (PersistentUserInfo) PersistentUserInfo.getPersistentInfo(getApplicationContext());
+
+                    Log.e("DEBUG", persistentUserInfo.getBirthdate());
 
                     Uri photoUrl = currentUser.getPhotoUrl();
 

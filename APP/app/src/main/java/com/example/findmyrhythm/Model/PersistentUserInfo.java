@@ -2,61 +2,57 @@ package com.example.findmyrhythm.Model;
 
 import android.content.Context;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
 import java.util.ArrayList;
 
-public class PersistentUserInfo {
+public class PersistentUserInfo extends PersistentInfo {
 
-    private ArrayList<String> eventsToAttend;
-    private String biography;
+    private String birthdate;
+    private ArrayList<String> subscribedLocations = new ArrayList<String>();
+    private ArrayList<String> subscribedGenres = new ArrayList<String>();
 
-
-    public PersistentUserInfo(ArrayList<String> eventsToAttend, String biography) {
-        this.eventsToAttend = eventsToAttend;
-        this.biography = biography;
+    public PersistentUserInfo(String id, String name, String username, String email, String biography, ArrayList<Event> events, String birthdate, ArrayList<String> subscribedLocations, ArrayList<String> subscribedGenres) {
+        super(id, name, username, email, biography, events);
+        this.birthdate = birthdate;
+        this.subscribedLocations = subscribedLocations;
+        this.subscribedGenres = subscribedGenres;
     }
 
-    public ArrayList<String> getEventsToAttend() {
-        return eventsToAttend;
+    public ArrayList<String> getSubscribedLocations() {
+        return subscribedLocations;
     }
 
-    public void setEventsToAttend(ArrayList<String> eventsToAttend) {
-        this.eventsToAttend = eventsToAttend;
+    public void setSubscribedLocations(ArrayList<String> subscribedLocations) {
+        this.subscribedLocations = subscribedLocations;
     }
 
-    public String getBiography() {
-        return biography;
+    public ArrayList<String> getSubscribedGenres() {
+        return subscribedGenres;
     }
 
-    public void setBiography(String biography) {
-        this.biography = biography;
+    public void setSubscribedGenres(ArrayList<String> subscribedGenres) {
+        this.subscribedGenres = subscribedGenres;
     }
 
-    public static PersistentUserInfo getPersistentUserInfo(Context context) {
-        Gson gson = new Gson();
-        PersistentUserInfo persistentUserInfo = null;
-        try {
-            persistentUserInfo = gson.fromJson(new FileReader(context.getFilesDir().getPath() + "user_persistent_info.json"), PersistentUserInfo.class);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return persistentUserInfo;
+    public String getBirthdate() {
+        return birthdate;
     }
 
-    public static void setPersistentUserInfo(Context context, PersistentUserInfo persistentUserInfo) {
-        try (Writer writer = new FileWriter(context.getFilesDir().getPath() + "user_persistent_info.json")) {
-            Gson gson = new GsonBuilder().create();
-            gson.toJson(persistentUserInfo, writer);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void setBirthdate(String birthdate) {
+        this.birthdate = birthdate;
+    }
+
+
+
+    public void updateInfo(Context context, String name, String username, String email, String biography, String birthdate, ArrayList<String> subscribedLocations, ArrayList<String> subscribedGenres) {
+        PersistentUserInfo persistentUserInfo = (PersistentUserInfo) PersistentUserInfo.getPersistentInfo(context);
+        persistentUserInfo.setName(name);
+        persistentUserInfo.setUsername(username);
+        persistentUserInfo.setBiography(biography);
+        persistentUserInfo.setBirthdate(birthdate);
+        persistentUserInfo.setSubscribedLocations(subscribedLocations);
+        persistentUserInfo.setSubscribedGenres(subscribedGenres);
+
+        PersistentUserInfo.setPersistentInfo(context, persistentUserInfo);
     }
 
 }
