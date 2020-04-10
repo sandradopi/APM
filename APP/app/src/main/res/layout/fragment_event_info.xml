@@ -88,19 +88,4 @@
 
     </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <Chronometer
-            android:id="@+id/eventClock"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:padding="20sp"
-            android:textSize="40sp" />
-    </RelativeLayout>
-
 </LinearLayout>

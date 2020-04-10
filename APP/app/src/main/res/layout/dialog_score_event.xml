@@ -1,0 +1,76 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:orientation="vertical"
+    android:padding="25dp">
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <TextView
+            android:id="@+id/scoreTitle"
+            android:layout_width="205dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Valoración: "
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textSize="18dp" />
+    </TableRow>
+
+    <TextView
+        android:id="@+id/scoreTitleEvent"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        android:text="@string/dirPlaya"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <TextView
+            android:id="@+id/scoreSubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Puntuación"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textSize="18dp" />
+
+        <RatingBar
+            android:id="@+id/pastEventScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="10dp"
+            android:clickable="false"
+            android:numStars="5"
+            android:scaleX="0.5"
+            android:scaleY="0.5"
+            android:theme="@style/CustomRatingBar" />
+
+    </TableRow>
+
+    <TextView
+        android:id="@+id/scoreComment"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        android:text="Comentario:"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+    <TextView
+        android:id="@+id/contentdireccion"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        android:text="Que conciertazo!"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+</LinearLayout>
+

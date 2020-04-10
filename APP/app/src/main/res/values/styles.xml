@@ -27,4 +27,10 @@
         <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
     </style>
 
+    <!-- Rating Bar Style -->
+    <style name="CustomRatingBar"
+        parent="android:style/Widget.Material.RatingBar.Small">
+        <item name="colorControlActivated">@color/primaryDark</item>
+    </style>
+
 </resources>

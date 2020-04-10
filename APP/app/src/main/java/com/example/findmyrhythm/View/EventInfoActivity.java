@@ -28,6 +28,8 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
     Boolean id_Joined = false;
     AttendeeService attendeeService = new AttendeeService();
     UserService userService = new UserService();
+    String joined_text = "Apuntado";
+    String join_event_text = "Apuntarse";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,13 +45,11 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
                 .findFragmentById(R.id.eventMap);
         mapFragment.getMapAsync(this);
 
-        final Chronometer chronometer = (Chronometer) findViewById(R.id.eventClock);
         final Button joinButton = (Button) findViewById(R.id.joinBtn);
 
            if (id_Joined) {
-               joinButton.setText("Apuntado");
+               joinButton.setText(joined_text);
                joinButton.setBackgroundColor(0xFF673AB7);
-               chronometer.start();
            }
 
 
@@ -59,16 +59,14 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
             public void onClick(View v) {
                 if(id_Joined){
                     //attendeeService.deleteAttendee(attendee);
-                    joinButton.setText("Apuntarse");
+                    joinButton.setText(join_event_text);
                     joinButton.setBackgroundColor(0xFFB3A1CE);
-                    chronometer.stop();
                     id_Joined= false;
 
                 }else{
                     attendeeService.createAttendee("FJkjdJFIOEHb7895", "PLCfp0OsCMN3MG14kcuMZoPHnwA3");
-                    joinButton.setText("Apuntado");
+                    joinButton.setText(joined_text);
                     joinButton.setBackgroundColor(0xFF673AB7);
-                    chronometer.start();
                     id_Joined= true;
 
                 }
@@ -112,7 +110,7 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
             System.out.println("aqui1");
             try {
                 User user = userService.getUser(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                Attendee attendee = attendeeService.findAttendeeByIds("FJkjdJFIOEHb7895", user.getId());
+                Attendee attendee = attendeeService.findAttendeeByIds("M4U8W8YMavqlySo8aic", user.getId());
                 if (attendee != null){
                     id_Joined=true;
                 }

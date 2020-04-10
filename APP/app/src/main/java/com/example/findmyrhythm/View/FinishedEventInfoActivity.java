@@ -2,12 +2,17 @@ package com.example.findmyrhythm.View;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.Toast;
 
 import com.example.findmyrhythm.R;
@@ -15,7 +20,9 @@ import com.example.findmyrhythm.View.tabs.RatingsAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 public class FinishedEventInfoActivity extends AppCompatActivity {
+    private static final String TAG = "Score Event";
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,21 +41,32 @@ public class FinishedEventInfoActivity extends AppCompatActivity {
         TabLayout tabs = findViewById(R.id.eventTabs);
         tabs.setupWithViewPager(viewPager);
 
-        final Button scoreButton = (Button) findViewById(R.id.scoreBtn);
-
-        scoreButton.setOnClickListener(new View.OnClickListener() {
-
+        // SCORES LOGIC
+        RatingBar bar=(RatingBar)findViewById(R.id.pastEventScore);
+        bar.setStepSize(0.5f);
+        //Bundle b = getIntent().getExtras();
+        float score= 8;
+        //change the score out of ten to star rating out of 5
+        float scores = score / 2;
+        //display star rating
+        bar.setRating(scores);
+        bar.setClickable(true);
+        bar.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                Context context = getApplicationContext();
-                CharSequence text = "Score Event";
-                int duration = Toast.LENGTH_LONG;
-
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
+            public boolean onTouch (View view, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    Log.w(TAG, "Score event");
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    ScoreEventDialog dialog = new ScoreEventDialog();
+                    dialog.show(fragmentManager, "tagAlerta");
+                }
+                return true;
             }
         });
+
     }
+
+
 
     @Override
     public boolean onSupportNavigateUp() {

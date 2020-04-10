@@ -88,6 +88,8 @@
     <string name="email1">Correo</string>
     <string name="orglocation">Localización de la organización</string>
     <string name="notiCreation">Perfil creado con éxito</string>
+    <string name="join_event_btn">Apuntarse</string>
+    <string name="joined_event_btn">Perfil creado con éxito</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
