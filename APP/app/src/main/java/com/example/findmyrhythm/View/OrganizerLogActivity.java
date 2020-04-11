@@ -94,6 +94,7 @@ public class OrganizerLogActivity extends AppCompatActivity implements View.OnCl
         startActivity(intent);
     }
 
+
     public void createOrganizer() {
 
         SharedPreferences sharedpreferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
@@ -125,12 +126,7 @@ public class OrganizerLogActivity extends AppCompatActivity implements View.OnCl
         //TODO: Introduce into database by getting the value of every field. Check Android Service.
         new CreateUserTask().execute();
 
-        //TODO: Intent to new Activity
-        Log.w(TAG, "Creación de la cuenta del organizador");
-        Toast.makeText(OrganizerLogActivity.this, getString(R.string.notiCreation),  Toast.LENGTH_SHORT).show();
 
-        Intent intent = new Intent(this, OrganizerProfileActivity.class);
-        startActivity(intent);
 
     }
 
