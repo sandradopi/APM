@@ -7,6 +7,7 @@ import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.example.findmyrhythm.R;
 
@@ -14,7 +15,7 @@ import com.example.findmyrhythm.R;
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
-public class SectionsPagerAdapter extends FragmentPagerAdapter {
+public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
 
     //@StringRes
     //private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2};
@@ -38,6 +39,10 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
                  return null;
         }
     }
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
+    }
+
 
     @Nullable
     @Override
@@ -57,4 +62,5 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         // Show 2 total pages.
         return 2;
     }
+
 }

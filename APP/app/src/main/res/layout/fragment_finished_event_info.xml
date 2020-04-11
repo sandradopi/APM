@@ -44,6 +44,18 @@
                     android:text="Terminado"
                     android:textColor="@color/white" />
 
+                <RatingBar
+                    android:id="@+id/pastEventScore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="70dp"
+                    android:layout_marginRight="32dp"
+                    android:clickable="true"
+                    android:numStars="5"
+                    android:scaleX="0.3"
+                    android:scaleY="0.3"
+                    android:theme="@style/CustomRatingBar" />
+
             </RelativeLayout>
 
             <RelativeLayout
@@ -60,17 +72,6 @@
                     android:textColor="#707070"
                     android:textSize="18sp" />
 
-                <RatingBar
-                    android:id="@+id/pastEventScore"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginLeft="10dp"
-                    android:clickable="true"
-                    android:numStars="5"
-                    android:scaleX="0.3"
-                    android:scaleY="0.3"
-                    android:theme="@style/CustomRatingBar" />
             </RelativeLayout>
 
             <LinearLayout

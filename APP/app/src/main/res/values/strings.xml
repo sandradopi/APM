@@ -53,7 +53,6 @@
     <string name="genresSettings">Géneros seleccionados</string>
     <string name="locationsSettings">Ubicaciones seleccionadas</string>
 
-
     <!-- Strings for the creation of the profile of the users -->
 
     <string name="genresListID">SubscribedGenres</string>

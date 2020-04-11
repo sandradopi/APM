@@ -76,5 +76,19 @@ public class PersistentUserInfo extends User {
         setPersistentUserInfo(context, persistentInfo);
     }
 
+    public void deleteEvent(Context context, Event event) {
+        PersistentUserInfo persistentInfo = getPersistentUserInfo(context);
+        events = persistentInfo.getEvents();
+
+        if (events.contains(event) && event!=null){
+            events.remove(event);
+            System.out.println(events);
+
+        }
+        persistentInfo.setEvents(events);
+        setPersistentUserInfo(context, persistentInfo);
+    }
+
+
 
 }

@@ -10,11 +10,14 @@ import android.widget.ListView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.findmyrhythm.Model.Event;
 import com.example.findmyrhythm.Model.PersistentUserInfo;
 import com.example.findmyrhythm.R;
 import com.example.findmyrhythm.View.EventInfoActivity;
+import com.example.findmyrhythm.View.RecommendedEventsActivity;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,10 +40,10 @@ public class NextEventsFragment extends Fragment {
 
 
         PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
-        ArrayList<Event> nextEvents= persistentUserInfo.getEvents();
-        String[] events = new String[nextEvents.size()];
-        String[] dates = new String[nextEvents.size()];
-        String[] prices = new String[nextEvents.size()];
+        final ArrayList<Event> nextEvents= persistentUserInfo.getEvents();
+        final String[] events = new String[nextEvents.size()];
+        final String[] dates = new String[nextEvents.size()];
+        final String[] prices = new String[nextEvents.size()];
 
         int i = 0;
         for (Event event : nextEvents) {
@@ -57,11 +60,16 @@ public class NextEventsFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
                 Intent intent = new Intent(getActivity(), EventInfoActivity.class);
+                String eventJson = (new Gson()).toJson(nextEvents.get((int) id));
+                intent.putExtra("EVENT", eventJson);
                 getActivity().startActivity(intent);
+
 
 
             }
         });
+
+
 
         return view;
     }

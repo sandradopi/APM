@@ -15,6 +15,8 @@ import com.example.findmyrhythm.Model.IOFiles;
 import com.example.findmyrhythm.R;
 import com.google.android.material.tabs.TabLayout;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.findmyrhythm.View.tabs.SectionsPagerAdapter;
@@ -41,6 +43,7 @@ public class UserProfileActivity extends UserMenuDrawerActivity {
 //
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);
+
 
         setContentView(R.layout.activity_user_profile);
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
@@ -83,6 +86,12 @@ public class UserProfileActivity extends UserMenuDrawerActivity {
         } catch (FileNotFoundException e) {
             imageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_logo));
         }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
     }
 }

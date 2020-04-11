@@ -59,14 +59,10 @@ public class SplashActivity extends AppCompatActivity {
                     } else {
                         PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
                         eventsToAttendIds = attendeeService.findAttendeeByUser(currentUser.getUid());
-                        Log.e("DEBUG", "IDs eventos");
-                        System.out.println(eventsToAttendIds.get(0));
 
                         for (String idEvent : eventsToAttendIds) {
                             Event event = eventService.getEvent(idEvent);
-                            System.out.println(event.getId());
                             persistentUserInfo.addEvent(getApplicationContext(),event);
-                            System.out.println(persistentUserInfo.getEvents());
                         }
 
 

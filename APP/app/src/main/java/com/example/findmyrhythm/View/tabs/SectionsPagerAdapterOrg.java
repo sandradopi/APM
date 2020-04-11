@@ -6,12 +6,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
-public class SectionsPagerAdapterOrg extends FragmentPagerAdapter {
+public class SectionsPagerAdapterOrg extends FragmentStatePagerAdapter {
 
     //@StringRes
     //private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2};
@@ -51,6 +52,9 @@ public class SectionsPagerAdapterOrg extends FragmentPagerAdapter {
             default:
                 return null;
         }
+    }
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
     }
 
     @Override

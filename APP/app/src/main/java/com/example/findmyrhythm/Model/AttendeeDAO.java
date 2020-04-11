@@ -1,5 +1,7 @@
 package com.example.findmyrhythm.Model;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.google.firebase.database.DataSnapshot;
@@ -93,4 +95,45 @@ public class AttendeeDAO extends GenericDAO<Attendee>{
         }
         return eventsToAttendId;
     }
+
+    public void deleteAttendeeByEvent (final String idEvent) {
+        DatabaseReference table = getTable();
+        // Lock
+        final CountDownLatch lock = new CountDownLatch(1);
+        Log.e("DEBUG", "DAO");
+
+        table.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.e("DEBUG", "DAO1");
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    Log.e("DEBUG", "DAO2");
+                    Attendee attendee = child.getValue(Attendee.class);
+                    // Event title contains title and event is not deleted
+                    if (attendee.getIdEvent().contains(idEvent)) {
+                        Log.e("DEBUG", "DAO3");
+                        getTable().child(attendee.getId()).removeValue();
+                        break;
+                    }
+                }
+                lock.countDown();
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                lock.countDown();
+            }
+        });
+        // Wait for all data to be retrieved
+        try {
+            lock.await();
+        }
+        catch (InterruptedException e) {
+            //Log.e(TAG, "Thread was interrupted while waiting for syncronisation with Firebase call");
+        }
+    }
+
+
+
 }

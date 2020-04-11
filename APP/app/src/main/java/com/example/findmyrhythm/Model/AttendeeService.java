@@ -50,5 +50,9 @@ public class AttendeeService {
         return attendeeDAO.findAttendeeByUser(idUser);
     }
 
+    public void deleteAttendeeByEvent(String idEvent) {
+        attendeeDAO.deleteAttendeeByEvent(idEvent);
+    }
+
 
 }

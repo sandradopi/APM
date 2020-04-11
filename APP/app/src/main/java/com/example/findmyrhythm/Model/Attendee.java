@@ -5,7 +5,7 @@ public class Attendee extends Entity {
     private  String idEvent;
     private  String idUser;
 
-    public Attendee(String idEvent, String idUser) {
+    public Attendee(String idUser, String idEvent ) {
         this.idEvent = idEvent;
         this.idUser = idUser;
     }
