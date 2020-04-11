@@ -21,6 +21,14 @@ public class PersistentOrganizerInfo extends Organizer {
         this.events = events;
     }
 
+    public ArrayList<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(ArrayList<Event> events) {
+        this.events = events;
+    }
+
     public static PersistentOrganizerInfo getPersistentOrganizerInfo(Context context) {
         Gson gson = new Gson();
         PersistentOrganizerInfo persistentOrganizerInfo = null;
@@ -40,6 +48,11 @@ public class PersistentOrganizerInfo extends Organizer {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public void addEvent(Context context, Event event) {
+        PersistentOrganizerInfo persistentInfo = getPersistentOrganizerInfo(context);
+        persistentInfo.events.add(event);
+        setPersistentOrganizerInfo(context, persistentInfo);
     }
 
 }

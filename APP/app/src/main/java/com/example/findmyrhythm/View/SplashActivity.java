@@ -13,6 +13,7 @@ import com.example.findmyrhythm.Model.Attendee;
 import com.example.findmyrhythm.Model.AttendeeDAO;
 import com.example.findmyrhythm.Model.AttendeeService;
 import com.example.findmyrhythm.Model.Event;
+import com.example.findmyrhythm.Model.EventService;
 import com.example.findmyrhythm.Model.IOFiles;
 import com.example.findmyrhythm.Model.PersistentOrganizerInfo;
 import com.example.findmyrhythm.Model.PersistentUserInfo;
@@ -35,6 +36,7 @@ public class SplashActivity extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         final AttendeeService attendeeService = new AttendeeService();
+        final EventService eventService = new EventService();
 
         if (currentUser != null) {
             (new Thread() {
@@ -42,6 +44,9 @@ public class SplashActivity extends AppCompatActivity {
                     String name = currentUser.getDisplayName();
                     String email = currentUser.getEmail();
                     String userId = currentUser.getUid();
+                    ArrayList<String> eventsToAttendIds = new ArrayList<String>();
+                    ArrayList<String> eventscreatedIds = new ArrayList<String>();
+
 
                     SharedPreferences sharedPreferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
                     String account_type = sharedPreferences.getString("account_type", null);
@@ -53,8 +58,17 @@ public class SplashActivity extends AppCompatActivity {
 
                     } else {
                         PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
+                        eventsToAttendIds = attendeeService.findAttendeeByUser(currentUser.getUid());
+                        Log.e("DEBUG", "IDs eventos");
+                        System.out.println(eventsToAttendIds.get(0));
 
-                        // TODO: Actualizar info: 1) Descargar datos  2) Set de la nueva info
+                        for (String idEvent : eventsToAttendIds) {
+                            Event event = eventService.getEvent(idEvent);
+                            System.out.println(event.getId());
+                            persistentUserInfo.addEvent(getApplicationContext(),event);
+                            System.out.println(persistentUserInfo.getEvents());
+                        }
+
 
                     }
 

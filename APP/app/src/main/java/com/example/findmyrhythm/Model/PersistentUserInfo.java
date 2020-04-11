@@ -22,6 +22,14 @@ public class PersistentUserInfo extends User {
         this.events = events;
     }
 
+    public ArrayList<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(ArrayList<Event> events) {
+        this.events = events;
+    }
+
     public void updateInfo(Context context, String name, String username, String email, String biography, String birthdate, ArrayList<String> subscribedLocations, ArrayList<String> subscribedGenres) {
         PersistentUserInfo persistentUserInfo = (PersistentUserInfo) PersistentUserInfo.getPersistentUserInfo(context);
         persistentUserInfo.setName(name);
@@ -54,6 +62,18 @@ public class PersistentUserInfo extends User {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void addEvent(Context context, Event event) {
+        PersistentUserInfo persistentInfo = getPersistentUserInfo(context);
+        events = persistentInfo.getEvents();
+
+        if (!events.contains(event) && event!=null){
+            events.add(event);
+
+        }
+        persistentInfo.setEvents(events);
+        setPersistentUserInfo(context, persistentInfo);
     }
 
 

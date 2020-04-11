@@ -11,8 +11,15 @@ import android.widget.ListView;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.findmyrhythm.Model.Event;
+import com.example.findmyrhythm.Model.PersistentUserInfo;
 import com.example.findmyrhythm.R;
 import com.example.findmyrhythm.View.EventInfoActivity;
+
+import java.util.ArrayList;
+import java.util.Date;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 public class NextEventsFragment extends Fragment {
@@ -27,9 +34,22 @@ public class NextEventsFragment extends Fragment {
 
         ListView mListView;
         mListView = (ListView) view.findViewById(R.id.eventlist);
-        String[] events = new String[] {"Viva Suecia", "Dani Fernández", "Antonio José"};
-        String[] dates = new String[] { "Sab, 28 Agosto | 22:30", "Viernes, 6 Julio | 23:30", "Domingo, 4 Abril | 22:00" };
-        String[] prices = new String[] {"20€", "20€", "10€"};
+
+
+        PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
+        ArrayList<Event> nextEvents= persistentUserInfo.getEvents();
+        String[] events = new String[nextEvents.size()];
+        String[] dates = new String[nextEvents.size()];
+        String[] prices = new String[nextEvents.size()];
+
+        int i = 0;
+        for (Event event : nextEvents) {
+            events[i] = event.getName();
+            dates[i] = "fecha";
+            prices[i] = String.valueOf(event.getPrice()).concat("€");
+            i++;
+        }
+
         mListView.setAdapter(new ListAdapterNext(this.requireContext(), events, dates, prices));
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
