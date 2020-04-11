@@ -96,5 +96,4 @@ public class EventDAO extends GenericDAO<Event> {
 
 
     }
-
 }
