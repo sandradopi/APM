@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.util.Log;
 
 import com.example.findmyrhythm.Model.IOFiles;
+import com.example.findmyrhythm.Model.PersistentOrganizerInfo;
 import com.example.findmyrhythm.Model.PersistentUserInfo;
 import com.example.findmyrhythm.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -41,12 +42,20 @@ public class SplashActivity extends AppCompatActivity {
                     ArrayList<String> eventsToAttend = new ArrayList<String>();
                     eventsToAttend.add("Rock in Cambre");
 
-                    // TODO: cargar los eventos en el JSON desde la base de datos
+                    SharedPreferences sharedPreferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
+                    String account_type = sharedPreferences.getString("account_type", null);
 
+                    if (account_type.equals("organizer")) {
+                        PersistentOrganizerInfo persistentOrganizerInfo = PersistentOrganizerInfo.getPersistentOrganizerInfo(getApplicationContext());
 
-                    PersistentUserInfo persistentUserInfo = (PersistentUserInfo) PersistentUserInfo.getPersistentInfo(getApplicationContext());
+                        // TODO: Actualizar info: 1) Descargar datos  2) Set de la nueva info
 
-                    Log.e("DEBUG", persistentUserInfo.getBirthdate());
+                    } else {
+                        PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
+
+                        // TODO: Actualizar info: 1) Descargar datos  2) Set de la nueva info
+
+                    }
 
                     Uri photoUrl = currentUser.getPhotoUrl();
 

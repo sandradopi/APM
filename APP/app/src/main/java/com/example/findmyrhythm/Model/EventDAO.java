@@ -91,6 +91,9 @@ public class EventDAO extends GenericDAO<Event> {
 //        }
 
 
+        // TODO: Comprobar si está apuntado y lo de la fecha
+
+
         Log.e(TAG, locationEvents.toString());
         return locationEvents;
 
