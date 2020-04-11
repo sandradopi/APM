@@ -9,8 +9,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
+import com.example.findmyrhythm.Model.Attendee;
+import com.example.findmyrhythm.Model.AttendeeDAO;
+import com.example.findmyrhythm.Model.AttendeeService;
+import com.example.findmyrhythm.Model.Event;
 import com.example.findmyrhythm.Model.IOFiles;
 import com.example.findmyrhythm.Model.PersistentUserInfo;
+import com.example.findmyrhythm.Model.User;
 import com.example.findmyrhythm.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,6 +33,7 @@ public class SplashActivity extends AppCompatActivity {
 
         // Check if user is signed in (non-null) and update UI accordingly.
         final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        final AttendeeService attendeeService = new AttendeeService();
 
         if (currentUser != null) {
             (new Thread() {
@@ -36,16 +42,10 @@ public class SplashActivity extends AppCompatActivity {
                     String email = currentUser.getEmail();
                     String userId = currentUser.getUid();
 
+
                     // IOFiles.storeInfoJSON(name, email, getPackageName());
-
-                    ArrayList<String> eventsToAttend = new ArrayList<String>();
-                    eventsToAttend.add("Rock in Cambre");
-
                     // TODO: cargar los eventos en el JSON desde la base de datos
-
-
                     PersistentUserInfo persistentUserInfo = (PersistentUserInfo) PersistentUserInfo.getPersistentInfo(getApplicationContext());
-
                     Log.e("DEBUG", persistentUserInfo.getBirthdate());
 
                     Uri photoUrl = currentUser.getPhotoUrl();
@@ -72,8 +72,10 @@ public class SplashActivity extends AppCompatActivity {
 
                     Intent intent;
                     if (accountType.equals("organizer")) {
+
                         intent = new Intent(SplashActivity.this, OrganizerProfileActivity.class);
                     } else if (accountType.equals("user")) {
+
                         intent = new Intent(SplashActivity.this, UserProfileActivity.class);
                     } else {
                         throw new IllegalArgumentException("Unknown user type.");

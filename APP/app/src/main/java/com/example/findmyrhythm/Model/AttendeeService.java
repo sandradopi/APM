@@ -5,6 +5,8 @@ import android.util.Log;
 import com.example.findmyrhythm.Model.Exceptions.DuplicatedInstanceException;
 import com.example.findmyrhythm.Model.Exceptions.InstanceNotFoundException;
 
+import java.util.ArrayList;
+
 public class AttendeeService {
 
     private static final String TAG = "AttendeeService";
@@ -43,5 +45,10 @@ public class AttendeeService {
     public Attendee findAttendeeByIds(String idEvent, String idUser) {
         return attendeeDAO.findAttendeeByIds(idEvent,idUser );
     }
+
+    public ArrayList<String> findAttendeeByUser(String idUser) {
+        return attendeeDAO.findAttendeeByUser(idUser);
+    }
+
 
 }
