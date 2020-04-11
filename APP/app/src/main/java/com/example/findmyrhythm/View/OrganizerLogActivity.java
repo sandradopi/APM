@@ -119,9 +119,9 @@ public class OrganizerLogActivity extends AppCompatActivity implements View.OnCl
 
         PersistentOrganizerInfo persistentOrganizerInfo = new PersistentOrganizerInfo(currentUser.getUid(),name.getText().toString(),
                 nickname.getText().toString(),email.getText().toString(), biography.getText().toString(),
-                new ArrayList<Event>(), null, location.getText().toString() );
+                null, location.getText().toString() , new ArrayList<Event>());
 
-        PersistentOrganizerInfo.setPersistentInfo(getApplicationContext(), persistentOrganizerInfo);
+        PersistentOrganizerInfo.setPersistentOrganizerInfo(getApplicationContext(), persistentOrganizerInfo);
 
         //TODO: Introduce into database by getting the value of every field. Check Android Service.
         new CreateUserTask().execute();

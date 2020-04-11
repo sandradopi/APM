@@ -14,6 +14,7 @@ import com.example.findmyrhythm.Model.AttendeeDAO;
 import com.example.findmyrhythm.Model.AttendeeService;
 import com.example.findmyrhythm.Model.Event;
 import com.example.findmyrhythm.Model.IOFiles;
+import com.example.findmyrhythm.Model.PersistentOrganizerInfo;
 import com.example.findmyrhythm.Model.PersistentUserInfo;
 import com.example.findmyrhythm.Model.User;
 import com.example.findmyrhythm.R;
@@ -42,11 +43,20 @@ public class SplashActivity extends AppCompatActivity {
                     String email = currentUser.getEmail();
                     String userId = currentUser.getUid();
 
+                    SharedPreferences sharedPreferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
+                    String account_type = sharedPreferences.getString("account_type", null);
 
-                    // IOFiles.storeInfoJSON(name, email, getPackageName());
-                    // TODO: cargar los eventos en el JSON desde la base de datos
-                    PersistentUserInfo persistentUserInfo = (PersistentUserInfo) PersistentUserInfo.getPersistentInfo(getApplicationContext());
-                    Log.e("DEBUG", persistentUserInfo.getBirthdate());
+                    if (account_type.equals("organizer")) {
+                        PersistentOrganizerInfo persistentOrganizerInfo = PersistentOrganizerInfo.getPersistentOrganizerInfo(getApplicationContext());
+
+                        // TODO: Actualizar info: 1) Descargar datos  2) Set de la nueva info
+
+                    } else {
+                        PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
+
+                        // TODO: Actualizar info: 1) Descargar datos  2) Set de la nueva info
+
+                    }
 
                     Uri photoUrl = currentUser.getPhotoUrl();
 

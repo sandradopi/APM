@@ -101,9 +101,9 @@ public class UserLogActivity extends AppCompatActivity implements View.OnClickLi
 
         PersistentUserInfo persistentUserInfo = new PersistentUserInfo(currentUser.getUid(),name.getText().toString(),
                 nickname.getText().toString(),email.getText().toString(), biography.getText().toString(),
-                new ArrayList<Event>(), birthDate.getText().toString(), locations, genres);
+                birthDate.getText().toString(), locations, genres, new ArrayList<Event>());
 
-        PersistentUserInfo.setPersistentInfo(getApplicationContext(), persistentUserInfo);
+        PersistentUserInfo.setPersistentUserInfo(getApplicationContext(), persistentUserInfo);
 
         //TODO: Introduce into database by getting the value of every field. Check Android Service.
         new CreateUserTask().execute();
