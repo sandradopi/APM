@@ -51,7 +51,26 @@ public class PersistentOrganizerInfo extends Organizer {
     }
     public void addEvent(Context context, Event event) {
         PersistentOrganizerInfo persistentInfo = getPersistentOrganizerInfo(context);
-        persistentInfo.events.add(event);
+        events = persistentInfo.getEvents();
+
+        if (!events.contains(event) && event!=null){
+            events.add(event);
+
+        }
+        persistentInfo.setEvents(events);
+        setPersistentOrganizerInfo(context, persistentInfo);
+    }
+
+    public void deleteEvent(Context context, Event event) {
+        PersistentOrganizerInfo persistentInfo = getPersistentOrganizerInfo(context);
+        events = persistentInfo.getEvents();
+
+        if (events.contains(event) && event!=null){
+            events.remove(event);
+            System.out.println(events);
+
+        }
+        persistentInfo.setEvents(events);
         setPersistentOrganizerInfo(context, persistentInfo);
     }
 

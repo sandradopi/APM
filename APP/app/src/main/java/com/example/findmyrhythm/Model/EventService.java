@@ -47,4 +47,9 @@ public class EventService {
     public ArrayList<Event> getRecommendedEvents(User user) {
         return eventDAO.getRecommendedEvents(user);
     }
+
+    public ArrayList<Event> findEventByOrganicer(String idOrganicer) {
+        return eventDAO.findEventByOrganicer(idOrganicer);
+    }
+
 }

@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.findmyrhythm.Model.IOFiles;
 import com.example.findmyrhythm.R;
+import com.example.findmyrhythm.View.tabs.SectionsPagerAdapter;
 import com.example.findmyrhythm.View.tabs.SectionsPagerAdapterOrg;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
@@ -103,6 +104,15 @@ public class OrganizerProfileActivity extends OrganizerMenuDrawerActivity {
             }
         });
 
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ViewPager viewPager = findViewById(R.id.view_pager);
+        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
+        viewPager.setAdapter(sectionsPagerAdapter);
 
     }
 }

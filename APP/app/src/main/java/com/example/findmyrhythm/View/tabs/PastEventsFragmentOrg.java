@@ -11,8 +11,16 @@ import android.widget.ListView;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.findmyrhythm.Model.Event;
+import com.example.findmyrhythm.Model.PersistentOrganizerInfo;
+import com.example.findmyrhythm.Model.PersistentUserInfo;
 import com.example.findmyrhythm.R;
 import com.example.findmyrhythm.View.FinishedEventInfoActivity;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class PastEventsFragmentOrg extends Fragment {
 
@@ -25,15 +33,28 @@ public class PastEventsFragmentOrg extends Fragment {
 
         ListView mListView;
         mListView = (ListView) view.findViewById(R.id.eventlist);
-        String[] events = new String[] {"Viva Suecia", "Dani Fernández", "Antonio José"};
-        String[] dates = new String[] { "Sab, 3 Marzo | 22:30", "Viernes, 6 Marzo | 23:30", "Domingo, 4 Enero | 22:00" };
-        String[] rates = new String[] {"not_rated", "not_rated", "rated"};
+        PersistentOrganizerInfo persistentOrganicerInfo = PersistentOrganizerInfo.getPersistentOrganizerInfo(getApplicationContext());
+        final ArrayList<Event> pastEvents= persistentOrganicerInfo.getEvents();
+
+        String[] events = new String[pastEvents.size()];
+        String[] dates = new String[pastEvents.size()];
+        String[] rates = new String[pastEvents.size()];
+
+        int i = 0;
+        for (Event event : pastEvents) {
+            events[i] = event.getName();
+            dates[i] = "fecha";
+            rates[i] = null;
+            i++;
+        }
         mListView.setAdapter(new ListAdapterPast(this.requireContext(), events, dates, rates));
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
                 Intent intent = new Intent(getActivity(), FinishedEventInfoActivity.class);
+                String eventJson = (new Gson()).toJson(pastEvents.get((int) id));
+                intent.putExtra("EVENT", eventJson);
                 getActivity().startActivity(intent);
 
 

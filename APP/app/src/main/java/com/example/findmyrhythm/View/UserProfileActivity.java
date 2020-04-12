@@ -92,6 +92,9 @@ public class UserProfileActivity extends UserMenuDrawerActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        ViewPager viewPager = findViewById(R.id.view_pager);
+        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
+        viewPager.setAdapter(sectionsPagerAdapter);
 
     }
 }

@@ -40,14 +40,20 @@ public class OrganizerEventInfoActivity extends AppCompatActivity implements OnM
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //Toolbar
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.layout_actionbar_empty);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        setContentView(R.layout.activity_organizer_event_info);
+        //Event
+        Gson gson = new Gson();
+        final Event eventSelect = gson.fromJson(getIntent().getStringExtra("EVENT"), Event.class);
 
-        Bundle extras = getIntent().getExtras();
+        //View
+        setContentView(R.layout.activity_organizer_event_info);
+        showEventInfo(eventSelect);
+
+        /*Bundle extras = getIntent().getExtras();
         if (extras != null) {
             if (extras.containsKey("EVENT")) {
                 String eventJson = extras.getString("EVENT");
@@ -61,7 +67,7 @@ public class OrganizerEventInfoActivity extends AppCompatActivity implements OnM
                 new OrganizerEventInfoActivity.getEvent().execute(eventId);
             }
 
-        }
+        }*/
 
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.eventMap);
@@ -87,10 +93,16 @@ public class OrganizerEventInfoActivity extends AppCompatActivity implements OnM
         TextView eventName = findViewById(R.id.eventName);
         TextView eventMaxAttendees = findViewById(R.id.eventCapacity);
         TextView eventPrice = findViewById(R.id.eventCost);
+        TextView eventDate = findViewById(R.id.eventDate);
+        TextView eventLocation = findViewById(R.id.eventLocationContent);
+        TextView eventDescrip = findViewById(R.id.eventDescContent);
 
         eventName.setText(event.getName());
         eventMaxAttendees.setText(String.valueOf(event.getMaxAttendees()));
         eventPrice.setText(String.valueOf(event.getPrice())+"€");
+        eventDate.setText("fecha");
+        eventLocation.setText(event.getLocation());
+        eventDescrip.setText("descripcion");
     }
 
 
@@ -99,7 +111,7 @@ public class OrganizerEventInfoActivity extends AppCompatActivity implements OnM
         LatLng latLong = new LatLng(43.3713500, -8.3960000);
         map.addMarker(new MarkerOptions()
                 .position(latLong)
-                .title("Viva Suecia"));
+                .title(""));
         map.animateCamera(CameraUpdateFactory.newLatLng(latLong));
     }
 
@@ -110,7 +122,7 @@ public class OrganizerEventInfoActivity extends AppCompatActivity implements OnM
     }
 
 
-    private class getEvent extends AsyncTask<String, Void, Event> {
+    /*private class getEvent extends AsyncTask<String, Void, Event> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -129,6 +141,6 @@ public class OrganizerEventInfoActivity extends AppCompatActivity implements OnM
         protected void onPostExecute(Event event) {
             showEventInfo(event);
         }
-    }
+    }*/
 
 }

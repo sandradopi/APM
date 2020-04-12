@@ -45,7 +45,7 @@ public class SplashActivity extends AppCompatActivity {
                     String email = currentUser.getEmail();
                     String userId = currentUser.getUid();
                     ArrayList<String> eventsToAttendIds = new ArrayList<String>();
-                    ArrayList<String> eventscreatedIds = new ArrayList<String>();
+                    ArrayList<Event> eventscreated = new ArrayList<Event>();
 
 
                     SharedPreferences sharedPreferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
@@ -53,8 +53,13 @@ public class SplashActivity extends AppCompatActivity {
 
                     if (account_type.equals("organizer")) {
                         PersistentOrganizerInfo persistentOrganizerInfo = PersistentOrganizerInfo.getPersistentOrganizerInfo(getApplicationContext());
+                        eventscreated = eventService.findEventByOrganicer(currentUser.getUid());
+                        System.out.println("ORGANIZADOR"+eventscreated);
 
-                        // TODO: Actualizar info: 1) Descargar datos  2) Set de la nueva info
+                        for (Event event : eventscreated) {
+                            persistentOrganizerInfo.addEvent(getApplicationContext(),event);
+                        }
+
 
                     } else {
                         PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
