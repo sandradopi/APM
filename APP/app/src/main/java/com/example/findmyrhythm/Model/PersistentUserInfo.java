@@ -34,6 +34,7 @@ public class PersistentUserInfo extends User {
         PersistentUserInfo persistentUserInfo = (PersistentUserInfo) PersistentUserInfo.getPersistentUserInfo(context);
         persistentUserInfo.setName(name);
         persistentUserInfo.setUsername(username);
+        persistentUserInfo.setEmail(email);
         persistentUserInfo.setBiography(biography);
         persistentUserInfo.setBirthdate(birthdate);
         persistentUserInfo.setSubscribedLocations(subscribedLocations);

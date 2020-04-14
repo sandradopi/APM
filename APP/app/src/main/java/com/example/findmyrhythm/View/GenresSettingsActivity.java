@@ -11,16 +11,21 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.findmyrhythm.Model.Event;
+import com.example.findmyrhythm.Model.PersistentUserInfo;
 import com.example.findmyrhythm.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class GenresSettingsActivity extends AppCompatActivity implements View.OnClickListener{
 
     CardView pop, rock, hiphop, latin, dance, indie, classic, reggae, trap;
     FloatingActionButton save;
-    ArrayList<String> selectedGenres = new ArrayList<>();
+    ArrayList<String> selectedGenres = new ArrayList<String>();
+    PersistentUserInfo persistentUserInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +36,12 @@ public class GenresSettingsActivity extends AppCompatActivity implements View.On
         getSupportActionBar().setCustomView(R.layout.layout_actionbar_empty);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        selectedGenres.add("pop");
-        selectedGenres.add("latin");
-        selectedGenres.add("trap");
+
+        Gson gson = new Gson();
+        persistentUserInfo = gson.fromJson(getIntent().getStringExtra("INFO"), PersistentUserInfo.class);
+        //if (b.getStringArrayList(getString(R.string.genresListID)) != null)
+        //    selectedGenres = b.getStringArrayList(getString(R.string.genresListID));
+        selectedGenres = persistentUserInfo.getSubscribedGenres();
 
         pop = (CardView) findViewById(R.id.pop);
         pop.setOnClickListener(this);
@@ -92,6 +100,9 @@ public class GenresSettingsActivity extends AppCompatActivity implements View.On
 
             Intent intent = new Intent(this, UserSettingsActivity.class);
             //intent.putExtra(getString(R.string.genresListID), selectedGenres);
+            persistentUserInfo.setSubscribedGenres(selectedGenres);
+            String infoJson = (new Gson()).toJson(persistentUserInfo);
+            intent.putExtra("INFO", infoJson);
             startActivity(intent);
 
         } else {

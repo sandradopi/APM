@@ -15,8 +15,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.findmyrhythm.Model.PersistentUserInfo;
 import com.example.findmyrhythm.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -26,6 +28,7 @@ public class LocationsSettingsActivity extends AppCompatActivity implements Adap
     ArrayList<String> selectedProvinces = new ArrayList<String>();
     GridLayout locations;
     FloatingActionButton save;
+    PersistentUserInfo persistentUserInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,15 @@ public class LocationsSettingsActivity extends AppCompatActivity implements Adap
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.layout_actionbar_empty);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        locations = (GridLayout) findViewById(R.id.locations);
+
+        Gson gson = new Gson();
+        persistentUserInfo = gson.fromJson(getIntent().getStringExtra("INFO"), PersistentUserInfo.class);
+        selectedProvinces = persistentUserInfo.getSubscribedLocations();
+        for (String i : selectedProvinces) {
+            addProvince(i);
+        }
 
         save = (FloatingActionButton) findViewById(R.id.save);
         save.setOnClickListener(this);
@@ -49,11 +61,6 @@ public class LocationsSettingsActivity extends AppCompatActivity implements Adap
         provinces.setAdapter(adapter);
         provinces.setOnItemClickListener(this);
 
-        locations = (GridLayout) findViewById(R.id.locations);
-
-        addProvince("A Coruña");
-        addProvince("Lugo");
-        addProvince("Pontevedra");
     }
 
     @Override
@@ -70,14 +77,16 @@ public class LocationsSettingsActivity extends AppCompatActivity implements Adap
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
         String value = (String) adapterView.getItemAtPosition(i);
-        addProvince(value);
+        if (!selectedProvinces.contains(value)) {
+            selectedProvinces.add(value);
+            addProvince(value);
+        }
         provinces.setText("");
 
     }
 
     public void addProvince(String province){
 
-        selectedProvinces.add(province);
         TextView text = new TextView(this);
         text.setText(province);
         LinearLayout.LayoutParams params = (new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
@@ -94,7 +103,9 @@ public class LocationsSettingsActivity extends AppCompatActivity implements Adap
 
         //TODO: PASS TO THE GENRES CLASS THE ARRAYlIST OF LOCATIONS AND WHEN ALL THE INFORMATION IS KNOWN ADD THE USER IN THE DATABASE.
         Intent intent = new Intent(this, UserSettingsActivity.class);
-        intent.putExtra(getString(R.string.locationsListID), selectedProvinces);
+        persistentUserInfo.setSubscribedLocations(selectedProvinces);
+        String infoJson = (new Gson()).toJson(persistentUserInfo);
+        intent.putExtra("INFO", infoJson);
         startActivity(intent);
 
     }
