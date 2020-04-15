@@ -18,7 +18,9 @@ import com.example.findmyrhythm.R;
 import com.example.findmyrhythm.View.OrganizerEventInfoActivity;
 import com.google.gson.Gson;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
@@ -43,10 +45,14 @@ public class NextEventsFragmentOrg extends Fragment {
         final String[] dates = new String[nextEvents.size()];
         final String[] prices = new String[nextEvents.size()];
 
+        // TODO: POR FAVOR ESTO DE AQUI HAY QUE CAMBIARLO AMIGUITOS :)
+        Date date;
         int i = 0;
         for (Event event : nextEvents) {
             events[i] = event.getName();
-            dates[i] = "fecha";
+            date = event.getEventDate();
+            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yy");
+            dates[i] = df.format(date);
             prices[i] = String.valueOf(event.getPrice()).concat("€");
             i++;
         }

@@ -6,12 +6,15 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 import android.provider.MediaStore;
@@ -29,17 +32,24 @@ import com.google.gson.Gson;
 
 import android.widget.ImageView;
 import java.util.Calendar;
+import java.util.Date;
 
 
-public class CreateEventActivity extends AppCompatActivity {
+public class CreateEventActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private static final String TAG = "Crear Evento";
     private int mYear, mMonth, mDay, mHour, mMinute;
-    private EditText date, hour, address, maxAttendees, genre, name, price;
+    private EditText date, hour, address, maxAttendees, name, price;
+    private Spinner genres;
+    private Button saveButton;
     Uri imageUri;
     private static final int PICK_IMAGE = 100;
     static final Integer READ_EXST = 0x4;
     ImageView imageView;
+    String selectedGenre;
+    Date eventDate;
+    Calendar calendar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,20 +61,28 @@ public class CreateEventActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_create_event);
 
+        calendar = Calendar.getInstance();
+
         // Reference to the different EditText containing the event info
         address = findViewById(R.id.address);
         maxAttendees = findViewById(R.id.max_attendees);
         price = findViewById(R.id.price);
         name = findViewById(R.id.event_name);
         date = findViewById(R.id.day);
+        date.setOnClickListener(this);
         hour = findViewById(R.id.hour);
+        hour.setOnClickListener(this);
+
+        genres = (Spinner) findViewById(R.id.genre_selection);
+        genres.setOnItemSelectedListener(this);
         // Button to confirm the event creation
-        Button saveButton = findViewById(R.id.ok);
-        saveButton.setClickable(true);
+        saveButton = findViewById(R.id.ok);
+        saveButton.setOnClickListener(this);
+
         // Load picture button
         Button buttonPhoto = findViewById(R.id.button_load_picture);
 
-        date.setOnClickListener(new View.OnClickListener() {
+        /*date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
                 openDialogDate();
@@ -76,7 +94,7 @@ public class CreateEventActivity extends AppCompatActivity {
             public void onClick(View view){
                 openDialogTime();
             }
-        });
+        });*/
 
         buttonPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,21 +103,37 @@ public class CreateEventActivity extends AppCompatActivity {
             }
         });
 
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                createEvent();
-            }
-        });
-
     }
 
+
+
+    @Override
+    public void onClick(View v) {
+
+        if (v == date)
+            openDialogDate();
+
+        else if (v == hour)
+            openDialogTime();
+
+        else if( v == saveButton) {
+            Calendar currentCalendar = Calendar.getInstance();
+            // TODO: CHECK IF DESCRIPTION AND IMAGE EXISTS.
+            if (isEmpty(name) || isEmpty(date) || isEmpty(hour) || isEmpty(address) || isEmpty(maxAttendees) || isEmpty(price) || selectedGenre.equals("") || calendar.getTime().compareTo(currentCalendar.getTime()) < 0) {
+                Toast.makeText(this, "Please cover every field shown in the screen", Toast.LENGTH_LONG).show();
+                return;
+            }
+            //TODO: INSERT EVENT
+            new AddEventTask().execute();
+        }
+    }
 
     /**
      * Gets the data of the event and calls to EventService to add the event to the database.
      * Then, changes the activity to the one used to show the event info.
      */
-    private void createEvent() {
+    // ESTA LLAMADA A LA BASE DE DATOS DEBERÍA DE SER ASÍNCRONA.
+    /*private void createEvent() {
         // Get the id of the organizer
         SharedPreferences preferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
         String organizerId = preferences.getString("fb_id", null);
@@ -125,7 +159,7 @@ public class CreateEventActivity extends AppCompatActivity {
         Intent intent = new Intent(CreateEventActivity.this, OrganizerEventInfoActivity.class);
         intent.putExtra("EVENT", eventJson);
         startActivity(intent);
-    }
+    }*/
 
 
     public void openDialogDate(){
@@ -143,8 +177,15 @@ public class CreateEventActivity extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker view, int year,
                                           int monthOfYear, int dayOfMonth) {
+                        // Por que month of year + 1???
+                        //date.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                        String textdate = dayOfMonth + "/" + monthOfYear + "/" + year;
+                        date.setText(textdate);
+                        calendar.set(Calendar.YEAR, year);
+                        calendar.set(Calendar.MONTH, monthOfYear);
+                        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-                        date.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                        Toast.makeText(getApplicationContext(), "hello: " + calendar.get(Calendar.DAY_OF_MONTH), Toast.LENGTH_SHORT).show();
 
                     }
                 }, mYear, mMonth, mDay);
@@ -167,7 +208,20 @@ public class CreateEventActivity extends AppCompatActivity {
                     public void onTimeSet(TimePicker view, int hourOfDay,
                                           int minute) {
 
-                        hour.setText(hourOfDay + ":" + minute);
+                        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                        calendar.set(Calendar.MINUTE, minute);
+
+                        if (hourOfDay == 0 && minute == 0)
+                            hour.setText(hourOfDay + "0:0" + minute);
+
+                        else if (hourOfDay == 0)
+                            hour.setText(hourOfDay + "0:" + minute);
+
+                        else if (minute == 0)
+                            hour.setText(hourOfDay + ":0" + minute);
+
+                        else
+                            hour.setText(hourOfDay + ":" + minute);
                     }
                 }, mHour, mMinute, false);
         timePickerDialog.show();
@@ -212,5 +266,56 @@ public class CreateEventActivity extends AppCompatActivity {
         finish();
         return true;
     }
+
+    private boolean isEmpty(EditText text) {
+
+        return text.getText().toString().equals("");
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        selectedGenre = (String) parent.getItemAtPosition(position);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        //Nothing to do.
+    }
+
+    private class AddEventTask extends AsyncTask<Void, Void, Event> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Event doInBackground(Void... voids) {
+            // Get the id of the organizer
+            SharedPreferences preferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
+            final String organizerId = preferences.getString("fb_id", null);
+
+            eventDate = calendar.getTime();
+            EventService service = new EventService();
+
+            final Event event = new Event(name.getText().toString(), eventDate, address.getText().toString(), selectedGenre, organizerId, maxAttendees.getText().toString(), price.getText().toString(), "", "");
+            service.createEvent(event);
+
+            return event;
+        }
+
+        @Override
+        protected void onPostExecute(Event event) {
+            super.onPostExecute(event);
+            Toast.makeText(getApplicationContext(), "Concierto creado con éxito!", Toast.LENGTH_LONG).show();
+            String eventJson = (new Gson()).toJson(event);
+            // Start the activity to show the event info
+            Intent intent = new Intent(CreateEventActivity.this, OrganizerEventInfoActivity.class);
+            intent.putExtra("EVENT", eventJson);
+            startActivity(intent);
+            finish();
+        }
+    }
+
 }
 

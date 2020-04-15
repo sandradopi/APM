@@ -6,22 +6,21 @@ import java.util.Date;
 public class Event extends Entity{
 
     private String name;
-    private Date date;
-    private LocalDateTime hour;
-    private String location, genre, organizerId;
-    private int maxAttendees, price;
+    private Date eventDate;
+    private String location, genre, organizerId, maxAttendees, price, description, eventImage;
 
     public Event() {}
 
-    public Event(String name, Date date, LocalDateTime hour, String location, String genre, String organizerId, int maxAttendees, int price) {
+    public Event(String name, Date date, String location, String genre, String organizerId, String maxAttendees, String price, String description, String eventImage) {
         this.name = name;
-        this.date = date;
-        this.hour = hour;
+        this.eventDate = date;
         this.location = location;
         this.genre = genre;
         this.organizerId = organizerId;
         this.maxAttendees = maxAttendees;
         this.price = price;
+        this.description = description;
+        this.eventImage = eventImage;
     }
 
     public String getName() {
@@ -32,20 +31,12 @@ public class Event extends Entity{
         this.name = name;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getEventDate() {
+        return eventDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public LocalDateTime getHour() {
-        return hour;
-    }
-
-    public void setHour(LocalDateTime hour) {
-        this.hour = hour;
+    public void setEventDate(Date eventDate) {
+        this.eventDate = eventDate;
     }
 
     public String getLocation() {
@@ -72,20 +63,36 @@ public class Event extends Entity{
         this.organizerId = organizerId;
     }
 
-    public int getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
-    public int getMaxAttendees() {
+    public String getMaxAttendees() {
         return maxAttendees;
     }
 
-    public void setMaxAttendees(int maxAttendees) {
+    public void setMaxAttendees(String maxAttendees) {
         this.maxAttendees = maxAttendees;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getEventImage() {
+        return eventImage;
+    }
+
+    public void setEventImage(String eventImage) {
+        this.eventImage = eventImage;
     }
 }
 

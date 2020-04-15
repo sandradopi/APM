@@ -56,7 +56,8 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="16dp"
                 android:hint="@string/dia"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:focusable="false"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -75,7 +76,8 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="16dp"
                 android:hint="@string/hora"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:focusable="false"/>
 
             <TextView
                 android:layout_width="match_parent"

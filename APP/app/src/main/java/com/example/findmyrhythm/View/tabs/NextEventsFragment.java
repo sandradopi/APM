@@ -19,6 +19,7 @@ import com.example.findmyrhythm.View.EventInfoActivity;
 import com.example.findmyrhythm.View.RecommendedEventsActivity;
 import com.google.gson.Gson;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -45,10 +46,13 @@ public class NextEventsFragment extends Fragment {
         final String[] dates = new String[nextEvents.size()];
         final String[] prices = new String[nextEvents.size()];
 
+        Date date;
         int i = 0;
         for (Event event : nextEvents) {
             events[i] = event.getName();
-            dates[i] = "fecha";
+            date = event.getEventDate();
+            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yy");
+            dates[i] = df.format(date);
             prices[i] = String.valueOf(event.getPrice()).concat("€");
             i++;
         }
