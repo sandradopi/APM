@@ -21,6 +21,17 @@ public class PersistentOrganizerInfo extends Organizer {
         this.events = events;
     }
 
+    public void updateInfo(Context context, String name, String username, String email, String biography, String location) {
+        PersistentOrganizerInfo persistentOrgInfo = (PersistentOrganizerInfo) PersistentOrganizerInfo.getPersistentOrganizerInfo(context);
+        persistentOrgInfo.setName(name);
+        persistentOrgInfo.setUsername(username);
+        persistentOrgInfo.setEmail(email);
+        persistentOrgInfo.setBiography(biography);
+        persistentOrgInfo.setLocation(location);
+
+        PersistentOrganizerInfo.setPersistentOrganizerInfo(context, persistentOrgInfo);
+    }
+
     public ArrayList<Event> getEvents() {
         return events;
     }
