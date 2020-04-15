@@ -54,19 +54,6 @@ public class UserProfileActivity extends UserMenuDrawerActivity {
 
         setMenuItemChecked(R.id.nav_profile);
 
-        ImageView editButton = findViewById(R.id.edit);
-        editButton.setClickable(true);
-        editButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                Log.w(TAG, "Ha clickeado en ajustes del usuario");
-                Intent intent = new Intent(UserProfileActivity.this, UserSettingsActivity.class);
-                startActivity(intent);
-            }
-        });
-
-
         TextView toolbarTitle = findViewById(R.id.tvTitle);
         toolbarTitle.setText("Perfil");
 

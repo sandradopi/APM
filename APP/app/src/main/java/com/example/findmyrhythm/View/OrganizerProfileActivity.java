@@ -79,19 +79,6 @@ public class OrganizerProfileActivity extends OrganizerMenuDrawerActivity {
             }
         });
 
-        ImageView editButton = findViewById(R.id.edit);
-        editButton.setClickable(true);
-        editButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                Log.w(TAG, "Ha clickeado en ajustes del local");
-                Intent intent = new Intent(OrganizerProfileActivity.this, OrganizerSettingsActivity.class);
-                startActivity(intent);
-            }
-        });
-
-
         FloatingActionButton addEvent = findViewById(R.id.floatingActionButton4);
         addEvent.setClickable(true);
         addEvent.setOnClickListener(new View.OnClickListener() {
