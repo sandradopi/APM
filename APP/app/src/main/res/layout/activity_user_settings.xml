@@ -55,119 +55,118 @@
                 android:hint="Introducir nombre de usuario"
                 android:textSize="14sp"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:textSize="16sp"
-            android:textColor="@color/lightgray"
-            android:text="@string/email2"
-            android:textStyle="bold">
-        </TextView>
-
-        <EditText
-            android:id="@+id/userEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColorHint="@color/blueish"
-            android:textColor="@color/lightgray"
-            android:hint="Introducir email"
-            android:textSize="14sp"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:textSize="16sp"
-            android:textColor="@color/lightgray"
-            android:text="@string/biography"
-            android:textStyle="bold">
-        </TextView>
-
-        <EditText
-            android:id="@+id/userBiography"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColorHint="@color/blueish"
-            android:textColor="@color/lightgray"
-            android:hint="Introducir biografía"
-            android:textSize="14sp"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:textSize="16sp"
-            android:textColor="@color/lightgray"
-            android:text="@string/birthdate"
-            android:textStyle="bold">
-        </TextView>
-
-        <EditText
-            android:id="@+id/userBirthdate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColorHint="@color/blueish"
-            android:textColor="@color/lightgray"
-            android:hint="Introducir fecha de nacimiento"
-            android:textSize="14sp"/>
-
-            <LinearLayout
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/genres"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_margin="10dp"
-                    android:text="géneros" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/locations"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_margin="10dp"
-                    android:text="Localizaciones" />
-            </LinearLayout>
-
-            <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
-
-            <RelativeLayout
-                android:layout_height="match_parent"
-                android:layout_width="0dp"
-                android:layout_weight="1">
-            </RelativeLayout>
-
-            <Switch
-                android:id="@+id/switch1"
-                android:textColor="@color/lightgray"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="end"
-                android:text="@string/notifications" />
+                android:layout_marginTop="20dp"
+                android:textSize="16sp"
+                android:textColor="@color/lightgray"
+                android:text="@string/email2"
+                android:textStyle="bold">
+            </TextView>
 
-            <RelativeLayout
+            <EditText
+                android:id="@+id/userEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/blueish"
+                android:textColor="@color/lightgray"
+                android:hint="Introducir email"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textSize="16sp"
+                android:textColor="@color/lightgray"
+                android:text="@string/biography"
+                android:textStyle="bold">
+            </TextView>
+
+            <EditText
+                android:id="@+id/userBiography"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/blueish"
+                android:textColor="@color/lightgray"
+                android:hint="Introducir biografía"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textSize="16sp"
+                android:textColor="@color/lightgray"
+                android:text="@string/birthdate"
+                android:textStyle="bold">
+            </TextView>
+
+            <EditText
+                android:id="@+id/userBirthdate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/blueish"
+                android:textColor="@color/lightgray"
+                android:hint="Introducir fecha de nacimiento"
+                android:textSize="14sp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/genres"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_margin="10dp"
+                        android:text="géneros" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/locations"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_margin="10dp"
+                        android:text="Localizaciones" />
+                </LinearLayout>
+
+                <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_width="0dp"
-                android:layout_weight="1">
-            </RelativeLayout>
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
 
+                    <RelativeLayout
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1">
+                    </RelativeLayout>
 
-        </LinearLayout>
+                    <Switch
+                        android:id="@+id/switch1"
+                        android:textColor="@color/lightgray"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:text="@string/notifications" />
+
+                    <RelativeLayout
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1">
+                    </RelativeLayout>
+
+                </LinearLayout>
 
         </LinearLayout>
 
@@ -186,7 +185,6 @@
             android:id="@+id/save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/primary"
             android:elevation="10dp"
             android:layout_marginEnd="15dp"
             android:layout_marginBottom="15dp"
@@ -194,4 +192,4 @@
 
     </LinearLayout>
 
-    </RelativeLayout>
+</RelativeLayout>

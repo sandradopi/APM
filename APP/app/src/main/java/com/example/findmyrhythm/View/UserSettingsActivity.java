@@ -1,6 +1,7 @@
 package com.example.findmyrhythm.View;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -120,7 +121,9 @@ public class UserSettingsActivity extends UserMenuDrawerActivity {
         @Override
         public void onClick(View view) {
             Log.w(TAG, "Ha clickeado en guardar ajustes");
+
             persistentUserInfo.updateInfo(getApplicationContext(), nameView.getText().toString(), usernameView.getText().toString(), emailView.getText().toString(), biographyView.getText().toString(), birthdateView.getText().toString(), selectedLocations, selectedGenres);
+
             user.setName(nameView.getText().toString());
             user.setUsername(usernameView.getText().toString());
             user.setEmail(emailView.getText().toString());
@@ -130,6 +133,12 @@ public class UserSettingsActivity extends UserMenuDrawerActivity {
             user.setSubscribedLocations(selectedLocations);
             UpdateInfo updateInfo = new UpdateInfo();
             updateInfo.execute();
+
+            SharedPreferences preferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putString("name", nameView.getText().toString());
+            editor.commit();
+
             Toast.makeText(UserSettingsActivity.this, getString(R.string.guardar),  Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(UserSettingsActivity.this, UserProfileActivity.class);
             startActivity(intent);

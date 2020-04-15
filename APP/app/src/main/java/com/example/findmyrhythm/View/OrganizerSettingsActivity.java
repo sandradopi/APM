@@ -1,6 +1,7 @@
 package com.example.findmyrhythm.View;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -64,13 +65,21 @@ public class OrganizerSettingsActivity extends OrganizerMenuDrawerActivity {
             @Override
             public void onClick(View view) {
                 Log.w(TAG, "Ha clickeado en guardar ajustes");
+
                 persistentOrgInfo.updateInfo(getApplicationContext(), nameView.getText().toString(), usernameView.getText().toString(), emailView.getText().toString(), biographyView.getText().toString(), locationView.getText().toString());
+
                 organizer.setName(nameView.getText().toString());
                 organizer.setUsername(usernameView.getText().toString());
                 organizer.setEmail(emailView.getText().toString());
                 organizer.setBiography(biographyView.getText().toString());
                 organizer.setLocation(locationView.getText().toString());
                 organizer.setRating(rating);
+
+                SharedPreferences preferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("name", nameView.getText().toString());
+                editor.commit();
+
                 UpdateInfo updateInfo = new UpdateInfo();
                 updateInfo.execute();
                 Toast.makeText(OrganizerSettingsActivity.this, getString(R.string.guardar),  Toast.LENGTH_SHORT).show();
