@@ -57,7 +57,7 @@ public class NextEventsFragmentOrg extends Fragment {
             i++;
         }
 
-        System.out.println("SUECIA"+nextEvents.get(0).getName());
+        //System.out.println("SUECIA"+nextEvents.get(0).getName());
         mListView.setAdapter(new ListAdapterNext(this.requireContext(), events, dates, prices));
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){

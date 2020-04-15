@@ -46,7 +46,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
     private static final int PICK_IMAGE = 100;
     static final Integer READ_EXST = 0x4;
     ImageView imageView;
-    String selectedGenre;
+    String selectedGenre ="";
     Date eventDate;
     Calendar calendar;
 
