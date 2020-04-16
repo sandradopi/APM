@@ -107,9 +107,9 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
                 public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
                     Intent intent = new Intent(RecommendedEventsActivity.this, EventInfoActivity.class);
-                    String eventJson = (new Gson()).toJson(events.get((int) id));
+                   // String eventJson = (new Gson()).toJson(events.get((int) id));
                     // intent.putExtra("ID", ids[(int) id]);
-                    intent.putExtra("EVENT", eventJson);
+                    intent.putExtra("EVENT", events.get((int) id).getId());
                     RecommendedEventsActivity.this.startActivity(intent);
 
                 }

@@ -65,8 +65,8 @@ public class NextEventsFragmentOrg extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
                 Intent intent = new Intent(getActivity(), OrganizerEventInfoActivity.class);
-                String eventJson = (new Gson()).toJson(nextEvents.get((int) id));
-                intent.putExtra("EVENT", eventJson);
+              //  String eventJson = (new Gson()).toJson(nextEvents.get((int) id));
+                intent.putExtra("EVENT", nextEvents.get((int) id).getId());
                 getActivity().startActivity(intent);
 
 

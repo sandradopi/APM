@@ -7,6 +7,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -17,6 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.findmyrhythm.Model.Event;
+import com.example.findmyrhythm.Model.PersistentOrganizerInfo;
+import com.example.findmyrhythm.Model.PersistentUserInfo;
 import com.example.findmyrhythm.R;
 import com.example.findmyrhythm.View.tabs.RatingsAdapter;
 import com.google.android.material.tabs.TabLayout;
@@ -38,8 +41,21 @@ public class FinishedEventInfoActivity extends AppCompatActivity {
 
         //Event
         //Event
-        Gson gson = new Gson();
-        final Event eventSelect = gson.fromJson(getIntent().getStringExtra("EVENT"), Event.class);
+       // Gson gson = new Gson();
+      //  final Event eventSelect = gson.fromJson(getIntent().getStringExtra("EVENT"), Event.class);
+        final String eventSelectId = getIntent().getStringExtra("EVENT");
+        SharedPreferences sharedPreferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
+        String account_type = sharedPreferences.getString("account_type", null);
+        Event eventSelect;
+        if (account_type.equals("organizer")) {
+
+            PersistentOrganizerInfo persistentInfo = PersistentOrganizerInfo.getPersistentOrganizerInfo(getApplicationContext());
+            eventSelect = persistentInfo.getEvent(eventSelectId);
+        }
+        else {
+            PersistentUserInfo persistentInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
+            eventSelect = persistentInfo.getEvent(eventSelectId);
+        }
 
         //View
         setContentView(R.layout.activity_finished_event_info);

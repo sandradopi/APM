@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.findmyrhythm.Model.Event;
 import com.example.findmyrhythm.Model.EventService;
 import com.example.findmyrhythm.Model.Exceptions.InstanceNotFoundException;
+import com.example.findmyrhythm.Model.PersistentOrganizerInfo;
 import com.example.findmyrhythm.Model.User;
 import com.example.findmyrhythm.Model.UserService;
 import com.example.findmyrhythm.R;
@@ -47,8 +48,10 @@ public class OrganizerEventInfoActivity extends AppCompatActivity implements OnM
 
         //Event
         Gson gson = new Gson();
-        final Event eventSelect = gson.fromJson(getIntent().getStringExtra("EVENT"), Event.class);
-
+       // final Event eventSelect = gson.fromJson(getIntent().getStringExtra("EVENT"), Event.class);
+        final String eventSelectId = getIntent().getStringExtra("EVENT");
+        final PersistentOrganizerInfo persistentOrganizerInfo = PersistentOrganizerInfo.getPersistentOrganizerInfo(getApplicationContext());
+        Event eventSelect = persistentOrganizerInfo.getEvent(eventSelectId);
         //View
         setContentView(R.layout.activity_organizer_event_info);
         showEventInfo(eventSelect);

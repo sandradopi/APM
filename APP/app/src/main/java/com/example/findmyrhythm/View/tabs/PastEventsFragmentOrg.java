@@ -53,8 +53,8 @@ public class PastEventsFragmentOrg extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
                 Intent intent = new Intent(getActivity(), FinishedEventInfoActivity.class);
-                String eventJson = (new Gson()).toJson(pastEvents.get((int) id));
-                intent.putExtra("EVENT", eventJson);
+                //String eventJson = (new Gson()).toJson(pastEvents.get((int) id));
+                intent.putExtra("EVENT", pastEvents.get((int) id).getId());
                 getActivity().startActivity(intent);
 
 
