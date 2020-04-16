@@ -26,6 +26,16 @@ public class PersistentUserInfo extends User {
         return events;
     }
 
+    public Event getEvent(String id){
+        System.out.println(id);
+        for (Event event:events){
+            System.out.println(event.getId());
+
+            if(event.getId().equals(id)) return event;
+        }
+        return null;
+    }
+
     public void setEvents(ArrayList<Event> events) {
         this.events = events;
     }

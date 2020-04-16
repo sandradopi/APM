@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -23,10 +22,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:layout_marginBottom="4dp"
-                android:text="@string/nombre_del_evento"
                 android:importantForAutofill="no"
+                android:text="@string/nombre_del_evento"
                 android:textSize="18sp"
-                android:textStyle="bold|italic"/>
+                android:textStyle="bold|italic" />
 
             <EditText
                 android:id="@+id/event_name"
@@ -37,17 +36,38 @@
                 android:hint="@string/nombre_del_evento"
                 android:importantForAutofill="no"
                 android:inputType="text"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="4dp"
+                android:importantForAutofill="no"
+                android:text="Descripción"
+                android:textSize="18sp"
+                android:textStyle="bold|italic" />
+
+            <EditText
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:hint="Description"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:textSize="16sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="4dp"
-                android:text="@string/dia"
                 android:importantForAutofill="no"
+                android:text="@string/dia"
                 android:textSize="18sp"
-                android:textStyle="bold|italic"/>
+                android:textStyle="bold|italic" />
 
             <EditText
                 android:id="@+id/day"
@@ -55,19 +75,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="16dp"
+                android:focusable="false"
                 android:hint="@string/dia"
-                android:textSize="16sp"
-                android:focusable="false"/>
+                android:textSize="16sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="4dp"
-                android:text="@string/hora"
                 android:importantForAutofill="no"
+                android:text="@string/hora"
                 android:textSize="18sp"
-                android:textStyle="bold|italic"/>
+                android:textStyle="bold|italic" />
 
             <EditText
                 android:id="@+id/hour"
@@ -75,19 +95,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="16dp"
+                android:focusable="false"
                 android:hint="@string/hora"
-                android:textSize="16sp"
-                android:focusable="false"/>
+                android:textSize="16sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="4dp"
-                android:text="@string/direccion"
                 android:importantForAutofill="no"
+                android:text="@string/direccion"
                 android:textSize="18sp"
-                android:textStyle="bold|italic"/>
+                android:textStyle="bold|italic" />
 
             <EditText
                 android:id="@+id/address"
@@ -97,17 +117,17 @@
                 android:layout_marginBottom="16dp"
                 android:hint="@string/direccion"
                 android:inputType="textPostalAddress"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="4dp"
-                android:text="@string/asistentes_max"
                 android:importantForAutofill="no"
+                android:text="@string/asistentes_max"
                 android:textSize="18sp"
-                android:textStyle="bold|italic"/>
+                android:textStyle="bold|italic" />
 
             <EditText
                 android:id="@+id/max_attendees"
@@ -117,15 +137,15 @@
                 android:layout_marginBottom="16dp"
                 android:hint="@string/asistentes_max"
                 android:inputType="number"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="13dp"
                 android:layout_marginBottom="4dp"
-                android:text="@string/precio"
                 android:importantForAutofill="no"
+                android:text="@string/precio"
                 android:textSize="18sp"
                 android:textStyle="bold|italic" />
 
@@ -144,8 +164,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="13dp"
                 android:layout_marginBottom="4dp"
-                android:text="Categoria"
                 android:importantForAutofill="no"
+                android:text="Categoria"
                 android:textSize="18sp"
                 android:textStyle="bold|italic" />
 
@@ -162,37 +182,34 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="13dp"
                 android:layout_marginBottom="4dp"
-                android:text="Subir foto del evento"
                 android:importantForAutofill="no"
+                android:text="Cartel del evento"
                 android:textSize="18sp"
                 android:textStyle="bold|italic" />
 
-            <ImageView
-                android:id="@+id/event_photo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+
             <Button
                 android:id="@+id/button_load_picture"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_weight="0"
-                android:text="Añadir foto"
-                android:layout_gravity="center"/>
+                android:text="Añadir foto" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <Button
                     android:id="@+id/ok"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
                     android:layout_alignParentEnd="true"
+                    android:layout_margin="15dp"
                     android:background="@color/primary"
-                    android:textColor="@color/white"
-                    android:text="@string/crear" />
+                    android:text="@string/crear"
+                    android:textColor="@color/white" />
             </RelativeLayout>
         </LinearLayout>
 

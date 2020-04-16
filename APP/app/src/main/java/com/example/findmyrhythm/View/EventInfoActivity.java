@@ -21,6 +21,7 @@ import com.example.findmyrhythm.Model.Event;
 import com.example.findmyrhythm.Model.EventService;
 import com.example.findmyrhythm.Model.Exceptions.InstanceNotFoundException;
 import com.example.findmyrhythm.Model.Attendee;
+import com.example.findmyrhythm.Model.PersistentOrganizerInfo;
 import com.example.findmyrhythm.Model.PersistentUserInfo;
 import com.example.findmyrhythm.Model.User;
 import com.example.findmyrhythm.Model.UserService;
@@ -55,12 +56,14 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Event
-        Gson gson = new Gson();
-        final Event eventSelect = gson.fromJson(getIntent().getStringExtra("EVENT"), Event.class);
-
+        //Gson gson = new Gson();
+        //final Event eventSelect = gson.fromJson(getIntent().getStringExtra("EVENT"), Event.class);
+        final String eventSelectId = getIntent().getStringExtra("EVENT");
+        final PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
+        Event eventSelect = persistentUserInfo.getEvent(eventSelectId);
 
         //Its joined?
-        final PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
+        //final PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
 
 
         //Vista

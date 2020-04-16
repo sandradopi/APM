@@ -6,8 +6,11 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,6 +21,8 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 import android.provider.MediaStore;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -27,10 +32,17 @@ import android.net.Uri;
 
 import com.example.findmyrhythm.Model.Event;
 import com.example.findmyrhythm.Model.EventService;
+import com.example.findmyrhythm.Model.PersistentOrganizerInfo;
 import com.example.findmyrhythm.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 
 import android.widget.ImageView;
+
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -39,16 +51,24 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
 
     private static final String TAG = "Crear Evento";
     private int mYear, mMonth, mDay, mHour, mMinute;
-    private EditText date, hour, address, maxAttendees, name, price;
+    private EditText date, hour, address, maxAttendees, name, price,description;
     private Spinner genres;
     private Button saveButton;
     Uri imageUri;
     private static final int PICK_IMAGE = 100;
-    static final Integer READ_EXST = 0x4;
-    ImageView imageView;
-    String selectedGenre ="";
+    public static final String NO_IMAGE = "no_image";
+    String selectedGenre = "";
+
     Date eventDate;
     Calendar calendar;
+    private static final String READ_EXTERNAL_STORAGE = Manifest.permission.READ_EXTERNAL_STORAGE;
+    private static final String WRITE_EXTERNAL_STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE;
+    private static final int STORAGE_PERMISSION_CODE = 1896;
+    Boolean mStoragePermissionGranted = false;
+    public static final int GET_FROM_GALLERY = 3;
+    Bitmap imageBitmap = null;
+    String bitmapEncoded = "";
+    byte[] byteArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,14 +91,13 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         date = findViewById(R.id.day);
         date.setOnClickListener(this);
         hour = findViewById(R.id.hour);
+        description = findViewById(R.id.description);
         hour.setOnClickListener(this);
-
         genres = (Spinner) findViewById(R.id.genre_selection);
         genres.setOnItemSelectedListener(this);
         // Button to confirm the event creation
         saveButton = findViewById(R.id.ok);
         saveButton.setOnClickListener(this);
-
         // Load picture button
         Button buttonPhoto = findViewById(R.id.button_load_picture);
 
@@ -86,25 +105,24 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onClick(View view){
                 openDialogDate();
+                openDialogTime();
             }
         });
 
         hour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
-                openDialogTime();
             }
         });*/
 
         buttonPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openGallery();
+                getStoragePermission();
             }
         });
 
     }
-
 
 
     @Override
@@ -116,10 +134,10 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         else if (v == hour)
             openDialogTime();
 
-        else if( v == saveButton) {
+        else if (v == saveButton) {
             Calendar currentCalendar = Calendar.getInstance();
             // TODO: CHECK IF DESCRIPTION AND IMAGE EXISTS.
-            if (isEmpty(name) || isEmpty(date) || isEmpty(hour) || isEmpty(address) || isEmpty(maxAttendees) || isEmpty(price) || selectedGenre.equals("") || calendar.getTime().compareTo(currentCalendar.getTime()) < 0) {
+            if (isEmpty(name) || isEmpty(date) || isEmpty(hour) || isEmpty(address) || isEmpty(maxAttendees) || isEmpty(price) || isEmpty(description) || imageBitmap==null ||  selectedGenre.equals("") || calendar.getTime().compareTo(currentCalendar.getTime()) < 0) {
                 Toast.makeText(this, "Please cover every field shown in the screen", Toast.LENGTH_LONG).show();
                 return;
             }
@@ -160,9 +178,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         intent.putExtra("EVENT", eventJson);
         startActivity(intent);
     }*/
-
-
-    public void openDialogDate(){
+    public void openDialogDate() {
 
         // Get Current Date
         final Calendar c = Calendar.getInstance();
@@ -185,7 +201,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
                         calendar.set(Calendar.MONTH, monthOfYear);
                         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-                        Toast.makeText(getApplicationContext(), "hello: " + calendar.get(Calendar.DAY_OF_MONTH), Toast.LENGTH_SHORT).show();
+
 
                     }
                 }, mYear, mMonth, mDay);
@@ -193,7 +209,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         datePickerDialog.show();
     }
 
-    public void openDialogTime(){
+    public void openDialogTime() {
 
         // Get Current Time
         final Calendar c = Calendar.getInstance();
@@ -227,40 +243,65 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         timePickerDialog.show();
     }
 
-    private void askPermissions(String permission,Integer requestCode){
-        if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+    public void getImageUri() {
 
+                //MediaStore.Images.Media.INTERNAL_CONTENT_URI
+        Intent gallery = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        gallery.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+        startActivityForResult(gallery, GET_FROM_GALLERY);
 
-            // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
+    }
 
-                //This is called if user has denied the permission before
-                //In this case I am just asking the permission again
-                ActivityCompat.requestPermissions(this, new String[]{permission}, requestCode);
+    private void getStoragePermission() {
 
-            } else {
+        String[] permissions = {READ_EXTERNAL_STORAGE};
 
-                ActivityCompat.requestPermissions(this, new String[]{permission}, requestCode);
-            }
-        } else {
-            Toast.makeText(this, "" + permission + " is already granted.", Toast.LENGTH_SHORT).show();
+        if (ContextCompat.checkSelfPermission(this.getApplicationContext(), READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+
+            mStoragePermissionGranted = true;
+            getImageUri();
+            return;
         }
+
+        ActivityCompat.requestPermissions(this, permissions, STORAGE_PERMISSION_CODE);
     }
 
-
-    private void openGallery() {
-        askPermissions(Manifest.permission.READ_EXTERNAL_STORAGE,READ_EXST);
-        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-        startActivityForResult(gallery, PICK_IMAGE);
-    }
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        mStoragePermissionGranted = false;
+
+        if (requestCode == STORAGE_PERMISSION_CODE) {
+
+            // If granResults lenght is > 0 is that something was granted
+            if (grantResults.length > 0) {
+                for (int item : grantResults)
+                    if (item != PackageManager.PERMISSION_GRANTED) {
+                        mStoragePermissionGranted = false;
+                        return;
+                    }
+
+                mStoragePermissionGranted = true;
+                getImageUri();
+            }
+        }
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == PICK_IMAGE){
+        if (resultCode == RESULT_OK && data != null) {
             imageUri = data.getData();
-            imageView.setImageURI(imageUri);
+
+            try {
+                imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
+
     @Override
     public boolean onSupportNavigateUp() {
         finish();
@@ -298,9 +339,26 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             eventDate = calendar.getTime();
             EventService service = new EventService();
 
-            final Event event = new Event(name.getText().toString(), eventDate, address.getText().toString(), selectedGenre, organizerId, maxAttendees.getText().toString(), price.getText().toString(), "", "");
-            service.createEvent(event);
 
+            if (imageBitmap != null) {
+
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                System.out.println(imageBitmap.getByteCount());
+                imageBitmap.compress(Bitmap.CompressFormat.PNG, 10, stream);
+                System.out.println(imageBitmap.getByteCount());
+                byteArray = stream.toByteArray();
+                bitmapEncoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                imageBitmap.recycle();
+            } else
+                bitmapEncoded = NO_IMAGE;
+            //bitmapEncoded = NO_IMAGE;
+            String path= imageUri.getEncodedPath();
+            final Event event = new Event(name.getText().toString(), eventDate, address.getText().toString(), selectedGenre, organizerId, maxAttendees.getText().toString(), price.getText().toString(), description.getText().toString(), bitmapEncoded);
+            service.createEvent(event);
+            event.setEventImage(path);
+            final PersistentOrganizerInfo persistentOrganizerInfo = PersistentOrganizerInfo.getPersistentOrganizerInfo(getApplicationContext());
+
+            persistentOrganizerInfo.addEvent(getApplicationContext(),event);
             return event;
         }
 
@@ -311,11 +369,13 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             String eventJson = (new Gson()).toJson(event);
             // Start the activity to show the event info
             Intent intent = new Intent(CreateEventActivity.this, OrganizerEventInfoActivity.class);
-            intent.putExtra("EVENT", eventJson);
+            intent.putExtra("EVENT", event.getId());
             startActivity(intent);
             finish();
         }
     }
-
 }
+
+
+
 

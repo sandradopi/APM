@@ -1,5 +1,7 @@
 package com.example.findmyrhythm.Model;
 
+import android.graphics.Bitmap;
+
 import java.time.LocalDateTime;
 import java.util.Date;
 
