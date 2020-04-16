@@ -74,6 +74,7 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
                 System.out.println(user.getSubscribedLocations() + "\n");
                 System.out.println(user.getSubscribedGenres() + "\n");
                 events = eventService.getRecommendedEvents(user);
+                Log.e("AQUI", events.toString());
                 persistentUserInfo.addEventRecommended(getApplicationContext(), events);
             } catch (InstanceNotFoundException e) {
                 Log.e("DEBUG", "InstanceNotFoundException");

@@ -87,6 +87,7 @@ public class EventDAO extends GenericDAO<Event> {
                     finalEvents.add(event);
 
         Log.e(TAG, locationEvents.toString());
+        Log.e("FINALEVENTS", finalEvents.toString());
         return finalEvents;
     }
 
