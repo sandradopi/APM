@@ -54,7 +54,7 @@ public class PersistentUserInfo extends User {
     }
 
     public void setEventsRecommended(ArrayList<Event> events) {
-        this.recommended = recommended;
+        this.recommended = events;
     }
 
     public void updateInfo(Context context, String name, String username, String email, String biography, String birthdate, ArrayList<String> subscribedLocations, ArrayList<String> subscribedGenres) {

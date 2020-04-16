@@ -59,14 +59,14 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
         //Gson gson = new Gson();
         //final Event eventSelect = gson.fromJson(getIntent().getStringExtra("EVENT"), Event.class);
         final PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
-        final String recommended = getIntent().getStringExtra("RECOMMENDED");
+        final boolean recommended = getIntent().getExtras().getBoolean("RECOMMENDED");
         final String eventSelectId = getIntent().getStringExtra("EVENT");
         Event eventSelect;
-        if(recommended.equals("true")){
-
+        if(recommended) {
+            System.out.println("****************************** ENTRAS AQUI HIJO DE LA GRAN PUTA CABRON");
             eventSelect  = persistentUserInfo.getEventsRecommended(eventSelectId);
 
-        }else{
+        } else{
              eventSelect = persistentUserInfo.getEvent(eventSelectId);
         }
 
