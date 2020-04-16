@@ -55,6 +55,7 @@ public class PastEventsFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), FinishedEventInfoActivity.class);
                 String eventJson = (new Gson()).toJson(pastEvents.get((int) id));
                 intent.putExtra("EVENT", eventJson);
+                intent.putExtra("RECOMMENDED", false);
                 getActivity().startActivity(intent);
 
 

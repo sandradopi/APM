@@ -66,6 +66,7 @@ public class NextEventsFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), EventInfoActivity.class);
                 String eventJson = (new Gson()).toJson(nextEvents.get((int) id));
                 intent.putExtra("EVENT", eventJson);
+                intent.putExtra("RECOMMENDED", false);
                 getActivity().startActivity(intent);
 
 

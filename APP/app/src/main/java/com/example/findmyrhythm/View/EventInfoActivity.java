@@ -59,11 +59,12 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
         //Gson gson = new Gson();
         //final Event eventSelect = gson.fromJson(getIntent().getStringExtra("EVENT"), Event.class);
         final PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
+
         final boolean recommended = getIntent().getExtras().getBoolean("RECOMMENDED");
         final String eventSelectId = getIntent().getStringExtra("EVENT");
         Event eventSelect;
+
         if(recommended) {
-            System.out.println("****************************** ENTRAS AQUI HIJO DE LA GRAN PUTA CABRON");
             eventSelect  = persistentUserInfo.getEventsRecommended(eventSelectId);
 
         } else{
@@ -157,8 +158,9 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
 
     private class unSubscribe extends AsyncTask<Void, Void, Void> {
         Gson gson = new Gson();
-        Event eventSelect = gson.fromJson(getIntent().getStringExtra("EVENT"), Event.class);
+        final String eventSelectId = getIntent().getStringExtra("EVENT");
         final PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
+        Event eventSelect  = persistentUserInfo.getEvent(eventSelectId);
 
         @Override
         protected void onPreExecute() {
@@ -183,8 +185,9 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
 
     private class Subscribe extends AsyncTask<Void, Void, Void> {
         Gson gson = new Gson();
-        Event eventSelect = gson.fromJson(getIntent().getStringExtra("EVENT"), Event.class);
+        final String eventSelectId = getIntent().getStringExtra("EVENT");
         final PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
+        Event eventSelect  = persistentUserInfo.getEventsRecommended(eventSelectId);
         final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         @Override
@@ -196,7 +199,7 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
         protected Void doInBackground(Void... voids) {
             attendeeService.createAttendee(currentUser.getUid(), eventSelect.getId());
             persistentUserInfo.addEvent(getApplicationContext(),eventSelect);
-            Joined= true;
+            Joined = true;
             return null;
         }
 
