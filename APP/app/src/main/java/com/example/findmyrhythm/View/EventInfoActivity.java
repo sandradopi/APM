@@ -58,9 +58,20 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
         //Event
         //Gson gson = new Gson();
         //final Event eventSelect = gson.fromJson(getIntent().getStringExtra("EVENT"), Event.class);
-        final String eventSelectId = getIntent().getStringExtra("EVENT");
         final PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
-        Event eventSelect = persistentUserInfo.getEvent(eventSelectId);
+        final String recommended = getIntent().getStringExtra("RECOMMENDED");
+        final String eventSelectId = getIntent().getStringExtra("EVENT");
+        Event eventSelect;
+        if(recommended.equals("true")){
+
+            eventSelect  = persistentUserInfo.getEventsRecommended(eventSelectId);
+
+        }else{
+             eventSelect = persistentUserInfo.getEvent(eventSelectId);
+        }
+
+
+
 
         //Its joined?
         //final PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());

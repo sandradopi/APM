@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.example.findmyrhythm.Model.Event;
 import com.example.findmyrhythm.Model.EventService;
 import com.example.findmyrhythm.Model.Exceptions.InstanceNotFoundException;
+import com.example.findmyrhythm.Model.PersistentUserInfo;
 import com.example.findmyrhythm.Model.User;
 import com.example.findmyrhythm.Model.UserService;
 import com.example.findmyrhythm.R;
@@ -65,6 +66,7 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
             EventService eventService = new EventService();
             UserService userService = new UserService();
             ArrayList<Event> events = new ArrayList<>();
+            final PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
             try {
                 SharedPreferences preferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
                 User user = userService.getUser(preferences.getString("fb_id", null));
@@ -72,6 +74,7 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
                 System.out.println(user.getSubscribedLocations() + "\n");
                 System.out.println(user.getSubscribedGenres() + "\n");
                 events = eventService.getRecommendedEvents(user);
+                persistentUserInfo.addEventRecommended(getApplicationContext(), events);
             } catch (InstanceNotFoundException e) {
                 Log.e("DEBUG", "InstanceNotFoundException");
             }
@@ -110,6 +113,7 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
                    // String eventJson = (new Gson()).toJson(events.get((int) id));
                     // intent.putExtra("ID", ids[(int) id]);
                     intent.putExtra("EVENT", events.get((int) id).getId());
+                    intent.putExtra("RECOMMENDED", true);
                     RecommendedEventsActivity.this.startActivity(intent);
 
                 }
