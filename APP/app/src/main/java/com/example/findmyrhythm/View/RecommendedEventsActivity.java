@@ -22,7 +22,9 @@ import com.example.findmyrhythm.View.tabs.ListAdapterRecomended;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 public class RecommendedEventsActivity extends UserMenuDrawerActivity {
@@ -87,11 +89,14 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
             String[] prices = new String[events.size()];
             final String[] ids = new String[events.size()];
 
+            Date date;
             int i = 0;
             for (Event event : events) {
                 ids[i] = event.getId();
                 names[i] = event.getName();
-                dates[i] = "fecha";
+                date = event.getEventDate();
+                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yy");
+                dates[i] = df.format(date);
                 prices[i] = String.valueOf(event.getPrice());
                 i++;
             }
