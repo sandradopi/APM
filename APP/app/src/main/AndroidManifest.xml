@@ -49,8 +49,8 @@
         <activity android:name=".View.UserLogActivity" />
         <activity android:name=".View.SetGenresActivity" />
         <activity
-            android:name=".View.SetLocationActivity"
-            android:windowSoftInputMode="adjustResize" />
+            android:name=".View.SetLocationActivity">
+        </activity>
         <activity
             android:name=".View.GreetingsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
