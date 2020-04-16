@@ -69,16 +69,22 @@ public class EventDAO extends GenericDAO<Event> {
             Log.e(TAG, "Interrupted Exception");
         }
 
-        //TODO: CHECK WITH CONTAINS
+
         for (Event event : locationEvents) {
-            for (String genre : user.getSubscribedGenres()) {
-                if (event.getGenre().equals(genre)) {
-                    Log.e(TAG, event.getGenre());
-                    recommendedEvents.add(event);
-                    break;
-                }
+            if (user.getSubscribedGenres().contains(event.getGenre())) {
+                recommendedEvents.add(event);
             }
         }
+
+
+//        for (String genre : user.getSubscribedGenres()) {
+//
+//            if (event.getGenre().equals(genre)) {
+//                Log.e(TAG, event.getGenre());
+//                recommendedEvents.add(event);
+//                break;
+//            }
+//        }
 
         Log.e(TAG+">>>>>>>>>>>>>>", recommendedEvents.toString());
 
