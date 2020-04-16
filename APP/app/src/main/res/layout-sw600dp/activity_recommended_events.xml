@@ -1,49 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:background="@color/primaryBackgroundDark"
     android:layout_height="match_parent">
 
 
-    <TextView
-        android:id="@+id/titulo"
-        android:layout_width="261dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="100dp"
-        android:layout_marginTop="70dp"
-        android:layout_marginEnd="144dp"
-        android:layout_toStartOf="@+id/eventInfo"
-        android:text="@string/recomendados_para_ti"
-        android:textSize="24sp"
-        android:textStyle="bold|italic" />
+    <LinearLayout
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_width="match_parent">
+        <TextView
+            android:id="@+id/titulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity = "center_horizontal"
+            android:text="@string/recomendados_para_ti"
+            android:textSize="24sp"
+            android:textStyle="bold|italic" />
 
-    <ListView
-        android:id="@+id/eventlist2"
-        android:layout_width="match_parent"
-        android:layout_height="479dp"
-        android:layout_below="@+id/titulo"
-        android:layout_marginTop="7dp" />
+        <ListView
+            android:id="@+id/eventlist2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/titulo"
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="0dp" />
+    </LinearLayout>
 
-    <fragment
-        android:id="@+id/eventInfo"
-        android:name="com.example.findmyrhythm.View.tabs.EventoInfoFragment"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_below="@+id/eventlist2"
-        android:layout_marginStart="-600dp"
-        android:layout_marginTop="0dp"
-        android:layout_toEndOf="@+id/eventlist2" />
+    <LinearLayout
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layout_width="match_parent">
 
-    <fragment
-        android:id="@+id/eventMap"
-        android:name="com.google.android.gms.maps.MapFragment"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_below="@+id/eventInfo"
-        android:layout_marginStart="-300dp"
-        android:layout_marginTop="-300dp"
-        android:layout_toEndOf="@+id/eventlist2" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-</RelativeLayout>
+            <fragment
+                android:id="@+id/eventInfo"
+                android:name="com.example.findmyrhythm.View.tabs.EventoInfoFragment"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="1dp"
+                android:layout_toEndOf="@+id/eventlist2" />
+
+            <fragment
+                android:id="@+id/eventMap"
+                android:name="com.google.android.gms.maps.MapFragment"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_below="@+id/eventInfo"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_toEndOf="@+id/eventlist2" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
