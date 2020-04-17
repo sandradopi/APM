@@ -19,7 +19,7 @@
                 android:id="@+id/eventName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Viva Suecia"
+                android:text=""
                 android:layout_centerVertical="true"
                 android:textSize="25sp"
                 android:textStyle="bold" />
@@ -39,7 +39,7 @@
             android:id="@+id/eventDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sab, Marzo 3 | 23:00"
+            android:text=""
             android:textColor="#707070"
             android:textSize="18sp" />
 
@@ -60,7 +60,7 @@
                 android:id="@+id/eventDescContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Suecia es un grupo de Indie Rock con toques Shoegaze originario de la ciudad de Murcia (España) y formado en 2013."
+                android:text=""
                 android:textSize="15sp" />
         </LinearLayout>
 
@@ -81,7 +81,7 @@
                 android:id="@+id/eventLocationContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Discoteca Playa Club Andén de Riazor, S/n,15011 A Coruña"
+                android:text=""
                 android:textSize="15sp" />
         </LinearLayout>
 

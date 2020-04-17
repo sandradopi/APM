@@ -1,15 +1,20 @@
 package com.example.findmyrhythm.View;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 
 import com.example.findmyrhythm.Model.Event;
 import com.example.findmyrhythm.Model.EventService;
@@ -20,6 +25,7 @@ import com.example.findmyrhythm.Model.UserService;
 import com.example.findmyrhythm.R;
 import com.example.findmyrhythm.View.tabs.ListAdapterNext;
 import com.example.findmyrhythm.View.tabs.ListAdapterRecomended;
+import com.example.findmyrhythm.View.tabs.NextEventsFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 
@@ -31,6 +37,10 @@ import java.util.concurrent.ExecutionException;
 public class RecommendedEventsActivity extends UserMenuDrawerActivity {
 
     ListView mListView;
+    TextView eventName;
+    TextView eventDate;
+    TextView eventDescContent;
+    TextView eventLocationContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +50,11 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
         setMenuItemChecked(R.id.nav_recommended);
 
         mListView = findViewById(R.id.eventslist2);
+        eventName = findViewById(R.id.eventName);
+        eventDate = findViewById(R.id.eventDate);
+        eventDescContent = findViewById(R.id.eventDescContent);
+        eventLocationContent = findViewById(R.id.eventLocationContent);
+
 
         TextView toolbarTitle = findViewById(R.id.tvTitle);
         toolbarTitle.setText("Recomendados");
@@ -75,9 +90,11 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
                 events = eventService.getRecommendedEvents(user);
                 Log.e("AQUI", events.toString());
                 persistentUserInfo.addEventRecommended(getApplicationContext(), events);
+
             } catch (InstanceNotFoundException e) {
                 Log.e("DEBUG", "InstanceNotFoundException");
             }
+
 
             return events;
         }
@@ -106,22 +123,49 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
 
             ListAdapterNext adapter = new ListAdapterNext(RecommendedEventsActivity.this, names, dates, prices);
 
-            mListView.setAdapter(adapter);
+            int orientation = getResources().getConfiguration().orientation;
+            if(orientation == Configuration.ORIENTATION_LANDSCAPE || isTablet(getApplicationContext())){
+                System.out.println(events.get(0).getName());
+                eventName.setText(events.get(0).getName());
+                eventDate.setText(events.get(0).getEventDate().toString());
+                eventDescContent.setText(events.get(0).getDescription());
+                eventLocationContent.setText(events.get(0).getLocation());
 
+            }
+            mListView.setAdapter(adapter);
             mListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
-                    Intent intent = new Intent(RecommendedEventsActivity.this, EventInfoActivity.class);
-                   // String eventJson = (new Gson()).toJson(events.get((int) id));
-                    // intent.putExtra("ID", ids[(int) id]);
-                    intent.putExtra("EVENT", events.get((int) id).getId());
-                    intent.putExtra("RECOMMENDED", true);
-                    RecommendedEventsActivity.this.startActivity(intent);
+                    int orientation = getResources().getConfiguration().orientation;
+
+                    if(orientation == Configuration.ORIENTATION_LANDSCAPE || isTablet(getApplicationContext())){
+                        eventName.setText(events.get((int) id).getName());
+                        eventDate.setText(events.get((int) id).getEventDate().toString());
+                        eventDescContent.setText(events.get((int) id).getDescription());
+                        eventLocationContent.setText(events.get((int) id).getLocation());
+                    }
+
+                    else if (orientation == Configuration.ORIENTATION_PORTRAIT){
+                        Intent intent = new Intent(RecommendedEventsActivity.this, EventInfoActivity.class);
+                        // String eventJson = (new Gson()).toJson(events.get((int) id));
+                        // intent.putExtra("ID", ids[(int) id]);
+                        intent.putExtra("EVENT", events.get((int) id).getId());
+                        intent.putExtra("RECOMMENDED", true);
+                        RecommendedEventsActivity.this.startActivity(intent);
+                    }
+
+
 
                 }
             });
 
         }
+        public boolean isTablet(Context context) {
+            return (context.getResources().getConfiguration().screenLayout
+                    & Configuration.SCREENLAYOUT_SIZE_MASK)
+                    >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+        }
+
     }
 }
