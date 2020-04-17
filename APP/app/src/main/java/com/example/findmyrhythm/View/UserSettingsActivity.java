@@ -113,6 +113,8 @@ public class UserSettingsActivity extends UserMenuDrawerActivity {
             SharedPreferences preferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
             editor.putString("name", nameView.getText().toString());
+            editor.putString("email", emailView.getText().toString());
+            editor.putString("nickname", usernameView.getText().toString());
             editor.commit();
 
             Toast.makeText(UserSettingsActivity.this, getString(R.string.guardar),  Toast.LENGTH_SHORT).show();

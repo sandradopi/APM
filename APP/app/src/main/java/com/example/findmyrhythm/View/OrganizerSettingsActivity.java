@@ -78,6 +78,8 @@ public class OrganizerSettingsActivity extends OrganizerMenuDrawerActivity {
                 SharedPreferences preferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString("name", nameView.getText().toString());
+                editor.putString("email", emailView.getText().toString());
+                editor.putString("nickname", usernameView.getText().toString());
                 editor.commit();
 
                 UpdateInfo updateInfo = new UpdateInfo();
