@@ -50,6 +50,17 @@ public class AttendeeService {
         return attendeeDAO.findAttendeeByUser(idUser);
     }
 
+    public ArrayList<Event> getEventsByUser(String idUser) {
+        ArrayList<Event> events = new ArrayList<>();
+        EventService eventService = new EventService();
+        ArrayList<String> eventsIDs = attendeeDAO.findAttendeeByUser(idUser);
+        for (String eventID : eventsIDs) {
+            Event event = eventService.getEvent(eventID);
+            events.add(event);
+        }
+        return events;
+    }
+
     public void deleteAttendeeByEvent(String idEvent) {
         Log.e("IDSERVICE", idEvent);
         attendeeDAO.deleteAttendeeByEvent(idEvent);

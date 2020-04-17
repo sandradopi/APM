@@ -5,6 +5,8 @@ import android.util.Log;
 import com.example.findmyrhythm.Model.Exceptions.DuplicatedInstanceException;
 import com.example.findmyrhythm.Model.Exceptions.InstanceNotFoundException;
 
+import java.util.ArrayList;
+
 public class OrganizerService {
 
     private static final String TAG = "OrganizerService";
@@ -40,5 +42,11 @@ public class OrganizerService {
 
     public void updateOrganizer(Organizer organizer) {
         organizerDAO.update(organizer);
+    }
+
+    public ArrayList<Event> getOrganizedEventsByOrganizer(String idOrganizer) {
+        ArrayList<Event> events = new ArrayList<>();
+        // TODO: Obtener los eventos organizados por el organizador
+        return events;
     }
 }

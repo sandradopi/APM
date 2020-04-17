@@ -1,6 +1,8 @@
 package com.example.findmyrhythm.View;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -8,9 +10,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.findmyrhythm.Model.AttendeeService;
+import com.example.findmyrhythm.Model.Event;
+import com.example.findmyrhythm.Model.EventService;
+import com.example.findmyrhythm.Model.Exceptions.InstanceNotFoundException;
+import com.example.findmyrhythm.Model.Organizer;
+import com.example.findmyrhythm.Model.OrganizerService;
+import com.example.findmyrhythm.Model.PersistentOrganizerInfo;
+import com.example.findmyrhythm.Model.PersistentUserInfo;
+import com.example.findmyrhythm.Model.User;
+import com.example.findmyrhythm.Model.UserService;
 import com.example.findmyrhythm.R;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -32,8 +45,8 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
 
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -153,17 +166,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void updateUI(FirebaseUser currentUser) {
         if (currentUser != null) {
-            //addNewUser(currentUser);
-            startGreetings();
+            new CheckUserTask().execute(currentUser);
         }
-    }
-
-
-    private void startGreetings() {
-        // Log out to test with different accounts
-        // FirebaseAuth.getInstance().signOut(); // TODO: delete
-        Intent intent = new Intent(LoginActivity.this, GreetingsActivity.class);
-        startActivity(intent);
     }
 
 
@@ -248,5 +252,108 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
+
+    private class CheckUserTask extends AsyncTask<FirebaseUser, Void, Void> {
+        User user;
+        Organizer organizer;
+
+        @Override
+        protected Void doInBackground(FirebaseUser... fbUser) {
+            //addNewUser(currentUser);
+            // Check if user already signed-in previously
+
+            try {
+                UserService userService = new UserService();
+                user = userService.getUser(fbUser[0].getUid());
+            } catch (InstanceNotFoundException e) {
+                user = null;
+            }
+
+            try {
+                OrganizerService organizerService = new OrganizerService();
+                organizer = organizerService.getOrganizer(fbUser[0].getUid());
+            } catch (InstanceNotFoundException e) {
+                organizer = null;
+            }
+
+            if (user==null && organizer==null) {
+                Intent intent = new Intent(LoginActivity.this, GreetingsActivity.class);
+                startActivity(intent);
+            } else if (user!=null && organizer==null) {
+                recoverUser(user);
+            } else if (user==null && organizer!=null) {
+                recoverOrganizer(organizer);
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            if (user!=null && organizer!=null) {
+                showSelectAccountDialog(user, organizer);
+            }
+        }
+    }
+
+    public void recoverUser(User user) {
+        AttendeeService attendeeService = new AttendeeService();
+        ArrayList<Event> events = attendeeService.getEventsByUser(user.getId());
+
+        PersistentUserInfo persistentUserInfo = new PersistentUserInfo(user.getId(),user.getName(),
+                user.getUsername(),user.getEmail(), user.getBiography(), user.getBirthdate(),
+                user.getSubscribedLocations(), user.getSubscribedGenres(), events,
+                new ArrayList<Event>());
+
+        PersistentUserInfo.setPersistentUserInfo(getApplicationContext(), persistentUserInfo);
+
+        Intent intent = new Intent(LoginActivity.this, UserProfileActivity.class);
+        startActivity(intent);
+    }
+
+    public void recoverOrganizer(Organizer organizer) {
+        OrganizerService organizerService = new OrganizerService();
+        AttendeeService attendeeService = new AttendeeService();
+        ArrayList<Event> events = organizerService.getOrganizedEventsByOrganizer(organizer.getId());
+
+        PersistentOrganizerInfo persistentOrganizerInfo = new PersistentOrganizerInfo(organizer.getId(),
+                organizer.getName(), organizer.getUsername(),organizer.getEmail(),
+                organizer.getBiography(), organizer.getRating(), organizer.getLocation(), events);
+
+        PersistentOrganizerInfo.setPersistentOrganizerInfo(getApplicationContext(), persistentOrganizerInfo);
+
+        Intent intent = new Intent(LoginActivity.this, UserProfileActivity.class);
+        startActivity(intent);
+    }
+
+    public void showSelectAccountDialog(final User user, final Organizer organizer) {
+        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setTitle("Selecciona tu cuenta");
+        alertDialog.setMessage("Se han detectado dos cuentas previas: una de usuario y otra de organizador, ¿cuál quieres utilizar?");
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Usuario",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        recoverUser(user);
+                    }
+                });
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ninguna",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        Intent intent = new Intent(LoginActivity.this, GreetingsActivity.class);
+                        startActivity(intent);
+                    }
+                });
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Organizador",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        recoverOrganizer(organizer);
+                    }
+                });
+        alertDialog.show();
+    }
 
 }
