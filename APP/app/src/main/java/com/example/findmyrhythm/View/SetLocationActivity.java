@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -75,9 +76,9 @@ public class SetLocationActivity extends AppCompatActivity implements AdapterVie
 
     }
 
-    public void addProvince(String province){
+    public void addProvince(final String province){
 
-        TextView text = new TextView(this);
+        final TextView text = new TextView(this);
         text.setText(province);
         LinearLayout.LayoutParams params = (new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         params.setMargins(10, 0, 10, 25);
@@ -86,11 +87,17 @@ public class SetLocationActivity extends AppCompatActivity implements AdapterVie
         text.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.close, 0);
 
         locations.addView(text);
+
+        text.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                locations.removeView(text);
+                selectedProvinces.remove(province);
+            }
+        });
     }
 
     @Override
     public void onClick(View view) {
-
         //TODO: PASS TO THE GENRES CLASS THE ARRAYlIST OF LOCATIONS AND WHEN ALL THE INFORMATION IS KNOWN ADD THE USER IN THE DATABASE.
         Intent intent = new Intent(this, SetGenresActivity.class);
         intent.putExtra(getString(R.string.locationsListID), selectedProvinces);

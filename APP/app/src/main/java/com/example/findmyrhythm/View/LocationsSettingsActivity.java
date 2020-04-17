@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -82,12 +83,14 @@ public class LocationsSettingsActivity extends AppCompatActivity implements Adap
             addProvince(value);
         }
         provinces.setText("");
+        Log.e("DEBUG", "ADDED");
 
     }
 
-    public void addProvince(String province){
 
-        TextView text = new TextView(this);
+    public void addProvince(final String province){
+
+        final TextView text = new TextView(this);
         text.setText(province);
         LinearLayout.LayoutParams params = (new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         params.setMargins(10, 0, 10, 25);
@@ -96,7 +99,15 @@ public class LocationsSettingsActivity extends AppCompatActivity implements Adap
         text.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.close, 0);
 
         locations.addView(text);
+
+        text.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                locations.removeView(text);
+                selectedProvinces.remove(province);
+            }
+        });
     }
+
 
     @Override
     public void onClick(View view) {
