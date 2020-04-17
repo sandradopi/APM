@@ -25,6 +25,9 @@ import com.example.findmyrhythm.View.tabs.RatingsAdapter;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class FinishedEventInfoActivity extends AppCompatActivity {
     private static final String TAG = "Score Event";
     TextView name, date, descripcion, ubication;
@@ -68,13 +71,16 @@ public class FinishedEventInfoActivity extends AppCompatActivity {
 
         name = findViewById(R.id.eventName);
         date =  findViewById(R.id.eventDate);
-        //descripcion = findViewById(R.id.eventDescContent);
+        descripcion = findViewById(R.id.eventDescContent);
         ubication = findViewById(R.id.eventLocationContent);
 
 
         name.setText(eventSelect.getName());
-        date.setText("fecha");//eventSelect.getDate()
-        //descripcion.setText(eventSelect);
+        Date dateF;
+        dateF = eventSelect.getEventDate();
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yy");
+        date.setText(df.format(dateF));
+        descripcion.setText(eventSelect.getDescription());
         ubication.setText(eventSelect.getLocation());
 
         // SCORES LOGIC

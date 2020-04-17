@@ -31,7 +31,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class OrganizerEventInfoActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -103,9 +105,12 @@ public class OrganizerEventInfoActivity extends AppCompatActivity implements OnM
         eventName.setText(event.getName());
         eventMaxAttendees.setText(String.valueOf(event.getMaxAttendees()));
         eventPrice.setText(String.valueOf(event.getPrice())+"€");
-        eventDate.setText("fecha");
+        Date dateF;
+        dateF = event.getEventDate();
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yy");
+        eventDate.setText(df.format(dateF));
         eventLocation.setText(event.getLocation());
-        eventDescrip.setText("descripcion");
+        eventDescrip.setText(event.getDescription());
     }
 
 

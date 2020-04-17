@@ -18,7 +18,9 @@ import com.example.findmyrhythm.R;
 import com.example.findmyrhythm.View.FinishedEventInfoActivity;
 import com.google.gson.Gson;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -30,7 +32,7 @@ public class PastEventsFragmentOrg extends Fragment {
 
 
         View view = inflater.inflate(R.layout.fragment_past_events, container, false);
-
+        Date date;
         ListView mListView;
         mListView = (ListView) view.findViewById(R.id.eventlist);
         PersistentOrganizerInfo persistentOrganicerInfo = PersistentOrganizerInfo.getPersistentOrganizerInfo(getApplicationContext());
@@ -43,7 +45,9 @@ public class PastEventsFragmentOrg extends Fragment {
         int i = 0;
         for (Event event : pastEvents) {
             events[i] = event.getName();
-            dates[i] = "fecha";
+            date = event.getEventDate();
+            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yy");
+            dates[i] = df.format(date);
             rates[i] = null;
             i++;
         }

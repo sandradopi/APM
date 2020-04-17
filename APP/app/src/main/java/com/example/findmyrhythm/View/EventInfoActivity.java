@@ -37,7 +37,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 
+import java.io.SyncFailedException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCallback {
     String joined_text = "Apuntado";
@@ -62,6 +65,7 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
 
         final boolean recommended = getIntent().getExtras().getBoolean("RECOMMENDED");
         final String eventSelectId = getIntent().getStringExtra("EVENT");
+        Log.e("IDACTIVITY", eventSelectId);
         Event eventSelect;
 
         if(recommended) {
@@ -88,13 +92,16 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
 
         name = findViewById(R.id.eventName);
         date =  findViewById(R.id.eventDate);
-        //descripcion = findViewById(R.id.eventDescContent);
+        descripcion = findViewById(R.id.eventDescContent);
         ubication = findViewById(R.id.eventLocationContent);
 
 
+        Date dateF;
+        dateF = eventSelect.getEventDate();
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yy");
+        date.setText(df.format(dateF));
         name.setText(eventSelect.getName());
-        date.setText("fecha");//eventSelect.getDate()
-        //descripcion.setText(eventSelect);
+        descripcion.setText(eventSelect.getDescription());
         ubication.setText(eventSelect.getLocation());
 
 
@@ -115,16 +122,11 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
                     new unSubscribe().execute();
                     joinButton.setText(join_event_text);
                     joinButton.setBackgroundColor(0xFFB3A1CE);
-                    System.out.println("HOLA1");
-
-
 
                 }else{
                     new Subscribe().execute();
                     joinButton.setText(joined_text);
                     joinButton.setBackgroundColor(0xFF673AB7);
-                    System.out.println("HOLA2");
-
                 }
 
             }
@@ -159,6 +161,7 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
     private class unSubscribe extends AsyncTask<Void, Void, Void> {
         Gson gson = new Gson();
         final String eventSelectId = getIntent().getStringExtra("EVENT");
+
         final PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
         Event eventSelect  = persistentUserInfo.getEvent(eventSelectId);
 

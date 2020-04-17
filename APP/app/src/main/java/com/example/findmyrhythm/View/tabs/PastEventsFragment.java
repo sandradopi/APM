@@ -17,7 +17,9 @@ import com.example.findmyrhythm.R;
 import com.example.findmyrhythm.View.FinishedEventInfoActivity;
 import com.google.gson.Gson;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -29,7 +31,7 @@ public class PastEventsFragment extends Fragment {
 
 
         View view = inflater.inflate(R.layout.fragment_past_events, container, false);
-
+        Date date;
         ListView mListView;
         mListView = (ListView) view.findViewById(R.id.eventlist);
         PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
@@ -41,7 +43,9 @@ public class PastEventsFragment extends Fragment {
         int i = 0;
         for (Event event : pastEvents) {
             events[i] = event.getName();
-            dates[i] = "fecha";
+            date = event.getEventDate();
+            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yy");
+            dates[i] = df.format(date);
             rates[i] = "not_rated";
             i++;
         }
@@ -53,8 +57,7 @@ public class PastEventsFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
                 Intent intent = new Intent(getActivity(), FinishedEventInfoActivity.class);
-                String eventJson = (new Gson()).toJson(pastEvents.get((int) id));
-                intent.putExtra("EVENT", eventJson);
+                intent.putExtra("EVENT", pastEvents.get((int) id).getId());
                 intent.putExtra("RECOMMENDED", false);
                 getActivity().startActivity(intent);
 

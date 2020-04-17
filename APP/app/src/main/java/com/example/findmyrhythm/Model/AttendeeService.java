@@ -51,6 +51,7 @@ public class AttendeeService {
     }
 
     public void deleteAttendeeByEvent(String idEvent) {
+        Log.e("IDSERVICE", idEvent);
         attendeeDAO.deleteAttendeeByEvent(idEvent);
     }
 
