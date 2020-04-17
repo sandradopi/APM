@@ -72,8 +72,6 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
                 SharedPreferences preferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
                 User user = userService.getUser(preferences.getString("fb_id", null));
 
-                System.out.println(user.getSubscribedLocations() + "\n");
-                System.out.println(user.getSubscribedGenres() + "\n");
                 events = eventService.getRecommendedEvents(user);
                 Log.e("AQUI", events.toString());
                 persistentUserInfo.addEventRecommended(getApplicationContext(), events);

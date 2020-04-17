@@ -85,13 +85,12 @@ public class FinishedEventInfoActivity extends AppCompatActivity {
 
         // SCORES LOGIC
         RatingBar bar=(RatingBar)findViewById(R.id.pastEventScore);
-        bar.setStepSize(0.5f);
         //Bundle b = getIntent().getExtras();
         float score= 8;
         //change the score out of ten to star rating out of 5
         float scores = score / 2;
         //display star rating
-        bar.setRating(scores);
+        bar.setRating(2.5f);
         bar.setClickable(true);
         bar.setOnTouchListener(new View.OnTouchListener() {
             @Override
