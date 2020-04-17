@@ -3,9 +3,12 @@
     <string-array name="categories">
         <item>Rock</item>
         <item>Pop</item>
-        <item>Jazz</item>
+        <item>Trap</item>
         <item>Clásica</item>
         <item>Hip-hop</item>
         <item>Blues</item>
+        <item>Dance</item>
+        <item>Indie</item>
+        <item>Reggae</item>
     </string-array>
 </resources>
