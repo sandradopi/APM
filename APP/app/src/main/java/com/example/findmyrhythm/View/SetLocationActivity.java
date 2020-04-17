@@ -66,11 +66,19 @@ public class SetLocationActivity extends AppCompatActivity implements AdapterVie
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
         String value = (String) adapterView.getItemAtPosition(i);
-        selectedProvinces.add(value);
+        if (!selectedProvinces.contains(value)) {
+            selectedProvinces.add(value);
+            addProvince(value);
+        }
+        provinces.setText("");
+
+    }
+
+    public void addProvince(String province){
+
         TextView text = new TextView(this);
-        text.setText(value);
+        text.setText(province);
         LinearLayout.LayoutParams params = (new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         params.setMargins(10, 0, 10, 25);
         text.setLayoutParams(params);
@@ -78,9 +86,6 @@ public class SetLocationActivity extends AppCompatActivity implements AdapterVie
         text.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.close, 0);
 
         locations.addView(text);
-
-        provinces.setText("");
-
     }
 
     @Override
