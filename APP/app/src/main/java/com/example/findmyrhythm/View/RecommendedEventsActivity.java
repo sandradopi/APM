@@ -52,6 +52,7 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
         new getEvents().execute();
     }
 
@@ -104,7 +105,10 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
                 prices[i] = String.valueOf(event.getPrice());
                 i++;
             }
-            mListView.setAdapter(new ListAdapterNext(RecommendedEventsActivity.this, names, dates, prices));
+
+            ListAdapterNext adapter = new ListAdapterNext(RecommendedEventsActivity.this, names, dates, prices);
+
+            mListView.setAdapter(adapter);
 
             mListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
                 @Override
