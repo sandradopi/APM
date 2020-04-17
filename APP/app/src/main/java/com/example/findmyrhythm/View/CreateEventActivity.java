@@ -198,7 +198,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
                         String textdate = dayOfMonth + "/" + monthOfYear + "/" + year;
                         date.setText(textdate);
                         calendar.set(Calendar.YEAR, year);
-                        calendar.set(Calendar.MONTH, monthOfYear);
+                        calendar.set(Calendar.MONTH, monthOfYear +1);
                         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
 
