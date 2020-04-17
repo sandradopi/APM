@@ -37,11 +37,10 @@ public class GenresSettingsActivity extends AppCompatActivity implements View.On
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-        Gson gson = new Gson();
-        persistentUserInfo = gson.fromJson(getIntent().getStringExtra("INFO"), PersistentUserInfo.class);
-        //if (b.getStringArrayList(getString(R.string.genresListID)) != null)
-        //    selectedGenres = b.getStringArrayList(getString(R.string.genresListID));
-        selectedGenres = persistentUserInfo.getSubscribedGenres();
+        Bundle b = getIntent().getExtras();
+        //if (b.getStringArrayList("GENRES") != null)
+        selectedGenres = b.getStringArrayList("GENRES");
+        //selectedGenres = persistentUserInfo.getSubscribedGenres();
 
         pop = (CardView) findViewById(R.id.pop);
         pop.setOnClickListener(this);
@@ -99,11 +98,9 @@ public class GenresSettingsActivity extends AppCompatActivity implements View.On
              */
 
             Intent intent = new Intent(this, UserSettingsActivity.class);
-            //intent.putExtra(getString(R.string.genresListID), selectedGenres);
-            persistentUserInfo.setSubscribedGenres(selectedGenres);
-            String infoJson = (new Gson()).toJson(persistentUserInfo);
-            intent.putExtra("INFO", infoJson);
-            startActivity(intent);
+            intent.putStringArrayListExtra("GENRES", selectedGenres);
+            setResult(RESULT_OK, intent);
+            finish();
 
         } else {
 

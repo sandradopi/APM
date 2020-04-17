@@ -39,6 +39,12 @@ public class UserSettingsActivity extends UserMenuDrawerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_settings);
 
+        final TextView nameView = findViewById(R.id.userFullName);
+        final TextView usernameView = findViewById(R.id.userNickname);
+        final TextView emailView = findViewById(R.id.userEmail);
+        final TextView biographyView = findViewById(R.id.userBiography);
+        final TextView birthdateView = findViewById(R.id.userBirthdate);
+
 
         setMenuItemChecked(R.id.nav_settings);
 
@@ -47,34 +53,15 @@ public class UserSettingsActivity extends UserMenuDrawerActivity {
 
         persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
 
-        Bundle b = getIntent().getExtras();
-        if (b != null) {
-            Gson gson = new Gson();
-            persistentUserInfo = gson.fromJson(getIntent().getStringExtra("INFO"), PersistentUserInfo.class);
-        }
-
         selectedGenres = persistentUserInfo.getSubscribedGenres();
         selectedLocations = persistentUserInfo.getSubscribedLocations();
 
-        final String name = persistentUserInfo.getName();
-        final TextView nameView = findViewById(R.id.userFullName);
-        nameView.setText(name);
+        nameView.setText(persistentUserInfo.getName());
+        usernameView.setText(persistentUserInfo.getUsername());
+        emailView.setText(persistentUserInfo.getEmail());
+        biographyView.setText(persistentUserInfo.getBiography());
+        birthdateView.setText(persistentUserInfo.getBirthdate());
 
-        final String username = persistentUserInfo.getUsername();
-        final TextView usernameView = findViewById(R.id.userNickname);
-        usernameView.setText(username);
-
-        final String email = persistentUserInfo.getEmail();
-        final TextView emailView = findViewById(R.id.userEmail);
-        emailView.setText(email);
-
-        final String biography = persistentUserInfo.getBiography();
-        final TextView biographyView = findViewById(R.id.userBiography);
-        biographyView.setText(biography);
-
-        final String birthdate = persistentUserInfo.getBirthdate();
-        final TextView birthdateView = findViewById(R.id.userBirthdate);
-        birthdateView.setText(birthdate);
 
 
 
@@ -84,15 +71,9 @@ public class UserSettingsActivity extends UserMenuDrawerActivity {
             @Override
             public void onClick(View view) {
                 Log.w(TAG, "Ha clickeado en Editar Géneros");
-                persistentUserInfo.setName(nameView.getText().toString());
-                persistentUserInfo.setUsername(usernameView.getText().toString());
-                persistentUserInfo.setEmail(emailView.getText().toString());
-                persistentUserInfo.setBiography(biographyView.getText().toString());
-                persistentUserInfo.setBirthdate(birthdateView.getText().toString());
                 Intent intent = new Intent(UserSettingsActivity.this, GenresSettingsActivity.class);
-                String infoJson = (new Gson()).toJson(persistentUserInfo);
-                intent.putExtra("INFO", infoJson);
-                startActivity(intent);
+                intent.putStringArrayListExtra("GENRES", selectedGenres);
+                startActivityForResult(intent, 1);
             }
         });
 
@@ -102,15 +83,10 @@ public class UserSettingsActivity extends UserMenuDrawerActivity {
             @Override
             public void onClick(View view) {
                 Log.w(TAG, "Ha clickeado en Editar Localidades");
-                persistentUserInfo.setName(nameView.getText().toString());
-                persistentUserInfo.setUsername(usernameView.getText().toString());
-                persistentUserInfo.setEmail(emailView.getText().toString());
-                persistentUserInfo.setBiography(biographyView.getText().toString());
-                persistentUserInfo.setBirthdate(birthdateView.getText().toString());
+
                 Intent intent = new Intent(UserSettingsActivity.this, LocationsSettingsActivity.class);
-                String infoJson = (new Gson()).toJson(persistentUserInfo);
-                intent.putExtra("INFO", infoJson);
-                startActivity(intent);
+                intent.putStringArrayListExtra("LOCATIONS", selectedLocations);
+                startActivityForResult(intent, 2);
             }
         });
 
@@ -159,6 +135,25 @@ public class UserSettingsActivity extends UserMenuDrawerActivity {
         }
         });
 
+
+
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1) {
+
+            if (resultCode == RESULT_OK) {
+                selectedGenres = data.getStringArrayListExtra("GENRES");
+            }
+
+        }
+        if (requestCode == 2) {
+            if (resultCode == RESULT_OK) {
+                selectedLocations = data.getStringArrayListExtra("LOCATIONS");
+            }
+        }
     }
 
     private class UpdateInfo extends AsyncTask<Void, Void, Void> {
@@ -182,5 +177,8 @@ public class UserSettingsActivity extends UserMenuDrawerActivity {
 
         }
     }
+
+
+
 
 }
