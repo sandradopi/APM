@@ -16,7 +16,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.findmyrhythm.Model.AttendeeService;
 import com.example.findmyrhythm.Model.Event;
-import com.example.findmyrhythm.Model.EventService;
 import com.example.findmyrhythm.Model.Exceptions.InstanceNotFoundException;
 import com.example.findmyrhythm.Model.Organizer;
 import com.example.findmyrhythm.Model.OrganizerService;
@@ -47,6 +46,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -256,19 +256,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private class CheckUserTask extends AsyncTask<FirebaseUser, Void, Void> {
         User user;
         Organizer organizer;
-        ArrayList<Event> userEvents;
-        ArrayList<Event> organizerEvents;
 
         @Override
         protected Void doInBackground(FirebaseUser... fbUser) {
-            //addNewUser(currentUser);
             // Check if user already signed-in previously
 
             try {
                 UserService userService = new UserService();
                 user = userService.getUser(fbUser[0].getUid());
-                AttendeeService attendeeService = new AttendeeService();
-                userEvents = attendeeService.getEventsByUser(user.getId());
             } catch (InstanceNotFoundException e) {
                 user = null;
             }
@@ -276,18 +271,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             try {
                 OrganizerService organizerService = new OrganizerService();
                 organizer = organizerService.getOrganizer(fbUser[0].getUid());
-                organizerEvents = organizerService.getOrganizedEventsByOrganizer(organizer.getId());
             } catch (InstanceNotFoundException e) {
                 organizer = null;
-            }
-
-            if (user==null && organizer==null) {
-                Intent intent = new Intent(LoginActivity.this, GreetingsActivity.class);
-                startActivity(intent);
-            } else if (user!=null && organizer==null) {
-                recoverUser(user, userEvents);
-            } else if (user==null && organizer!=null) {
-                recoverOrganizer(organizer, organizerEvents);
             }
 
             return null;
@@ -296,37 +281,81 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            if (user!=null && organizer!=null) {
-                showSelectAccountDialog(user, organizer, userEvents, organizerEvents);
+            if (user==null && organizer==null) {
+                Intent intent = new Intent(LoginActivity.this, GreetingsActivity.class);
+                startActivity(intent);
+            } else if (user!=null && organizer==null) {
+                new RecoverUserTask().execute(user); //recoverUser(user);
+            } else if (user==null && organizer!=null) {
+                new RecoverOrganizerTask().execute(organizer); //recoverOrganizer(organizer);
+            } else if (user!=null && organizer!=null) {
+                showSelectAccountDialog(user, organizer);
             }
         }
     }
 
 
-    public void recoverUser(User user, ArrayList<Event> events) {
-        PersistentUserInfo persistentUserInfo = new PersistentUserInfo(user.getId(),user.getName(),
-                user.getUsername(),user.getEmail(), user.getBiography(), user.getBirthdate(),
-                user.getSubscribedLocations(), user.getSubscribedGenres(), events,
-                new ArrayList<Event>());
+    private class RecoverUserTask extends AsyncTask<User, Void, Void> {
 
-        PersistentUserInfo.setPersistentUserInfo(getApplicationContext(), persistentUserInfo);
+        ArrayList<Event> events;
 
-        Intent intent = new Intent(LoginActivity.this, UserProfileActivity.class);
-        startActivity(intent);
+        @Override
+        protected Void doInBackground(User... user) {
+
+            AttendeeService attendeeService = new AttendeeService();
+            events = attendeeService.getEventsByUser(user[0].getId());
+
+            PersistentUserInfo persistentUserInfo = new PersistentUserInfo(user[0].getId(),user[0].getName(),
+                    user[0].getUsername(),user[0].getEmail(), user[0].getBiography(), user[0].getBirthdate(),
+                    user[0].getSubscribedLocations(), user[0].getSubscribedGenres(), events,
+                    new ArrayList<Event>());
+
+            PersistentUserInfo.setPersistentUserInfo(getApplicationContext(), persistentUserInfo);
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+
+            Intent intent = new Intent(LoginActivity.this, UserProfileActivity.class);
+            startActivity(intent);
+        }
     }
 
-    public void recoverOrganizer(Organizer organizer, ArrayList<Event> events) {
-        PersistentOrganizerInfo persistentOrganizerInfo = new PersistentOrganizerInfo(organizer.getId(),
-                organizer.getName(), organizer.getUsername(),organizer.getEmail(),
-                organizer.getBiography(), organizer.getRating(), organizer.getLocation(), events);
 
-        PersistentOrganizerInfo.setPersistentOrganizerInfo(getApplicationContext(), persistentOrganizerInfo);
 
-        Intent intent = new Intent(LoginActivity.this, UserProfileActivity.class);
-        startActivity(intent);
+    private class RecoverOrganizerTask extends AsyncTask<Organizer, Void, Void> {
+
+        ArrayList<Event> events;
+
+        @Override
+        protected Void doInBackground(Organizer... organizer) {
+
+            OrganizerService organizerService = new OrganizerService();
+            events = organizerService.getOrganizedEventsByOrganizer(organizer[0].getId());
+
+            PersistentOrganizerInfo persistentOrganizerInfo = new PersistentOrganizerInfo(organizer[0].getId(),
+                    organizer[0].getName(), organizer[0].getUsername(), organizer[0].getEmail(),
+                    organizer[0].getBiography(), organizer[0].getRating(), organizer[0].getLocation(), events);
+
+            PersistentOrganizerInfo.setPersistentOrganizerInfo(getApplicationContext(), persistentOrganizerInfo);
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+
+            Intent intent = new Intent(LoginActivity.this, OrganizerProfileActivity.class);
+            startActivity(intent);
+        }
     }
 
-    public void showSelectAccountDialog(final User user, final Organizer organizer, final ArrayList<Event> userEvents, final ArrayList<Event> organizerEvents) {
+
+    public void showSelectAccountDialog(final User user, final Organizer organizer) {
         AlertDialog alertDialog = new AlertDialog.Builder(this).create();
         alertDialog.setTitle("Selecciona tu cuenta");
         alertDialog.setMessage("Se han detectado dos cuentas previas: una de usuario y otra de organizador, ¿cuál quieres utilizar?");
@@ -334,7 +363,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        recoverUser(user, userEvents);
+                        new RecoverUserTask().execute(user);
                     }
                 });
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ninguna",
@@ -349,7 +378,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        recoverOrganizer(organizer, organizerEvents);
+                        new RecoverOrganizerTask().execute(organizer);
                     }
                 });
         alertDialog.show();
