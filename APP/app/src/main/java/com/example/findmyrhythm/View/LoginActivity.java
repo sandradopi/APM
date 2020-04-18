@@ -17,6 +17,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.findmyrhythm.Model.AttendeeService;
 import com.example.findmyrhythm.Model.Event;
 import com.example.findmyrhythm.Model.Exceptions.InstanceNotFoundException;
+import com.example.findmyrhythm.Model.IOFiles;
 import com.example.findmyrhythm.Model.Organizer;
 import com.example.findmyrhythm.Model.OrganizerService;
 import com.example.findmyrhythm.Model.PersistentOrganizerInfo;
@@ -166,6 +167,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void updateUI(FirebaseUser currentUser) {
         if (currentUser != null) {
+            IOFiles.downloadProfilePicture(currentUser, getApplicationContext());
             new CheckUserTask().execute(currentUser);
         }
     }

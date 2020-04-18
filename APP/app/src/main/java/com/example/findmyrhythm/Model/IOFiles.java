@@ -38,7 +38,7 @@ public class IOFiles {
         ContextWrapper cw = new ContextWrapper(context);
         File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
         // Create imageDir
-        File f=new File(directory, "profile.jpg");
+        File f=new File(directory, "profile.png");
         bmp = BitmapFactory.decodeStream(new FileInputStream(f));
 
         return bmp;
@@ -52,7 +52,7 @@ public class IOFiles {
         // path to /data/data/yourapp/app_data/imageDir
         File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
         // Create imageDir
-        File mypath=new File(directory,"profile.jpg");
+        File mypath=new File(directory,"profile.png");
 
         FileOutputStream fos = null;
         try {

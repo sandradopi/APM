@@ -22,7 +22,10 @@ import com.example.findmyrhythm.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
+import com.google.gson.Gson;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -50,6 +53,10 @@ public class SplashActivity extends AppCompatActivity {
 
                     SharedPreferences sharedPreferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
                     String account_type = sharedPreferences.getString("account_type", null);
+
+//                    if (account_type == null) {
+//
+//                    }
 
                     if (account_type.equals("organizer")) {
                         PersistentOrganizerInfo persistentOrganizerInfo = PersistentOrganizerInfo.getPersistentOrganizerInfo(getApplicationContext());
