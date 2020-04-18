@@ -256,6 +256,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private class CheckUserTask extends AsyncTask<FirebaseUser, Void, Void> {
         User user;
         Organizer organizer;
+        ArrayList<Event> userEvents;
+        ArrayList<Event> organizerEvents;
 
         @Override
         protected Void doInBackground(FirebaseUser... fbUser) {
@@ -265,6 +267,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             try {
                 UserService userService = new UserService();
                 user = userService.getUser(fbUser[0].getUid());
+                AttendeeService attendeeService = new AttendeeService();
+                userEvents = attendeeService.getEventsByUser(user.getId());
             } catch (InstanceNotFoundException e) {
                 user = null;
             }
@@ -272,6 +276,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             try {
                 OrganizerService organizerService = new OrganizerService();
                 organizer = organizerService.getOrganizer(fbUser[0].getUid());
+                organizerEvents = organizerService.getOrganizedEventsByOrganizer(organizer.getId());
             } catch (InstanceNotFoundException e) {
                 organizer = null;
             }
@@ -280,9 +285,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Intent intent = new Intent(LoginActivity.this, GreetingsActivity.class);
                 startActivity(intent);
             } else if (user!=null && organizer==null) {
-                recoverUser(user);
+                recoverUser(user, userEvents);
             } else if (user==null && organizer!=null) {
-                recoverOrganizer(organizer);
+                recoverOrganizer(organizer, organizerEvents);
             }
 
             return null;
@@ -292,15 +297,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             if (user!=null && organizer!=null) {
-                showSelectAccountDialog(user, organizer);
+                showSelectAccountDialog(user, organizer, userEvents, organizerEvents);
             }
         }
     }
 
-    public void recoverUser(User user) {
-        AttendeeService attendeeService = new AttendeeService();
-        ArrayList<Event> events = attendeeService.getEventsByUser(user.getId());
 
+    public void recoverUser(User user, ArrayList<Event> events) {
         PersistentUserInfo persistentUserInfo = new PersistentUserInfo(user.getId(),user.getName(),
                 user.getUsername(),user.getEmail(), user.getBiography(), user.getBirthdate(),
                 user.getSubscribedLocations(), user.getSubscribedGenres(), events,
@@ -312,11 +315,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         startActivity(intent);
     }
 
-    public void recoverOrganizer(Organizer organizer) {
-        OrganizerService organizerService = new OrganizerService();
-        AttendeeService attendeeService = new AttendeeService();
-        ArrayList<Event> events = organizerService.getOrganizedEventsByOrganizer(organizer.getId());
-
+    public void recoverOrganizer(Organizer organizer, ArrayList<Event> events) {
         PersistentOrganizerInfo persistentOrganizerInfo = new PersistentOrganizerInfo(organizer.getId(),
                 organizer.getName(), organizer.getUsername(),organizer.getEmail(),
                 organizer.getBiography(), organizer.getRating(), organizer.getLocation(), events);
@@ -327,7 +326,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         startActivity(intent);
     }
 
-    public void showSelectAccountDialog(final User user, final Organizer organizer) {
+    public void showSelectAccountDialog(final User user, final Organizer organizer, final ArrayList<Event> userEvents, final ArrayList<Event> organizerEvents) {
         AlertDialog alertDialog = new AlertDialog.Builder(this).create();
         alertDialog.setTitle("Selecciona tu cuenta");
         alertDialog.setMessage("Se han detectado dos cuentas previas: una de usuario y otra de organizador, ¿cuál quieres utilizar?");
@@ -335,7 +334,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        recoverUser(user);
+                        recoverUser(user, userEvents);
                     }
                 });
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ninguna",
@@ -350,7 +349,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        recoverOrganizer(organizer);
+                        recoverOrganizer(organizer, organizerEvents);
                     }
                 });
         alertDialog.show();
