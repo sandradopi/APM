@@ -190,36 +190,19 @@ public class UserLogActivity extends AppCompatActivity implements View.OnClickLi
             locations = b.getStringArrayList(getString(R.string.locationsListID));
             genres = b.getStringArrayList(getString(R.string.genresListID));
 
-           // User user = new User(currentUser.getUid(), name.getText().toString(), nickname.getText().toString(), email.getText().toString(), biography.getText().toString(), birthDate.getText().toString(), locations, genres);
-
             UserService userService = new UserService();
-            userService.createUser(currentUser.getUid(), name.getText().toString(), nickname.getText().toString(), email.getText().toString(), biography.getText().toString(), birthDate.getText().toString(), locations, genres);
+            userService.createUser(currentUser.getUid(), name.getText().toString(), nickname.getText().toString(),
+                    email.getText().toString(), biography.getText().toString(), birthDate.getText().toString(),
+                    locations, genres);
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            // IOFiles.storeInfoJSON(name.getText().toString(), email.getText().toString(), getPackageName());
 
-            Uri photoUrl = currentUser.getPhotoUrl();
+            IOFiles.downloadProfilePicture(currentUser, getApplicationContext());
 
-            for (UserInfo profile : currentUser.getProviderData()) {
-                System.out.println(profile.getProviderId());
-                // check if the provider id matches "facebook.com"
-                if (profile.getProviderId().equals("facebook.com")) {
-
-                    String facebookUserId = profile.getUid();
-
-                    photoUrl = Uri.parse("https://graph.facebook.com/" + facebookUserId + "/picture?height=500");
-
-                } else if (profile.getProviderId().equals("google.com")) {
-                    photoUrl = Uri.parse(photoUrl.toString().replace("s96-c", "s700-c"));
-                }
-            }
-
-            IOFiles.downloadSaveBmp(photoUrl, getApplicationContext());
-            //setResult(RESULT_OK);
             finish();
         }
     }

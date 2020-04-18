@@ -10,6 +10,8 @@ import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -81,6 +83,29 @@ public class IOFiles {
         }
 
         IOFiles.saveToInternalStorage(bmp, applicationContext);
+    }
+
+
+    public static void downloadProfilePicture(FirebaseUser user, Context context) {
+        Uri photoUrl = user.getPhotoUrl();
+
+        for (UserInfo profile : user.getProviderData()) {
+            System.out.println(profile.getProviderId());
+            // check if the provider id matches "facebook.com"
+            if (profile.getProviderId().equals("facebook.com")) {
+
+                String facebookUserId = profile.getUid();
+
+                photoUrl = Uri.parse("https://graph.facebook.com/" + facebookUserId + "/picture?height=500");
+
+            } else if (profile.getProviderId().equals("google.com")) {
+                photoUrl = Uri.parse(photoUrl.toString().replace("s96-c", "s700-c"));
+            }
+        }
+
+        IOFiles.downloadSaveBmp(photoUrl, context);
+        //setResult(RESULT_OK);
+        //finish();
     }
 
 }

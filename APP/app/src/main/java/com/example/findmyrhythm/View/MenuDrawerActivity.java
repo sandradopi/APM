@@ -46,8 +46,9 @@ public abstract class MenuDrawerActivity extends AppCompatActivity implements Na
     protected DrawerLayout fullLayout;
     protected LinearLayout actContent;
     protected DrawerLayout drawerLayout;
-    protected int menuItemID;
+    protected int menuItemID, prevMenuItemID;
     private Menu menu;
+    NavigationView navigationView;
     private FirebaseAuth mAuth;
     FirebaseUser currentUser;
     private GoogleSignInClient mGoogleSignInClient;
@@ -73,7 +74,7 @@ public abstract class MenuDrawerActivity extends AppCompatActivity implements Na
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = findViewById(R.id.navigation_view);
+        navigationView = findViewById(R.id.navigation_view);
 
         navigationView.getMenu().clear();
 
@@ -135,6 +136,9 @@ public abstract class MenuDrawerActivity extends AppCompatActivity implements Na
 
     protected abstract void inflateMenu(NavigationView navigationView);
 
+    @Override
+    public abstract boolean onNavigationItemSelected(@NonNull MenuItem menuItem);
+
 
     @Override
     public void onBackPressed() {
@@ -146,12 +150,13 @@ public abstract class MenuDrawerActivity extends AppCompatActivity implements Na
     }
 
     public void setMenuItemChecked(int id) {
-        menu.findItem(id).setChecked(true);
+        menu.findItem(menuItemID).setChecked(false);
+        prevMenuItemID = menuItemID;
         menuItemID = id;
+
+        menu.findItem(id).setChecked(true);
     }
 
-    @Override
-    public abstract boolean onNavigationItemSelected(@NonNull MenuItem menuItem);
 
 
     public void showExitDialog() {
@@ -181,6 +186,7 @@ public abstract class MenuDrawerActivity extends AppCompatActivity implements Na
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
+                        setMenuItemChecked(prevMenuItemID);
                     }
                 });
         alertDialog.show();

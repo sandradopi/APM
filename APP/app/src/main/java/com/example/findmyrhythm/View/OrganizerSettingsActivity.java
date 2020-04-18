@@ -104,8 +104,15 @@ public class OrganizerSettingsActivity extends OrganizerMenuDrawerActivity {
             }
         });
 
-
     }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setMenuItemChecked(R.id.nav_settings);
+    }
+
 
     private class UpdateInfo extends AsyncTask<Void, Void, Void> {
         final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();

@@ -67,7 +67,7 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
+        setMenuItemChecked(R.id.nav_recommended);
         new getEvents().execute();
     }
 

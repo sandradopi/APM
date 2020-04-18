@@ -22,6 +22,7 @@ public class OrganizerMenuDrawerActivity extends MenuDrawerActivity {
 
         // check if the current activity is the same as the one selected
         if (menuItemID != menuItem.getItemId()) {
+            setMenuItemChecked(menuItem.getItemId());
             switch (menuItem.getItemId()) {
                 case R.id.nav_profile:
                     startActivity(new Intent(this, OrganizerProfileActivity.class));

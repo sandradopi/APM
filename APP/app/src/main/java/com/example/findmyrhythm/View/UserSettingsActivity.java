@@ -141,6 +141,12 @@ public class UserSettingsActivity extends UserMenuDrawerActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setMenuItemChecked(R.id.nav_settings);
+    }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
