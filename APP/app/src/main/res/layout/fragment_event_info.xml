@@ -92,6 +92,48 @@
                 android:layout_marginBottom="5dp">
 
                 <ImageView
+                    android:id="@+id/capacityIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@drawable/ic_people" />
+
+                <TextView
+                    android:id="@+id/eventCapacity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="150"
+                    android:textColor="#707070"
+                    android:textSize="18sp" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp">
+
+                <ImageView
+                    android:id="@+id/costIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="24dp"
+                    app:srcCompat="@drawable/ic_euro" />
+
+                <TextView
+                    android:id="@+id/eventCost"
+                    android:layout_width="328dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="20€"
+                    android:textColor="#707070"
+                    android:textSize="18sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp">
+
+                <ImageView
                     android:id="@+id/calendar"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -154,7 +196,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="10dp"
-                android:text=""
+                android:text="Riazor"
                 android:textSize="15sp" />
         </LinearLayout>
 

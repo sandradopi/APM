@@ -37,7 +37,7 @@ import java.util.Date;
 public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCallback {
     String joined_text = "Apuntado";
     String join_event_text = "Apuntarse";
-    TextView name, date, descripcion, ubication, category, time;
+    TextView name, date, descripcion, ubication, category, time, eventMaxAttendees,eventPrice;
     AttendeeService attendeeService= new AttendeeService();
     PhotoService photoService= new PhotoService();
     Boolean Joined= false;
@@ -82,11 +82,11 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
         //Vista
         setContentView(R.layout.activity_event_info);
         final Button joinButton = (Button) findViewById(R.id.joinBtn);
-        MapFragment mapFragment = (MapFragment) getFragmentManager()
-                .findFragmentById(R.id.eventMap);
-        mapFragment.getMapAsync(this);
 
 
+
+        eventMaxAttendees = findViewById(R.id.eventCapacity);
+        eventPrice = findViewById(R.id.eventCost);
         name = findViewById(R.id.eventName);
         category = findViewById(R.id.category);
         date =  findViewById(R.id.eventDate);
@@ -106,6 +106,8 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
         descripcion.setText(eventSelect.getDescription());
         ubication.setText(eventSelect.getLocation());
         category.setText(eventSelect.getGenre());
+        eventMaxAttendees.setText(String.valueOf(eventSelect.getMaxAttendees())+" personas");
+        eventPrice.setText(String.valueOf(eventSelect.getPrice())+"€");
 
 
 
