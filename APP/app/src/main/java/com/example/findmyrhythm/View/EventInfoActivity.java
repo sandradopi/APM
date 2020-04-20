@@ -3,30 +3,23 @@ package com.example.findmyrhythm.View;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Color;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.Chronometer;
-import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.findmyrhythm.Model.AttendeeService;
 import com.example.findmyrhythm.Model.Event;
-import com.example.findmyrhythm.Model.EventService;
-import com.example.findmyrhythm.Model.Exceptions.InstanceNotFoundException;
-import com.example.findmyrhythm.Model.Attendee;
-import com.example.findmyrhythm.Model.PersistentOrganizerInfo;
 import com.example.findmyrhythm.Model.PersistentUserInfo;
-import com.example.findmyrhythm.Model.User;
-import com.example.findmyrhythm.Model.UserService;
+import com.example.findmyrhythm.Model.Photo;
+import com.example.findmyrhythm.Model.PhotoService;
 import com.example.findmyrhythm.R;
-import com.example.findmyrhythm.View.tabs.ListAdapterNext;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -35,19 +28,21 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.gson.Gson;
 
-import java.io.SyncFailedException;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCallback {
     String joined_text = "Apuntado";
     String join_event_text = "Apuntarse";
-    TextView name, date, descripcion, ubication;
+    TextView name, date, descripcion, ubication, category, time;
     AttendeeService attendeeService= new AttendeeService();
+    PhotoService photoService= new PhotoService();
     Boolean Joined= false;
+    Photo photoEvent;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,17 +57,19 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
         //Gson gson = new Gson();
         //final Event eventSelect = gson.fromJson(getIntent().getStringExtra("EVENT"), Event.class);
         final PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
-
+        Event eventSelect;
         final boolean recommended = getIntent().getExtras().getBoolean("RECOMMENDED");
         final String eventSelectId = getIntent().getStringExtra("EVENT");
         Log.e("IDACTIVITY", eventSelectId);
-        Event eventSelect;
+
 
         if(recommended) {
-            eventSelect  = persistentUserInfo.getEventsRecommended(eventSelectId);
+            eventSelect  = persistentUserInfo.getEventRecommended(eventSelectId);
+            new getPhoto().execute();
 
         } else{
              eventSelect = persistentUserInfo.getEvent(eventSelectId);
+            new getPhoto().execute();
         }
 
 
@@ -89,9 +86,15 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
                 .findFragmentById(R.id.eventMap);
         mapFragment.getMapAsync(this);
 
+        //Image
+
+
+
 
         name = findViewById(R.id.eventName);
+        category = findViewById(R.id.category);
         date =  findViewById(R.id.eventDate);
+        time =  findViewById(R.id.eventTime);
         descripcion = findViewById(R.id.eventDescContent);
         ubication = findViewById(R.id.eventLocationContent);
 
@@ -99,10 +102,16 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
         Date dateF;
         dateF = eventSelect.getEventDate();
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yy");
+        SimpleDateFormat df2 = new SimpleDateFormat("HH:mm");
         date.setText(df.format(dateF));
+        time.setText(df2.format(dateF));
+
         name.setText(eventSelect.getName());
         descripcion.setText(eventSelect.getDescription());
         ubication.setText(eventSelect.getLocation());
+        category.setText(eventSelect.getGenre());
+
+
 
 
         //If is a atendee of the event
@@ -158,12 +167,10 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
 
     }
 
-    private class unSubscribe extends AsyncTask<Void, Void, Void> {
-        Gson gson = new Gson();
-        final String eventSelectId = getIntent().getStringExtra("EVENT");
+    private class getPhoto extends AsyncTask<Void, Void, Void> {
 
+        final String eventSelectId = getIntent().getStringExtra("EVENT");
         final PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
-        Event eventSelect  = persistentUserInfo.getEvent(eventSelectId);
 
         @Override
         protected void onPreExecute() {
@@ -172,8 +179,49 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
 
         @Override
         protected Void doInBackground(Void... voids) {
+            Event eventSelect;
+            final boolean recommended = getIntent().getExtras().getBoolean("RECOMMENDED");
+            if(recommended) {
+              eventSelect  = persistentUserInfo.getEventRecommended(eventSelectId);
+
+            } else{
+              eventSelect = persistentUserInfo.getEvent(eventSelectId);
+            }
+
+            photoEvent = photoService.getPhoto(eventSelect.getEventImage());
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+
+            byte[] decodedString = Base64.decode(photoEvent.getEventImage(),Base64.NO_WRAP);
+            InputStream inputStream  = new ByteArrayInputStream(decodedString);
+            Bitmap bitmap  = BitmapFactory.decodeStream(inputStream);
+            Bitmap imagenFinal = Bitmap.createScaledBitmap(bitmap,242,152,false);
+            final ImageView imageEvent =  findViewById(R.id.imageEvent);
+            imageEvent.setImageBitmap(imagenFinal);
+
+
+        }
+    }
+
+    private class unSubscribe extends AsyncTask<Void, Void, Void> {
+        final String eventSelectId = getIntent().getStringExtra("EVENT");
+        final PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            Event eventSelect;
+            eventSelect = persistentUserInfo.getEvent(eventSelectId);
             attendeeService.deleteAttendeeByEvent(eventSelect.getId());
             persistentUserInfo.deleteEvent(getApplicationContext(),eventSelect);
+            persistentUserInfo.addUniqueEventRecommended(getApplicationContext(), eventSelect);
             Joined= false;
             return null;
         }
@@ -187,10 +235,8 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
     }
 
     private class Subscribe extends AsyncTask<Void, Void, Void> {
-        Gson gson = new Gson();
         final String eventSelectId = getIntent().getStringExtra("EVENT");
         final PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
-        Event eventSelect  = persistentUserInfo.getEventsRecommended(eventSelectId);
         final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         @Override
@@ -200,9 +246,15 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
 
         @Override
         protected Void doInBackground(Void... voids) {
+            Event eventSelect;
+            eventSelect  = persistentUserInfo.getEventRecommended(eventSelectId);
             attendeeService.createAttendee(currentUser.getUid(), eventSelect.getId());
             persistentUserInfo.addEvent(getApplicationContext(),eventSelect);
+            persistentUserInfo.deleteRecommendedEvent(getApplicationContext(), eventSelect);
             Joined = true;
+
+
+
             return null;
         }
 

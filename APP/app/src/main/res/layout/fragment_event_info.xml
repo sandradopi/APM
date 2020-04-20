@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -15,14 +17,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/eventName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:layout_centerVertical="true"
-                android:textSize="25sp"
-                android:textStyle="bold" />
+            <ImageView
+                android:id="@+id/imageEvent"
+                android:layout_width="155dp"
+                android:layout_height="110dp"
+                tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
             <Button
                 android:id="@+id/joinBtn"
@@ -36,12 +35,35 @@
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/eventDate"
+            android:id="@+id/category"
+            android:layout_width="143dp"
+            android:layout_height="wrap_content"
+            android:text="@string/pop"
+            android:textColor="#707070"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/eventName"
+            android:layout_width="143dp"
+            android:layout_height="50dp"
+            android:text="PartyOn"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/datos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=""
-            android:textColor="#707070"
-            android:textSize="18sp" />
+            android:text="Información"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="#A38DC3" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -49,19 +71,54 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/eventDesc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Descripción"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <TextView
                 android:id="@+id/eventDescContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
                 android:text=""
                 android:textSize="15sp" />
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp">
+
+                <ImageView
+                    android:id="@+id/calendar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@drawable/ic_calendar" />
+
+                <TextView
+                    android:id="@+id/eventDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="20/08/2020"
+                    android:textColor="#707070"
+                    android:textSize="18sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp">
+
+                <ImageView
+                    android:id="@+id/clock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@drawable/ic_clock" />
+
+                <TextView
+                    android:id="@+id/eventTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="10:30"
+                    android:textColor="#707070"
+                    android:textSize="18sp" />
+            </TableRow>
+
         </LinearLayout>
 
         <LinearLayout
@@ -74,14 +131,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Ubicación"
-                android:textSize="20sp"
+                android:text="Dirección"
+                android:textSize="16sp"
                 android:textStyle="bold" />
+
+            <View
+                android:id="@+id/divider2"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="#A38DC3" />
 
             <TextView
                 android:id="@+id/eventLocationContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:text=""
                 android:textSize="15sp" />
         </LinearLayout>
