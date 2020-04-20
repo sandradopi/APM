@@ -56,10 +56,11 @@
 
                 <TextView
                     android:id="@+id/eventDate"
-                    android:layout_alignParentLeft="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
+                    android:layout_marginBottom="6pt"
                     android:text="Sab, Marzo 3 | 23:00"
                     android:textColor="#707070"
                     android:textSize="18sp" />

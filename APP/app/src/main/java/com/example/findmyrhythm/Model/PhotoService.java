@@ -22,14 +22,16 @@ public class PhotoService {
         }
     }
 
-    public void createPhoto(Photo photo) {
+    public String createPhoto(Photo photo) {
 
         try {
             // Insert event
             String photoId = photoDAO.insert(photo);
+            return photoId;
         }
         catch (DuplicatedInstanceException e) {
             Log.e(TAG, "Photo id was already taken");
+            return null;
         }
 
     }

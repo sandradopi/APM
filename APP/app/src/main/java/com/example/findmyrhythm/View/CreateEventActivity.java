@@ -33,6 +33,8 @@ import android.net.Uri;
 import com.example.findmyrhythm.Model.Event;
 import com.example.findmyrhythm.Model.EventService;
 import com.example.findmyrhythm.Model.PersistentOrganizerInfo;
+import com.example.findmyrhythm.Model.Photo;
+import com.example.findmyrhythm.Model.PhotoService;
 import com.example.findmyrhythm.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -69,6 +71,9 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
     Bitmap imageBitmap = null;
     String bitmapEncoded = "";
     byte[] byteArray;
+
+    EventService eventService = new EventService();
+    PhotoService photoService = new PhotoService();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -337,8 +342,6 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             final String organizerId = preferences.getString("fb_id", null);
 
             eventDate = calendar.getTime();
-            EventService service = new EventService();
-
 
             if (imageBitmap != null) {
 
@@ -352,10 +355,12 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             } else
                 bitmapEncoded = NO_IMAGE;
             //bitmapEncoded = NO_IMAGE;
-            String path= imageUri.getEncodedPath();
-            final Event event = new Event(name.getText().toString(), eventDate, address.getText().toString(), selectedGenre, organizerId, maxAttendees.getText().toString(), price.getText().toString(), description.getText().toString(), bitmapEncoded);
-            service.createEvent(event);
-            event.setEventImage(path);
+            //String path= imageUri.getEncodedPath();
+            final Photo photo = new Photo (bitmapEncoded);
+            String photoId = photoService.createPhoto(photo);
+            final Event event = new Event(name.getText().toString(), eventDate, address.getText().toString(), selectedGenre, organizerId, maxAttendees.getText().toString(), price.getText().toString(), description.getText().toString(),photoId);
+            eventService.createEvent(event);
+            //event.setEventImage(path);
             final PersistentOrganizerInfo persistentOrganizerInfo = PersistentOrganizerInfo.getPersistentOrganizerInfo(getApplicationContext());
 
             persistentOrganizerInfo.addEvent(getApplicationContext(),event);

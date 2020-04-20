@@ -39,7 +39,7 @@ public class OrganizerInfoDialog extends DialogFragment {
         tv_detail = (TextView) view.findViewById(R.id.tv_detail);
 
         contentdireccion.setText(persistentOrganizerInfo.getLocation());
-        tv_detail.setText("descripción");
+        tv_detail.setText(persistentOrganizerInfo.getBiography());
 
         builder.setView(view);
 

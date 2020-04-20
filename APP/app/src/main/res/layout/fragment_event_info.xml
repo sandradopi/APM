@@ -73,6 +73,7 @@
                 android:id="@+id/eventLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:text="Ubicación"
                 android:textSize="20sp"
                 android:textStyle="bold" />
