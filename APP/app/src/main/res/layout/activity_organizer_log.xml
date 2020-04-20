@@ -96,13 +96,18 @@
                 android:textStyle="bold">
             </TextView>
 
-            <EditText
-                android:id="@+id/orgLocation"
+            <Button
+                android:id="@+id/currentLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Localización de la organización"
-                android:textSize="14sp"/>
+                android:textSize="14sp"
+                android:clickable="false"/>
 
+            <Button
+                android:id="@+id/exploreMap"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"/>
 
             <TextView
                 android:layout_width="match_parent"

@@ -1,6 +1,7 @@
 package com.example.findmyrhythm.Model;
 
 import android.graphics.Bitmap;
+import android.location.Address;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -23,6 +24,7 @@ public class Event extends Entity{
         this.price = price;
         this.description = description;
         this.eventImage = eventImage;
+
     }
 
     public String getName() {

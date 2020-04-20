@@ -1,16 +1,27 @@
 package com.example.findmyrhythm.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -18,19 +29,31 @@ import com.example.findmyrhythm.Model.Event;
 import com.example.findmyrhythm.Model.IOFiles;
 import com.example.findmyrhythm.Model.OrganizerService;
 import com.example.findmyrhythm.Model.PersistentOrganizerInfo;
+import com.example.findmyrhythm.Model.Utils.GeoUtils;
 import com.example.findmyrhythm.R;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class OrganizerLogActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "Creación Organizador";
-    EditText name, nickname, email, biography, location;
+    EditText name, nickname, email, biography;
+    Button location, exploreMapButton;
     FloatingActionButton next;
     FirebaseUser currentUser;
+    FusedLocationProviderClient fusedLocationClient;
+    private Location lastLocation;
+    private static final int LOCATION_PERMISSION_CODE = 7346;
+    private static final String ACCESS_FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
+    private Boolean locationPermissionGranted = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +68,8 @@ public class OrganizerLogActivity extends AppCompatActivity implements View.OnCl
         nickname = (EditText) findViewById(R.id.orgNickName);
         email = (EditText) findViewById(R.id.orgEmail);
         biography = (EditText) findViewById(R.id.orgBiography);
-        location = (EditText) findViewById(R.id.orgLocation);
+        location = (Button) findViewById(R.id.currentLocation);
+        exploreMapButton = (Button) findViewById(R.id.exploreMap);
 
         next = (FloatingActionButton) findViewById(R.id.next);
         next.setOnClickListener(this);
@@ -54,6 +78,88 @@ public class OrganizerLogActivity extends AppCompatActivity implements View.OnCl
         name.setText(currentUser.getDisplayName());
         email.setText(currentUser.getEmail());
 
+        // Google Play Services
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        if (!checkPermissions()) {
+            requestPermissions();
+        } else {
+            getLastLocation();
+            GeoUtils geoUtils = new GeoUtils(this, Locale.getDefault());
+            Address address = geoUtils.getAddressFromLocation(lastLocation);
+            location.setText(address.getLocality());
+        }
+    }
+
+    // Methods for requesting permissions
+    // Return the current state of the permissions needed
+    private boolean checkPermissions() {
+        int permissionState = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+        return permissionState == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void startLocationPermissionsRequest() {
+        ActivityCompat.requestPermissions(this, new String[]{ACCESS_FINE_LOCATION},
+                LOCATION_PERMISSION_CODE);
+    }
+
+    private void requestPermissions() {
+
+        String[] permissions = {ACCESS_FINE_LOCATION};
+
+        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            startLocationPermissionsRequest();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        if (requestCode == LOCATION_PERMISSION_CODE) {
+
+            // If grantResults lenght is > 0 is that something was granted
+            if (grantResults.length > 0) {
+                for (int item : grantResults)
+                    if (item == PackageManager.PERMISSION_DENIED) {
+                        return;
+                    }
+
+                getLastLocation();
+                GeoUtils geoUtils = new GeoUtils(this, Locale.getDefault());
+                Address address = geoUtils.getAddressFromLocation(lastLocation);
+                location.setText(address.getLocality());
+            }
+        }
+    }
+
+    // Method for obtaining the last know location of the device
+    private void getLastLocation() {
+        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        Criteria crta = new Criteria();
+        String provider = lm.getBestProvider(crta, true);
+        try {
+            lastLocation = lm.getLastKnownLocation(provider);
+        } catch (SecurityException e) {
+            System.out.println("nada");
+        }
+
+        /* fusedLocationClient.getLastLocation().addOnCompleteListener(this, new OnCompleteListener<Location>() {
+            @Override
+            public void onComplete(@NonNull Task<Location> task) {
+                if (task.isSuccessful() && task.getResult() != null) {
+                    lastLocation = task.getResult();
+                } else {
+                    Log.w(TAG, "getLastLocation:exception", task.getException());
+                }
+            }
+        }); */
     }
 
     @Override
@@ -80,7 +186,7 @@ public class OrganizerLogActivity extends AppCompatActivity implements View.OnCl
 
         //TODO: Intent to new Activity
         Log.w(TAG, "Creación de la cuenta del organizador");
-        Toast.makeText(OrganizerLogActivity.this, getString(R.string.notiCreation),  Toast.LENGTH_SHORT).show();
+        Toast.makeText(OrganizerLogActivity.this, getString(R.string.notiCreation), Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent(this, OrganizerProfileActivity.class);
         startActivity(intent);
@@ -109,15 +215,14 @@ public class OrganizerLogActivity extends AppCompatActivity implements View.OnCl
 
         mDatabase.child("organizers").child(currentUser.getUid()).setValue(organizer);*/
 
-        PersistentOrganizerInfo persistentOrganizerInfo = new PersistentOrganizerInfo(currentUser.getUid(),name.getText().toString(),
-                nickname.getText().toString(),email.getText().toString(), biography.getText().toString(),
-                null, location.getText().toString() , new ArrayList<Event>());
+        PersistentOrganizerInfo persistentOrganizerInfo = new PersistentOrganizerInfo(currentUser.getUid(), name.getText().toString(),
+                nickname.getText().toString(), email.getText().toString(), biography.getText().toString(),
+                null, location.getText().toString(), new ArrayList<Event>());
 
         PersistentOrganizerInfo.setPersistentOrganizerInfo(getApplicationContext(), persistentOrganizerInfo);
 
         //TODO: Introduce into database by getting the value of every field. Check Android Service.
         new CreateOrganizerTask().execute();
-
 
 
     }
@@ -133,7 +238,7 @@ public class OrganizerLogActivity extends AppCompatActivity implements View.OnCl
         return true;
     }
 
-    private class CreateOrganizerTask extends AsyncTask<Void,Void,Void> {
+    private class CreateOrganizerTask extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected void onPreExecute() {

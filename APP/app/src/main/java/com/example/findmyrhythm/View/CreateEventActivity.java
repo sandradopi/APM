@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Address;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Base64;
@@ -32,6 +33,7 @@ import android.net.Uri;
 
 import com.example.findmyrhythm.Model.Event;
 import com.example.findmyrhythm.Model.EventService;
+import com.example.findmyrhythm.Model.Utils.GeoUtils;
 import com.example.findmyrhythm.Model.PersistentOrganizerInfo;
 import com.example.findmyrhythm.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,6 +47,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 
 public class CreateEventActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
@@ -52,6 +55,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
     private static final String TAG = "Crear Evento";
     private int mYear, mMonth, mDay, mHour, mMinute;
     private EditText date, hour, address, maxAttendees, name, price,description;
+    private GeoUtils geoUtils;
     private Spinner genres;
     private Button saveButton;
     Uri imageUri;
@@ -85,6 +89,8 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
 
         // Reference to the different EditText containing the event info
         address = findViewById(R.id.address);
+        // Create the complete address from location's name
+        geoUtils = new GeoUtils(this, Locale.getDefault());
         maxAttendees = findViewById(R.id.max_attendees);
         price = findViewById(R.id.price);
         name = findViewById(R.id.event_name);
@@ -137,7 +143,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         else if (v == saveButton) {
             Calendar currentCalendar = Calendar.getInstance();
             // TODO: CHECK IF DESCRIPTION AND IMAGE EXISTS.
-            if (isEmpty(name) || isEmpty(date) || isEmpty(hour) || isEmpty(address) || isEmpty(maxAttendees) || isEmpty(price) || isEmpty(description) || imageBitmap==null ||  selectedGenre.equals("") || calendar.getTime().compareTo(currentCalendar.getTime()) < 0) {
+            if (isEmpty(name) || isEmpty(date) || isEmpty(hour) || isEmpty(address) || isEmpty(maxAttendees) || isEmpty(price) || isEmpty(description) || imageBitmap == null || selectedGenre.equals("") || calendar.getTime().compareTo(currentCalendar.getTime()) < 0) {
                 Toast.makeText(this, "Please cover every field shown in the screen", Toast.LENGTH_LONG).show();
                 return;
             }
