@@ -41,13 +41,17 @@ public class PastEventsFragment extends Fragment {
         String[] rates = new String[pastEvents.size()];
 
         int i = 0;
+        Date actualDate = new Date();
+        System.out.println("FECHA ACTUAL"+actualDate);
         for (Event event : pastEvents) {
+            //if(event.getEventDate().compareTo(actualDate) < 0  ){
             events[i] = event.getName();
             date = event.getEventDate();
             SimpleDateFormat df = new SimpleDateFormat("dd/MM/yy");
             dates[i] = df.format(date);
             rates[i] = "not_rated";
             i++;
+            //}
         }
 
         mListView.setAdapter(new ListAdapterPast(this.requireContext(), events, dates, rates));
