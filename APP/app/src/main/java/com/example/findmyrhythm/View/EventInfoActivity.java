@@ -65,14 +65,14 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
 
         if(recommended) {
             eventSelect  = persistentUserInfo.getEventRecommended(eventSelectId);
-            new getPhoto().execute();
+
 
         } else{
              eventSelect = persistentUserInfo.getEvent(eventSelectId);
-            new getPhoto().execute();
+
         }
 
-
+        new getPhoto().execute();
 
 
         //Its joined?
@@ -85,10 +85,6 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.eventMap);
         mapFragment.getMapAsync(this);
-
-        //Image
-
-
 
 
         name = findViewById(R.id.eventName);

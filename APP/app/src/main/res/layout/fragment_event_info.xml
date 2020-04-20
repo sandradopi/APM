@@ -34,36 +34,43 @@
                 android:textColor="@color/white" />
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/category"
-            android:layout_width="143dp"
-            android:layout_height="wrap_content"
-            android:text="@string/pop"
-            android:textColor="#707070"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/eventName"
-            android:layout_width="143dp"
-            android:layout_height="50dp"
-            android:text="PartyOn"
-            android:textSize="25sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/datos"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Información"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <View
-            android:id="@+id/divider"
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:background="#A38DC3" />
+            <TextView
+                android:id="@+id/category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/pop"
+                android:textColor="#707070"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/eventName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="15dp"
+                android:text="PartyOn"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/datos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Información"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="#A38DC3" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -76,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="10dp"
-                android:text=""
+                android:text="Un concierto increible"
                 android:textSize="15sp" />
 
             <TableRow
@@ -146,6 +153,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
                 android:text=""
                 android:textSize="15sp" />
         </LinearLayout>
