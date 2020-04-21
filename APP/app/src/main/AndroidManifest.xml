@@ -48,6 +48,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".View.SearchOrganizerLocation"
+            android:label="@string/title_activity_search_events"></activity>
         <activity android:name=".View.OrganizerLogActivity" />
         <activity android:name=".View.UserLogActivity" />
         <activity android:name=".View.SetGenresActivity" />

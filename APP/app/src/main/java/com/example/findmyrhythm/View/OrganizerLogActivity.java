@@ -51,9 +51,11 @@ public class OrganizerLogActivity extends AppCompatActivity implements View.OnCl
     FirebaseUser currentUser;
     FusedLocationProviderClient fusedLocationClient;
     private Location lastLocation;
+    private GeoUtils geoUtils;
     private static final int LOCATION_PERMISSION_CODE = 7346;
     private static final String ACCESS_FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     private Boolean locationPermissionGranted = false;
+    private Boolean useMyLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +80,19 @@ public class OrganizerLogActivity extends AppCompatActivity implements View.OnCl
         name.setText(currentUser.getDisplayName());
         email.setText(currentUser.getEmail());
 
+        useMyLocation = true;
+        exploreMapButton.setText("Explorar en el mapa");
+        exploreMapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    startActivityForResult(new Intent(getApplicationContext(), SearchOrganizerLocation.class), 1);
+                    //startActivity(new Intent(getApplicationContext(), SearchOrganizerLocation.class));
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+        });
         // Google Play Services
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -89,9 +104,9 @@ public class OrganizerLogActivity extends AppCompatActivity implements View.OnCl
 
         if (!checkPermissions()) {
             requestPermissions();
-        } else {
+        } else if (useMyLocation) {
             getLastLocation();
-            GeoUtils geoUtils = new GeoUtils(this, Locale.getDefault());
+            geoUtils = new GeoUtils(this, Locale.getDefault());
             Address address = geoUtils.getAddressFromLocation(lastLocation);
             location.setText(address.getLocality());
         }
@@ -131,10 +146,12 @@ public class OrganizerLogActivity extends AppCompatActivity implements View.OnCl
                         return;
                     }
 
-                getLastLocation();
-                GeoUtils geoUtils = new GeoUtils(this, Locale.getDefault());
-                Address address = geoUtils.getAddressFromLocation(lastLocation);
-                location.setText(address.getLocality());
+                if (useMyLocation) {
+                    getLastLocation();
+                    GeoUtils geoUtils = new GeoUtils(this, Locale.getDefault());
+                    Address address = geoUtils.getAddressFromLocation(lastLocation);
+                    location.setText(address.getLocality());
+                }
             }
         }
     }
@@ -160,6 +177,20 @@ public class OrganizerLogActivity extends AppCompatActivity implements View.OnCl
                 }
             }
         }); */
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                useMyLocation = false;
+                Location newLocation = data.getParcelableExtra("pickedLocation");
+                geoUtils = new GeoUtils(this, Locale.getDefault());
+                Address address = geoUtils.getAddressFromLocation(newLocation);
+                location.setText(address.getLocality());
+            }
+        }
     }
 
     @Override

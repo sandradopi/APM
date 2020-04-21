@@ -48,6 +48,7 @@
     <string name="precio">Precio</string>
     <string name="euro">€</string>
     <string name="crear">Crear</string>
+    <string name="submit">Aceptar</string>
     <string name="recomendados_para_ti">Recomendados para ti</string>
     <string name="notiCreationEve">Evento creado con éxito</string>
     <string name="genresSettings">Géneros seleccionados</string>
@@ -93,6 +94,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_search_events">Search Events</string>
+    <string name="title_activity_search_organizer_location">Choose your location</string>
     <string name="categoria" />
 
 </resources>
