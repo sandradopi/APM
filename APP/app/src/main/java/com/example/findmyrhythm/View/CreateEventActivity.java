@@ -45,6 +45,8 @@ import android.widget.ImageView;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -200,10 +202,12 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
                                           int monthOfYear, int dayOfMonth) {
                         // Por que month of year + 1???
                         //date.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-                        String textdate = dayOfMonth + "/" + monthOfYear + "/" + year;
-                        date.setText(textdate);
+                        String textdate = dayOfMonth + "/" + (monthOfYear+1) + "/" + year;
+                        Date fecha = new Date(year, monthOfYear, dayOfMonth);
+                        DateFormat df = new SimpleDateFormat("dd/MM/yy", java.util.Locale.getDefault());
+                        date.setText(df.format(fecha));
                         calendar.set(Calendar.YEAR, year);
-                        calendar.set(Calendar.MONTH, monthOfYear +1);
+                        calendar.set(Calendar.MONTH, monthOfYear);
                         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
 

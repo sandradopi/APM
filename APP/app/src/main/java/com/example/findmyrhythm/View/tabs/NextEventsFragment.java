@@ -40,7 +40,7 @@ public class NextEventsFragment extends Fragment {
         ListView mListView;
         mListView = (ListView) view.findViewById(R.id.eventlist);
 
-        final DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        final DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", java.util.Locale.getDefault());
         PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
         final ArrayList<Event> nextEvents= persistentUserInfo.getEvents();
         final String[] events = new String[nextEvents.size()];
@@ -48,14 +48,13 @@ public class NextEventsFragment extends Fragment {
         final String[] prices = new String[nextEvents.size()];
 
         Date date;
-        Date actualDate = new Date();
-        System.out.println("FECHA ACTUAL"+actualDate);
+        DateFormat df;
         int i = 0;
         for (Event event : nextEvents) {
            // if(event.getEventDate().compareTo(actualDate) > 0  ){
             events[i] = event.getName();
             date = event.getEventDate();
-            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yy");
+            df = new SimpleDateFormat("dd/MM/yy", java.util.Locale.getDefault());
             dates[i] = df.format(date);
             prices[i] = String.valueOf(event.getPrice()).concat("€");
             i++;

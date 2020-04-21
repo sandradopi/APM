@@ -18,6 +18,7 @@ import com.example.findmyrhythm.R;
 import com.example.findmyrhythm.View.FinishedEventInfoActivity;
 import com.google.gson.Gson;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -46,7 +47,7 @@ public class PastEventsFragmentOrg extends Fragment {
         for (Event event : pastEvents) {
             events[i] = event.getName();
             date = event.getEventDate();
-            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yy");
+            DateFormat df = new SimpleDateFormat("dd/MM/yy", java.util.Locale.getDefault());
             dates[i] = df.format(date);
             rates[i] = null;
             i++;

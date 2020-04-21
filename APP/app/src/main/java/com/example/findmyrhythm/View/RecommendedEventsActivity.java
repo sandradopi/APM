@@ -29,6 +29,7 @@ import com.example.findmyrhythm.View.tabs.NextEventsFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -110,12 +111,13 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
             final String[] ids = new String[events.size()];
 
             Date date;
+            DateFormat df;
             int i = 0;
             for (Event event : events) {
                 ids[i] = event.getId();
                 names[i] = event.getName();
                 date = event.getEventDate();
-                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yy");
+                df = new SimpleDateFormat("dd/MM/yy", java.util.Locale.getDefault());
                 dates[i] = df.format(date);
                 prices[i] = String.valueOf(event.getPrice().concat("€"));
                 i++;

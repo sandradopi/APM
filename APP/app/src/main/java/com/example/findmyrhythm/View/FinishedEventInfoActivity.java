@@ -34,6 +34,7 @@ import com.google.gson.Gson;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -94,8 +95,8 @@ public class FinishedEventInfoActivity extends AppCompatActivity {
         name.setText(eventSelect.getName());
         Date dateF;
         dateF = eventSelect.getEventDate();
-        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yy");
-        SimpleDateFormat df2 = new SimpleDateFormat("HH:mm");
+        DateFormat df = new SimpleDateFormat("dd/MM/yy", java.util.Locale.getDefault());
+        DateFormat df2 = new SimpleDateFormat("HH:mm", java.util.Locale.getDefault());
         date.setText(df.format(dateF));
         time.setText(df2.format(dateF));
         descripcion.setText(eventSelect.getDescription());

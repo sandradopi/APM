@@ -54,9 +54,10 @@ public class SplashActivity extends AppCompatActivity {
                     SharedPreferences sharedPreferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
                     String account_type = sharedPreferences.getString("account_type", null);
 
-//                    if (account_type == null) {
-//
-//                    }
+                    /*if (account_type == null) {
+                        Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                    }*/
 
                     if (account_type.equals("organizer")) {
                         PersistentOrganizerInfo persistentOrganizerInfo = PersistentOrganizerInfo.getPersistentOrganizerInfo(getApplicationContext());
