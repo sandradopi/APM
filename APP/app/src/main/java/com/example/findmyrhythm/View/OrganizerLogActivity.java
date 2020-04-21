@@ -45,11 +45,12 @@ import java.util.Locale;
 
 public class OrganizerLogActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "Creación Organizador";
-    EditText name, nickname, email, biography;
-    Button location, exploreMapButton;
-    FloatingActionButton next;
-    FirebaseUser currentUser;
-    FusedLocationProviderClient fusedLocationClient;
+    private EditText name, nickname, email, biography;
+    private Button location, exploreMapButton;
+    private Address completeAddress;
+    private FloatingActionButton next;
+    private FirebaseUser currentUser;
+    private FusedLocationProviderClient fusedLocationClient;
     private Location lastLocation;
     private GeoUtils geoUtils;
     private static final int LOCATION_PERMISSION_CODE = 7346;
@@ -86,10 +87,9 @@ public class OrganizerLogActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void onClick(View view) {
                 try {
-                    startActivityForResult(new Intent(getApplicationContext(), SearchOrganizerLocation.class), 1);
-                    //startActivity(new Intent(getApplicationContext(), SearchOrganizerLocation.class));
+                    startActivityForResult(new Intent(getApplicationContext(), SearchOrganizerLocation.class).putExtra("lastLocation", lastLocation), 1);
                 } catch (Exception e) {
-                    System.out.println(e);
+                    Log.w(TAG, e.toString());
                 }
             }
         });
@@ -107,8 +107,8 @@ public class OrganizerLogActivity extends AppCompatActivity implements View.OnCl
         } else if (useMyLocation) {
             getLastLocation();
             geoUtils = new GeoUtils(this, Locale.getDefault());
-            Address address = geoUtils.getAddressFromLocation(lastLocation);
-            location.setText(address.getLocality());
+            completeAddress = geoUtils.getAddressFromLocation(lastLocation);
+            location.setText(completeAddress.getLocality());
         }
     }
 
@@ -149,8 +149,8 @@ public class OrganizerLogActivity extends AppCompatActivity implements View.OnCl
                 if (useMyLocation) {
                     getLastLocation();
                     GeoUtils geoUtils = new GeoUtils(this, Locale.getDefault());
-                    Address address = geoUtils.getAddressFromLocation(lastLocation);
-                    location.setText(address.getLocality());
+                    completeAddress = geoUtils.getAddressFromLocation(lastLocation);
+                    location.setText(completeAddress.getLocality());
                 }
             }
         }
@@ -164,7 +164,7 @@ public class OrganizerLogActivity extends AppCompatActivity implements View.OnCl
         try {
             lastLocation = lm.getLastKnownLocation(provider);
         } catch (SecurityException e) {
-            System.out.println("nada");
+            Log.w(TAG, e.toString());
         }
 
         /* fusedLocationClient.getLastLocation().addOnCompleteListener(this, new OnCompleteListener<Location>() {
@@ -187,8 +187,8 @@ public class OrganizerLogActivity extends AppCompatActivity implements View.OnCl
                 useMyLocation = false;
                 Location newLocation = data.getParcelableExtra("pickedLocation");
                 geoUtils = new GeoUtils(this, Locale.getDefault());
-                Address address = geoUtils.getAddressFromLocation(newLocation);
-                location.setText(address.getLocality());
+                completeAddress = geoUtils.getAddressFromLocation(newLocation);
+                location.setText(completeAddress.getLocality());
             }
         }
     }

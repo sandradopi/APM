@@ -3,12 +3,16 @@ package com.example.findmyrhythm.View;
 import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Address;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Base64;
@@ -54,8 +58,12 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
 
     private static final String TAG = "Crear Evento";
     private int mYear, mMonth, mDay, mHour, mMinute;
-    private EditText date, hour, address, maxAttendees, name, price,description;
+    private EditText date, hour, maxAttendees, name, price, description;
+    private Button address, exploreMapButton;
+    private Address eventCompleteAddress;
+    private Location organizerLocation;
     private GeoUtils geoUtils;
+    private Boolean userDefaultLocation;
     private Spinner genres;
     private Button saveButton;
     Uri imageUri;
@@ -85,12 +93,22 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
 
         setContentView(R.layout.activity_create_event);
 
+        userDefaultLocation = true;
         calendar = Calendar.getInstance();
-
+        address = (Button) findViewById(R.id.address);
+        exploreMapButton = (Button) findViewById(R.id.exploreMap);
+        exploreMapButton.setText("Explorar en el mapa");
+        exploreMapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    startActivityForResult(new Intent(getApplicationContext(), SearchOrganizerLocation.class).putExtra("lastLocation", organizerLocation), 2);
+                } catch (Exception e) {
+                    Log.w(TAG, e.toString());
+                }
+            }
+        });
         // Reference to the different EditText containing the event info
-        address = findViewById(R.id.address);
-        // Create the complete address from location's name
-        geoUtils = new GeoUtils(this, Locale.getDefault());
         maxAttendees = findViewById(R.id.max_attendees);
         price = findViewById(R.id.price);
         name = findViewById(R.id.event_name);
@@ -130,6 +148,31 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
 
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        if (userDefaultLocation) {
+            // Retrieve organizer's location name
+            SharedPreferences preferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
+            String organizerLocationName = preferences.getString("location", null);
+            // Use GeoUtils to obtain the complete address from location name
+            geoUtils = new GeoUtils(this, Locale.getDefault());
+            Address organizerCompleteAddress = geoUtils.getAddressFromLocationName(organizerLocationName);
+            eventCompleteAddress = organizerCompleteAddress;
+            // Set the default text location in the view
+            address.setText(organizerLocationName);
+            // Initialize the new location through the Location Manager
+            LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            Criteria crta = new Criteria();
+            String provider = lm.getBestProvider(crta, true);
+            organizerLocation = new Location(provider);
+            // Set location coordinates which had been obtained before and are stored in
+            // the complete address
+            organizerLocation.setLatitude(organizerCompleteAddress.getLatitude());
+            organizerLocation.setLongitude(organizerCompleteAddress.getLongitude());
+        }
+    }
 
     @Override
     public void onClick(View v) {
@@ -143,7 +186,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         else if (v == saveButton) {
             Calendar currentCalendar = Calendar.getInstance();
             // TODO: CHECK IF DESCRIPTION AND IMAGE EXISTS.
-            if (isEmpty(name) || isEmpty(date) || isEmpty(hour) || isEmpty(address) || isEmpty(maxAttendees) || isEmpty(price) || isEmpty(description) || imageBitmap == null || selectedGenre.equals("") || calendar.getTime().compareTo(currentCalendar.getTime()) < 0) {
+            if (isEmpty(name) || isEmpty(date) || isEmpty(hour) || isEmpty(maxAttendees) || isEmpty(price) || isEmpty(description) || imageBitmap == null || selectedGenre.equals("") || calendar.getTime().compareTo(currentCalendar.getTime()) < 0) {
                 Toast.makeText(this, "Please cover every field shown in the screen", Toast.LENGTH_LONG).show();
                 return;
             }
@@ -204,9 +247,8 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
                         String textdate = dayOfMonth + "/" + monthOfYear + "/" + year;
                         date.setText(textdate);
                         calendar.set(Calendar.YEAR, year);
-                        calendar.set(Calendar.MONTH, monthOfYear +1);
+                        calendar.set(Calendar.MONTH, monthOfYear + 1);
                         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
 
 
                     }
@@ -251,7 +293,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
 
     public void getImageUri() {
 
-                //MediaStore.Images.Media.INTERNAL_CONTENT_URI
+        //MediaStore.Images.Media.INTERNAL_CONTENT_URI
         Intent gallery = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         gallery.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
         startActivityForResult(gallery, GET_FROM_GALLERY);
@@ -297,15 +339,23 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && data != null) {
-            imageUri = data.getData();
-
-            try {
-                imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
-            } catch (IOException e) {
-                e.printStackTrace();
+        if (requestCode == 2) {
+            if (resultCode == RESULT_OK) {
+                userDefaultLocation = false;
+                Location newLocation = data.getParcelableExtra("pickedLocation");
+                geoUtils = new GeoUtils(this, Locale.getDefault());
+                eventCompleteAddress = geoUtils.getAddressFromLocation(newLocation);
+                address.setText(eventCompleteAddress.getLocality());
             }
-        }
+        } else if (resultCode == RESULT_OK && data != null) {
+                imageUri = data.getData();
+
+                try {
+                    imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
     }
 
     @Override
@@ -358,13 +408,13 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             } else
                 bitmapEncoded = NO_IMAGE;
             //bitmapEncoded = NO_IMAGE;
-            String path= imageUri.getEncodedPath();
+            String path = imageUri.getEncodedPath();
             final Event event = new Event(name.getText().toString(), eventDate, address.getText().toString(), selectedGenre, organizerId, maxAttendees.getText().toString(), price.getText().toString(), description.getText().toString(), bitmapEncoded);
             service.createEvent(event);
             event.setEventImage(path);
             final PersistentOrganizerInfo persistentOrganizerInfo = PersistentOrganizerInfo.getPersistentOrganizerInfo(getApplicationContext());
 
-            persistentOrganizerInfo.addEvent(getApplicationContext(),event);
+            persistentOrganizerInfo.addEvent(getApplicationContext(), event);
             return event;
         }
 

@@ -5,12 +5,14 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.provider.Telephony;
+import android.util.Log;
 
 import java.io.IOException;
 import java.util.Locale;
 
 public class GeoUtils {
 
+    private static final String TAG = "Geolocation Utils";
     private Context context;
     private Locale locale;
 
@@ -26,7 +28,19 @@ public class GeoUtils {
             address =  geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1).get(0);
             return address;
         } catch (IOException exception) {
-            System.out.println("An error ocurred while creating location from name");
+            Log.w(TAG, exception.toString());
+            return address;
+        }
+    }
+
+    public Address getAddressFromLocationName(String locationName) {
+        Address address = new Address(this.locale);
+        try {
+            Geocoder geocoder = new Geocoder(this.context, this.locale);
+            address =  geocoder.getFromLocationName(locationName, 1).get(0);
+            return address;
+        } catch (IOException exception) {
+            Log.w(TAG, exception.toString());
             return address;
         }
     }

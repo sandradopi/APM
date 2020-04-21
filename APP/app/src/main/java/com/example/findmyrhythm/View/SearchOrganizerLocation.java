@@ -28,6 +28,7 @@ public class SearchOrganizerLocation extends FragmentActivity implements OnMapRe
     String provider;
     private Location newLocation;
     private GoogleMap mMap;
+    private LatLng coordinates;
     private Marker marker;
 
     @Override
@@ -39,12 +40,19 @@ public class SearchOrganizerLocation extends FragmentActivity implements OnMapRe
                 .findFragmentById(R.id.organizerMap);
         mapFragment.getMapAsync(this);
 
+        // Initialize the new location through the Location Manager
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Criteria crta = new Criteria();
         provider = lm.getBestProvider(crta, true);
         newLocation = new Location(provider);
 
+        // Retrieve the default location coordinates to set the map initial position
+        Intent callerIntent = getIntent();
+        Location lastLocation = callerIntent.getParcelableExtra("lastLocation");
+        coordinates = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
+
         submit = (Button) findViewById(R.id.organizer_submit);
+        // Send control back to organizer log activity with the new location value
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,11 +81,8 @@ public class SearchOrganizerLocation extends FragmentActivity implements OnMapRe
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        marker = mMap.addMarker(new MarkerOptions().position(sydney).title("Current Location"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 15));
+        marker = mMap.addMarker(new MarkerOptions().position(coordinates).title("Current Location"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinates, 15));
 
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
