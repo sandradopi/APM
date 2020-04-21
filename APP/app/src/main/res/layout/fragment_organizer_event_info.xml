@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/primaryBackgroundDark"
     android:orientation="vertical">
 
@@ -24,33 +26,50 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/eventName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Viva Suecia"
-                    android:textSize="25sp"
-                    android:textStyle="bold" />
+                android:layout_height="match_parent">
 
                 <ImageView
+                    android:id="@+id/imageEvent"
+                    android:layout_width="155dp"
+                    android:layout_height="110dp"
+                    tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+                <Button
                     android:id="@+id/editBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_gravity="end"
-                    android:src="@drawable/ic_edit_24px" />
+                    android:background="#FFB3A1CE"
+                    android:clickable="false"
+                    android:text="Editar"
+                    android:textColor="@color/white" />
+
             </RelativeLayout>
 
-            <TextView
-                android:id="@+id/eventDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sab, Marzo 3 | 23:00"
-                android:textColor="#707070"
-                android:textSize="18sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pop"
+                    android:textColor="#707070"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/eventName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="15dp"
+                    android:text="PartyOn"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -65,18 +84,109 @@
                 android:id="@+id/eventDesc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Descripción"
-                android:textSize="20sp"
+                android:text="Información"
+                android:textSize="15sp"
                 android:textStyle="bold" />
+
+            <View
+                android:id="@+id/divider6"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="#A38DC3" />
 
             <TextView
                 android:id="@+id/eventDescContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
                 android:text="Suecia es un grupo de Indie Rock con toques
                                 Shoegaze originario de la ciudad de Murcia (España)
                                 y formado en 2013."
                 android:textSize="15sp" />
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp">
+
+                <ImageView
+                    android:id="@+id/capacityIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@drawable/ic_people" />
+
+                <TextView
+                    android:id="@+id/eventCapacity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="150"
+                    android:textColor="#707070"
+                    android:textSize="18sp" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp">
+
+                <ImageView
+                    android:id="@+id/costIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="24dp"
+                    app:srcCompat="@drawable/ic_euro" />
+
+                <TextView
+                    android:id="@+id/eventCost"
+                    android:layout_width="328dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="20€"
+                    android:textColor="#707070"
+                    android:textSize="18sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp">
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@drawable/ic_clock" />
+
+                <TextView
+                    android:id="@+id/eventTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="10:30"
+                    android:textColor="#707070"
+                    android:textSize="18sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp">
+
+                <ImageView
+                    android:id="@+id/calendar"
+                    app:srcCompat="@drawable/ic_calendar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+
+                <TextView
+                    android:id="@+id/eventDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="20/08/2020"
+                    android:textColor="#707070"
+                    android:textSize="18sp" />
+            </TableRow>
+
         </LinearLayout>
 
         <LinearLayout
@@ -88,82 +198,29 @@
                 android:id="@+id/eventLocation"
                 android:layout_width="192dp"
                 android:layout_height="wrap_content"
-                android:text="Ubicación"
-                android:textSize="20sp"
+                android:layout_marginTop="10dp"
+                android:text="Dirección"
+                android:textSize="15sp"
                 android:textStyle="bold" />
+
+            <View
+                android:id="@+id/divider5"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="#A38DC3" />
 
             <TextView
                 android:id="@+id/eventLocationContent"
                 android:layout_width="318dp"
                 android:layout_height="44dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
                 android:text="Discoteca Playa Club Andén de Riazor,
                               S/n,15011 A Coruña"
                 android:textSize="15sp" />
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="76dp"
-            android:orientation="vertical">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@android:color/holo_purple" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="76dp"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/capacityIcon"
-                        android:layout_width="32dp"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentRight="true"
-                        android:padding="4dp"
-                        android:src="@drawable/ic_group_24px" />
-
-                    <TextView
-                        android:id="@+id/eventCapacity"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="150"
-                        android:textSize="25sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/costIcon"
-                        android:layout_width="32dp"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:padding="4dp"
-                        android:src="@drawable/ic_local_offer_24px" />
-
-                    <TextView
-                        android:id="@+id/eventCost"
-                        android:layout_width="328dp"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:text="20€"
-                        android:textSize="25sp" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

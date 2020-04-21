@@ -30,9 +30,9 @@
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/eventPager"
-        android:layout_weight="0.8"
         android:layout_width="match_parent"
         android:layout_height="160dp"
+        android:layout_weight="0.3"
         android:background="@color/white"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 

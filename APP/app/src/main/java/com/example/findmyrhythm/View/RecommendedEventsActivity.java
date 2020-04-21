@@ -117,7 +117,7 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
                 date = event.getEventDate();
                 SimpleDateFormat df = new SimpleDateFormat("dd/MM/yy");
                 dates[i] = df.format(date);
-                prices[i] = String.valueOf(event.getPrice());
+                prices[i] = String.valueOf(event.getPrice().concat("€"));
                 i++;
             }
 

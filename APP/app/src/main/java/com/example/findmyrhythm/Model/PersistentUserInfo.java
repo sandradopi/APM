@@ -26,11 +26,14 @@ public class PersistentUserInfo extends User {
     public ArrayList<Event> getEvents() {
         return events;
     }
+    public ArrayList<Event> getEventsRecommended () {
+        return recommended;
+    }
 
-    public Event getEventsRecommended(String id){
+    public Event getEventRecommended(String id){
         System.out.println(id);
         for (Event event:recommended){
-            System.out.println(event.getId());
+            System.out.println("HOLAAAAAA"+event.getId());
 
             if(event.getId().equals(id)) return event;
         }
@@ -110,6 +113,14 @@ public class PersistentUserInfo extends User {
         setPersistentUserInfo(context, persistentInfo);
     }
 
+    public void addUniqueEventRecommended(Context context, Event event) {
+        PersistentUserInfo persistentInfo = getPersistentUserInfo(context);
+        ArrayList<Event> events= persistentInfo.getEventsRecommended();
+        events.add(event);
+        persistentInfo.setEventsRecommended(events);
+        setPersistentUserInfo(context, persistentInfo);
+    }
+
     public void deleteEvent(Context context, Event event) {
         PersistentUserInfo persistentInfo = getPersistentUserInfo(context);
         events = persistentInfo.getEvents();
@@ -122,6 +133,20 @@ public class PersistentUserInfo extends User {
         persistentInfo.setEvents(events);
         setPersistentUserInfo(context, persistentInfo);
     }
+
+    public void deleteRecommendedEvent(Context context, Event event) {
+        PersistentUserInfo persistentInfo = getPersistentUserInfo(context);
+        events = persistentInfo.getEventsRecommended();
+
+        if (events.contains(event) && event!=null){
+            events.remove(event);
+            System.out.println(events);
+
+        }
+        persistentInfo.setEventsRecommended(events);
+        setPersistentUserInfo(context, persistentInfo);
+    }
+
 
 
 

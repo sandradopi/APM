@@ -9,7 +9,8 @@ public class Event extends Entity{
 
     private String name;
     private Date eventDate;
-    private String location, genre, organizerId, maxAttendees, price, description, eventImage;
+    private String location, genre, organizerId, maxAttendees, price, description;
+    private String eventImage;
 
     public Event() {}
 
@@ -23,6 +24,7 @@ public class Event extends Entity{
         this.price = price;
         this.description = description;
         this.eventImage = eventImage;
+
     }
 
     public String getName() {

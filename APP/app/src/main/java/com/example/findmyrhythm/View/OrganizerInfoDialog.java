@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.findmyrhythm.Model.PersistentOrganizerInfo;
@@ -20,7 +21,7 @@ import com.google.firebase.auth.FirebaseUser;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class OrganizerInfoDialog extends DialogFragment {
-    TextView contentdireccion, tv_detail;
+    TextView contentdireccion, tv_detail, titulo;
 
 
     @Override
@@ -28,8 +29,7 @@ public class OrganizerInfoDialog extends DialogFragment {
 
         final PersistentOrganizerInfo persistentOrganizerInfo = PersistentOrganizerInfo.getPersistentOrganizerInfo(getApplicationContext());
 
-
-        AlertDialog.Builder builder =
+        final AlertDialog.Builder builder =
                 new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
@@ -37,18 +37,13 @@ public class OrganizerInfoDialog extends DialogFragment {
 
         contentdireccion = (TextView) view.findViewById(R.id.contentdireccion);
         tv_detail = (TextView) view.findViewById(R.id.tv_detail);
+        titulo = view.findViewById(R.id.title);
+
 
         contentdireccion.setText(persistentOrganizerInfo.getLocation());
-        tv_detail.setText("descripción");
-
+        tv_detail.setText(persistentOrganizerInfo.getBiography());
+        titulo.setText(persistentOrganizerInfo.getName());
         builder.setView(view);
-
-        builder.setTitle(persistentOrganizerInfo.getName())
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
 
         return builder.create();
     }
