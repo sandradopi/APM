@@ -40,6 +40,7 @@ import com.google.gson.Gson;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -119,8 +120,8 @@ public class OrganizerEventInfoActivity extends AppCompatActivity implements OnM
         eventPrice.setText(String.valueOf(event.getPrice())+"€");
         Date dateF;
         dateF = event.getEventDate();
-        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yy");
-        SimpleDateFormat df2 = new SimpleDateFormat("HH:mm");
+        DateFormat df = new SimpleDateFormat("dd/MM/yy", java.util.Locale.getDefault());
+        DateFormat df2 = new SimpleDateFormat("HH:mm", java.util.Locale.getDefault());
         eventDate.setText(df.format(dateF));
         eventTime.setText(df2.format(dateF));
         eventLocation.setText(event.getLocation());
