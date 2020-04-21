@@ -60,7 +60,7 @@ public class FinishedEventInfoActivity extends AppCompatActivity {
         final String eventSelectId = getIntent().getStringExtra("EVENT");
         SharedPreferences sharedPreferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
         String account_type = sharedPreferences.getString("account_type", null);
-        Event eventSelect;
+        final Event eventSelect;
         if (account_type.equals("organizer")) {
 
             PersistentOrganizerInfo persistentInfo = PersistentOrganizerInfo.getPersistentOrganizerInfo(getApplicationContext());
@@ -81,6 +81,7 @@ public class FinishedEventInfoActivity extends AppCompatActivity {
         ViewPager viewPager = findViewById(R.id.eventPager);
         viewPager.setAdapter(ratingsAdapter);
         TabLayout tabs = findViewById(R.id.eventTabs);
+
         tabs.setupWithViewPager(viewPager);
 
         name = findViewById(R.id.eventName);
@@ -118,7 +119,7 @@ public class FinishedEventInfoActivity extends AppCompatActivity {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     Log.w(TAG, "Score event");
                     FragmentManager fragmentManager = getSupportFragmentManager();
-                    ScoreEventDialog dialog = new ScoreEventDialog();
+                    ScoreEventDialog dialog = new ScoreEventDialog().newInstance(name.getText().toString(), eventSelect.getId() );
                     dialog.show(fragmentManager, "tagAlerta");
                 }
                 return true;

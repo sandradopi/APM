@@ -30,7 +30,7 @@
 
     <!-- Rating Bar Style -->
     <style name="CustomRatingBar"
-        parent="android:style/Widget.Material.RatingBar.Small">
+        parent="android:style/Widget.Material.RatingBar">
         <item name="colorControlActivated">@color/primaryDark</item>
     </style>
 
