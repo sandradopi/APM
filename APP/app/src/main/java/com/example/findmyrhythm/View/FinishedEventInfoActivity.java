@@ -27,6 +27,7 @@ import com.example.findmyrhythm.Model.PersistentOrganizerInfo;
 import com.example.findmyrhythm.Model.PersistentUserInfo;
 import com.example.findmyrhythm.Model.Photo;
 import com.example.findmyrhythm.Model.PhotoService;
+import com.example.findmyrhythm.Model.RatingService;
 import com.example.findmyrhythm.R;
 import com.example.findmyrhythm.View.tabs.RatingsAdapter;
 import com.google.android.material.tabs.TabLayout;
@@ -37,11 +38,12 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class FinishedEventInfoActivity extends AppCompatActivity {
+public class FinishedEventInfoActivity extends AppCompatActivity implements ScoreEventDialog.ScoreEventListener {
     private static final String TAG = "Score Event";
     TextView name, date, descripcion, ubication, time,category;
     Photo photoEvent;
     PhotoService photoService= new PhotoService();
+    Event eventSelect;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -60,7 +62,7 @@ public class FinishedEventInfoActivity extends AppCompatActivity {
         final String eventSelectId = getIntent().getStringExtra("EVENT");
         SharedPreferences sharedPreferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
         String account_type = sharedPreferences.getString("account_type", null);
-        final Event eventSelect;
+
         if (account_type.equals("organizer")) {
 
             PersistentOrganizerInfo persistentInfo = PersistentOrganizerInfo.getPersistentOrganizerInfo(getApplicationContext());
@@ -106,12 +108,7 @@ public class FinishedEventInfoActivity extends AppCompatActivity {
 
         // SCORES LOGIC
         RatingBar bar=(RatingBar)findViewById(R.id.pastEventScore);
-        //Bundle b = getIntent().getExtras();
-        float score= 8;
-        //change the score out of ten to star rating out of 5
-        float scores = score / 2;
-        //display star rating
-        bar.setRating(2.5f);
+        new getRatingsMedia().execute();
         bar.setClickable(true);
         bar.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -126,6 +123,12 @@ public class FinishedEventInfoActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onDialogPositiveClick() {
+        // User touched the dialog's positive button
+        new getRatingsMedia().execute();
     }
 
     private class getPhoto extends AsyncTask<Void, Void, Void> {
@@ -164,6 +167,29 @@ public class FinishedEventInfoActivity extends AppCompatActivity {
             imageEvent.setImageBitmap(imagenFinal);
 
 
+        }
+    }
+
+    private class getRatingsMedia extends AsyncTask<Void, Void, Void> {
+
+        RatingService ratingService = new RatingService();
+        Float ratingsMedia;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            ratingsMedia = ratingService.getMedia(eventSelect.getId());
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            RatingBar bar=(RatingBar)findViewById(R.id.pastEventScore);
+            bar.setRating(ratingsMedia);
         }
     }
 
