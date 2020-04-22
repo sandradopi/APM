@@ -39,6 +39,8 @@ import com.example.findmyrhythm.Model.Event;
 import com.example.findmyrhythm.Model.EventService;
 import com.example.findmyrhythm.Model.Utils.GeoUtils;
 import com.example.findmyrhythm.Model.PersistentOrganizerInfo;
+import com.example.findmyrhythm.Model.Photo;
+import com.example.findmyrhythm.Model.PhotoService;
 import com.example.findmyrhythm.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -49,6 +51,8 @@ import android.widget.ImageView;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -81,6 +85,9 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
     Bitmap imageBitmap = null;
     String bitmapEncoded = "";
     byte[] byteArray;
+
+    EventService eventService = new EventService();
+    PhotoService photoService = new PhotoService();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -244,10 +251,12 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
                                           int monthOfYear, int dayOfMonth) {
                         // Por que month of year + 1???
                         //date.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-                        String textdate = dayOfMonth + "/" + monthOfYear + "/" + year;
-                        date.setText(textdate);
+                        String textdate = dayOfMonth + "/" + (monthOfYear+1) + "/" + year;
+                        Date fecha = new Date(year, monthOfYear, dayOfMonth);
+                        DateFormat df = new SimpleDateFormat("dd/MM/yy", java.util.Locale.getDefault());
+                        date.setText(df.format(fecha));
                         calendar.set(Calendar.YEAR, year);
-                        calendar.set(Calendar.MONTH, monthOfYear + 1);
+                        calendar.set(Calendar.MONTH, monthOfYear);
                         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
 
@@ -393,8 +402,6 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             final String organizerId = preferences.getString("fb_id", null);
 
             eventDate = calendar.getTime();
-            EventService service = new EventService();
-
 
             if (imageBitmap != null) {
 
@@ -408,10 +415,12 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             } else
                 bitmapEncoded = NO_IMAGE;
             //bitmapEncoded = NO_IMAGE;
-            String path = imageUri.getEncodedPath();
-            final Event event = new Event(name.getText().toString(), eventDate, address.getText().toString(), selectedGenre, organizerId, maxAttendees.getText().toString(), price.getText().toString(), description.getText().toString(), bitmapEncoded, eventCompleteAddress);
-            service.createEvent(event);
-            event.setEventImage(path);
+            //String path= imageUri.getEncodedPath();
+            final Photo photo = new Photo (bitmapEncoded);
+            String photoId = photoService.createPhoto(photo);
+            final Event event = new Event(name.getText().toString(), eventDate, address.getText().toString(), selectedGenre, organizerId, maxAttendees.getText().toString(), price.getText().toString(), description.getText().toString(), photoId, eventCompleteAddress);
+            eventService.createEvent(event);
+            //event.setEventImage(path);
             final PersistentOrganizerInfo persistentOrganizerInfo = PersistentOrganizerInfo.getPersistentOrganizerInfo(getApplicationContext());
 
             persistentOrganizerInfo.addEvent(getApplicationContext(), event);

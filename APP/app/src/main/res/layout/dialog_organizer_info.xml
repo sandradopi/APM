@@ -3,66 +3,80 @@
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
     android:orientation="vertical"
+    android:background="@drawable/drawer_background_border"
+
     android:padding="25dp">
+
+
 
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
+
         <TextView
-            android:id="@+id/mediaOrg"
-            android:layout_width="205dp"
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:text="Media de Valoraciones: "
+            android:text="Playa Club"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            android:textSize="18dp" />
+            android:textColor="#92FFFFFF"
+            android:textSize="28dp" />
 
-        <TextView
-            android:id="@+id/contentMedia"
+
+        <RatingBar
+            android:id="@+id/pastEventScore"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginTop="12dp"
-            android:layout_marginRight="12pt"
-            android:text="9/10"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="10dp"
+            android:clickable="false"
+            android:numStars="5"
+            android:scaleX="0.5"
+            android:scaleY="0.5"
+            android:theme="@style/CustomRatingBar" />
+
     </TableRow>
 
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:text="Descripción"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        android:textSize="18dp" />
 
     <TextView
         android:id="@+id/tv_detail"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:text="@string/descripPlaya"
-        android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        android:textSize="18sp"
+        android:textStyle="bold|italic" />
 
-    <TextView
-        android:id="@+id/address"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:text="Dirección"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        android:textSize="18dp" />
 
-    <TextView
-        android:id="@+id/contentdireccion"
-        android:layout_width="wrap_content"
+    <TableRow
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="5dp"
-        android:text="@string/dirPlaya"
-        android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+        android:layout_gravity="start">
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/direccion"
+            android:layout_width="41dp"
+            android:layout_height="34dp"
+            android:layout_gravity="left"
+            android:clickable="false"
+            android:src="@drawable/logo_dir" />
+
+        <TextView
+            android:id="@+id/contentdireccion"
+            android:layout_width="313dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Direccion"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+    </TableRow>
+
+
+
 </LinearLayout>
 

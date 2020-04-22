@@ -8,11 +8,16 @@ import androidx.viewpager.widget.ViewPager;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,17 +25,24 @@ import android.widget.Toast;
 import com.example.findmyrhythm.Model.Event;
 import com.example.findmyrhythm.Model.PersistentOrganizerInfo;
 import com.example.findmyrhythm.Model.PersistentUserInfo;
+import com.example.findmyrhythm.Model.Photo;
+import com.example.findmyrhythm.Model.PhotoService;
 import com.example.findmyrhythm.R;
 import com.example.findmyrhythm.View.tabs.RatingsAdapter;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class FinishedEventInfoActivity extends AppCompatActivity {
     private static final String TAG = "Score Event";
-    TextView name, date, descripcion, ubication;
+    TextView name, date, descripcion, ubication, time,category;
+    Photo photoEvent;
+    PhotoService photoService= new PhotoService();
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -58,7 +70,10 @@ public class FinishedEventInfoActivity extends AppCompatActivity {
         else {
             PersistentUserInfo persistentInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
             eventSelect = persistentInfo.getEvent(eventSelectId);
+
         }
+        
+        new getPhoto().execute();
 
         //View
         setContentView(R.layout.activity_finished_event_info);
@@ -73,15 +88,21 @@ public class FinishedEventInfoActivity extends AppCompatActivity {
         date =  findViewById(R.id.eventDate);
         descripcion = findViewById(R.id.eventDescContent);
         ubication = findViewById(R.id.eventLocationContent);
+        time = findViewById(R.id.eventTime);
+        category = findViewById(R.id.category);
 
 
         name.setText(eventSelect.getName());
         Date dateF;
         dateF = eventSelect.getEventDate();
-        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yy");
+        DateFormat df = new SimpleDateFormat("dd/MM/yy", java.util.Locale.getDefault());
+        DateFormat df2 = new SimpleDateFormat("HH:mm", java.util.Locale.getDefault());
         date.setText(df.format(dateF));
+        time.setText(df2.format(dateF));
         descripcion.setText(eventSelect.getDescription());
         ubication.setText(eventSelect.getLocation());
+        category.setText(eventSelect.getGenre());
+
 
         // SCORES LOGIC
         RatingBar bar=(RatingBar)findViewById(R.id.pastEventScore);
@@ -107,11 +128,50 @@ public class FinishedEventInfoActivity extends AppCompatActivity {
 
     }
 
+    private class getPhoto extends AsyncTask<Void, Void, Void> {
 
+        final String eventSelectId = getIntent().getStringExtra("EVENT");
+        final PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            Event eventSelect;
+            final boolean recommended = getIntent().getExtras().getBoolean("RECOMMENDED");
+            if(recommended) {
+                eventSelect  = persistentUserInfo.getEventRecommended(eventSelectId);
+
+            } else{
+                eventSelect = persistentUserInfo.getEvent(eventSelectId);
+            }
+
+            photoEvent = photoService.getPhoto(eventSelect.getEventImage());
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+
+            byte[] decodedString = Base64.decode(photoEvent.getEventImage(),Base64.NO_WRAP);
+            InputStream inputStream  = new ByteArrayInputStream(decodedString);
+            Bitmap bitmap  = BitmapFactory.decodeStream(inputStream);
+            Bitmap imagenFinal = Bitmap.createScaledBitmap(bitmap,242,152,false);
+            final ImageView imageEvent =  findViewById(R.id.imageEvent);
+            imageEvent.setImageBitmap(imagenFinal);
+
+
+        }
+    }
 
     @Override
     public boolean onSupportNavigateUp() {
         finish();
         return true;
     }
+
+
 }

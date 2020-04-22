@@ -6,11 +6,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +23,9 @@ import com.example.findmyrhythm.Model.Event;
 import com.example.findmyrhythm.Model.EventService;
 import com.example.findmyrhythm.Model.Exceptions.InstanceNotFoundException;
 import com.example.findmyrhythm.Model.PersistentOrganizerInfo;
+import com.example.findmyrhythm.Model.PersistentUserInfo;
+import com.example.findmyrhythm.Model.Photo;
+import com.example.findmyrhythm.Model.PhotoService;
 import com.example.findmyrhythm.Model.User;
 import com.example.findmyrhythm.Model.UserService;
 import com.example.findmyrhythm.R;
@@ -31,13 +38,17 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class OrganizerEventInfoActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-
+    Photo photoEvent;
+    PhotoService photoService= new PhotoService();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +68,7 @@ public class OrganizerEventInfoActivity extends AppCompatActivity implements OnM
         //View
         setContentView(R.layout.activity_organizer_event_info);
         showEventInfo(eventSelect);
+        new getPhoto().execute();
 
         /*Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -74,11 +86,10 @@ public class OrganizerEventInfoActivity extends AppCompatActivity implements OnM
 
         }*/
 
-        MapFragment mapFragment = (MapFragment) getFragmentManager()
-                .findFragmentById(R.id.eventMap);
-        mapFragment.getMapAsync(this);
 
-        ImageView editButton = (ImageView) findViewById(R.id.editBtn);
+
+
+        Button editButton = findViewById(R.id.editBtn);
         editButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -101,16 +112,21 @@ public class OrganizerEventInfoActivity extends AppCompatActivity implements OnM
         TextView eventDate = findViewById(R.id.eventDate);
         TextView eventLocation = findViewById(R.id.eventLocationContent);
         TextView eventDescrip = findViewById(R.id.eventDescContent);
+        TextView eventTime = findViewById(R.id.eventTime);
+        TextView category = findViewById(R.id.category);
 
         eventName.setText(event.getName());
-        eventMaxAttendees.setText(String.valueOf(event.getMaxAttendees()));
+        eventMaxAttendees.setText(String.valueOf(event.getMaxAttendees())+" personas");
         eventPrice.setText(String.valueOf(event.getPrice())+"€");
         Date dateF;
         dateF = event.getEventDate();
-        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yy");
+        DateFormat df = new SimpleDateFormat("dd/MM/yy", java.util.Locale.getDefault());
+        DateFormat df2 = new SimpleDateFormat("HH:mm", java.util.Locale.getDefault());
         eventDate.setText(df.format(dateF));
+        eventTime.setText(df2.format(dateF));
         eventLocation.setText(event.getLocation());
         eventDescrip.setText(event.getDescription());
+        category.setText(event.getGenre());
     }
 
 
@@ -130,25 +146,43 @@ public class OrganizerEventInfoActivity extends AppCompatActivity implements OnM
     }
 
 
-    /*private class getEvent extends AsyncTask<String, Void, Event> {
+    private class getPhoto extends AsyncTask<Void, Void, Void> {
+
+        final String eventSelectId = getIntent().getStringExtra("EVENT");
+        final PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
         }
 
         @Override
-        protected Event doInBackground(String... ids) {
-            String id = ids[0];
-            EventService eventService = new EventService();
-            Event event = eventService.getEvent(id);
+        protected Void doInBackground(Void... voids) {
+            Event eventSelect;
+            final boolean recommended = getIntent().getExtras().getBoolean("RECOMMENDED");
+            if(recommended) {
+                eventSelect  = persistentUserInfo.getEventRecommended(eventSelectId);
 
-            return event;
+            } else{
+                eventSelect = persistentUserInfo.getEvent(eventSelectId);
+            }
+
+            photoEvent = photoService.getPhoto(eventSelect.getEventImage());
+            return null;
         }
 
         @Override
-        protected void onPostExecute(Event event) {
-            showEventInfo(event);
+        protected void onPostExecute(Void aVoid) {
+
+            byte[] decodedString = Base64.decode(photoEvent.getEventImage(),Base64.NO_WRAP);
+            InputStream inputStream  = new ByteArrayInputStream(decodedString);
+            Bitmap bitmap  = BitmapFactory.decodeStream(inputStream);
+            Bitmap imagenFinal = Bitmap.createScaledBitmap(bitmap,242,152,false);
+            final ImageView imageEvent =  findViewById(R.id.imageEvent);
+            imageEvent.setImageBitmap(imagenFinal);
+
+
         }
-    }*/
+    }
 
 }
