@@ -104,12 +104,14 @@
 
                     <ImageView
                         android:id="@+id/calendar"
+                        android:layout_margin="4dp"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        app:srcCompat="@drawable/ic_calendar" />
+                        android:src="@drawable/ic_calendar_today_white_18dp" />
 
                     <TextView
                         android:id="@+id/eventDate"
+                        android:layout_marginStart="6dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="20/08/2020"
@@ -124,12 +126,14 @@
 
                     <ImageView
                         android:id="@+id/clock"
+                        android:layout_margin="4dp"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        app:srcCompat="@drawable/ic_clock" />
+                        android:src="@drawable/ic_access_time_white_18dp" />
 
                     <TextView
                         android:id="@+id/eventTime"
+                        android:layout_marginStart="6dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="10:30"
