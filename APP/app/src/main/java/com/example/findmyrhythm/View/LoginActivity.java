@@ -287,9 +287,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Intent intent = new Intent(LoginActivity.this, GreetingsActivity.class);
                 startActivity(intent);
             } else if (user!=null && organizer==null) {
-                new RecoverUserTask().execute(user); //recoverUser(user);
+                showUseExistentAccountDialog(user, organizer);
             } else if (user==null && organizer!=null) {
-                new RecoverOrganizerTask().execute(organizer); //recoverOrganizer(organizer);
+                showUseExistentAccountDialog(user, organizer);
             } else if (user!=null && organizer!=null) {
                 showSelectAccountDialog(user, organizer);
             }
@@ -385,5 +385,33 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 });
         alertDialog.show();
     }
+
+
+    public void showUseExistentAccountDialog(final User user, final Organizer organizer) {
+        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        final String account = (organizer != null) ? "organizer" : "user";
+        alertDialog.setTitle("Cuenta existente");
+        alertDialog.setMessage("Se ha detectado una cuenta previa de "+account+", ¿la quieres utilizar?");
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Sí",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        if (organizer != null)
+                            new RecoverOrganizerTask().execute(organizer);
+                        else
+                            new RecoverUserTask().execute(user);
+                    }
+                });
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        Intent intent = new Intent(LoginActivity.this, GreetingsActivity.class);
+                        startActivity(intent);
+                    }
+                });
+        alertDialog.show();
+    }
+
 
 }
