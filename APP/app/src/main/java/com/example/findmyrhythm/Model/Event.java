@@ -5,17 +5,19 @@ import android.location.Address;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.HashMap;
 
 public class Event extends Entity{
 
     private String name;
     private Date eventDate;
     private String location, genre, organizerId, maxAttendees, price, description, eventImage;
-    private Address completeAddress;
+    private HashMap<String, String> completeAddress;
 
     public Event() {}
 
-    public Event(String name, Date date, String location, String genre, String organizerId, String maxAttendees, String price, String description, String eventImage, Address completeAddress) {
+    public Event(String name, Date date, String location, String genre, String organizerId, String maxAttendees,
+                 String price, String description, String eventImage, HashMap<String, String> completeAddress) {
         this.name = name;
         this.eventDate = date;
         this.location = location;
@@ -101,11 +103,11 @@ public class Event extends Entity{
         this.eventImage = eventImage;
     }
 
-    public Address getCompleteAddress() {
+    public HashMap<String, String> getCompleteAddress() {
         return completeAddress;
     }
 
-    public void setCompleteAddress(Address completeAddress) {
+    public void setCompleteAddress(HashMap<String, String> completeAddress) {
         this.completeAddress = completeAddress;
     }
 }

@@ -44,4 +44,15 @@ public class GeoUtils {
             return address;
         }
     }
+
+    public static String getAddressString(Address fullAddress) {
+        String address = fullAddress.getAddressLine(0);
+        String city = fullAddress.getLocality();
+        String country = fullAddress.getCountryName();
+        String postalCode = fullAddress.getPostalCode();
+        String street = fullAddress.getThoroughfare();
+        String streetNumber = fullAddress.getSubThoroughfare();
+        return street + ", " + streetNumber + ", " + postalCode + ", " + city + ", " + country;
+    }
+
 }

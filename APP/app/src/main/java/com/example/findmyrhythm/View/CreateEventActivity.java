@@ -55,6 +55,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Locale;
 
 
@@ -388,6 +390,8 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         //Nothing to do.
     }
 
+
+
     private class AddEventTask extends AsyncTask<Void, Void, Event> {
 
         @Override
@@ -418,7 +422,19 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             //String path= imageUri.getEncodedPath();
             final Photo photo = new Photo (bitmapEncoded);
             String photoId = photoService.createPhoto(photo);
-            final Event event = new Event(name.getText().toString(), eventDate, address.getText().toString(), selectedGenre, organizerId, maxAttendees.getText().toString(), price.getText().toString(), description.getText().toString(), photoId, eventCompleteAddress);
+            // creating a My HashTable Dictionary
+            HashMap<String, String> addressDict = new HashMap<>();
+
+            // Using a few dictionary Class methods
+            // using put method
+            addressDict.put("province", eventCompleteAddress.getSubAdminArea());
+            addressDict.put("full_address", GeoUtils.getAddressString(eventCompleteAddress)); // Double
+            addressDict.put("latitude", String.valueOf(eventCompleteAddress.getLatitude()));
+            addressDict.put("longitude", String.valueOf(eventCompleteAddress.getLongitude()));
+
+            final Event event = new Event(name.getText().toString(), eventDate, address.getText().toString(),
+                    selectedGenre, organizerId, maxAttendees.getText().toString(), price.getText().toString(),
+                    description.getText().toString(), photoId, addressDict);
             eventService.createEvent(event);
             //event.setEventImage(path);
             final PersistentOrganizerInfo persistentOrganizerInfo = PersistentOrganizerInfo.getPersistentOrganizerInfo(getApplicationContext());
