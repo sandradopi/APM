@@ -11,6 +11,7 @@
     <string name="dirPlaya">Discoteca Playa Club Andén de Riazor, S/n, 15011 A Coruña</string>
     <string name="authFail">Autenticación fallada</string>
     <string name="authExi">Autenticación exitosa</string>
+<!--    <string name="google_api_key" translatable="false">AIzaSyDoUjZ-mIeMBqumb22ITJAQ5AO-ZTlTMws</string>-->
 
 
     <string name="navigation_drawer_open">Abriendo menú</string>
