@@ -323,6 +323,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             editor.putString("fb_id", persistentUserInfo.getId());
             editor.putString("name", persistentUserInfo.getName());
             editor.putString("email", persistentUserInfo.getEmail());
+            editor.putString("nickname", persistentUserInfo.getUsername());
             editor.putString("account_type", "organizer");
 
             editor.commit(); // or apply
@@ -365,6 +366,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             editor.putString("fb_id", persistentOrganizerInfo.getId());
             editor.putString("name", persistentOrganizerInfo.getName());
             editor.putString("email", persistentOrganizerInfo.getEmail());
+            editor.putString("nickname", persistentOrganizerInfo.getUsername());
+            editor.putString("location", persistentOrganizerInfo.getLocation());
             editor.putString("account_type", "organizer");
 
             editor.commit(); // or apply
