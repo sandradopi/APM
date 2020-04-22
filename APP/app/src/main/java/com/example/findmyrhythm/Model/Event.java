@@ -11,10 +11,11 @@ public class Event extends Entity{
     private String name;
     private Date eventDate;
     private String location, genre, organizerId, maxAttendees, price, description, eventImage;
+    private Address completeAddress;
 
     public Event() {}
 
-    public Event(String name, Date date, String location, String genre, String organizerId, String maxAttendees, String price, String description, String eventImage) {
+    public Event(String name, Date date, String location, String genre, String organizerId, String maxAttendees, String price, String description, String eventImage, Address completeAddress) {
         this.name = name;
         this.eventDate = date;
         this.location = location;
@@ -24,6 +25,7 @@ public class Event extends Entity{
         this.price = price;
         this.description = description;
         this.eventImage = eventImage;
+        this.completeAddress = completeAddress;
 
     }
 
@@ -97,6 +99,14 @@ public class Event extends Entity{
 
     public void setEventImage(String eventImage) {
         this.eventImage = eventImage;
+    }
+
+    public Address getCompleteAddress() {
+        return completeAddress;
+    }
+
+    public void setCompleteAddress(Address completeAddress) {
+        this.completeAddress = completeAddress;
     }
 }
 

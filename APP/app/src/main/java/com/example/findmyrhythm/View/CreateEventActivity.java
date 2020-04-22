@@ -186,7 +186,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         else if (v == saveButton) {
             Calendar currentCalendar = Calendar.getInstance();
             // TODO: CHECK IF DESCRIPTION AND IMAGE EXISTS.
-            if (isEmpty(name) || isEmpty(date) || isEmpty(hour) || isEmpty(maxAttendees) || isEmpty(price) || isEmpty(description) || imageBitmap == null || selectedGenre.equals("") || calendar.getTime().compareTo(currentCalendar.getTime()) < 0) {
+            if (isEmpty(name) || isEmpty(date) || isEmpty(hour) || isEmpty(maxAttendees) || isEmpty(price) || isEmpty(description) || address.getText().toString().isEmpty() || imageBitmap == null || selectedGenre.equals("") || calendar.getTime().compareTo(currentCalendar.getTime()) < 0) {
                 Toast.makeText(this, "Please cover every field shown in the screen", Toast.LENGTH_LONG).show();
                 return;
             }
@@ -409,7 +409,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
                 bitmapEncoded = NO_IMAGE;
             //bitmapEncoded = NO_IMAGE;
             String path = imageUri.getEncodedPath();
-            final Event event = new Event(name.getText().toString(), eventDate, address.getText().toString(), selectedGenre, organizerId, maxAttendees.getText().toString(), price.getText().toString(), description.getText().toString(), bitmapEncoded);
+            final Event event = new Event(name.getText().toString(), eventDate, address.getText().toString(), selectedGenre, organizerId, maxAttendees.getText().toString(), price.getText().toString(), description.getText().toString(), bitmapEncoded, eventCompleteAddress);
             service.createEvent(event);
             event.setEventImage(path);
             final PersistentOrganizerInfo persistentOrganizerInfo = PersistentOrganizerInfo.getPersistentOrganizerInfo(getApplicationContext());
