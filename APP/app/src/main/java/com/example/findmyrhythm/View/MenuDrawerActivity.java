@@ -164,7 +164,7 @@ public abstract class MenuDrawerActivity extends AppCompatActivity implements Na
         alertDialog.setTitle("Cerrar sesión");
         alertDialog.setMessage("¿Seguro que quieres cerrar sesión?");
         final String finalProvider = provider;
-        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Sí",
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Sí",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -182,7 +182,7 @@ public abstract class MenuDrawerActivity extends AppCompatActivity implements Na
 
                     }
                 });
-        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "No",
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

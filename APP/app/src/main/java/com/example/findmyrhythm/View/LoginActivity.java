@@ -2,6 +2,7 @@ package com.example.findmyrhythm.View;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -314,6 +315,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             PersistentUserInfo.setPersistentUserInfo(getApplicationContext(), persistentUserInfo);
 
+            SharedPreferences sharedpreferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+
+            editor.putString("fb_name", persistentUserInfo.getName());
+            editor.putString("fb_email", persistentUserInfo.getEmail());
+            editor.putString("fb_id", persistentUserInfo.getId());
+            editor.putString("name", persistentUserInfo.getName());
+            editor.putString("email", persistentUserInfo.getEmail());
+            editor.putString("account_type", "organizer");
+
+            editor.commit(); // or apply
+
             return null;
         }
 
@@ -343,6 +356,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     organizer[0].getBiography(), organizer[0].getRating(), organizer[0].getLocation(), events);
 
             PersistentOrganizerInfo.setPersistentOrganizerInfo(getApplicationContext(), persistentOrganizerInfo);
+
+            SharedPreferences sharedpreferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+
+            editor.putString("fb_name", persistentOrganizerInfo.getName());
+            editor.putString("fb_email", persistentOrganizerInfo.getEmail());
+            editor.putString("fb_id", persistentOrganizerInfo.getId());
+            editor.putString("name", persistentOrganizerInfo.getName());
+            editor.putString("email", persistentOrganizerInfo.getEmail());
+            editor.putString("account_type", "organizer");
+
+            editor.commit(); // or apply
 
             return null;
         }
