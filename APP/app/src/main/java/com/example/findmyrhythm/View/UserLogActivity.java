@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.findmyrhythm.Model.Event;
+import com.example.findmyrhythm.Model.EventService;
 import com.example.findmyrhythm.Model.IOFiles;
 import com.example.findmyrhythm.Model.PersistentUserInfo;
 import com.example.findmyrhythm.Model.User;
@@ -108,6 +109,9 @@ public class UserLogActivity extends AppCompatActivity implements View.OnClickLi
         //TODO: Introduce into database by getting the value of every field. Check Android Service.
         new CreateUserTask().execute();
 
+        EventService service = new EventService();
+        service.subscribeEventNotificationListener(this, currentUser.getUid());
+
         //TODO: Intent to new Activity
         Log.w(TAG, "Creación de la cuenta del usuario");
         Toast.makeText(UserLogActivity.this, getString(R.string.notiCreation),  Toast.LENGTH_SHORT).show();
@@ -116,51 +120,6 @@ public class UserLogActivity extends AppCompatActivity implements View.OnClickLi
         startActivity(intent);
     }
 
-
-    /*public void createUser() {
-
-        DatabaseReference mDatabase;// ...
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-
-        String name = currentUser.getDisplayName();
-        String email = currentUser.getEmail();
-        String userId = currentUser.getUid();
-
-        ArrayList<String> genres, locations;
-
-        Bundle b = getIntent().getExtras();
-        locations = b.getStringArrayList(getString(R.string.locationsListID));
-        genres = b.getStringArrayList(getString(R.string.genresListID));
-
-       /* User user = new User(name, nickname.getText().toString(), email, biography.getText().toString(), birthDate.getText().toString(), locations, genres);
-
-        mDatabase.child("users2").child(userId).setValue(user);/*
-
-        /* TODO: esto se está ejecutando cada vez que se inicia la actividad. Lo ideal parece que
-         *   sería crear una actividad de carga con el logo o algo así que se ejecutara una única
-         *   vez. Es bastante común en las aplicaciones. */
-
-        /*IOFiles.storeInfoJSON(name, email, getPackageName());
-
-        Uri photoUrl = currentUser.getPhotoUrl();
-
-        for (PersistentUserInfo profile : currentUser.getProviderData()) {
-            System.out.println(profile.getProviderId());
-            // check if the provider id matches "facebook.com"
-            if (profile.getProviderId().equals("facebook.com")) {
-
-                String facebookUserId = profile.getUid();
-
-                photoUrl = Uri.parse("https://graph.facebook.com/" + facebookUserId + "/picture?height=500");
-
-            } else if (profile.getProviderId().equals("google.com")) {
-                photoUrl = Uri.parse(photoUrl.toString().replace("s96-c", "s700-c"));
-            }
-        }
-
-        IOFiles.downloadSaveBmp(photoUrl, getApplicationContext());
-
-    }*/
 
     private boolean isEmpty(EditText text) {
 

@@ -76,9 +76,6 @@ public class UserProfileActivity extends UserMenuDrawerActivity {
             imageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_logo));
         }
 
-        EventService service = new EventService();
-        service.subscribeEventNotificationListener(UserProfileActivity.this, userId);
-
     }
 
     @Override
