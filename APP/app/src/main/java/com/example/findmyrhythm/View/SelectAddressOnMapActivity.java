@@ -64,7 +64,7 @@ public class SelectAddressOnMapActivity extends FragmentActivity implements OnMa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_events);
+        setContentView(R.layout.activity_select_address_on_map);
 
         mSearchResult = findViewById(R.id.searchResult);
         searchText = findViewById(R.id.input_search);
