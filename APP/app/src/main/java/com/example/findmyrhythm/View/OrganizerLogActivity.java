@@ -18,6 +18,8 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,10 +33,20 @@ import com.example.findmyrhythm.Model.OrganizerService;
 import com.example.findmyrhythm.Model.PersistentOrganizerInfo;
 import com.example.findmyrhythm.Model.Utils.GeoUtils;
 import com.example.findmyrhythm.R;
+import com.facebook.internal.LockOnGetVariable;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationAvailability;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -45,18 +57,23 @@ import java.util.Locale;
 
 public class OrganizerLogActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "Creación Organizador";
+    private static long UPDATE_INTERVAL_IN_MILISECONDS = 100;
+    private static long FASTEST_UPDATE_INTERVAL_IN_MILISECONDS = 50;
     private EditText name, nickname, email, biography;
     private Button location, exploreMapButton;
     private Address completeAddress;
     private FloatingActionButton next;
     private FirebaseUser currentUser;
-    private FusedLocationProviderClient fusedLocationClient;
     private Location lastLocation;
     private GeoUtils geoUtils;
     private static final int LOCATION_PERMISSION_CODE = 7346;
     private static final String ACCESS_FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     private Boolean locationPermissionGranted = false;
     private Boolean useMyLocation;
+    // Google Play Services attributes
+    private LocationRequest mLocationRequest;
+    // Provides the entry point to the Fused Location Provider API
+    private FusedLocationProviderClient mFusedLocationClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,14 +104,14 @@ public class OrganizerLogActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void onClick(View view) {
                 try {
-                    startActivityForResult(new Intent(getApplicationContext(), SearchOrganizerLocation.class).putExtra("lastLocation", lastLocation), 1);
+                    startActivityForResult(new Intent(getApplicationContext(), SelectAddressOnMapActivity.class), 1);
                 } catch (Exception e) {
                     Log.w(TAG, e.toString());
                 }
             }
         });
-        // Google Play Services
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        // Initialize client
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
     }
 
@@ -105,10 +122,8 @@ public class OrganizerLogActivity extends AppCompatActivity implements View.OnCl
         if (!checkPermissions()) {
             requestPermissions();
         } else if (useMyLocation) {
+            createLocationRequest();
             getLastLocation();
-            geoUtils = new GeoUtils(this, Locale.getDefault());
-            completeAddress = geoUtils.getAddressFromLocation(lastLocation);
-            location.setText(completeAddress.getLocality());
         }
     }
 
@@ -125,9 +140,7 @@ public class OrganizerLogActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void requestPermissions() {
-
         String[] permissions = {ACCESS_FINE_LOCATION};
-
         if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
                 ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             startLocationPermissionsRequest();
@@ -141,42 +154,17 @@ public class OrganizerLogActivity extends AppCompatActivity implements View.OnCl
 
             // If grantResults lenght is > 0 is that something was granted
             if (grantResults.length > 0) {
-                for (int item : grantResults)
+                for (int item : grantResults) {
                     if (item == PackageManager.PERMISSION_DENIED) {
                         return;
                     }
-
-                if (useMyLocation) {
-                    getLastLocation();
-                    GeoUtils geoUtils = new GeoUtils(this, Locale.getDefault());
-                    completeAddress = geoUtils.getAddressFromLocation(lastLocation);
-                    location.setText(completeAddress.getLocality());
                 }
+                geoUtils = new GeoUtils(this, Locale.getDefault());
+                // Calls to Google API must be asynchronous: we cannot block UI mainloop
+                createLocationRequest();
+                getLastLocation();
             }
         }
-    }
-
-    // Method for obtaining the last know location of the device
-    private void getLastLocation() {
-        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        Criteria crta = new Criteria();
-        String provider = lm.getBestProvider(crta, true);
-        try {
-            lastLocation = lm.getLastKnownLocation(provider);
-        } catch (SecurityException e) {
-            Log.w(TAG, e.toString());
-        }
-
-        /* fusedLocationClient.getLastLocation().addOnCompleteListener(this, new OnCompleteListener<Location>() {
-            @Override
-            public void onComplete(@NonNull Task<Location> task) {
-                if (task.isSuccessful() && task.getResult() != null) {
-                    lastLocation = task.getResult();
-                } else {
-                    Log.w(TAG, "getLastLocation:exception", task.getException());
-                }
-            }
-        }); */
     }
 
     @Override
@@ -185,9 +173,9 @@ public class OrganizerLogActivity extends AppCompatActivity implements View.OnCl
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
                 useMyLocation = false;
-                Location newLocation = data.getParcelableExtra("pickedLocation");
-                geoUtils = new GeoUtils(this, Locale.getDefault());
-                completeAddress = geoUtils.getAddressFromLocation(newLocation);
+                Address completeAddress = data.getParcelableExtra("pickedAddress");
+//                geoUtils = new GeoUtils(this, Locale.getDefault());
+//                completeAddress = geoUtils.getAddressFromLocation(newLocation);
                 location.setText(completeAddress.getLocality());
             }
         }
@@ -294,5 +282,30 @@ public class OrganizerLogActivity extends AppCompatActivity implements View.OnCl
 
             finish();
         }
+    }
+
+    // Request the first location fix, which is required to obtain the last location from
+    // the Google Play Services
+    private void createLocationRequest() {
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(UPDATE_INTERVAL_IN_MILISECONDS);
+        mLocationRequest.setFastestInterval(FASTEST_UPDATE_INTERVAL_IN_MILISECONDS);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+    }
+
+    // Method for obtaining the last know location of the device
+    private void getLastLocation() {
+        mFusedLocationClient.getLastLocation().addOnCompleteListener(this, new OnCompleteListener<Location>() {
+            @Override
+            public void onComplete(@NonNull Task<Location> task) {
+                if (task.isSuccessful() && task.getResult() != null) {
+                    lastLocation = task.getResult();
+                    completeAddress = geoUtils.getAddressFromLocation(lastLocation);
+                    location.setText(completeAddress.getLocality());
+                } else {
+                    Log.w(TAG, task.getException());
+                }
+            }
+        });
     }
 }

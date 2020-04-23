@@ -37,6 +37,10 @@ public class EventService {
 
     }
 
+    public ArrayList<Event> getEventsByTitle(String token) {
+        return eventDAO.getEventsByTitle(token);
+    }
+
     public void updateEvent(Event event) {
         eventDAO.update(event);
     }
