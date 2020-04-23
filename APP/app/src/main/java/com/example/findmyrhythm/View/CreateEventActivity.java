@@ -111,7 +111,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onClick(View view) {
                 try {
-                    startActivityForResult(new Intent(getApplicationContext(), SearchOrganizerLocation.class).putExtra("lastLocation", organizerLocation), 2);
+                    startActivityForResult(new Intent(getApplicationContext(), SelectAddressOnMapActivity.class), 2);
                 } catch (Exception e) {
                     Log.w(TAG, e.toString());
                 }
@@ -353,9 +353,9 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         if (requestCode == 2) {
             if (resultCode == RESULT_OK) {
                 userDefaultLocation = false;
-                Location newLocation = data.getParcelableExtra("pickedLocation");
-                geoUtils = new GeoUtils(this, Locale.getDefault());
-                eventCompleteAddress = geoUtils.getAddressFromLocation(newLocation);
+                eventCompleteAddress = data.getParcelableExtra("pickedAddress");
+//                geoUtils = new GeoUtils(this, Locale.getDefault());
+//                eventCompleteAddress = geoUtils.getAddressFromLocation(newLocation);
                 address.setText(eventCompleteAddress.getLocality());
             }
         } else if (resultCode == RESULT_OK && data != null) {

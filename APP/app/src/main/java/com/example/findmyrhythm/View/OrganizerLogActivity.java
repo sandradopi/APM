@@ -104,7 +104,7 @@ public class OrganizerLogActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void onClick(View view) {
                 try {
-                    startActivityForResult(new Intent(getApplicationContext(), SearchOrganizerLocation.class).putExtra("lastLocation", lastLocation), 1);
+                    startActivityForResult(new Intent(getApplicationContext(), SelectAddressOnMapActivity.class), 1);
                 } catch (Exception e) {
                     Log.w(TAG, e.toString());
                 }
@@ -171,9 +171,9 @@ public class OrganizerLogActivity extends AppCompatActivity implements View.OnCl
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
                 useMyLocation = false;
-                Location newLocation = data.getParcelableExtra("pickedLocation");
-                geoUtils = new GeoUtils(this, Locale.getDefault());
-                completeAddress = geoUtils.getAddressFromLocation(newLocation);
+                Address completeAddress = data.getParcelableExtra("pickedAddress");
+//                geoUtils = new GeoUtils(this, Locale.getDefault());
+//                completeAddress = geoUtils.getAddressFromLocation(newLocation);
                 location.setText(completeAddress.getLocality());
             }
         }

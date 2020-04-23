@@ -37,22 +37,30 @@ public class PastEventsFragment extends Fragment {
         mListView = (ListView) view.findViewById(R.id.eventlist);
         PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
         final ArrayList<Event> pastEvents= persistentUserInfo.getEvents();
-        String[] events = new String[pastEvents.size()];
-        String[] dates = new String[pastEvents.size()];
-        String[] rates = new String[pastEvents.size()];
 
-        int i = 0;
+
+
+        int eventsize = 0;
         Date actualDate = new Date();
-        System.out.println("FECHA ACTUAL"+actualDate);
         for (Event event : pastEvents) {
-            //if(event.getEventDate().compareTo(actualDate) < 0  ){
+            if(event.getEventDate().compareTo(actualDate) < 0  ) {
+                eventsize++;
+            }
+            }
+
+        String[] events = new String[eventsize];
+        String[] dates = new String[eventsize];
+        String[] rates = new String[eventsize];
+        int i = 0;
+        for (Event event : pastEvents) {
+            if(event.getEventDate().compareTo(actualDate) < 0  ){
             events[i] = event.getName();
             date = event.getEventDate();
             DateFormat df = new SimpleDateFormat("dd/MM/yy", java.util.Locale.getDefault());
             dates[i] = df.format(date);
             rates[i] = "not_rated";
             i++;
-            //}
+            }
         }
 
         mListView.setAdapter(new ListAdapterPast(this.requireContext(), events, dates, rates));
