@@ -16,18 +16,24 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.findmyrhythm.Model.Event;
+import com.example.findmyrhythm.Model.Exceptions.InstanceNotFoundException;
 import com.example.findmyrhythm.Model.PersistentOrganizerInfo;
 import com.example.findmyrhythm.Model.PersistentUserInfo;
 import com.example.findmyrhythm.Model.Photo;
 import com.example.findmyrhythm.Model.PhotoService;
+import com.example.findmyrhythm.Model.Rating;
 import com.example.findmyrhythm.Model.RatingService;
+import com.example.findmyrhythm.Model.User;
+import com.example.findmyrhythm.Model.UserService;
 import com.example.findmyrhythm.R;
 import com.example.findmyrhythm.View.tabs.RatingsAdapter;
 import com.google.android.material.tabs.TabLayout;
@@ -36,7 +42,10 @@ import com.google.gson.Gson;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 public class FinishedEventInfoActivity extends AppCompatActivity implements ScoreEventDialog.ScoreEventListener {
     private static final String TAG = "Score Event";
@@ -44,6 +53,9 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
     Photo photoEvent;
     PhotoService photoService= new PhotoService();
     Event eventSelect;
+    ArrayList<Rating> ratings = new ArrayList<>();
+    ArrayList<String> comments = new ArrayList<>();
+    ArrayList<String> names = new ArrayList<>();
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -79,12 +91,15 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
         //View
         setContentView(R.layout.activity_finished_event_info);
 
-        RatingsAdapter ratingsAdapter = new RatingsAdapter(this, getSupportFragmentManager());
+        /*RatingsAdapter ratingsAdapter = new RatingsAdapter(this, getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.eventPager);
         viewPager.setAdapter(ratingsAdapter);
         TabLayout tabs = findViewById(R.id.eventTabs);
 
-        tabs.setupWithViewPager(viewPager);
+        tabs.setupWithViewPager(viewPager);*/
+        new getComments().execute();
+        new getUsers().execute();
+
 
         name = findViewById(R.id.eventName);
         date =  findViewById(R.id.eventDate);
@@ -129,6 +144,8 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
     public void onDialogPositiveClick() {
         // User touched the dialog's positive button
         new getRatingsMedia().execute();
+        new getComments().execute();
+        new getUsers().execute();
     }
 
     private class getPhoto extends AsyncTask<Void, Void, Void> {
@@ -193,11 +210,72 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
         }
     }
 
+    private class getComments extends AsyncTask<Void, Void, Void> {
+
+        RatingService ratingService = new RatingService();
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            ratings.clear();
+            ratings = ratingService.getComments(eventSelect.getId());
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            comments.clear();
+            for (Rating r : ratings) {
+                if (! r.getComment().isEmpty())
+                    comments.add(r.getComment());
+            }
+
+        }
+    }
+
+    private class getUsers extends AsyncTask<Void, Void, Void> {
+
+        UserService userService = new UserService();
+        ArrayList<User> users = new ArrayList<>();
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            for (Rating r : ratings) {
+                try {
+                    users.add(userService.getUser(r.getUserId()));
+                } catch (InstanceNotFoundException e) {
+                    Log.e(TAG, "tried to insert an existing id");
+                    return null;
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            ArrayList<String> names = new ArrayList<String>();
+            for (User u: users) {
+                names.add(u.getName());
+            }
+            final ListView listview = (ListView) findViewById(R.id.ratingList);
+            RatingsAdapter adapter = new RatingsAdapter(getApplicationContext(), comments, names);
+            listview.setAdapter(adapter);
+        }
+    }
+
     @Override
     public boolean onSupportNavigateUp() {
         finish();
         return true;
     }
-
 
 }

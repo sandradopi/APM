@@ -6,6 +6,7 @@ import com.example.findmyrhythm.Model.Exceptions.DuplicatedInstanceException;
 import com.example.findmyrhythm.Model.Exceptions.InstanceNotFoundException;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RatingService {
 
@@ -22,6 +23,10 @@ public class RatingService {
             Log.e(TAG, "getRating: Rating not found");
             return null;
         }
+    }
+
+    public ArrayList<Rating> getComments(String eventId) {
+        return ratingDAO.findCommentsByEventId(eventId);
     }
 
     public Float getMedia (String eventId) {
