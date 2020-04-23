@@ -142,4 +142,14 @@ public class EventDAO extends GenericDAO<Event> {
         }
         return eventsCreated;
     }
+
+    public void addChildEventListener (ValueEventListener listener) {
+        DatabaseReference table = getTable();
+        table.addValueEventListener(listener);
+    }
+
+    public void removeChildEventListener (ValueEventListener listener) {
+        DatabaseReference table = getTable();
+        table.removeEventListener(listener);
+    }
 }

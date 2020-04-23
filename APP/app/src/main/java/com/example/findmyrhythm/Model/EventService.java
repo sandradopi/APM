@@ -1,5 +1,6 @@
 package com.example.findmyrhythm.Model;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.example.findmyrhythm.Model.Exceptions.DuplicatedInstanceException;
@@ -50,6 +51,20 @@ public class EventService {
 
     public ArrayList<Event> findEventByOrganicer(String idOrganicer) {
         return eventDAO.findEventByOrganicer(idOrganicer);
+    }
+
+    public void subscribeEventNotificationListener(Context context, String userId) {
+        EventNotificationListener listener = EventNotificationListener.getInstance();
+        listener.setContext(context);
+        listener.setUser(userId);
+        eventDAO.addChildEventListener(listener);
+        Log.i(TAG, "NotifListener added");
+    }
+
+    public void unSubscribeEventNotificationListener() {
+        EventNotificationListener listener = EventNotificationListener.getInstance();
+        eventDAO.removeChildEventListener(listener);
+        Log.i(TAG, "NotifListener removed");
     }
 
 }
