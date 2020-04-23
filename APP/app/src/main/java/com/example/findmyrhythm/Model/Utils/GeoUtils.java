@@ -52,7 +52,7 @@ public class GeoUtils {
         String postalCode = fullAddress.getPostalCode();
         String street = fullAddress.getThoroughfare();
         String streetNumber = fullAddress.getSubThoroughfare();
-        return street + ", " + streetNumber + ", " + postalCode + ", " + city + ", " + country;
+        return fullAddress.getAddressLine(0); // street + ", " + streetNumber + ", " + postalCode + ", " + city + ", " + country;
     }
 
 }

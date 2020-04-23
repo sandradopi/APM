@@ -2,22 +2,32 @@ package com.example.findmyrhythm.View;
 
 import androidx.fragment.app.FragmentActivity;
 
+import android.content.Intent;
+import android.location.Address;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Telephony;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.findmyrhythm.Model.Utils.GeoUtils;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.findmyrhythm.R;
 import com.google.android.libraries.places.api.Places;
@@ -30,8 +40,12 @@ import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRe
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
+import android.location.Geocoder;
 
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 
 
 public class SearchEventsActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -40,6 +54,8 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
     private StringBuilder mResult;
     private EditText searchText;
     private ListView mSearchResult;
+    Geocoder geocoder;
+    Marker marker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,59 +79,41 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
 
         searchText = findViewById(R.id.input_search);
 
-        searchText.addTextChangedListener(new TextWatcher() {
+        // Create a Uri from an intent string. Use the result to create an Intent.
+        Uri gmmIntentUri = Uri.parse("google.streetview:cbll=46.414382,10.013988");
 
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+        Locale spanish = new Locale("es", "ES");
+        geocoder = new Geocoder(this, spanish);
 
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-//                // Toast.makeText(SearchEventsActivity.this, searchText.getText().toString(), Toast.LENGTH_SHORT).show();
-//                // Create a new token for the autocomplete session. Pass this to FindAutocompletePredictionsRequest,
-//                // and once again when the user makes a selection (for example when calling fetchPlace()).
-//                AutocompleteSessionToken token = AutocompleteSessionToken.newInstance();
-//                // Create a RectangularBounds object.
-//                RectangularBounds bounds = RectangularBounds.newInstance(
-//                        new LatLng(24.253831, -27.396693), //dummy lat/lng
-//                        new LatLng(43.633574, 6.265417));
-//                // Use the builder to create a FindAutocompletePredictionsRequest.
-//                FindAutocompletePredictionsRequest request = FindAutocompletePredictionsRequest.builder()
-//                        // Call either setLocationBias() OR setLocationRestriction().
-//                        //.setLocationBias(bounds)
-//                        //.setLocationRestriction(bounds)
-//                        .setCountry("es")//Nigeria
-//                        //.setTypeFilter(TypeFilter.ADDRESS)
-//                        .setSessionToken(token)
-//                        .setQuery(searchText.getText().toString())
-//                        .build();
-//
-//
-//                placesClient.findAutocompletePredictions(request).addOnSuccessListener(response -> {
-//                    mResult = new StringBuilder();
-//                    for (AutocompletePrediction prediction : response.getAutocompletePredictions()) {
-//                        mResult.append(" ").append(prediction.getFullText(null) + "\n");
-//                        Log.i(TAG, prediction.getPlaceId());
-//                        Log.i(TAG, prediction.getPrimaryText(null).toString());
-//                        // Toast.makeText(SearchEventsActivity.this, prediction.getPrimaryText(null) + "-" + prediction.getSecondaryText(null), Toast.LENGTH_SHORT).show();
-//                    }
-//                    mSearchResult.setText(String.valueOf(mResult));
-//                }).addOnFailureListener((exception) -> {
-//                    if (exception instanceof ApiException) {
-//                        ApiException apiException = (ApiException) exception;
-//                        Log.e(TAG, "Place not found: " + apiException.getStatusCode());
-//                    }
-//                });
-            }
-
+        searchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public void afterTextChanged(Editable editable) {
-
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH && mMap != null) {
+                    try {
+                        List<Address> addresses = geocoder.getFromLocationName(searchText.getText().toString(), 5);
+                        for (Address address : addresses) {
+                            Log.e(TAG, GeoUtils.getAddressString(address));
+                            LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+                            marker.remove();
+                            marker = mMap.addMarker(new MarkerOptions().position(latLng).title(GeoUtils.getAddressString(address)));
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+                            break;
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    return true;
+                }
+                return false;
             }
         });
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-//        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-//                .findFragmentById(R.id.map);
-//        mapFragment.getMapAsync(this);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+
     }
 
 
@@ -132,9 +130,32 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        marker = mMap.addMarker(new MarkerOptions().position(new LatLng(0,0)).visible(false));
+
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+//        LatLng sydney = new LatLng(-34, 151);
+//        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+
+                try {
+                    List<Address> addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+                    for (Address address : addresses) {
+                        marker.remove();
+                        marker = mMap.addMarker(new MarkerOptions().position(latLng).title(GeoUtils.getAddressString(address)));
+                        // mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                        mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+                        marker.showInfoWindow();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+            }
+        });
     }
+
 }
