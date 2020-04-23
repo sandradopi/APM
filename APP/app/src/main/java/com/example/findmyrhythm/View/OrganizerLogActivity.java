@@ -122,7 +122,8 @@ public class OrganizerLogActivity extends AppCompatActivity implements View.OnCl
         if (!checkPermissions()) {
             requestPermissions();
         } else if (useMyLocation) {
-            new GetLastLocationTask().execute();
+            createLocationRequest();
+            getLastLocation();
         }
     }
 
@@ -160,7 +161,8 @@ public class OrganizerLogActivity extends AppCompatActivity implements View.OnCl
                 }
                 geoUtils = new GeoUtils(this, Locale.getDefault());
                 // Calls to Google API must be asynchronous: we cannot block UI mainloop
-                new GetLastLocationTask().execute();
+                createLocationRequest();
+                getLastLocation();
             }
         }
     }
