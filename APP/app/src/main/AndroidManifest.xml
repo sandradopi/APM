@@ -37,6 +37,9 @@
         <activity
             android:name=".View.SearchEventsActivity"
             android:label="@string/title_activity_search_events"></activity>
+        <activity
+            android:name=".View.SelectAddressOnMapActivity"
+            android:label="@string/title_activity_search_events"></activity>
         <activity android:name=".View.LocationsSettingsActivity" />
         <activity android:name=".View.GenresSettingsActivity" />
         <activity
