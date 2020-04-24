@@ -147,6 +147,7 @@ public class OrganizerLogActivity extends AppCompatActivity implements View.OnCl
         }
     }
 
+    // TODO: el geoUtils hay que escribirlo también en otro lado, porque si ya se tienen los permisos peta
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
@@ -176,7 +177,7 @@ public class OrganizerLogActivity extends AppCompatActivity implements View.OnCl
                 Address completeAddress = data.getParcelableExtra("pickedAddress");
 //                geoUtils = new GeoUtils(this, Locale.getDefault());
 //                completeAddress = geoUtils.getAddressFromLocation(newLocation);
-                location.setText(completeAddress.getLocality());
+                location.setText(completeAddress.getSubAdminArea());
             }
         }
     }

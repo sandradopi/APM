@@ -356,7 +356,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
                 eventCompleteAddress = data.getParcelableExtra("pickedAddress");
 //                geoUtils = new GeoUtils(this, Locale.getDefault());
 //                eventCompleteAddress = geoUtils.getAddressFromLocation(newLocation);
-                address.setText(eventCompleteAddress.getLocality());
+                address.setText(eventCompleteAddress.getSubAdminArea());
             }
         } else if (resultCode == RESULT_OK && data != null) {
                 imageUri = data.getData();
