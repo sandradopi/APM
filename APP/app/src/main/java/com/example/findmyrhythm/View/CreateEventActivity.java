@@ -177,17 +177,13 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             selectedGenre = eventSelect.getGenre();
             address.setText(eventSelect.getLocation());
             photo = photoService.getPhoto(eventSelect.getEventImage());
-
             //TODO Revisar esta cutrez
             int i=0;
             while(!genres.getSelectedItem().toString().equals(selectedGenre)){
                 genres.setSelection(i);
                 i++;
             }
-
         }
-
-
     }
 
     @Override
@@ -228,7 +224,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         else if (v == saveButton && modify==0) {
             Calendar currentCalendar = Calendar.getInstance();
             // TODO: CHECK IF DESCRIPTION AND IMAGE EXISTS.
-            if (isEmpty(name) || isEmpty(date) || isEmpty(hour) || isEmpty(maxAttendees) || isEmpty(price) || isEmpty(description) || address.getText().toString().isEmpty() || photo==null || selectedGenre.equals("") || calendar.getTime().compareTo(currentCalendar.getTime()) < 0) {
+            if (isEmpty(name) || isEmpty(date) || isEmpty(hour) || isEmpty(maxAttendees) || isEmpty(price) || isEmpty(description) || address.getText().toString().isEmpty() || selectedGenre.equals("") || calendar.getTime().compareTo(currentCalendar.getTime()) < 0) {
                 Toast.makeText(this, "Please cover every field shown in the screen", Toast.LENGTH_LONG).show();
                 return;
             }
@@ -238,7 +234,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         else if (v == saveButton && modify==1) {
             Calendar currentCalendar = Calendar.getInstance();
 
-            if (isEmpty(name) || isEmpty(date) || isEmpty(hour) || isEmpty(maxAttendees) || isEmpty(price) || isEmpty(description) || address.getText().toString().isEmpty() || photo==null ||  selectedGenre.equals("") || calendar.getTime().compareTo(currentCalendar.getTime()) < 0) {
+            if (isEmpty(name) || isEmpty(date) || isEmpty(hour) || isEmpty(maxAttendees) || isEmpty(price) || isEmpty(description) || address.getText().toString().isEmpty() ||  selectedGenre.equals("") || calendar.getTime().compareTo(currentCalendar.getTime()) < 0) {
                 Toast.makeText(this, "Please cover every field shown in the screen", Toast.LENGTH_LONG).show();
                 return;
             }
@@ -410,19 +406,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
                     int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
                     returnCursor.moveToFirst();
                     buttonPhoto.setText(returnCursor.getString(nameIndex));
-                    if (imageBitmap != null) {
 
-                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-
-                        imageBitmap.compress(Bitmap.CompressFormat.PNG, 10, stream);
-
-                        byteArray = stream.toByteArray();
-                        bitmapEncoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                        imageBitmap.recycle();
-                        photo = new Photo(bitmapEncoded);
-                        String photoId = photoService.createPhoto(photo);
-                    } else
-                        bitmapEncoded = NO_IMAGE;
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -465,6 +449,24 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             final String organizerId = preferences.getString("fb_id", null);
 
             eventDate = calendar.getTime();
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            if (imageBitmap != null) {
+
+                imageBitmap.compress(Bitmap.CompressFormat.PNG, 10, stream);
+                byteArray = stream.toByteArray();
+                bitmapEncoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                imageBitmap.recycle();
+                photo = new Photo(bitmapEncoded);
+                photoId = photoService.createPhoto(photo);
+            } else {
+                Bitmap icon = BitmapFactory.decodeResource(getResources(),R.drawable.logo_white);
+                icon.compress(Bitmap.CompressFormat.PNG, 10, stream);
+                byteArray = stream.toByteArray();
+                bitmapEncoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                icon.recycle();
+                photo = new Photo(bitmapEncoded);
+                photoId = photoService.createPhoto(photo);
+            }
 
 
             //bitmapEncoded = NO_IMAGE;
@@ -523,23 +525,35 @@ private class ModifyEventTask extends AsyncTask<Void, Void, Event> {
 
         //bitmapEncoded = NO_IMAGE;
         //String path= imageUri.getEncodedPath();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        if (imageBitmap != null) {
 
-
+            imageBitmap.compress(Bitmap.CompressFormat.PNG, 10, stream);
+            byteArray = stream.toByteArray();
+            bitmapEncoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+            imageBitmap.recycle();
+            photo = new Photo(bitmapEncoded);
+            photoId = photoService.createPhoto(photo);
+        } else {
+            Bitmap icon = BitmapFactory.decodeResource(getResources(),R.drawable.logo_white);
+            icon.compress(Bitmap.CompressFormat.PNG, 10, stream);
+            byteArray = stream.toByteArray();
+            bitmapEncoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+            icon.recycle();
+            photo = new Photo(bitmapEncoded);
+            photoId = photoService.createPhoto(photo);
+        }
         // creating a My HashTable Dictionary
         HashMap<String, String> addressDict = new HashMap<>();
-
         // Using a few dictionary Class methods
         // using put method
         addressDict.put("province", eventCompleteAddress.getSubAdminArea());
         addressDict.put("full_address", GeoUtils.getAddressString(eventCompleteAddress)); // Double
         addressDict.put("latitude", String.valueOf(eventCompleteAddress.getLatitude()));
         addressDict.put("longitude", String.valueOf(eventCompleteAddress.getLongitude()));
-
         final Event event = new Event(name.getText().toString(), eventDate, address.getText().toString(),
                 selectedGenre, organizerId, maxAttendees.getText().toString(), price.getText().toString(),
                 description.getText().toString(), photoId, addressDict);
- //       eventService.createEvent(event);
-        //event.setEventImage(path);
         final PersistentOrganizerInfo persistentOrganizerInfo = PersistentOrganizerInfo.getPersistentOrganizerInfo(getApplicationContext());
 
         persistentOrganizerInfo.modifyEvent(getApplicationContext(),eventSelect,event);
