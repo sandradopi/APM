@@ -81,6 +81,13 @@ public class UserProfileActivity extends UserMenuDrawerActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        SharedPreferences sharedpreferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString("account_type", "user");
+        editor.commit(); // or apply
+
+
         setMenuItemChecked(R.id.nav_profile);
         ViewPager viewPager = findViewById(R.id.view_pager);
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
