@@ -1,43 +1,40 @@
 package com.example.findmyrhythm.View.tabs;
 
 import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
+import com.example.findmyrhythm.R;
 
-/**
- * A [FragmentPagerAdapter] that returns a fragment corresponding to
- * one of the sections/tabs/pages.
- */
-public class RatingsAdapter extends FragmentPagerAdapter {
+import java.util.ArrayList;
 
-    //@StringRes
-    //private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2};
-    private final Context mContext;
+public class RatingsAdapter extends ArrayAdapter<String> {
 
-    public RatingsAdapter(Context context, FragmentManager fm) {
-        super(fm);
-        mContext = context;
+    private final Context context;
+    private ArrayList<String> comments = new ArrayList<String>();
+    private ArrayList<String> names = new ArrayList<String>();
+
+    public RatingsAdapter(Context context, ArrayList<String> comments, ArrayList<String> names) {
+        super(context, R.layout.list_row_ratings, comments);
+        this.context = context;
+        this.comments = comments;
+        this.names = names;
     }
 
     @Override
-    public Fragment getItem(int position) {
-        // getItem is called to instantiate the fragment for the given page.
-        // Return a PlaceholderFragment (defined as a static inner class below).
-        return new EventsRatingsFragment();
+    public View getView(int position, View convertView, ViewGroup parent) {
+        LayoutInflater inflater = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View rowView = inflater.inflate(R.layout.list_row_ratings, parent, false);
+        TextView commentView = (TextView) rowView.findViewById(R.id.comment);
+        TextView userView = (TextView) rowView.findViewById(R.id.user);
+        commentView.setText(comments.get(position));
+        userView.setText(names.get(position));
 
-    }
-
-    @Nullable
-    @Override
-    public CharSequence getPageTitle(int position) {
-        return "VALORACIONES";
-    }
-
-    @Override
-    public int getCount() {
-        return 1;
+        return rowView;
     }
 }
