@@ -17,6 +17,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.findmyrhythm.Model.AttendeeService;
 import com.example.findmyrhythm.Model.Event;
+import com.example.findmyrhythm.Model.EventService;
 import com.example.findmyrhythm.Model.Exceptions.InstanceNotFoundException;
 import com.example.findmyrhythm.Model.IOFiles;
 import com.example.findmyrhythm.Model.Organizer;
@@ -349,8 +350,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         @Override
         protected Void doInBackground(Organizer... organizer) {
 
-            OrganizerService organizerService = new OrganizerService();
-            events = organizerService.getOrganizedEventsByOrganizer(organizer[0].getId());
+            EventService organizerService = new EventService();
+            events = organizerService.findEventByOrganicer(organizer[0].getId());
 
             PersistentOrganizerInfo persistentOrganizerInfo = new PersistentOrganizerInfo(organizer[0].getId(),
                     organizer[0].getName(), organizer[0].getUsername(), organizer[0].getEmail(),

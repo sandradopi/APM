@@ -171,7 +171,7 @@ public class EventDAO extends GenericDAO<Event> {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     Event event = child.getValue(Event.class);
                     // Event title contains title and event is not deleted
-                    if (event.getOrganizerId().contains(idOrganicer)) {
+                    if (event.getOrganizerId().equals(idOrganicer)) {
                         eventsCreated.add(event);
                     }
                 }
