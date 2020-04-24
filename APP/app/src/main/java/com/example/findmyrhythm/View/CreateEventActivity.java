@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Address;
@@ -15,6 +16,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.OpenableColumns;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -75,6 +77,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
     private Spinner genres;
     private Button saveButton;
     Uri imageUri;
+    String imageName;
     private static final int PICK_IMAGE = 100;
     public static final String NO_IMAGE = "no_image";
     String selectedGenre = "";
@@ -90,7 +93,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
     Bitmap imageBitmap = null;
     String bitmapEncoded = "";
     byte[] byteArray;
-
+    Button buttonPhoto;
     EventService eventService = new EventService();
     PhotoService photoService = new PhotoService();
     Event eventSelect;
@@ -137,7 +140,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         saveButton = findViewById(R.id.ok);
         saveButton.setOnClickListener(this);
         // Load picture button
-        Button buttonPhoto = findViewById(R.id.button_load_picture);
+        buttonPhoto = findViewById(R.id.button_load_picture);
 
         /*date.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -403,6 +406,10 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
 
                 try {
                     imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+                    Cursor returnCursor = getContentResolver().query(imageUri, null, null, null, null);
+                    int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+                    returnCursor.moveToFirst();
+                    buttonPhoto.setText(returnCursor.getString(nameIndex));
                     if (imageBitmap != null) {
 
                         ByteArrayOutputStream stream = new ByteArrayOutputStream();
