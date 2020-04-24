@@ -324,7 +324,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             editor.putString("name", persistentUserInfo.getName());
             editor.putString("email", persistentUserInfo.getEmail());
             editor.putString("nickname", persistentUserInfo.getUsername());
-            editor.putString("account_type", "organizer");
+            editor.putString("account_type", "user");
 
             editor.commit(); // or apply
 
