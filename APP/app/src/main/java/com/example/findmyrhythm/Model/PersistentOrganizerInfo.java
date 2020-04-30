@@ -37,9 +37,9 @@ public class PersistentOrganizerInfo extends Organizer {
     }
 
     public Event getEvent(String id){
-        System.out.println(id);
+        //System.out.println(id);
         for (Event event:events){
-            System.out.println(event.getId());
+            //System.out.println(event.getId());
 
             if(event.getId().equals(id)) return event;
         }
@@ -81,7 +81,21 @@ public class PersistentOrganizerInfo extends Organizer {
         persistentInfo.setEvents(events);
         setPersistentOrganizerInfo(context, persistentInfo);
     }
-
+    public Event modifyEvent(Context context,Event eventToModiy, Event eventModified) {
+        PersistentOrganizerInfo persistentInfo = getPersistentOrganizerInfo(context);
+        events = persistentInfo.getEvents();
+        Event tomodify;
+        if (events.contains(eventToModiy) && eventModified!=null){
+            int index= events.indexOf(eventToModiy);
+            tomodify = events.get(index);
+            tomodify.modify(eventModified);
+            persistentInfo.setEvents(events);
+            //System.out.println(events);
+            setPersistentOrganizerInfo(context, persistentInfo);
+            return tomodify;
+        }
+        return null;
+    }
     public void deleteEvent(Context context, Event event) {
         PersistentOrganizerInfo persistentInfo = getPersistentOrganizerInfo(context);
         events = persistentInfo.getEvents();

@@ -31,6 +31,20 @@ public class Event extends Entity{
 
     }
 
+    public void modify(Event event){
+        this.name = event.getName();
+        this.eventDate = event.getEventDate();
+        this.location = event.getLocation();
+        this.genre = event.getGenre();
+        this.organizerId = event.getOrganizerId();
+        this.maxAttendees = event.getMaxAttendees();
+        this.price = event.getPrice();
+        this.description = event.getDescription();
+        this.eventImage = event.getEventImage();
+        this.completeAddress = event.getCompleteAddress();
+
+    }
+
     public String getName() {
         return name;
     }

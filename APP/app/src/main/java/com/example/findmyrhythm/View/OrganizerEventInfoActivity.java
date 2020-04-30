@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,7 +50,7 @@ public class OrganizerEventInfoActivity extends AppCompatActivity implements OnM
 
     Photo photoEvent;
     PhotoService photoService= new PhotoService();
-
+    Event eventSelect;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +65,7 @@ public class OrganizerEventInfoActivity extends AppCompatActivity implements OnM
        // final Event eventSelect = gson.fromJson(getIntent().getStringExtra("EVENT"), Event.class);
         final String eventSelectId = getIntent().getStringExtra("EVENT");
         final PersistentOrganizerInfo persistentOrganizerInfo = PersistentOrganizerInfo.getPersistentOrganizerInfo(getApplicationContext());
-        Event eventSelect = persistentOrganizerInfo.getEvent(eventSelectId);
+        eventSelect = persistentOrganizerInfo.getEvent(eventSelectId);
         //View
         setContentView(R.layout.activity_organizer_event_info);
         showEventInfo(eventSelect);
@@ -89,24 +90,22 @@ public class OrganizerEventInfoActivity extends AppCompatActivity implements OnM
 
 
 
-        Button editButton = findViewById(R.id.editBtn);
+        final Button editButton = findViewById(R.id.editBtn);
         editButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                Context context = getApplicationContext();
-                CharSequence text = "Editar evento";
-                int duration = Toast.LENGTH_LONG;
-
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
+                Intent intent = new Intent(OrganizerEventInfoActivity.this, CreateEventActivity.class);
+                intent.putExtra("EVENT",  eventSelect.getId());
+                startActivity(intent);
             }
         });
     }
 
 
     private void showEventInfo(Event event) {
-        TextView eventName = findViewById(R.id.eventName);
+        EditText eventName = findViewById(R.id.eventName);
+        eventName.setEnabled(false);
         TextView eventMaxAttendees = findViewById(R.id.eventCapacity);
         TextView eventPrice = findViewById(R.id.eventCost);
         TextView eventDate = findViewById(R.id.eventDate);
