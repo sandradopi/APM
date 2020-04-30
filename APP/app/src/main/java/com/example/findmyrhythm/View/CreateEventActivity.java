@@ -38,7 +38,9 @@ import androidx.core.content.ContextCompat;
 import android.net.Uri;
 
 import com.example.findmyrhythm.Model.Event;
+import com.example.findmyrhythm.Model.EventDAO;
 import com.example.findmyrhythm.Model.EventService;
+import com.example.findmyrhythm.Model.PersistentUserInfo;
 import com.example.findmyrhythm.Model.Utils.GeoUtils;
 import com.example.findmyrhythm.Model.PersistentOrganizerInfo;
 import com.example.findmyrhythm.Model.Photo;
@@ -50,9 +52,11 @@ import com.google.gson.Gson;
 
 import android.widget.ImageView;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -98,6 +102,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
     PhotoService photoService = new PhotoService();
     Event eventSelect;
     private int modify=0;
+    PersistentOrganizerInfo persistentOrganizerInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,19 +147,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         // Load picture button
         buttonPhoto = findViewById(R.id.button_load_picture);
 
-        /*date.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view){
-                openDialogDate();
-                openDialogTime();
-            }
-        });
 
-        hour.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view){
-            }
-        });*/
         buttonPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -166,23 +159,28 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         final String eventSelectId = getIntent().getStringExtra("EVENT");
         if(eventSelectId!=null && !eventSelectId.isEmpty()) {
             modify=1;
-            final PersistentOrganizerInfo persistentOrganizerInfo = PersistentOrganizerInfo.getPersistentOrganizerInfo(getApplicationContext());
+            persistentOrganizerInfo = PersistentOrganizerInfo.getPersistentOrganizerInfo(getApplicationContext());
             eventSelect = persistentOrganizerInfo.getEvent(eventSelectId);
             price.setText(eventSelect.getPrice());
             name.setText(eventSelect.getName());
             date.setText(eventSelect.getEventDate().toString());
+            eventDate= eventSelect.getEventDate();
             hour.setText(eventSelect.getEventDate().toString());
             maxAttendees.setText(eventSelect.getMaxAttendees());
             description.setText(eventSelect.getDescription());
             selectedGenre = eventSelect.getGenre();
             address.setText(eventSelect.getLocation());
-            photo = photoService.getPhoto(eventSelect.getEventImage());
+            saveButton.setText("MODIFICAR");
+            buttonPhoto.setText("Cambiar cartel");
+            new getPhoto().execute();
             //TODO Revisar esta cutrez
             int i=0;
             while(!genres.getSelectedItem().toString().equals(selectedGenre)){
                 genres.setSelection(i);
                 i++;
             }
+
+
         }
     }
 
@@ -234,7 +232,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         else if (v == saveButton && modify==1) {
             Calendar currentCalendar = Calendar.getInstance();
 
-            if (isEmpty(name) || isEmpty(date) || isEmpty(hour) || isEmpty(maxAttendees) || isEmpty(price) || isEmpty(description) || address.getText().toString().isEmpty() ||  selectedGenre.equals("") || calendar.getTime().compareTo(currentCalendar.getTime()) < 0) {
+            if (isEmpty(name) || isEmpty(date) || isEmpty(hour) || isEmpty(maxAttendees) || isEmpty(price) || isEmpty(description) || address.getText().toString().isEmpty() ||  selectedGenre.equals("") || eventSelect.getEventDate().compareTo(currentCalendar.getTime()) <0 ) {
                 Toast.makeText(this, "Please cover every field shown in the screen", Toast.LENGTH_LONG).show();
                 return;
             }
@@ -243,38 +241,21 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
 
         }
 
-    /**
-     * Gets the data of the event and calls to EventService to add the event to the database.
-     * Then, changes the activity to the one used to show the event info.
-     */
-    // ESTA LLAMADA A LA BASE DE DATOS DEBERÍA DE SER ASÍNCRONA.
-    /*private void createEvent() {
-        // Get the id of the organizer
-        SharedPreferences preferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
-        String organizerId = preferences.getString("fb_id", null);
 
-        // Create the event
-        Event event = new Event();
-        event.setName(name.getText().toString());
-        String dateStr =  date.getText().toString();
+    private class getPhoto extends AsyncTask<Void, Void, Void> {
 
-        event.setPrice(Integer.parseInt(price.getText().toString()));
-        event.setMaxAttendees(Integer.parseInt(maxAttendees.getText().toString()));
-        event.setOrganizerId(organizerId);
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
 
-        // Call to EventService to add the event to the database
-        EventService eventService = new EventService();
-        eventService.createEvent(event);
-
-        Log.w(TAG, "Se ha creado el evento con éxito");
-        Toast.makeText(CreateEventActivity.this, getString(R.string.notiCreationEve),  Toast.LENGTH_SHORT).show();
-
-        String eventJson = (new Gson()).toJson(event);
-        // Start the activity to show the event info
-        Intent intent = new Intent(CreateEventActivity.this, OrganizerEventInfoActivity.class);
-        intent.putExtra("EVENT", eventJson);
-        startActivity(intent);
-    }*/
+        @Override
+        protected Void doInBackground(Void... voids) {
+            photo = photoService.getPhoto(eventSelect.getEventImage());
+            photoId = photo.getId();
+            return null;
+        }
+    }
     public void openDialogDate() {
 
         // Get Current Date
@@ -520,26 +501,15 @@ private class ModifyEventTask extends AsyncTask<Void, Void, Event> {
         SharedPreferences preferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
         final String organizerId = preferences.getString("fb_id", null);
 
-        eventDate = calendar.getTime();
-
-
         //bitmapEncoded = NO_IMAGE;
         //String path= imageUri.getEncodedPath();
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        if (imageBitmap != null) {
+        if (imageBitmap != null && photo == null) {
 
             imageBitmap.compress(Bitmap.CompressFormat.PNG, 10, stream);
             byteArray = stream.toByteArray();
             bitmapEncoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
             imageBitmap.recycle();
-            photo = new Photo(bitmapEncoded);
-            photoId = photoService.createPhoto(photo);
-        } else {
-            Bitmap icon = BitmapFactory.decodeResource(getResources(),R.drawable.logo_white);
-            icon.compress(Bitmap.CompressFormat.PNG, 10, stream);
-            byteArray = stream.toByteArray();
-            bitmapEncoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
-            icon.recycle();
             photo = new Photo(bitmapEncoded);
             photoId = photoService.createPhoto(photo);
         }
@@ -554,16 +524,17 @@ private class ModifyEventTask extends AsyncTask<Void, Void, Event> {
         final Event event = new Event(name.getText().toString(), eventDate, address.getText().toString(),
                 selectedGenre, organizerId, maxAttendees.getText().toString(), price.getText().toString(),
                 description.getText().toString(), photoId, addressDict);
-        final PersistentOrganizerInfo persistentOrganizerInfo = PersistentOrganizerInfo.getPersistentOrganizerInfo(getApplicationContext());
+        Event e = persistentOrganizerInfo.modifyEvent(getApplicationContext(),eventSelect,event);
+        eventService.modifyEvent(e);
 
-        persistentOrganizerInfo.modifyEvent(getApplicationContext(),eventSelect,event);
-        return event;
+        return e;
+
     }
 
     @Override
     protected void onPostExecute(Event event) {
         super.onPostExecute(event);
-        Toast.makeText(getApplicationContext(), "Concierto creado con éxito!", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Concierto modificado con éxito!", Toast.LENGTH_LONG).show();
         String eventJson = (new Gson()).toJson(event);
         // Start the activity to show the event info
         Intent intent = new Intent(CreateEventActivity.this, OrganizerEventInfoActivity.class);
