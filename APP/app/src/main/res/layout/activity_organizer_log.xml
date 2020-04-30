@@ -96,12 +96,15 @@
                 android:textStyle="bold">
             </TextView>
 
-            <Button
-                android:id="@+id/currentLocation"
+            <TextView
+                android:id="@+id/selected_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:clickable="false"/>
+                android:layout_margin="20dp"
+                android:textSize="16sp"
+                android:text="Localización de la organización">
+            </TextView>
+
 
             <Button
                 android:id="@+id/exploreMap"
