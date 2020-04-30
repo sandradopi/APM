@@ -3,6 +3,7 @@ package com.example.findmyrhythm.View;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -51,6 +52,7 @@ public class OrganizerEventInfoActivity extends AppCompatActivity implements OnM
     Photo photoEvent;
     PhotoService photoService= new PhotoService();
     Event eventSelect;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,25 +72,6 @@ public class OrganizerEventInfoActivity extends AppCompatActivity implements OnM
         setContentView(R.layout.activity_organizer_event_info);
         showEventInfo(eventSelect);
         new getPhoto().execute();
-
-        /*Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            if (extras.containsKey("EVENT")) {
-                String eventJson = extras.getString("EVENT");
-                Log.e("DEBUG", eventJson);
-                Gson gson = new Gson();
-                Event event = gson.fromJson(eventJson, Event.class);
-                showEventInfo(event);
-
-            } else if (extras.containsKey("ID")) {
-                String eventId = extras.getString("ID");
-                new OrganizerEventInfoActivity.getEvent().execute(eventId);
-            }
-
-        }*/
-
-
-
 
         final Button editButton = findViewById(R.id.editBtn);
         editButton.setOnClickListener(new View.OnClickListener() {
@@ -153,6 +136,7 @@ public class OrganizerEventInfoActivity extends AppCompatActivity implements OnM
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+
         }
 
         @Override

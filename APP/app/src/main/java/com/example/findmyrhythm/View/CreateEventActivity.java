@@ -2,6 +2,7 @@ package com.example.findmyrhythm.View;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -247,6 +248,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+
         }
 
         @Override
