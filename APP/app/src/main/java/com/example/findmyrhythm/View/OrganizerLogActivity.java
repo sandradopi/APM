@@ -64,6 +64,8 @@ public class OrganizerLogActivity extends AppCompatActivity {
         getSupportActionBar().setCustomView(R.layout.layout_actionbar_empty);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
         name = findViewById(R.id.orgName);
         nickname = findViewById(R.id.orgNickName);
         email = findViewById(R.id.orgEmail);
@@ -154,7 +156,6 @@ public class OrganizerLogActivity extends AppCompatActivity {
 
 
     private void getMyLastLocation() {
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         mFusedLocationClient.getLastLocation()
                 .addOnSuccessListener(this, new OnSuccessListener<Location>() {

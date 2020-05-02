@@ -2,9 +2,7 @@ package com.example.findmyrhythm.View;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
-import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -12,14 +10,9 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Address;
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.OpenableColumns;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -39,72 +32,74 @@ import androidx.core.content.ContextCompat;
 import android.net.Uri;
 
 import com.example.findmyrhythm.Model.Event;
-import com.example.findmyrhythm.Model.EventDAO;
 import com.example.findmyrhythm.Model.EventService;
-import com.example.findmyrhythm.Model.PersistentUserInfo;
 import com.example.findmyrhythm.Model.Utils.GeoUtils;
 import com.example.findmyrhythm.Model.PersistentOrganizerInfo;
 import com.example.findmyrhythm.Model.Photo;
 import com.example.findmyrhythm.Model.PhotoService;
 import com.example.findmyrhythm.R;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 
-import android.widget.ImageView;
-
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Locale;
 
 
 public class CreateEventActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
-
-    private int NUM_GENRES = 9;
     private static final String TAG = "Crear Evento";
-    private int mYear, mMonth, mDay, mHour, mMinute;
-    private EditText date, hour, maxAttendees, name, price, description;
-    private Button address, exploreMapButton;
-    private Address eventCompleteAddress;
-    private Location organizerLocation;
-    private GeoUtils geoUtils;
-    private Boolean userDefaultLocation;
-    private Spinner genres;
-    private Button saveButton;
-    Uri imageUri;
-    String imageName;
+
+    // Request codes for activities started with startActivityForResult
+    private static final int GET_IMG_FROM_GALLERY = 3;
+    private static final int SET_LOCATION = 2;
     private static final int PICK_IMAGE = 100;
-    public static final String NO_IMAGE = "no_image";
-    String selectedGenre = "";
-    Photo photo;
-    String photoId="";
-    Date eventDate;
-    Calendar calendar;
+    private static final String NO_IMAGE = "no_image";
+
     private static final String READ_EXTERNAL_STORAGE = Manifest.permission.READ_EXTERNAL_STORAGE;
     private static final String WRITE_EXTERNAL_STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE;
     private static final int STORAGE_PERMISSION_CODE = 1896;
-    Boolean mStoragePermissionGranted = false;
-    public static final int GET_FROM_GALLERY = 3;
-    Bitmap imageBitmap = null;
-    String bitmapEncoded = "";
-    byte[] byteArray;
-    Button buttonPhoto;
-    EventService eventService = new EventService();
-    PhotoService photoService = new PhotoService();
-    Event eventSelect;
-    private int modify=0;
-    PersistentOrganizerInfo persistentOrganizerInfo;
+//    private static final int LOCATION_PERMISSION_CODE = 7346;
+
+//    private boolean useUserDefaultLocation;
+    private boolean modifyEvent = false;
+
+//    private int NUM_GENRES = 9;
+    private EditText date, hour, maxAttendees, name, price, description;
+    private Button addressButton, exploreMapButton;
+    private Button saveButton;
+    private Button uploadPhotoButton;
+    private Spinner genresSpinner;
+
+    private Address eventCompleteAddress;
+//    private Location organizerLocation;
+    private GeoUtils geoUtils;
+
+    private int mYear, mMonth, mDay, mHour, mMinute;
+    private Uri imageUri;
+    private String imageName;
+    private String selectedGenre = "";
+    private Photo photo;
+    private String photoId="";
+    private Bitmap imageBitmap = null;
+    private String bitmapEncoded = "";
+    private byte[] byteArray;
+
+    private Date eventDate;
+    private Calendar calendar;
+
+    private EventService eventService = new EventService();
+    private PhotoService photoService = new PhotoService();
+
+    private Event eventSelect;
+    private PersistentOrganizerInfo persistentOrganizerInfo;
+//    private FusedLocationProviderClient mFusedLocationClient;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,19 +112,17 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
 
         setContentView(R.layout.activity_create_event);
 
-        userDefaultLocation = true;
+//        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+//        useUserDefaultLocation = true;
         calendar = Calendar.getInstance();
-        address = (Button) findViewById(R.id.address);
-        exploreMapButton = (Button) findViewById(R.id.exploreMap);
+        addressButton = findViewById(R.id.address);
+        exploreMapButton = findViewById(R.id.exploreMap);
         exploreMapButton.setText("Explorar en el mapa");
         exploreMapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    startActivityForResult(new Intent(getApplicationContext(), SelectAddressOnMapActivity.class), 2);
-                } catch (Exception e) {
-                    Log.w(TAG, e.toString());
-                }
+            startActivityForResult(new Intent(getApplicationContext(), SelectAddressOnMapActivity.class), SET_LOCATION);
             }
         });
         // Reference to the different EditText containing the event info
@@ -141,16 +134,16 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         hour = findViewById(R.id.hour);
         description = findViewById(R.id.description);
         hour.setOnClickListener(this);
-        genres = (Spinner) findViewById(R.id.genre_selection);
-        genres.setOnItemSelectedListener(this);
+        genresSpinner = findViewById(R.id.genre_selection);
+        genresSpinner.setOnItemSelectedListener(this);
         // Button to confirm the event creation
         saveButton = findViewById(R.id.ok);
         saveButton.setOnClickListener(this);
         // Load picture button
-        buttonPhoto = findViewById(R.id.button_load_picture);
+        uploadPhotoButton = findViewById(R.id.button_load_picture);
 
 
-        buttonPhoto.setOnClickListener(new View.OnClickListener() {
+        uploadPhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getStoragePermission();
@@ -159,8 +152,8 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
 
         //No tengo claro si se deberia hacer así
         final String eventSelectId = getIntent().getStringExtra("EVENT");
-        if(eventSelectId!=null && !eventSelectId.isEmpty()) {
-            modify=1;
+        if (eventSelectId!=null && !eventSelectId.isEmpty()) {
+            modifyEvent = true;
             persistentOrganizerInfo = PersistentOrganizerInfo.getPersistentOrganizerInfo(getApplicationContext());
             eventSelect = persistentOrganizerInfo.getEvent(eventSelectId);
             price.setText(eventSelect.getPrice());
@@ -171,86 +164,102 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             maxAttendees.setText(eventSelect.getMaxAttendees());
             description.setText(eventSelect.getDescription());
             selectedGenre = eventSelect.getGenre();
-            address.setText(eventSelect.getLocation());
+            addressButton.setText(eventSelect.getLocation());
             saveButton.setText("MODIFICAR");
-            buttonPhoto.setText("Cambiar cartel");
+            uploadPhotoButton.setText("Cambiar cartel");
             new getPhoto().execute();
-            //TODO Revisar esta cutrez
-            int i=0;
-            while(!genres.getSelectedItem().toString().equals(selectedGenre)){
-                genres.setSelection(i);
-                i++;
-            }
+            //TODO Revisar esta cutrez (así?)
+            String[] genresArr = getResources().getStringArray(R.array.categories);
+            genresSpinner.setSelection(Arrays.asList(genresArr).indexOf(selectedGenre));
+//            mSpnBaths.setSelection(Arrays.asList(baths).indexOf(value_here));
+//            SpinnerAdapter genresAdapter = genres.getAdapter();
+//            Arrays.asList(gern).indexOf(value_here)
+//            genres.setSelection(().getPosition(selectedGenre));
+//            genres.setSelection(genres.get);
+//            int i=0;
+//            while(!genres.getSelectedItem().toString().equals(selectedGenre)){
+//                genres.setSelection(i);
+//                i++;
+//            }
 
 
-        }
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        if (userDefaultLocation) {
-            // Retrieve organizer's location name
+        } else {
+            // Set organizer location as default location
             SharedPreferences preferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
             String organizerLocationName = preferences.getString("location", null);
+
+            addressButton.setText(organizerLocationName);
             // Use GeoUtils to obtain the complete address from location name
             geoUtils = new GeoUtils(this, Locale.getDefault());
-            Address organizerCompleteAddress = geoUtils.getAddressFromLocationName(organizerLocationName);
-            eventCompleteAddress = organizerCompleteAddress;
-            // Set the default text location in the view
-            address.setText(organizerLocationName);
-            // Initialize the new location through the Location Manager
-            LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            Criteria crta = new Criteria();
-            String provider = lm.getBestProvider(crta, true);
-            organizerLocation = new Location(provider);
-            // Set location coordinates which had been obtained before and are stored in
-            // the complete address
-            organizerLocation.setLatitude(organizerCompleteAddress.getLatitude());
-            organizerLocation.setLongitude(organizerCompleteAddress.getLongitude());
+            eventCompleteAddress = geoUtils.getAddressFromLocationName(organizerLocationName);
         }
     }
+
+
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//
+//        if (useUserDefaultLocation) {
+//            // Retrieve organizer's location name
+//            SharedPreferences preferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
+//            String organizerLocationName = preferences.getString("location", null);
+//
+//            addressButton.setText(organizerLocationName);
+//            // Use GeoUtils to obtain the complete address from location name
+//            geoUtils = new GeoUtils(this, Locale.getDefault());
+//            eventCompleteAddress = geoUtils.getAddressFromLocationName(organizerLocationName);
+//            // Set the default text location in the view
+////            // Initialize the new location through the Location Manager
+////            LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+////            Criteria crta = new Criteria();
+////            String provider = lm.getBestProvider(crta, true);
+////            organizerLocation = new Location(provider);
+////            // Set location coordinates which had been obtained before and are stored in
+////            // the complete address
+////            organizerLocation.setLatitude(organizerCompleteAddress.getLatitude());
+////            organizerLocation.setLongitude(organizerCompleteAddress.getLongitude());
+//        }
+//    }
+
 
     @Override
-    public void onClick(View v) {
+    public void onClick(View view) {
 
-        if (v == date)
+        if (view == date) {
             openDialogDate();
-
-        else if (v == hour)
+        } else if (view == hour) {
             openDialogTime();
-
-        else if (v == saveButton && modify==0) {
+        } else if (view == saveButton) {
             Calendar currentCalendar = Calendar.getInstance();
-            // TODO: CHECK IF DESCRIPTION AND IMAGE EXISTS.
-            if (isEmpty(name) || isEmpty(date) || isEmpty(hour) || isEmpty(maxAttendees) || isEmpty(price) || isEmpty(description) || address.getText().toString().isEmpty() ||  selectedGenre.equals("") || calendar.getTime().compareTo(currentCalendar.getTime()) < 0) {
+            Date eventDate;
+            if (eventSelect != null) {
+                eventDate = eventSelect.getEventDate();
+            } else {
+                eventDate = calendar.getTime();
+            }
+            boolean isAnyFiledEmpty = isEmpty(name) || isEmpty(date) || isEmpty(hour)
+                    || isEmpty(maxAttendees) || isEmpty(price) || isEmpty(description)
+                    || addressButton.getText().toString().isEmpty() ||  selectedGenre.equals("")
+                    || eventDate.compareTo(currentCalendar.getTime()) < 0;
+
+            if (isAnyFiledEmpty) {
                 Toast.makeText(this, "Please cover every field shown in the screen", Toast.LENGTH_LONG).show();
                 return;
             }
-            //TODO: INSERT EVENT
-            new AddEventTask().execute();
+
+            if (modifyEvent) {
+                new ModifyEventTask().execute();
+            } else {
+                // TODO: CHECK IF DESCRIPTION AND IMAGE EXISTS.
+                new AddEventTask().execute();
+            }
+        }
+
     }
-        else if (v == saveButton && modify==1) {
-            Calendar currentCalendar = Calendar.getInstance();
-
-            if (isEmpty(name) || isEmpty(date) || isEmpty(hour) || isEmpty(maxAttendees) || isEmpty(price) || isEmpty(description) || address.getText().toString().isEmpty() ||  selectedGenre.equals("") || eventSelect.getEventDate().compareTo(currentCalendar.getTime()) <0 ) {
-                Toast.makeText(this, "Please cover every field shown in the screen", Toast.LENGTH_LONG).show();
-                return;
-            }
-            new ModifyEventTask().execute();
-        }
-
-        }
 
 
     private class getPhoto extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-        }
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -259,14 +268,15 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             return null;
         }
     }
+
+
     public void openDialogDate() {
 
         // Get Current Date
-        final Calendar c = Calendar.getInstance();
-        mYear = c.get(Calendar.YEAR);
-        mMonth = c.get(Calendar.MONTH);
-        mDay = c.get(Calendar.DAY_OF_MONTH);
-
+        final Calendar currentCalendar = Calendar.getInstance();
+        mYear = currentCalendar.get(Calendar.YEAR);
+        mMonth = currentCalendar.get(Calendar.MONTH);
+        mDay = currentCalendar.get(Calendar.DAY_OF_MONTH);
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                 new DatePickerDialog.OnDateSetListener() {
@@ -291,6 +301,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         datePickerDialog.show();
     }
 
+
     public void openDialogTime() {
 
         // Get Current Time
@@ -303,44 +314,38 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
                 new TimePickerDialog.OnTimeSetListener() {
 
                     @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay,
-                                          int minute) {
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
                         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                         calendar.set(Calendar.MINUTE, minute);
 
-                        if (hourOfDay == 0 && minute == 0)
+                        if (hourOfDay == 0 && minute == 0) {
                             hour.setText(hourOfDay + "0:0" + minute);
-
-                        else if (hourOfDay == 0)
+                        } else if (hourOfDay == 0) {
                             hour.setText(hourOfDay + "0:" + minute);
-
-                        else if (minute == 0)
+                        } else if (minute == 0) {
                             hour.setText(hourOfDay + ":0" + minute);
-
-                        else
+                        } else {
                             hour.setText(hourOfDay + ":" + minute);
+                        }
                     }
                 }, mHour, mMinute, false);
         timePickerDialog.show();
     }
 
-    public void getImageUri() {
 
+    public void getImageUri() {
         //MediaStore.Images.Media.INTERNAL_CONTENT_URI
         Intent gallery = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         gallery.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
-        startActivityForResult(gallery, GET_FROM_GALLERY);
-
+        startActivityForResult(gallery, GET_IMG_FROM_GALLERY);
     }
 
-    private void getStoragePermission() {
 
+    private void getStoragePermission() {
         String[] permissions = {READ_EXTERNAL_STORAGE};
 
         if (ContextCompat.checkSelfPermission(this.getApplicationContext(), READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-
-            mStoragePermissionGranted = true;
             getImageUri();
             return;
         }
@@ -348,10 +353,9 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         ActivityCompat.requestPermissions(this, permissions, STORAGE_PERMISSION_CODE);
     }
 
+
     @Override
     public void onRequestPermissionsResult( int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-
-        mStoragePermissionGranted = false;
 
         if (requestCode == STORAGE_PERMISSION_CODE) {
 
@@ -359,47 +363,47 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             if (grantResults.length > 0) {
                 for (int item : grantResults)
                     if (item != PackageManager.PERMISSION_GRANTED) {
-                        mStoragePermissionGranted = false;
                         return;
                     }
-                mStoragePermissionGranted = true;
                 getImageUri();
             }
         }
     }
 
 
-        @Override
-        protected void onActivityResult ( int requestCode, int resultCode, Intent data){
+    @Override
+    protected void onActivityResult (int requestCode, int resultCode, Intent data){
 
-            super.onActivityResult(requestCode, resultCode, data);
-            if (requestCode == 2) {
-                if (resultCode == RESULT_OK) {
-                    userDefaultLocation = false;
-                    eventCompleteAddress = data.getParcelableExtra("pickedAddress");
-//                geoUtils = new GeoUtils(this, Locale.getDefault());
-//                eventCompleteAddress = geoUtils.getAddressFromLocation(newLocation);
-                address.setText(eventCompleteAddress.getSubAdminArea());
-            }
-        } else if (resultCode == RESULT_OK && data != null) {
-                imageUri = data.getData();
+        super.onActivityResult(requestCode, resultCode, data);
 
-                try {
-                    imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == SET_LOCATION) {
+//                useUserDefaultLocation = false;
+                eventCompleteAddress = data.getParcelableExtra("pickedAddress");
+                //              geoUtils = new GeoUtils(this, Locale.getDefault());
+                //              eventCompleteAddress = geoUtils.getAddressFromLocation(newLocation);
+                addressButton.setText(GeoUtils.getAddressString(eventCompleteAddress));
+            } else if (requestCode == GET_IMG_FROM_GALLERY) {
+                if (data != null) {
 
-                    getRealPathFromURI(imageUri);
+                    imageUri = data.getData();
 
-                    /*Cursor returnCursor = getContentResolver().query(imageUri, null, null, null, null);
-                    int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
-                    returnCursor.moveToFirst();
-                    buttonPhoto.setText(returnCursor.getString(nameIndex));*/
+                    try {
+                        imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+                        getRealPathFromURI(imageUri);
 
+                        /*Cursor returnCursor = getContentResolver().query(imageUri, null, null, null, null);
+                        int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+                        returnCursor.moveToFirst();
+                        buttonPhoto.setText(returnCursor.getString(nameIndex));*/
 
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
+    }
 
 
     public String getRealPathFromURI(Uri uri) {
@@ -435,6 +439,26 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
     }
 
 
+    private Event makeEvent(String organizerId) {
+        //bitmapEncoded = NO_IMAGE;
+        //String path= imageUri.getEncodedPath();
+        // creating a My HashTable Dictionary
+        HashMap<String, String> addressDict = new HashMap<>();
+
+        // Using a few dictionary Class methods
+        // using put method
+        addressDict.put("province", eventCompleteAddress.getSubAdminArea());
+        addressDict.put("full_address", GeoUtils.getAddressString(eventCompleteAddress)); // Double
+        addressDict.put("latitude", String.valueOf(eventCompleteAddress.getLatitude()));
+        addressDict.put("longitude", String.valueOf(eventCompleteAddress.getLongitude()));
+
+        Event event = new Event(name.getText().toString(), eventDate, addressButton.getText().toString(),
+                selectedGenre, organizerId, maxAttendees.getText().toString(), price.getText().toString(),
+                description.getText().toString(), photoId, addressDict);
+
+        return event;
+    }
+
 
     private class AddEventTask extends AsyncTask<Void, Void, Event> {
 
@@ -469,23 +493,10 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
                 photoId = photoService.createPhoto(photo);
             }
 
+            Event event = makeEvent(organizerId);
 
-            //bitmapEncoded = NO_IMAGE;
-            //String path= imageUri.getEncodedPath();
-            // creating a My HashTable Dictionary
-            HashMap<String, String> addressDict = new HashMap<>();
-
-            // Using a few dictionary Class methods
-            // using put method
-            addressDict.put("province", eventCompleteAddress.getSubAdminArea());
-            addressDict.put("full_address", GeoUtils.getAddressString(eventCompleteAddress)); // Double
-            addressDict.put("latitude", String.valueOf(eventCompleteAddress.getLatitude()));
-            addressDict.put("longitude", String.valueOf(eventCompleteAddress.getLongitude()));
-
-            final Event event = new Event(name.getText().toString(), eventDate, address.getText().toString(),
-                    selectedGenre, organizerId, maxAttendees.getText().toString(), price.getText().toString(),
-                    description.getText().toString(), photoId, addressDict);
             eventService.createEvent(event);
+
             //event.setEventImage(path);
             final PersistentOrganizerInfo persistentOrganizerInfo = PersistentOrganizerInfo.getPersistentOrganizerInfo(getApplicationContext());
 
@@ -507,62 +518,53 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
     }
 
 
+    private class ModifyEventTask extends AsyncTask<Void, Void, Event> {
 
-private class ModifyEventTask extends AsyncTask<Void, Void, Event> {
-
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-    }
-
-    @Override
-    protected Event doInBackground(Void... voids) {
-        // Get the id of the organizer
-        SharedPreferences preferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
-        final String organizerId = preferences.getString("fb_id", null);
-
-        //bitmapEncoded = NO_IMAGE;
-        //String path= imageUri.getEncodedPath();
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        if (imageBitmap != null && photo == null) {
-
-            imageBitmap.compress(Bitmap.CompressFormat.PNG, 10, stream);
-            byteArray = stream.toByteArray();
-            bitmapEncoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
-            imageBitmap.recycle();
-            photo = new Photo(bitmapEncoded);
-            photoId = photoService.createPhoto(photo);
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
         }
-        // creating a My HashTable Dictionary
-        HashMap<String, String> addressDict = new HashMap<>();
-        // Using a few dictionary Class methods
-        // using put method
-        addressDict.put("province", eventCompleteAddress.getSubAdminArea());
-        addressDict.put("full_address", GeoUtils.getAddressString(eventCompleteAddress)); // Double
-        addressDict.put("latitude", String.valueOf(eventCompleteAddress.getLatitude()));
-        addressDict.put("longitude", String.valueOf(eventCompleteAddress.getLongitude()));
-        final Event event = new Event(name.getText().toString(), eventDate, address.getText().toString(),
-                selectedGenre, organizerId, maxAttendees.getText().toString(), price.getText().toString(),
-                description.getText().toString(), photoId, addressDict);
-        Event e = persistentOrganizerInfo.modifyEvent(getApplicationContext(),eventSelect,event);
-        eventService.modifyEvent(e);
 
-        return e;
+        @Override
+        protected Event doInBackground(Void... voids) {
+            // Get the id of the organizer
+            SharedPreferences preferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
+            final String organizerId = preferences.getString("fb_id", null);
 
+            //bitmapEncoded = NO_IMAGE;
+            //String path= imageUri.getEncodedPath();
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            if (imageBitmap != null && photo == null) {
+
+                imageBitmap.compress(Bitmap.CompressFormat.PNG, 10, stream);
+                byteArray = stream.toByteArray();
+                bitmapEncoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                imageBitmap.recycle();
+                photo = new Photo(bitmapEncoded);
+                photoId = photoService.createPhoto(photo);
+            }
+
+            Event event = makeEvent(organizerId);
+
+            Event e = persistentOrganizerInfo.modifyEvent(getApplicationContext(),eventSelect, event);
+            eventService.modifyEvent(e);
+
+            return e;
+
+        }
+
+        @Override
+        protected void onPostExecute(Event event) {
+            super.onPostExecute(event);
+            Toast.makeText(getApplicationContext(), "Concierto modificado con éxito!", Toast.LENGTH_LONG).show();
+            String eventJson = (new Gson()).toJson(event);
+            // Start the activity to show the event info
+            Intent intent = new Intent(CreateEventActivity.this, OrganizerEventInfoActivity.class);
+            intent.putExtra("EVENT", event.getId());
+            startActivity(intent);
+            finish();
+        }
     }
-
-    @Override
-    protected void onPostExecute(Event event) {
-        super.onPostExecute(event);
-        Toast.makeText(getApplicationContext(), "Concierto modificado con éxito!", Toast.LENGTH_LONG).show();
-        String eventJson = (new Gson()).toJson(event);
-        // Start the activity to show the event info
-        Intent intent = new Intent(CreateEventActivity.this, OrganizerEventInfoActivity.class);
-        intent.putExtra("EVENT", event.getId());
-        startActivity(intent);
-        finish();
-    }
-}
 }
 
 
