@@ -55,6 +55,7 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
     Event eventSelect;
     ArrayList<Rating> ratings = new ArrayList<>();
     ArrayList<String> comments = new ArrayList<>();
+    ArrayList<Float> scores = new ArrayList<>();
     ArrayList<String> names = new ArrayList<>();
 
     @SuppressLint("ClickableViewAccessibility")
@@ -222,14 +223,17 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
         @Override
         protected Void doInBackground(Void... voids) {
             ratings.clear();
-            ratings = ratingService.getComments(eventSelect.getId());
+            ratings = ratingService.getRatingsByEvent(eventSelect.getId());
+
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             comments.clear();
+            scores.clear();
             for (Rating r : ratings) {
+                scores.add(r.getRatingValue());
                 if (! r.getComment().isEmpty())
                     comments.add(r.getComment());
             }
@@ -267,7 +271,7 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
                 names.add(u.getName());
             }
             final ListView listview = (ListView) findViewById(R.id.ratingList);
-            RatingsAdapter adapter = new RatingsAdapter(getApplicationContext(), comments, names);
+            RatingsAdapter adapter = new RatingsAdapter(getApplicationContext(), comments, scores, names);
             listview.setAdapter(adapter);
         }
     }

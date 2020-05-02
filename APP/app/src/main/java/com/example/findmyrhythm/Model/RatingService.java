@@ -25,8 +25,8 @@ public class RatingService {
         }
     }
 
-    public ArrayList<Rating> getComments(String eventId) {
-        return ratingDAO.findCommentsByEventId(eventId);
+    public ArrayList<Rating> getRatingsByEvent(String eventId) {
+        return ratingDAO.findRatingsByEventId(eventId);
     }
 
     public Float getMedia (String eventId) {
