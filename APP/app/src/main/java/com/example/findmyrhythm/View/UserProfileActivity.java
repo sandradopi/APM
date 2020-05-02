@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.findmyrhythm.Model.BitmapDownloaderTask;
+import com.example.findmyrhythm.Model.EventService;
 import com.example.findmyrhythm.Model.IOFiles;
 import com.example.findmyrhythm.R;
 import com.google.android.material.tabs.TabLayout;
@@ -58,6 +59,7 @@ public class UserProfileActivity extends UserMenuDrawerActivity {
         toolbarTitle.setText("Perfil");
 
         SharedPreferences preferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
+        String userId = preferences.getString("fb_id", null);
         String userName = preferences.getString("name", null);
         String userEmail = preferences.getString("email", null);
         TextView userNameView = findViewById(R.id.user_name);
@@ -79,10 +81,19 @@ public class UserProfileActivity extends UserMenuDrawerActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
         setMenuItemChecked(R.id.nav_profile);
         ViewPager viewPager = findViewById(R.id.view_pager);
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
         viewPager.setAdapter(sectionsPagerAdapter);
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        EventService service = new EventService();
+        service.unSubscribeEventNotificationListener();
     }
 }

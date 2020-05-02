@@ -2,6 +2,7 @@ package com.example.findmyrhythm.View;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +17,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.findmyrhythm.Model.AttendeeService;
 import com.example.findmyrhythm.Model.Event;
+import com.example.findmyrhythm.Model.EventService;
 import com.example.findmyrhythm.Model.Exceptions.InstanceNotFoundException;
 import com.example.findmyrhythm.Model.IOFiles;
 import com.example.findmyrhythm.Model.Organizer;
@@ -287,9 +289,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Intent intent = new Intent(LoginActivity.this, GreetingsActivity.class);
                 startActivity(intent);
             } else if (user!=null && organizer==null) {
-                new RecoverUserTask().execute(user); //recoverUser(user);
+                showUseExistentAccountDialog(user, organizer);
             } else if (user==null && organizer!=null) {
-                new RecoverOrganizerTask().execute(organizer); //recoverOrganizer(organizer);
+                showUseExistentAccountDialog(user, organizer);
             } else if (user!=null && organizer!=null) {
                 showSelectAccountDialog(user, organizer);
             }
@@ -314,6 +316,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             PersistentUserInfo.setPersistentUserInfo(getApplicationContext(), persistentUserInfo);
 
+            SharedPreferences sharedpreferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+
+            editor.putString("fb_name", persistentUserInfo.getName());
+            editor.putString("fb_email", persistentUserInfo.getEmail());
+            editor.putString("fb_id", persistentUserInfo.getId());
+            editor.putString("name", persistentUserInfo.getName());
+            editor.putString("email", persistentUserInfo.getEmail());
+            editor.putString("nickname", persistentUserInfo.getUsername());
+            editor.putString("account_type", "user");
+
+            editor.commit(); // or apply
+
             return null;
         }
 
@@ -335,14 +350,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         @Override
         protected Void doInBackground(Organizer... organizer) {
 
-            OrganizerService organizerService = new OrganizerService();
-            events = organizerService.getOrganizedEventsByOrganizer(organizer[0].getId());
+            EventService organizerService = new EventService();
+            events = organizerService.findEventByOrganicer(organizer[0].getId());
 
             PersistentOrganizerInfo persistentOrganizerInfo = new PersistentOrganizerInfo(organizer[0].getId(),
                     organizer[0].getName(), organizer[0].getUsername(), organizer[0].getEmail(),
                     organizer[0].getBiography(), organizer[0].getRating(), organizer[0].getLocation(), events);
 
             PersistentOrganizerInfo.setPersistentOrganizerInfo(getApplicationContext(), persistentOrganizerInfo);
+
+            SharedPreferences sharedpreferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+
+            editor.putString("fb_name", persistentOrganizerInfo.getName());
+            editor.putString("fb_email", persistentOrganizerInfo.getEmail());
+            editor.putString("fb_id", persistentOrganizerInfo.getId());
+            editor.putString("name", persistentOrganizerInfo.getName());
+            editor.putString("email", persistentOrganizerInfo.getEmail());
+            editor.putString("nickname", persistentOrganizerInfo.getUsername());
+            editor.putString("location", persistentOrganizerInfo.getLocation());
+            editor.putString("account_type", "organizer");
+
+            editor.commit(); // or apply
 
             return null;
         }
@@ -385,5 +414,33 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 });
         alertDialog.show();
     }
+
+
+    public void showUseExistentAccountDialog(final User user, final Organizer organizer) {
+        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        final String account = (organizer != null) ? "organizer" : "user";
+        alertDialog.setTitle("Cuenta existente");
+        alertDialog.setMessage("Se ha detectado una cuenta previa de "+account+", ¿la quieres utilizar?");
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Sí",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        if (organizer != null)
+                            new RecoverOrganizerTask().execute(organizer);
+                        else
+                            new RecoverUserTask().execute(user);
+                    }
+                });
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        Intent intent = new Intent(LoginActivity.this, GreetingsActivity.class);
+                        startActivity(intent);
+                    }
+                });
+        alertDialog.show();
+    }
+
 
 }

@@ -11,6 +11,7 @@ public class OrganizerService {
 
     private static final String TAG = "OrganizerService";
     private OrganizerDAO organizerDAO = new OrganizerDAO();
+    private EventDAO eventDAO = new EventDAO();
 
     public Organizer getOrganizer(String organizerId) throws InstanceNotFoundException {
 
@@ -44,9 +45,4 @@ public class OrganizerService {
         organizerDAO.update(organizer);
     }
 
-    public ArrayList<Event> getOrganizedEventsByOrganizer(String idOrganizer) {
-        ArrayList<Event> events = new ArrayList<>();
-        // TODO: Obtener los eventos organizados por el organizador
-        return events;
-    }
 }

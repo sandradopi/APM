@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".View.SearchEventsActivity">
+
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/organizerMap"
+        tools:context=".MapsActivity"
+        android:name="com.google.android.gms.maps.SupportMapFragment"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/rounded_corners"
+        android:id="@+id/organizer_search_bar">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:id="@+id/organizer_magnify"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/ic_menu_search"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@+id/organizer_magnify"
+            android:layout_marginStart="10dp"
+            android:layout_centerVertical="true"
+            android:textSize="15sp"
+            android:textColor="#000"
+            android:id="@+id/input_search"
+            android:background="@null"
+            android:hint ="Buscar..."
+            android:inputType="textNoSuggestions"
+            android:imeOptions="actionSearch"/>
+
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/organizer_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="21dp"
+        android:background="@color/primary"
+        android:text="@string/submit"
+        android:textColor="@color/white" />
+
+
+    <!--    <ImageView-->
+<!--        android:layout_width="35dp"-->
+<!--        android:layout_height="35dp"-->
+<!--        android:layout_below="@+id/search_bar"-->
+<!--        android:layout_alignParentEnd="true"-->
+<!--        android:layout_marginEnd="10dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:scaleType="centerInside"-->
+<!--        android:background="@drawable/white_border"-->
+<!--        android:id="@+id/iv_gps"-->
+<!--        android:src="@drawable/ic_gps"/>-->
+
+<!--    <ImageView-->
+<!--        android:layout_width="35dp"-->
+<!--        android:layout_height="35dp"-->
+<!--        android:layout_below="@+id/iv_gps"-->
+<!--        android:layout_alignParentEnd="true"-->
+<!--        android:layout_marginEnd="10dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:scaleType="centerInside"-->
+<!--        android:background="@drawable/white_border"-->
+<!--        android:id="@+id/iv_add_location"-->
+<!--        android:src="@drawable/ic_add_location"/>-->
+
+
+</RelativeLayout>

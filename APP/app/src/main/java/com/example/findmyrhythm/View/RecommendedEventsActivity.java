@@ -1,16 +1,21 @@
 package com.example.findmyrhythm.View;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -20,6 +25,8 @@ import com.example.findmyrhythm.Model.Event;
 import com.example.findmyrhythm.Model.EventService;
 import com.example.findmyrhythm.Model.Exceptions.InstanceNotFoundException;
 import com.example.findmyrhythm.Model.PersistentUserInfo;
+import com.example.findmyrhythm.Model.Photo;
+import com.example.findmyrhythm.Model.PhotoService;
 import com.example.findmyrhythm.Model.User;
 import com.example.findmyrhythm.Model.UserService;
 import com.example.findmyrhythm.R;
@@ -29,6 +36,9 @@ import com.example.findmyrhythm.View.tabs.NextEventsFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -41,6 +51,10 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
     TextView eventDate;
     TextView eventDescContent;
     TextView eventLocationContent;
+    TextView eventCapacity;
+    TextView eventGenre, eventCost;
+    Photo photoEvent;
+    PhotoService photoService= new PhotoService();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +68,9 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
         eventDate = findViewById(R.id.eventDate);
         eventDescContent = findViewById(R.id.eventDescContent);
         eventLocationContent = findViewById(R.id.eventLocationContent);
-
+        eventCapacity = findViewById(R.id.eventCapacity);
+        eventCost = findViewById(R.id.eventCost);
+        eventGenre = findViewById(R.id.category);
 
         TextView toolbarTitle = findViewById(R.id.tvTitle);
         toolbarTitle.setText("Recomendados");
@@ -72,9 +88,11 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
     }
 
     private class getEvents extends AsyncTask<Void, Void, ArrayList<Event>> {
+        ProgressDialog progress;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            progress=ProgressDialog.show(RecommendedEventsActivity.this,"","Estamos buscando los mejores eventos para ti...",false);
         }
 
         @Override
@@ -101,7 +119,9 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
 
         @Override
         protected void onPostExecute(final ArrayList<Event> events) {
-            // super.onPostExecute(events);
+            progress.dismiss();
+            super.onPostExecute(events);
+
             Log.e("DEBUG", events.toString());
 
             String[] names = new String[events.size()];
@@ -110,12 +130,13 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
             final String[] ids = new String[events.size()];
 
             Date date;
+            DateFormat df;
             int i = 0;
             for (Event event : events) {
                 ids[i] = event.getId();
                 names[i] = event.getName();
                 date = event.getEventDate();
-                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yy");
+                df = new SimpleDateFormat("dd/MM/yy", java.util.Locale.getDefault());
                 dates[i] = df.format(date);
                 prices[i] = String.valueOf(event.getPrice().concat("€"));
                 i++;
@@ -125,11 +146,15 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
 
             int orientation = getResources().getConfiguration().orientation;
             if(orientation == Configuration.ORIENTATION_LANDSCAPE || isTablet(getApplicationContext())){
-                System.out.println(events.get(0).getName());
-                eventName.setText(events.get(0).getName());
-                eventDate.setText(events.get(0).getEventDate().toString());
-                eventDescContent.setText(events.get(0).getDescription());
-                eventLocationContent.setText(events.get(0).getLocation());
+                Event e = events.get(0);
+                eventName.setText(e.getName());
+                eventDate.setText(e.getEventDate().toString());
+                eventDescContent.setText(e.getDescription());
+                eventLocationContent.setText(e.getLocation());
+                eventCapacity.setText(e.getMaxAttendees());
+                eventCost.setText(e.getPrice());
+                eventGenre.setText(e.getGenre());
+
 
             }
             mListView.setAdapter(adapter);
@@ -140,10 +165,15 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
                     int orientation = getResources().getConfiguration().orientation;
 
                     if(orientation == Configuration.ORIENTATION_LANDSCAPE || isTablet(getApplicationContext())){
-                        eventName.setText(events.get((int) id).getName());
-                        eventDate.setText(events.get((int) id).getEventDate().toString());
-                        eventDescContent.setText(events.get((int) id).getDescription());
-                        eventLocationContent.setText(events.get((int) id).getLocation());
+                        Event e = events.get((int) id);
+                        eventName.setText(e.getName());
+                        eventDate.setText(e.getEventDate().toString());
+                        eventDescContent.setText(e.getDescription());
+                        eventLocationContent.setText(e.getLocation());
+                        eventCapacity.setText(e.getMaxAttendees());
+                        eventCost.setText(e.getPrice());
+                        eventGenre.setText(e.getGenre());
+
                     }
 
                     else if (orientation == Configuration.ORIENTATION_PORTRAIT){
@@ -168,4 +198,5 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
         }
 
     }
+
 }

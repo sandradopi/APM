@@ -18,6 +18,7 @@ import com.example.findmyrhythm.R;
 import com.example.findmyrhythm.View.FinishedEventInfoActivity;
 import com.google.gson.Gson;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,18 +39,29 @@ public class PastEventsFragmentOrg extends Fragment {
         PersistentOrganizerInfo persistentOrganicerInfo = PersistentOrganizerInfo.getPersistentOrganizerInfo(getApplicationContext());
         final ArrayList<Event> pastEvents= persistentOrganicerInfo.getEvents();
 
-        String[] events = new String[pastEvents.size()];
-        String[] dates = new String[pastEvents.size()];
-        String[] rates = new String[pastEvents.size()];
+
+        int eventsize = 0;
+        Date actualDate = new Date();
+        for (Event event : pastEvents) {
+            if(event.getEventDate().compareTo(actualDate) < 0  ) {
+                eventsize++;
+            }
+        }
+
+        String[] events = new String[eventsize];
+        String[] dates = new String[eventsize];
+        String[] rates = new String[eventsize];
 
         int i = 0;
         for (Event event : pastEvents) {
-            events[i] = event.getName();
-            date = event.getEventDate();
-            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yy");
-            dates[i] = df.format(date);
-            rates[i] = null;
-            i++;
+            if(event.getEventDate().compareTo(actualDate) < 0  ) {
+                events[i] = event.getName();
+                date = event.getEventDate();
+                DateFormat df = new SimpleDateFormat("dd/MM/yy", java.util.Locale.getDefault());
+                dates[i] = df.format(date);
+                rates[i] = null;
+                i++;
+            }
         }
         mListView.setAdapter(new ListAdapterPast(this.requireContext(), events, dates, rates));
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){

@@ -15,6 +15,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 public class EventDAO extends GenericDAO<Event> {
@@ -107,6 +108,56 @@ public class EventDAO extends GenericDAO<Event> {
     }
 
 
+    public ArrayList<Event> getEventsByTitle(final String token) {
+
+        final ArrayList<Event> events = new ArrayList<>();
+        ArrayList<Event> recommendedEvents = new ArrayList<>();
+        final DatabaseReference table = getTable();
+
+        final CountDownLatch lock = new CountDownLatch(1);
+
+        // TODO: Descomentar estas partes después de hacer las pruebas
+        table.orderByChild("name").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                /*Event event;
+                Calendar eventCalendar = Calendar.getInstance();*/
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+
+                    Log.e(TAG, ds.getValue(Event.class).getName());
+
+                    Event event = ds.getValue(Event.class);
+
+
+
+                    /*event = ds.getValue(Event.class);
+                    eventCalendar.setTime(event.getEventDate());
+                    if (eventCalendar.compareTo(currentCalendar) > 0)*/
+                    if (event.getName().toLowerCase().contains(token.toLowerCase()))
+                        events.add(ds.getValue(Event.class));
+
+                }
+                lock.countDown();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                lock.countDown();
+            }
+        });
+
+        // Wait for all data to be retrieved
+        try {
+            lock.await();
+        }
+        catch (InterruptedException e) {
+            //Log.e(TAG, "Thread was interrupted while waiting for syncronisation with Firebase call");
+        }
+
+        return events;
+    }
+
+
     public ArrayList<Event> findEventByOrganicer (final String idOrganicer) {
         DatabaseReference table = getTable();
         final ArrayList<Event> eventsCreated = new ArrayList<Event>();
@@ -120,7 +171,7 @@ public class EventDAO extends GenericDAO<Event> {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     Event event = child.getValue(Event.class);
                     // Event title contains title and event is not deleted
-                    if (event.getOrganizerId().contains(idOrganicer)) {
+                    if (event.getOrganizerId().equals(idOrganicer)) {
                         eventsCreated.add(event);
                     }
                 }
@@ -141,5 +192,15 @@ public class EventDAO extends GenericDAO<Event> {
             //Log.e(TAG, "Thread was interrupted while waiting for syncronisation with Firebase call");
         }
         return eventsCreated;
+    }
+
+    public void addChildEventListener (ValueEventListener listener) {
+        DatabaseReference table = getTable();
+        table.addValueEventListener(listener);
+    }
+
+    public void removeChildEventListener (ValueEventListener listener) {
+        DatabaseReference table = getTable();
+        table.removeEventListener(listener);
     }
 }

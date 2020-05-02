@@ -13,6 +13,7 @@
         android:orientation="vertical"
         android:padding="15dp">
 
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -93,12 +94,14 @@
 
                 <ImageView
                     android:id="@+id/capacityIcon"
+                    android:layout_margin="4dp"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    app:srcCompat="@drawable/ic_people" />
+                    android:src="@drawable/ic_people_white_18dp" />
 
                 <TextView
                     android:id="@+id/eventCapacity"
+                    android:layout_marginStart="6dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="150"
@@ -114,13 +117,15 @@
 
                 <ImageView
                     android:id="@+id/costIcon"
+                    android:layout_margin="4dp"
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
-                    app:srcCompat="@drawable/ic_euro" />
+                    android:src="@drawable/ic_euro_symbol_white_18dp" />
 
                 <TextView
                     android:id="@+id/eventCost"
-                    android:layout_width="328dp"
+                    android:layout_marginStart="6dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:text="20€"
@@ -136,11 +141,13 @@
                 <ImageView
                     android:id="@+id/calendar"
                     android:layout_width="wrap_content"
+                    android:layout_margin="4dp"
                     android:layout_height="match_parent"
-                    app:srcCompat="@drawable/ic_calendar" />
+                    android:src="@drawable/ic_calendar_today_white_18dp" />
 
                 <TextView
                     android:id="@+id/eventDate"
+                    android:layout_marginStart="6dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="20/08/2020"
@@ -155,12 +162,14 @@
 
                 <ImageView
                     android:id="@+id/clock"
+                    android:layout_margin="4dp"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    app:srcCompat="@drawable/ic_clock" />
+                    android:src="@drawable/ic_access_time_white_18dp" />
 
                 <TextView
                     android:id="@+id/eventTime"
+                    android:layout_marginStart="6dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="10:30"
@@ -192,6 +201,7 @@
 
             <TextView
                 android:id="@+id/eventLocationContent"
+                android:layout_marginStart="6dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -199,6 +209,7 @@
                 android:text="Riazor"
                 android:textSize="15sp" />
         </LinearLayout>
+
 
     </LinearLayout>
 

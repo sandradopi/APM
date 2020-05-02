@@ -152,14 +152,6 @@
                         android:layout_weight="1">
                     </RelativeLayout>
 
-                    <Switch
-                        android:id="@+id/switch1"
-                        android:textColor="@color/lightgray"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="end"
-                        android:text="@string/notifications" />
-
                     <RelativeLayout
                         android:layout_height="match_parent"
                         android:layout_width="0dp"

@@ -16,7 +16,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="10dp"
         android:layout_marginStart="10dp"
         android:background="@drawable/rounded_corners"
@@ -44,34 +44,42 @@
             android:inputType="textNoSuggestions"
             android:imeOptions="actionSearch"/>
 
-
     </RelativeLayout>
 
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/searchResult"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_below="@id/search_bar"
+        android:background="@color/white"
+        android:textColor="@color/black" />
 
 
-<!--    <ImageView-->
-<!--        android:layout_width="35dp"-->
-<!--        android:layout_height="35dp"-->
-<!--        android:layout_below="@+id/search_bar"-->
-<!--        android:layout_alignParentEnd="true"-->
-<!--        android:layout_marginEnd="10dp"-->
-<!--        android:layout_marginTop="10dp"-->
-<!--        android:scaleType="centerInside"-->
-<!--        android:background="@drawable/white_border"-->
-<!--        android:id="@+id/iv_gps"-->
-<!--        android:src="@drawable/ic_gps"/>-->
+    <!--    <ImageView-->
+    <!--        android:layout_width="35dp"-->
+    <!--        android:layout_height="35dp"-->
+    <!--        android:layout_below="@+id/search_bar"-->
+    <!--        android:layout_alignParentEnd="true"-->
+    <!--        android:layout_marginEnd="10dp"-->
+    <!--        android:layout_marginTop="10dp"-->
+    <!--        android:scaleType="centerInside"-->
+    <!--        android:background="@drawable/white_border"-->
+    <!--        android:id="@+id/iv_gps"-->
+    <!--        android:src="@drawable/ic_gps"/>-->
 
-<!--    <ImageView-->
-<!--        android:layout_width="35dp"-->
-<!--        android:layout_height="35dp"-->
-<!--        android:layout_below="@+id/iv_gps"-->
-<!--        android:layout_alignParentEnd="true"-->
-<!--        android:layout_marginEnd="10dp"-->
-<!--        android:layout_marginTop="10dp"-->
-<!--        android:scaleType="centerInside"-->
-<!--        android:background="@drawable/white_border"-->
-<!--        android:id="@+id/iv_add_location"-->
-<!--        android:src="@drawable/ic_add_location"/>-->
+    <!--    <ImageView-->
+    <!--        android:layout_width="35dp"-->
+    <!--        android:layout_height="35dp"-->
+    <!--        android:layout_below="@+id/iv_gps"-->
+    <!--        android:layout_alignParentEnd="true"-->
+    <!--        android:layout_marginEnd="10dp"-->
+    <!--        android:layout_marginTop="10dp"-->
+    <!--        android:scaleType="centerInside"-->
+    <!--        android:background="@drawable/white_border"-->
+    <!--        android:id="@+id/iv_add_location"-->
+    <!--        android:src="@drawable/ic_add_location"/>-->
 
 
 </RelativeLayout>

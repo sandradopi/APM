@@ -40,26 +40,36 @@ public class NextEventsFragment extends Fragment {
         ListView mListView;
         mListView = (ListView) view.findViewById(R.id.eventlist);
 
-        final DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        final DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", java.util.Locale.getDefault());
         PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
         final ArrayList<Event> nextEvents= persistentUserInfo.getEvents();
-        final String[] events = new String[nextEvents.size()];
-        final String[] dates = new String[nextEvents.size()];
-        final String[] prices = new String[nextEvents.size()];
+
 
         Date date;
+        DateFormat df;
         Date actualDate = new Date();
-        System.out.println("FECHA ACTUAL"+actualDate);
+        int eventsize = 0;
+
+        for (Event event : nextEvents) {
+            if(event.getEventDate().compareTo(actualDate) > 0  ) {
+                eventsize++;
+            }
+        }
+
+        String[] events = new String[eventsize];
+        String[] dates = new String[eventsize];
+        String[] prices = new String[eventsize];
+
         int i = 0;
         for (Event event : nextEvents) {
-           // if(event.getEventDate().compareTo(actualDate) > 0  ){
+           if(event.getEventDate().compareTo(actualDate) > 0  ){
             events[i] = event.getName();
             date = event.getEventDate();
-            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yy");
+            df = new SimpleDateFormat("dd/MM/yy", java.util.Locale.getDefault());
             dates[i] = df.format(date);
             prices[i] = String.valueOf(event.getPrice()).concat("€");
             i++;
-            //}
+            }
         }
 
         mListView.setAdapter(new ListAdapterNext(this.requireContext(), events, dates, prices));

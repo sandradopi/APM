@@ -123,20 +123,6 @@ public class UserSettingsActivity extends UserMenuDrawerActivity {
         }
         });
 
-        Switch notification = findViewById(R.id.switch1);
-        notification.setClickable(true);
-        notification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            if(isChecked){
-                Log.w(TAG, "Ha activado las notificaciones");
-                Toast.makeText(UserSettingsActivity.this, getString(R.string.noti),  Toast.LENGTH_SHORT).show();
-            }else{
-                Log.w(TAG, "Ha desactivado las notificaciones");
-                Toast.makeText(UserSettingsActivity.this, getString(R.string.desnoti),  Toast.LENGTH_SHORT).show();
-            }
-        }
-        });
-
 
 
     }

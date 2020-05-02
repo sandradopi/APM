@@ -1,20 +1,23 @@
 package com.example.findmyrhythm.Model;
 
 import android.graphics.Bitmap;
+import android.location.Address;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.HashMap;
 
 public class Event extends Entity{
 
     private String name;
     private Date eventDate;
-    private String location, genre, organizerId, maxAttendees, price, description;
-    private String eventImage;
+    private String location, genre, organizerId, maxAttendees, price, description, eventImage;
+    private HashMap<String, String> completeAddress;
 
     public Event() {}
 
-    public Event(String name, Date date, String location, String genre, String organizerId, String maxAttendees, String price, String description, String eventImage) {
+    public Event(String name, Date date, String location, String genre, String organizerId, String maxAttendees,
+                 String price, String description, String eventImage, HashMap<String, String> completeAddress) {
         this.name = name;
         this.eventDate = date;
         this.location = location;
@@ -24,6 +27,21 @@ public class Event extends Entity{
         this.price = price;
         this.description = description;
         this.eventImage = eventImage;
+        this.completeAddress = completeAddress;
+
+    }
+
+    public void modify(Event event){
+        this.name = event.getName();
+        this.eventDate = event.getEventDate();
+        this.location = event.getLocation();
+        this.genre = event.getGenre();
+        this.organizerId = event.getOrganizerId();
+        this.maxAttendees = event.getMaxAttendees();
+        this.price = event.getPrice();
+        this.description = event.getDescription();
+        this.eventImage = event.getEventImage();
+        this.completeAddress = event.getCompleteAddress();
 
     }
 
@@ -97,6 +115,14 @@ public class Event extends Entity{
 
     public void setEventImage(String eventImage) {
         this.eventImage = eventImage;
+    }
+
+    public HashMap<String, String> getCompleteAddress() {
+        return completeAddress;
+    }
+
+    public void setCompleteAddress(HashMap<String, String> completeAddress) {
+        this.completeAddress = completeAddress;
     }
 }
 

@@ -18,6 +18,7 @@ import com.example.findmyrhythm.R;
 import com.example.findmyrhythm.View.OrganizerEventInfoActivity;
 import com.google.gson.Gson;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -41,20 +42,34 @@ public class NextEventsFragmentOrg extends Fragment {
 
         PersistentOrganizerInfo persistentOrganicerInfo = PersistentOrganizerInfo.getPersistentOrganizerInfo(getApplicationContext());
         final ArrayList<Event> nextEvents= persistentOrganicerInfo.getEvents();
-        final String[] events = new String[nextEvents.size()];
-        final String[] dates = new String[nextEvents.size()];
-        final String[] prices = new String[nextEvents.size()];
+
 
         // TODO: POR FAVOR ESTO DE AQUI HAY QUE CAMBIARLO AMIGUITOS :)
         Date date;
+        DateFormat df;
+        Date actualDate = new Date();
+        int eventsize = 0;
+
+        for (Event event : nextEvents) {
+            if(event.getEventDate().compareTo(actualDate) > 0  ) {
+                eventsize++;
+            }
+        }
+
+        String[] events = new String[eventsize];
+        String[] dates = new String[eventsize];
+        String[] prices = new String[eventsize];
+
         int i = 0;
         for (Event event : nextEvents) {
-            events[i] = event.getName();
-            date = event.getEventDate();
-            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yy");
-            dates[i] = df.format(date);
-            prices[i] = String.valueOf(event.getPrice()).concat("€");
-            i++;
+            if(event.getEventDate().compareTo(actualDate) > 0  ) {
+                events[i] = event.getName();
+                date = event.getEventDate();
+                df = new SimpleDateFormat("dd/MM/yy", java.util.Locale.getDefault());
+                dates[i] = df.format(date);
+                prices[i] = String.valueOf(event.getPrice()).concat("€");
+                i++;
+            }
         }
 
         //System.out.println("SUECIA"+nextEvents.get(0).getName());

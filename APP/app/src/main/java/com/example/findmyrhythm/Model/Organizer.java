@@ -1,8 +1,11 @@
 package com.example.findmyrhythm.Model;
 
+import android.location.Address;
+
 public class Organizer extends GeneralUser {
 
     private String rating, location;
+    private Address completeAddress;
 
     public Organizer() {}
 
@@ -29,4 +32,11 @@ public class Organizer extends GeneralUser {
         this.location = location;
     }
 
+    public Address getCompleteAddress() {
+        return completeAddress;
+    }
+
+    public void setCompleteAddress(Address completeAddress) {
+        this.completeAddress = completeAddress;
+    }
 }
