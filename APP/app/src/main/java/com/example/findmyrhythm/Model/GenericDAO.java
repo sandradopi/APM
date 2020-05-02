@@ -60,6 +60,17 @@ public class GenericDAO <T extends Entity> {
         }
     }
 
+    public String modify (T entity) throws InstanceNotFoundException {
+        // Get reference to the table
+        DatabaseReference table = getTable();
+        // If entity has a preset id, we check if it exists
+
+                table.child(entity.getId()).setValue(entity);
+                // If id is found, object cant be inserted
+                return entity.getId();
+
+    }
+
     //TODO: MIRAR SI HACE FALTA PONER LOCKS. PROBABLEMENTE SI
     public T findById (String entityId) throws InstanceNotFoundException {
 

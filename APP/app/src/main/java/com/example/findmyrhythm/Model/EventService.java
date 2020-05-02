@@ -25,6 +25,16 @@ public class EventService {
         }
     }
 
+    public void modifyEvent(Event event) {
+
+        try {
+            String eventId = eventDAO.modify(event);
+
+        } catch (InstanceNotFoundException e) {
+            Log.e(TAG, "getEvent: Event not found");
+        }
+    }
+
     public void createEvent(Event event) {
 
         try {
