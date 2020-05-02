@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Address;
+import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Base64;
@@ -48,7 +49,9 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 
 public class CreateEventActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
@@ -82,13 +85,10 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
 
     private int mYear, mMonth, mDay, mHour, mMinute;
     private Uri imageUri;
-    private String imageName;
     private String selectedGenre = "";
     private Photo photo;
     private String photoId="";
     private Bitmap imageBitmap = null;
-    private String bitmapEncoded = "";
-    private byte[] byteArray;
 
     private Date eventDate;
     private Calendar calendar;
@@ -164,24 +164,29 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             maxAttendees.setText(eventSelect.getMaxAttendees());
             description.setText(eventSelect.getDescription());
             selectedGenre = eventSelect.getGenre();
-            addressButton.setText(eventSelect.getLocation());
+
+            Locale spanish = new Locale("es", "ES");
+            Geocoder geocoder = new Geocoder(this, spanish);
+
+            HashMap<String, String> completeAddressDict = eventSelect.getCompleteAddress();
+            List<Address> addresses = null;
+            try {
+                Double latitude = Double.valueOf(Objects.requireNonNull(completeAddressDict.get("latitude")));
+                Double longitude = Double.valueOf(Objects.requireNonNull(completeAddressDict.get("longitude")));
+                addresses = geocoder.getFromLocation(latitude, longitude, 1);
+                for (Address address : addresses) {
+                    eventCompleteAddress = address;
+                    addressButton.setText(GeoUtils.getAddressString(eventCompleteAddress));
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
             saveButton.setText("MODIFICAR");
             uploadPhotoButton.setText("Cambiar cartel");
             new getPhoto().execute();
-            //TODO Revisar esta cutrez (así?)
             String[] genresArr = getResources().getStringArray(R.array.categories);
             genresSpinner.setSelection(Arrays.asList(genresArr).indexOf(selectedGenre));
-//            mSpnBaths.setSelection(Arrays.asList(baths).indexOf(value_here));
-//            SpinnerAdapter genresAdapter = genres.getAdapter();
-//            Arrays.asList(gern).indexOf(value_here)
-//            genres.setSelection(().getPosition(selectedGenre));
-//            genres.setSelection(genres.get);
-//            int i=0;
-//            while(!genres.getSelectedItem().toString().equals(selectedGenre)){
-//                genres.setSelection(i);
-//                i++;
-//            }
-
 
         } else {
             // Set organizer location as default location
@@ -438,6 +443,24 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         //Nothing to do.
     }
 
+    private String createEncodedPhoto(Bitmap bitmapImage) {
+
+        Photo photo;
+        String photoId;
+        String bitmapEncoded;
+        byte[] byteArray;
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+
+        bitmapImage.compress(Bitmap.CompressFormat.PNG, 10, stream);
+        byteArray = stream.toByteArray();
+        bitmapEncoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+        bitmapImage.recycle();
+        photo = new Photo(bitmapEncoded);
+        photoId = photoService.createPhoto(photo);
+
+        return photoId;
+    }
+
 
     private Event makeEvent(String organizerId) {
         //bitmapEncoded = NO_IMAGE;
@@ -476,21 +499,10 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             eventDate = calendar.getTime();
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             if (imageBitmap != null) {
-
-                imageBitmap.compress(Bitmap.CompressFormat.PNG, 10, stream);
-                byteArray = stream.toByteArray();
-                bitmapEncoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                imageBitmap.recycle();
-                photo = new Photo(bitmapEncoded);
-                photoId = photoService.createPhoto(photo);
+                photoId = createEncodedPhoto(imageBitmap);
             } else {
                 Bitmap icon = BitmapFactory.decodeResource(getResources(),R.drawable.logo_white);
-                icon.compress(Bitmap.CompressFormat.PNG, 10, stream);
-                byteArray = stream.toByteArray();
-                bitmapEncoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                icon.recycle();
-                photo = new Photo(bitmapEncoded);
-                photoId = photoService.createPhoto(photo);
+                photoId = createEncodedPhoto(icon);
             }
 
             Event event = makeEvent(organizerId);
@@ -507,7 +519,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         @Override
         protected void onPostExecute(Event event) {
             super.onPostExecute(event);
-            Toast.makeText(getApplicationContext(), "Concierto creado con éxito!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "¡Concierto creado con éxito!", Toast.LENGTH_LONG).show();
             String eventJson = (new Gson()).toJson(event);
             // Start the activity to show the event info
             Intent intent = new Intent(CreateEventActivity.this, OrganizerEventInfoActivity.class);
@@ -535,13 +547,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             //String path= imageUri.getEncodedPath();
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             if (imageBitmap != null && photo == null) {
-
-                imageBitmap.compress(Bitmap.CompressFormat.PNG, 10, stream);
-                byteArray = stream.toByteArray();
-                bitmapEncoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                imageBitmap.recycle();
-                photo = new Photo(bitmapEncoded);
-                photoId = photoService.createPhoto(photo);
+                photoId = createEncodedPhoto(imageBitmap);
             }
 
             Event event = makeEvent(organizerId);
@@ -556,7 +562,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         @Override
         protected void onPostExecute(Event event) {
             super.onPostExecute(event);
-            Toast.makeText(getApplicationContext(), "Concierto modificado con éxito!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "¡Concierto modificado con éxito!", Toast.LENGTH_LONG).show();
             String eventJson = (new Gson()).toJson(event);
             // Start the activity to show the event info
             Intent intent = new Intent(CreateEventActivity.this, OrganizerEventInfoActivity.class);

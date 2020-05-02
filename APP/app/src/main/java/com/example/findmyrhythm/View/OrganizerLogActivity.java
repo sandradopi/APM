@@ -164,10 +164,9 @@ public class OrganizerLogActivity extends AppCompatActivity {
                         // Got last known location. In some rare situations this can be null.
                         if (location != null) {
                             // Logic to handle location object
-                            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
                             List<Address> addresses = null;
                             try {
-                                addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+                                addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
                                 for (Address address : addresses) {
                                     selectedAddressView.setText(GeoUtils.getAddressString(address));
                                 }
