@@ -29,9 +29,22 @@ public class RatingService {
         return ratingDAO.findRatingsByEventId(eventId);
     }
 
-    public Float getMedia (String eventId) {
+    public Float getMediaByEvent (String eventId) {
 
         ArrayList<Float> ratings = ratingDAO.findRatingsById(eventId);
+        float sum = 0;
+        if (!ratings.isEmpty()) {
+            for (float r : ratings)
+                sum += r;
+
+            return sum / ratings.size();
+        } else
+            return 0f;
+    }
+
+    public Float getMediaByUser (String userId) {
+
+        ArrayList<Float> ratings = ratingDAO.findRatingsByUserId(userId);
         float sum = 0;
         if (!ratings.isEmpty()) {
             for (float r : ratings)

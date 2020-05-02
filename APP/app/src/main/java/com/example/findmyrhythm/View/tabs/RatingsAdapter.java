@@ -37,6 +37,7 @@ public class RatingsAdapter extends ArrayAdapter<String> {
         TextView userView = (TextView) rowView.findViewById(R.id.user);
         RatingBar ratingBar = (RatingBar) rowView.findViewById(R.id.scoreRatings);
         ratingBar.setRating(scores.get(position));
+        ratingBar.setClickable(false);
         commentView.setText(comments.get(position));
         userView.setText(names.get(position));
 

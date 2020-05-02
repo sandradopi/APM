@@ -51,6 +51,7 @@ public class PastEventsFragmentOrg extends Fragment {
         String[] events = new String[eventsize];
         String[] dates = new String[eventsize];
         String[] rates = new String[eventsize];
+        final String[] ids = new String[eventsize];
 
         int i = 0;
         for (Event event : pastEvents) {
@@ -60,6 +61,7 @@ public class PastEventsFragmentOrg extends Fragment {
                 DateFormat df = new SimpleDateFormat("dd/MM/yy", java.util.Locale.getDefault());
                 dates[i] = df.format(date);
                 rates[i] = null;
+                ids[i]=event.getId();
                 i++;
             }
         }
@@ -70,7 +72,7 @@ public class PastEventsFragmentOrg extends Fragment {
 
                 Intent intent = new Intent(getActivity(), FinishedEventInfoActivity.class);
                 //String eventJson = (new Gson()).toJson(pastEvents.get((int) id));
-                intent.putExtra("EVENT", pastEvents.get((int) id).getId());
+                intent.putExtra("EVENT", ids[(int)id]);
                 intent.putExtra("RECOMMENDED", false);
                 getActivity().startActivity(intent);
 

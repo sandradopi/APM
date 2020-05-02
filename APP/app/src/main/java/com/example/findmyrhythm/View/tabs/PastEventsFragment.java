@@ -51,6 +51,8 @@ public class PastEventsFragment extends Fragment {
         String[] events = new String[eventsize];
         String[] dates = new String[eventsize];
         String[] rates = new String[eventsize];
+        final String[] ids = new String[eventsize];
+
         int i = 0;
         for (Event event : pastEvents) {
             if(event.getEventDate().compareTo(actualDate) < 0  ){
@@ -59,6 +61,7 @@ public class PastEventsFragment extends Fragment {
             DateFormat df = new SimpleDateFormat("dd/MM/yy", java.util.Locale.getDefault());
             dates[i] = df.format(date);
             rates[i] = "not_rated";
+            ids[i]=event.getId();
             i++;
             }
         }
@@ -70,7 +73,7 @@ public class PastEventsFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
                 Intent intent = new Intent(getActivity(), FinishedEventInfoActivity.class);
-                intent.putExtra("EVENT", pastEvents.get((int) id).getId());
+                intent.putExtra("EVENT", ids[(int)id]);
                 intent.putExtra("RECOMMENDED", false);
                 getActivity().startActivity(intent);
 

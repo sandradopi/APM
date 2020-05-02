@@ -75,7 +75,7 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
       //  final Event eventSelect = gson.fromJson(getIntent().getStringExtra("EVENT"), Event.class);
         final String eventSelectId = getIntent().getStringExtra("EVENT");
         SharedPreferences sharedPreferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
-        String account_type = sharedPreferences.getString("account_type", null);
+        final String account_type = sharedPreferences.getString("account_type", null);
 
         if (account_type.equals("organizer")) {
 
@@ -130,11 +130,13 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
         bar.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch (View view, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    Log.w(TAG, "Score event");
-                    FragmentManager fragmentManager = getSupportFragmentManager();
-                    ScoreEventDialog dialog = new ScoreEventDialog().newInstance(name.getText().toString(), eventSelect.getId() );
-                    dialog.show(fragmentManager, "tagAlerta");
+                if (account_type.equals("user")) {
+                    if (event.getAction() == MotionEvent.ACTION_UP) {
+                        Log.w(TAG, "Score event");
+                        FragmentManager fragmentManager = getSupportFragmentManager();
+                        ScoreEventDialog dialog = new ScoreEventDialog().newInstance(name.getText().toString(), eventSelect.getId());
+                        dialog.show(fragmentManager, "tagAlerta");
+                    }
                 }
                 return true;
             }
@@ -201,7 +203,7 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
 
         @Override
         protected Void doInBackground(Void... voids) {
-            ratingsMedia = ratingService.getMedia(eventSelect.getId());
+            ratingsMedia = ratingService.getMediaByEvent(eventSelect.getId());
             return null;
         }
 
