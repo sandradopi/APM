@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Address;
@@ -53,6 +54,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -195,7 +197,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         else if (v == saveButton) {
             Calendar currentCalendar = Calendar.getInstance();
             // TODO: CHECK IF DESCRIPTION AND IMAGE EXISTS.
-            if (isEmpty(name) || isEmpty(date) || isEmpty(hour) || isEmpty(maxAttendees) || isEmpty(price) || isEmpty(description) || address.getText().toString().isEmpty() || imageBitmap == null || selectedGenre.equals("") || calendar.getTime().compareTo(currentCalendar.getTime()) < 0) {
+            if (isEmpty(name) || isEmpty(date) || isEmpty(hour) || isEmpty(maxAttendees) || isEmpty(price) || isEmpty(description) || address.getText().toString().isEmpty() ||  selectedGenre.equals("") || calendar.getTime().compareTo(currentCalendar.getTime()) < 0) {
                 Toast.makeText(this, "Please cover every field shown in the screen", Toast.LENGTH_LONG).show();
                 return;
             }
@@ -363,10 +365,24 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
 
                 try {
                     imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+                    getRealPathFromURI(imageUri);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
+    }
+
+    public String getRealPathFromURI(Uri uri) {
+        String[] projection = { MediaStore.Images.Media.DATA };
+        @SuppressWarnings("deprecation")
+        Cursor cursor = managedQuery(uri, projection, null, null, null);
+        int column_index = cursor
+                .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        Button buttonPhoto = findViewById(R.id.button_load_picture);
+        String[] url = cursor.getString(column_index).split("/");
+        buttonPhoto.setText(url[url.length-1]);
+        return cursor.getString(column_index);
     }
 
     @Override
