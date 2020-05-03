@@ -27,6 +27,7 @@ import com.example.findmyrhythm.Model.IOFiles;
 import com.example.findmyrhythm.Model.OrganizerService;
 import com.example.findmyrhythm.Model.PersistentOrganizerInfo;
 import com.example.findmyrhythm.Model.Utils.GeoUtils;
+import com.example.findmyrhythm.Model.Utils.GenericUtils;
 import com.example.findmyrhythm.Model.Utils.PermissionUtils;
 import com.example.findmyrhythm.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -49,6 +50,7 @@ public class OrganizerLogActivity extends AppCompatActivity {
     private EditText name, nickname, email, biography;
     private Button exploreMapButton;
     private TextView selectedAddressView;
+    private List<Address> organizerAddressesList;
     private FloatingActionButton next;
     private FirebaseUser currentUser;
     Geocoder geocoder;
@@ -71,6 +73,7 @@ public class OrganizerLogActivity extends AppCompatActivity {
         email = findViewById(R.id.orgEmail);
         biography = findViewById(R.id.orgBiography);
         selectedAddressView = findViewById(R.id.selected_address);
+        organizerAddressesList = new ArrayList<>();
         exploreMapButton = findViewById(R.id.exploreMap);
         exploreMapButton = findViewById(R.id.exploreMap);
 
@@ -108,21 +111,22 @@ public class OrganizerLogActivity extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*TODO: Check if every field are covered.
-                 * If not ask for the user to cover them.
-                 * Insert the new user in the DataBase as ORGANIZATION with all the important information
-                 * Create the intent to go to the next Activity
-                 */
-
                 /*TODO: PROBABLY IT WOULD BE WISE TO GET THE LOCATION NOT BY GETTING THE TEXT OF THE EDITTEXT
                  * BUT BY INTRODUCING THE CITY, PROVINCE, STREET ETC SEPARATED BY USING THE GOOGLE MAP APP.
                  * IT WOULD MAKE EASIER THE CHECK OF EVENTS TO USERS AFTERWARDS.
                  */
 
-        //        if (isEmpty(name) || isEmpty(nickname) || isEmpty(email) || isEmpty(biography) || isEmpty(location)) {
-        //            Toast.makeText(this, "Porfavor rellene todos los campos", Toast.LENGTH_LONG).show();
-        //            return;
-        //        }
+                // Check if every field are covered. If not ask for the user to cover them.
+                if (GenericUtils.isEmpty(name) || GenericUtils.isEmpty(nickname) || GenericUtils.isEmpty(email) || GenericUtils.isEmpty(biography) || (organizerAddressesList.isEmpty())) {
+                    Toast.makeText(OrganizerLogActivity.this, "Porfavor rellene todos los campos", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                // Validate email
+                if (!GenericUtils.isValidEmail(email)) {
+                    email.setError("Invalid email format");
+                    return;
+                }
 
                 //TODO: Introduce into database by getting the value of every field. Check Android Service.
                 createOrganizer();
@@ -168,6 +172,7 @@ public class OrganizerLogActivity extends AppCompatActivity {
                             try {
                                 addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
                                 for (Address address : addresses) {
+                                    organizerAddressesList.add(address);
                                     selectedAddressView.setText(GeoUtils.getAddressString(address));
                                 }
                             } catch (IOException e) {
