@@ -46,7 +46,7 @@ import java.util.Locale;
 
 
 public class SelectAddressOnMapActivity extends FragmentActivity implements OnMapReadyCallback {
-    final String TAG  = "SearchEventActivity";
+    final String TAG = "SearchEventActivity";
     private GoogleMap mMap;
     private StringBuilder mResult;
     private EditText searchText;
@@ -79,6 +79,9 @@ public class SelectAddressOnMapActivity extends FragmentActivity implements OnMa
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        // Get the organizer's location
+        selectedAddress = getIntent().getParcelableExtra("organizerAddress");
+
 
     }
 
@@ -95,12 +98,19 @@ public class SelectAddressOnMapActivity extends FragmentActivity implements OnMa
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        marker = mMap.addMarker(new MarkerOptions().position(new LatLng(0,0)).visible(false));
+        // Check if there is a selected location and put the marker there.
+        if ((selectedAddress.getLatitude() != 0) && (selectedAddress.getLongitude() != 0)) {
+            marker = mMap.addMarker(new MarkerOptions().position(new LatLng(
+                    selectedAddress.getLatitude(), selectedAddress.getLongitude())).visible(true));
+            marker.setTitle(GeoUtils.getAddressString(selectedAddress));
+            marker.showInfoWindow();
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(
+                    selectedAddress.getLatitude(), selectedAddress.getLongitude()), 15));
+        } else {
+            marker = mMap.addMarker(new MarkerOptions().position(new LatLng(
+                    0, 0)).visible(false));
+        }
 
-        // Add a marker in Sydney and move the camera
-//        LatLng sydney = new LatLng(-34, 151);
-//        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
@@ -112,6 +122,7 @@ public class SelectAddressOnMapActivity extends FragmentActivity implements OnMa
                         marker = mMap.addMarker(new MarkerOptions().position(latLng).title(GeoUtils.getAddressString(address)));
                         mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
                         marker.showInfoWindow();
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
                         selectedAddress = address;
                     }
                 } catch (IOException e) {

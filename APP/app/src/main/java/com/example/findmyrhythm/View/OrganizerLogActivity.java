@@ -27,6 +27,7 @@ import com.example.findmyrhythm.Model.IOFiles;
 import com.example.findmyrhythm.Model.OrganizerService;
 import com.example.findmyrhythm.Model.PersistentOrganizerInfo;
 import com.example.findmyrhythm.Model.Utils.GeoUtils;
+import com.example.findmyrhythm.Model.Utils.GenericUtils;
 import com.example.findmyrhythm.Model.Utils.PermissionUtils;
 import com.example.findmyrhythm.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -49,6 +50,7 @@ public class OrganizerLogActivity extends AppCompatActivity {
     private EditText name, nickname, email, biography;
     private Button exploreMapButton;
     private TextView selectedAddressView;
+    private List<Address> organizerAddressesList;
     private FloatingActionButton next;
     private FirebaseUser currentUser;
     Geocoder geocoder;
@@ -71,6 +73,7 @@ public class OrganizerLogActivity extends AppCompatActivity {
         email = findViewById(R.id.orgEmail);
         biography = findViewById(R.id.orgBiography);
         selectedAddressView = findViewById(R.id.selected_address);
+        organizerAddressesList = new ArrayList<>();
         exploreMapButton = findViewById(R.id.exploreMap);
         exploreMapButton = findViewById(R.id.exploreMap);
 
@@ -80,7 +83,7 @@ public class OrganizerLogActivity extends AppCompatActivity {
         name.setText(currentUser.getDisplayName());
         email.setText(currentUser.getEmail());
 
-        Locale spanish = new Locale("es", "ES");
+        final Locale spanish = new Locale("es", "ES");
         geocoder = new Geocoder(this, spanish);
 
 
@@ -98,7 +101,16 @@ public class OrganizerLogActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 try {
-                    startActivityForResult(new Intent(getApplicationContext(), SelectAddressOnMapActivity.class), 1);
+                    Address organizerAddress;
+                    // Pass organizer's address in bundle. If it does not exist, initialize an address at (0,0).
+                    if (organizerAddressesList.isEmpty()) {
+                        organizerAddress = new Address(spanish);
+                        organizerAddress.setLatitude(0.0);
+                        organizerAddress.setLongitude(0.0);
+                    } else {
+                        organizerAddress = organizerAddressesList.get(0);
+                    }
+                    startActivityForResult(new Intent(getApplicationContext(), SelectAddressOnMapActivity.class).putExtra("organizerAddress", organizerAddress), 1);
                 } catch (Exception e) {
                     Log.w(TAG, e.toString());
                 }
@@ -108,21 +120,22 @@ public class OrganizerLogActivity extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*TODO: Check if every field are covered.
-                 * If not ask for the user to cover them.
-                 * Insert the new user in the DataBase as ORGANIZATION with all the important information
-                 * Create the intent to go to the next Activity
-                 */
-
                 /*TODO: PROBABLY IT WOULD BE WISE TO GET THE LOCATION NOT BY GETTING THE TEXT OF THE EDITTEXT
                  * BUT BY INTRODUCING THE CITY, PROVINCE, STREET ETC SEPARATED BY USING THE GOOGLE MAP APP.
                  * IT WOULD MAKE EASIER THE CHECK OF EVENTS TO USERS AFTERWARDS.
                  */
 
-        //        if (isEmpty(name) || isEmpty(nickname) || isEmpty(email) || isEmpty(biography) || isEmpty(location)) {
-        //            Toast.makeText(this, "Porfavor rellene todos los campos", Toast.LENGTH_LONG).show();
-        //            return;
-        //        }
+                // Check if every field are covered. If not ask for the user to cover them.
+                if (GenericUtils.isEmpty(name) || GenericUtils.isEmpty(nickname) || GenericUtils.isEmpty(email) || GenericUtils.isEmpty(biography) || (organizerAddressesList.isEmpty())) {
+                    Toast.makeText(OrganizerLogActivity.this, "Por favor rellene todos los campos", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                // Validate email
+                if (!GenericUtils.isValidEmail(email)) {
+                    email.setError("Formato de email inválido");
+                    return;
+                }
 
                 //TODO: Introduce into database by getting the value of every field. Check Android Service.
                 createOrganizer();
@@ -168,6 +181,7 @@ public class OrganizerLogActivity extends AppCompatActivity {
                             try {
                                 addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
                                 for (Address address : addresses) {
+                                    organizerAddressesList.add(address);
                                     selectedAddressView.setText(GeoUtils.getAddressString(address));
                                 }
                             } catch (IOException e) {
@@ -186,7 +200,9 @@ public class OrganizerLogActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 Address completeAddress = data.getParcelableExtra("pickedAddress");
                 Toast.makeText(getApplicationContext(),completeAddress.getSubAdminArea(),Toast.LENGTH_SHORT).show();
-
+                // Update the address to the new address selected from the map
+                organizerAddressesList = new ArrayList<>();
+                organizerAddressesList.add(completeAddress);
                 selectedAddressView.setText(GeoUtils.getAddressString(completeAddress));
             }
         }
@@ -233,7 +249,6 @@ public class OrganizerLogActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
-
             OrganizerService orgService = new OrganizerService();
             orgService.createOrganizer(currentUser.getUid(), name.getText().toString(), nickname.getText().toString(),
                     email.getText().toString(), biography.getText().toString(), null, selectedAddressView.getText().toString());
@@ -243,9 +258,7 @@ public class OrganizerLogActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-
             IOFiles.downloadProfilePicture(currentUser, getApplicationContext());
-
             finish();
         }
     }
