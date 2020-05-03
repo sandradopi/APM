@@ -2,6 +2,7 @@ package com.example.findmyrhythm.View.tabs;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +38,7 @@ public class PastEventsFragment extends Fragment {
         mListView = (ListView) view.findViewById(R.id.eventlist);
         PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
         final ArrayList<Event> pastEvents= persistentUserInfo.getEvents();
-
+        final ArrayList<String> eventsRated = persistentUserInfo.getRatedEvents();
 
 
         int eventsize = 0;
@@ -51,6 +52,8 @@ public class PastEventsFragment extends Fragment {
         String[] events = new String[eventsize];
         String[] dates = new String[eventsize];
         String[] rates = new String[eventsize];
+        final String[] ids = new String[eventsize];
+
         int i = 0;
         for (Event event : pastEvents) {
             if(event.getEventDate().compareTo(actualDate) < 0  ){
@@ -59,6 +62,11 @@ public class PastEventsFragment extends Fragment {
             DateFormat df = new SimpleDateFormat("dd/MM/yy", java.util.Locale.getDefault());
             dates[i] = df.format(date);
             rates[i] = "not_rated";
+            for (String ratedEvent : eventsRated) {
+                if (event.getId().equals(ratedEvent))
+                    rates[i] = "rated";
+            }
+            ids[i]=event.getId();
             i++;
             }
         }
@@ -70,7 +78,7 @@ public class PastEventsFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
                 Intent intent = new Intent(getActivity(), FinishedEventInfoActivity.class);
-                intent.putExtra("EVENT", pastEvents.get((int) id).getId());
+                intent.putExtra("EVENT", ids[(int)id]);
                 intent.putExtra("RECOMMENDED", false);
                 getActivity().startActivity(intent);
 

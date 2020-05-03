@@ -32,8 +32,6 @@ public class SectionsPagerAdapterOrg extends FragmentStatePagerAdapter {
                 return new NextEventsFragmentOrg();
             case 1:
                 return new PastEventsFragmentOrg();
-            case 2:
-                return new EventsRatingsFragment();
              default:
                  return null;
         }
@@ -47,8 +45,6 @@ public class SectionsPagerAdapterOrg extends FragmentStatePagerAdapter {
                 return "PRÓXIMOS";
             case 1:
                 return "PASADOS";
-            case 2:
-                return "VALORACIONES";
             default:
                 return null;
         }
@@ -60,7 +56,7 @@ public class SectionsPagerAdapterOrg extends FragmentStatePagerAdapter {
     @Override
     public int getCount() {
         // Show 2 total pages.
-        return 3;
+        return 2;
     }
 
 }

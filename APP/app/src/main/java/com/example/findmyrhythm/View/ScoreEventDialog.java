@@ -16,20 +16,27 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.findmyrhythm.Model.Event;
 import com.example.findmyrhythm.Model.IOFiles;
 import com.example.findmyrhythm.Model.OrganizerService;
+import com.example.findmyrhythm.Model.PersistentUserInfo;
 import com.example.findmyrhythm.Model.Rating;
 import com.example.findmyrhythm.Model.RatingService;
 import com.example.findmyrhythm.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.ArrayList;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 public class ScoreEventDialog extends DialogFragment {
 
     RatingService ratingService = new RatingService();
-    EditText comment;
+    EditText commentView;
     Float rate;
     String eventId;
+    String ratingId;
 
     public interface ScoreEventListener {
         public void onDialogPositiveClick();
@@ -48,29 +55,61 @@ public class ScoreEventDialog extends DialogFragment {
         final View view = inflater.inflate(R.layout.dialog_score_event, null);
         builder.setView(view);
 
-        String eventName = getArguments().getString("name");
-        eventId = getArguments().getString("id");
-
         // SCORES LOGIC
         final RatingBar bar=(RatingBar)view.findViewById(R.id.pastEventScore);
         bar.setClickable(true);
-        bar.setRating(3.5f);
+
+        String eventName = getArguments().getString("name");
+        eventId = getArguments().getString("id");
+        ratingId = getArguments().getString("ratingId");
 
 
-        builder.setTitle("Valorar evento " + eventName)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
+        commentView = view.findViewById(R.id.comment);
 
-                        comment = view.findViewById(R.id.comment);
-                        rate = bar.getRating();
-                        new createRating().execute();
-                        Toast.makeText(getActivity(), "Evento valorado con éxito",  Toast.LENGTH_SHORT).show();
-                        Log.w("VALORAR", dialog.toString());
-                        listener.onDialogPositiveClick();
-                        dialog.cancel();
+        //Already rated
+        if (ratingId != null) {
+            Float score = getArguments().getFloat("score");
+            String comment = getArguments().getString("comment");
+            bar.setRating(score);
+            commentView.setText(comment);
 
-                    }
-                });
+            builder.setTitle("Editar valoración del evento " + eventName)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            rate = bar.getRating();
+                            new updateRating().execute();
+                            Toast.makeText(getActivity(), "Evento valorado con éxito",  Toast.LENGTH_SHORT).show();
+                            Log.w("VALORAR", dialog.toString());
+                            listener.onDialogPositiveClick();
+                            dialog.cancel();
+
+                        }
+                    });
+        }
+
+
+        else {
+            bar.setRating(3.5f);
+
+            builder.setTitle("Valorar evento " + eventName)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            rate = bar.getRating();
+                            new createRating().execute();
+                            PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
+                            persistentUserInfo.addRatedEvent(getApplicationContext(), eventId);
+                            Toast.makeText(getActivity(), "Evento valorado con éxito",  Toast.LENGTH_SHORT).show();
+                            Log.w("VALORAR", dialog.toString());
+                            listener.onDialogPositiveClick();
+                            dialog.cancel();
+
+                        }
+                    });
+        }
+
+
+
+
 
         return builder.create();
     }
@@ -88,12 +127,15 @@ public class ScoreEventDialog extends DialogFragment {
         }
     }
 
-    public static ScoreEventDialog newInstance(String name, String id) {
+    public static ScoreEventDialog newInstance(String name, String id, Rating rated) {
         ScoreEventDialog fragment = new ScoreEventDialog();
 
         Bundle bundle = new Bundle();
         bundle.putString("name", name);
         bundle.putString("id", id);
+        bundle.putString("comment", rated.getComment());
+        bundle.putString("ratingId", rated.getId());
+        bundle.putFloat("score", rated.getRatingValue());
         fragment.setArguments(bundle);
 
         return fragment;
@@ -111,8 +153,32 @@ public class ScoreEventDialog extends DialogFragment {
         protected Void doInBackground(Void... voids) {
             final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-            Rating rating = new Rating(eventId, currentUser.getUid(),comment.getText().toString(), rate);
+            Rating rating = new Rating(eventId, currentUser.getUid(),commentView.getText().toString(), rate);
             ratingService.createRating(rating);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+        }
+    }
+
+    private class updateRating extends AsyncTask<Void,Void,Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+            Rating rating = new Rating(eventId, currentUser.getUid(),commentView.getText().toString(), rate);
+            rating.setId(ratingId);
+            ratingService.updateRating(rating);
             return null;
         }
 

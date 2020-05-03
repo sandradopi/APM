@@ -25,13 +25,17 @@ public class RatingService {
         }
     }
 
-    public ArrayList<Rating> getComments(String eventId) {
-        return ratingDAO.findCommentsByEventId(eventId);
+    public ArrayList<Rating> getRatingsByEvent(String eventId) {
+        return ratingDAO.findRatingsByEventId(eventId);
     }
 
-    public Float getMedia (String eventId) {
+    public ArrayList<String> getRatingsByUser(String userId) {
+        return ratingDAO.findRatingsByUserId(userId);
+    }
 
-        ArrayList<Float> ratings = ratingDAO.findRatingsById(eventId);
+    public Float getMediaByEvent (String eventId) {
+
+        ArrayList<Float> ratings = ratingDAO.findScoreRatingsById(eventId);
         float sum = 0;
         if (!ratings.isEmpty()) {
             for (float r : ratings)
@@ -40,6 +44,25 @@ public class RatingService {
             return sum / ratings.size();
         } else
             return 0f;
+    }
+
+    public Float getMediaByUser (String userId) {
+
+        ArrayList<Float> ratings = ratingDAO.findScoreRatingsByUserId(userId);
+        float sum = 0;
+        if (!ratings.isEmpty()) {
+            for (float r : ratings)
+                sum += r;
+
+            return sum / ratings.size();
+        } else
+            return 0f;
+    }
+
+
+    public Rating isRated (String userId, String eventId) {
+
+        return ratingDAO.isRated(userId, eventId);
     }
 
     public String createRating(Rating rating) {
