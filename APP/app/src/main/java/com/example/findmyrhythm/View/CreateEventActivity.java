@@ -1,8 +1,12 @@
 package com.example.findmyrhythm.View;
 
 import android.Manifest;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -65,7 +69,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
     private static final int PICK_IMAGE = 100;
     private static final String NO_IMAGE = "no_image";
 
-    private static final String DEFAULT_IMAGE_ID = "-M6PpLTdOhq0sFbyNrHz";
+    private String DEFAULT_IMAGE_ID = "-M6PpLTdOhq0sFbyNrHz";
     private static final String READ_EXTERNAL_STORAGE = Manifest.permission.READ_EXTERNAL_STORAGE;
     private static final String WRITE_EXTERNAL_STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE;
     private static final int STORAGE_PERMISSION_CODE = 1896;
@@ -157,6 +161,15 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
                 getStoragePermission();
             }
         });
+        uploadPhotoButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                showAlert();
+                //Toast.makeText(CreateEventActivity.this, "Borrar foto", Toast.LENGTH_LONG).show();
+                return true;
+            }
+        });
+
 
         //No tengo claro si se deberia hacer así
         final String eventSelectId = getIntent().getStringExtra("EVENT");
@@ -167,9 +180,15 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             eventSelect = persistentOrganizerInfo.getEvent(eventSelectId);
             price.setText(eventSelect.getPrice());
             name.setText(eventSelect.getName());
-            date.setText(eventSelect.getEventDate().toString());
+
             eventDate= eventSelect.getEventDate();
-            hour.setText(eventSelect.getEventDate().toString());
+
+
+            DateFormat df = new SimpleDateFormat("dd/MM/yy", java.util.Locale.getDefault());
+            DateFormat df2 = new SimpleDateFormat("HH:mm", java.util.Locale.getDefault());
+            date.setText(df.format(eventDate));
+            hour.setText(df2.format(eventDate));
+
             maxAttendees.setText(eventSelect.getMaxAttendees());
             description.setText(eventSelect.getDescription());
             selectedGenre = eventSelect.getGenre();
@@ -272,6 +291,24 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
 
     }
 
+    public void showAlert(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(CreateEventActivity.this);
+        builder.setMessage("Desea quitar la imagen seleccionada?")
+                .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        imageBitmap=null;
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+        AlertDialog ad= builder.create();
+        ad.show();
+    }
 
     private class getPhoto extends AsyncTask<Void, Void, Void> {
 
@@ -474,7 +511,6 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
     private void modifyEncodedPhoto(Bitmap bitmapImage) {
 
         Photo photo;
-        String photoId;
         String bitmapEncoded;
         byte[] byteArray;
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -483,9 +519,22 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         byteArray = stream.toByteArray();
         bitmapEncoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
         bitmapImage.recycle();
-        photo = new Photo(bitmapEncoded);
-        photoService.modifyPhoto(photoOriginal, photo);
+        photo = photoOriginal;
+        photo.setEventImage(bitmapEncoded);
+        photoService.updatePhoto(photo);
 
+    }
+    private void deletePhoto(Photo photo){
+        photoService.deletePhoto(photo.getId());
+        Photo defaultP = photoService.getPhoto(DEFAULT_IMAGE_ID);
+        if (defaultP != null){
+            photoId= DEFAULT_IMAGE_ID;
+        }
+        else{
+            Bitmap icon = BitmapFactory.decodeResource(getResources(),R.drawable.logo_white);
+            photoId = createEncodedPhoto(icon);
+            DEFAULT_IMAGE_ID = photoId;
+        }
     }
 
     private Event makeEvent(String organizerId) {
@@ -534,6 +583,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
                 else{
                     Bitmap icon = BitmapFactory.decodeResource(getResources(),R.drawable.logo_white);
                     photoId = createEncodedPhoto(icon);
+                    DEFAULT_IMAGE_ID = photoId;
                 }
 
             }
@@ -579,11 +629,14 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             //bitmapEncoded = NO_IMAGE;
             //String path= imageUri.getEncodedPath();
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            if (imageBitmap != null &&  photoOriginalId!=DEFAULT_IMAGE_ID) {
+            if (imageBitmap != null &&  !photoOriginalId.equals(DEFAULT_IMAGE_ID)) {
                 modifyEncodedPhoto(imageBitmap);
             }
-            else if (imageBitmap !=null && photoOriginalId==DEFAULT_IMAGE_ID){
+            else if (imageBitmap !=null){
                 createEncodedPhoto(imageBitmap);
+            }
+            else{
+                deletePhoto(photo);
             }
 
             Event event = makeEvent(organizerId);
