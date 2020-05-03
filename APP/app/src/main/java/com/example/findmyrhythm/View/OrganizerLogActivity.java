@@ -249,7 +249,6 @@ public class OrganizerLogActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
-
             OrganizerService orgService = new OrganizerService();
             orgService.createOrganizer(currentUser.getUid(), name.getText().toString(), nickname.getText().toString(),
                     email.getText().toString(), biography.getText().toString(), null, selectedAddressView.getText().toString());
@@ -259,9 +258,7 @@ public class OrganizerLogActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-
             IOFiles.downloadProfilePicture(currentUser, getApplicationContext());
-
             finish();
         }
     }

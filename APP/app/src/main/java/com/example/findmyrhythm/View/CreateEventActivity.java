@@ -14,6 +14,7 @@ import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -35,6 +36,7 @@ import android.net.Uri;
 
 import com.example.findmyrhythm.Model.Event;
 import com.example.findmyrhythm.Model.EventService;
+import com.example.findmyrhythm.Model.Utils.GenericUtils;
 import com.example.findmyrhythm.Model.Utils.GeoUtils;
 import com.example.findmyrhythm.Model.PersistentOrganizerInfo;
 import com.example.findmyrhythm.Model.Photo;
@@ -70,10 +72,10 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
     private static final int STORAGE_PERMISSION_CODE = 1896;
 //    private static final int LOCATION_PERMISSION_CODE = 7346;
 
-//    private boolean useUserDefaultLocation;
+    //    private boolean useUserDefaultLocation;
     private boolean modifyEvent = false;
 
-//    private int NUM_GENRES = 9;
+    //    private int NUM_GENRES = 9;
     private EditText date, hour, maxAttendees, name, price, description;
     private Button exploreMapButton;
     private TextView addressTextView;
@@ -82,14 +84,13 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
     private Spinner genresSpinner;
 
     private Address eventCompleteAddress;
-//    private Location organizerLocation;
     private GeoUtils geoUtils;
 
     private int mYear, mMonth, mDay, mHour, mMinute;
     private Uri imageUri;
     private String selectedGenre = "";
     private Photo photo;
-    private String photoId="";
+    private String photoId = "";
     private Bitmap imageBitmap = null;
 
     private Date eventDate;
@@ -117,14 +118,27 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
 //        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
 //        useUserDefaultLocation = true;
+        final Locale spanish = new Locale("es", "ES");
         calendar = Calendar.getInstance();
         addressTextView = findViewById(R.id.address);
         exploreMapButton = findViewById(R.id.exploreMap);
+        eventCompleteAddress = null;
         exploreMapButton.setText("Explorar en el mapa");
         exploreMapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            startActivityForResult(new Intent(getApplicationContext(), SelectAddressOnMapActivity.class), SET_LOCATION);
+                try {
+                    Address organizerAddress;
+                    // Pass event's address in bundle. If it does not exist, initialize an address at (0,0).
+                    if (eventCompleteAddress == null) {
+                        organizerAddress = new Address(spanish);
+                        organizerAddress.setLatitude(0.0);
+                        organizerAddress.setLongitude(0.0);
+                    }
+                    startActivityForResult(new Intent(getApplicationContext(), SelectAddressOnMapActivity.class).putExtra("organizerAddress", eventCompleteAddress), SET_LOCATION);
+                } catch (Exception e) {
+                    Log.w(TAG, e.toString());
+                }
             }
         });
         // Reference to the different EditText containing the event info
@@ -144,11 +158,8 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         // Load picture button
         uploadPhotoButton = findViewById(R.id.button_load_picture);
 
-
         TextView toolbarTitle = findViewById(R.id.toolbar_title);
         toolbarTitle.setText("Crear evento");
-
-
         uploadPhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -158,7 +169,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
 
         //No tengo claro si se deberia hacer así
         final String eventSelectId = getIntent().getStringExtra("EVENT");
-        if (eventSelectId!=null && !eventSelectId.isEmpty()) {
+        if (eventSelectId != null && !eventSelectId.isEmpty()) {
             toolbarTitle.setText("Editar evento");
             modifyEvent = true;
             persistentOrganizerInfo = PersistentOrganizerInfo.getPersistentOrganizerInfo(getApplicationContext());
@@ -166,13 +177,12 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             price.setText(eventSelect.getPrice());
             name.setText(eventSelect.getName());
             date.setText(eventSelect.getEventDate().toString());
-            eventDate= eventSelect.getEventDate();
+            eventDate = eventSelect.getEventDate();
             hour.setText(eventSelect.getEventDate().toString());
             maxAttendees.setText(eventSelect.getMaxAttendees());
             description.setText(eventSelect.getDescription());
             selectedGenre = eventSelect.getGenre();
 
-            Locale spanish = new Locale("es", "ES");
             Geocoder geocoder = new Geocoder(this, spanish);
 
             HashMap<String, String> completeAddressDict = eventSelect.getCompleteAddress();
@@ -250,9 +260,9 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             } else {
                 eventDate = calendar.getTime();
             }
-            boolean isAnyFiledEmpty = isEmpty(name) || isEmpty(date) || isEmpty(hour)
-                    || isEmpty(maxAttendees) || isEmpty(price) || isEmpty(description)
-                    || addressTextView.getText().toString().isEmpty() ||  selectedGenre.equals("")
+            boolean isAnyFiledEmpty = GenericUtils.isEmpty(name) || GenericUtils.isEmpty(date) || GenericUtils.isEmpty(hour)
+                    || GenericUtils.isEmpty(maxAttendees) || GenericUtils.isEmpty(price) || GenericUtils.isEmpty(description)
+                    || GenericUtils.isEmpty(addressTextView) || selectedGenre.equals("")
                     || eventDate.compareTo(currentCalendar.getTime()) < 0;
 
             if (isAnyFiledEmpty) {
@@ -298,7 +308,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
                                           int monthOfYear, int dayOfMonth) {
                         // Por que month of year + 1???
                         //date.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-                        String textdate = dayOfMonth + "/" + (monthOfYear+1) + "/" + year;
+                        String textdate = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
                         Date fecha = new Date(year, monthOfYear, dayOfMonth);
                         DateFormat df = new SimpleDateFormat("dd/MM/yy", java.util.Locale.getDefault());
                         date.setText(df.format(fecha));
@@ -367,7 +377,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
 
 
     @Override
-    public void onRequestPermissionsResult( int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
         if (requestCode == STORAGE_PERMISSION_CODE) {
 
@@ -384,31 +394,23 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
 
 
     @Override
-    protected void onActivityResult (int requestCode, int resultCode, Intent data){
-
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (resultCode == RESULT_OK) {
             if (requestCode == SET_LOCATION) {
-//                useUserDefaultLocation = false;
+                // Update the address to the new address selected from the map
                 eventCompleteAddress = data.getParcelableExtra("pickedAddress");
-                //              geoUtils = new GeoUtils(this, Locale.getDefault());
-                //              eventCompleteAddress = geoUtils.getAddressFromLocation(newLocation);
                 addressTextView.setText(GeoUtils.getAddressString(eventCompleteAddress));
             } else if (requestCode == GET_IMG_FROM_GALLERY) {
                 if (data != null) {
-
                     imageUri = data.getData();
-
                     try {
                         imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
                         getRealPathFromURI(imageUri);
-
                         /*Cursor returnCursor = getContentResolver().query(imageUri, null, null, null, null);
                         int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
                         returnCursor.moveToFirst();
                         buttonPhoto.setText(returnCursor.getString(nameIndex));*/
-
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -419,7 +421,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
 
 
     public String getRealPathFromURI(Uri uri) {
-        String[] projection = { MediaStore.Images.Media.DATA };
+        String[] projection = {MediaStore.Images.Media.DATA};
         @SuppressWarnings("deprecation")
         Cursor cursor = managedQuery(uri, projection, null, null, null);
         int column_index = cursor
@@ -427,7 +429,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         cursor.moveToFirst();
         Button buttonPhoto = findViewById(R.id.button_load_picture);
         String[] url = cursor.getString(column_index).split("/");
-        buttonPhoto.setText(url[url.length-1]);
+        buttonPhoto.setText(url[url.length - 1]);
         return cursor.getString(column_index);
     }
 
@@ -435,9 +437,6 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
     public boolean onSupportNavigateUp() {
         finish();
         return true;
-    }
-    private boolean isEmpty(EditText text) {
-        return text.getText().toString().equals("");
     }
 
     @Override
@@ -508,7 +507,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             if (imageBitmap != null) {
                 photoId = createEncodedPhoto(imageBitmap);
             } else {
-                Bitmap icon = BitmapFactory.decodeResource(getResources(),R.drawable.logo_white);
+                Bitmap icon = BitmapFactory.decodeResource(getResources(), R.drawable.logo_white);
                 photoId = createEncodedPhoto(icon);
             }
 
@@ -559,7 +558,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
 
             Event event = makeEvent(organizerId);
 
-            Event e = persistentOrganizerInfo.modifyEvent(getApplicationContext(),eventSelect, event);
+            Event e = persistentOrganizerInfo.modifyEvent(getApplicationContext(), eventSelect, event);
             eventService.modifyEvent(e);
 
             return e;
