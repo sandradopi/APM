@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 import android.provider.MediaStore;
@@ -74,7 +75,8 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
 
 //    private int NUM_GENRES = 9;
     private EditText date, hour, maxAttendees, name, price, description;
-    private Button addressButton, exploreMapButton;
+    private Button exploreMapButton;
+    private TextView addressTextView;
     private Button saveButton;
     private Button uploadPhotoButton;
     private Spinner genresSpinner;
@@ -116,7 +118,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
 
 //        useUserDefaultLocation = true;
         calendar = Calendar.getInstance();
-        addressButton = findViewById(R.id.address);
+        addressTextView = findViewById(R.id.address);
         exploreMapButton = findViewById(R.id.exploreMap);
         exploreMapButton.setText("Explorar en el mapa");
         exploreMapButton.setOnClickListener(new View.OnClickListener() {
@@ -143,6 +145,10 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         uploadPhotoButton = findViewById(R.id.button_load_picture);
 
 
+        TextView toolbarTitle = findViewById(R.id.toolbar_title);
+        toolbarTitle.setText("Crear evento");
+
+
         uploadPhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -153,6 +159,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         //No tengo claro si se deberia hacer así
         final String eventSelectId = getIntent().getStringExtra("EVENT");
         if (eventSelectId!=null && !eventSelectId.isEmpty()) {
+            toolbarTitle.setText("Editar evento");
             modifyEvent = true;
             persistentOrganizerInfo = PersistentOrganizerInfo.getPersistentOrganizerInfo(getApplicationContext());
             eventSelect = persistentOrganizerInfo.getEvent(eventSelectId);
@@ -176,7 +183,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
                 addresses = geocoder.getFromLocation(latitude, longitude, 1);
                 for (Address address : addresses) {
                     eventCompleteAddress = address;
-                    addressButton.setText(GeoUtils.getAddressString(eventCompleteAddress));
+                    addressTextView.setText(GeoUtils.getAddressString(eventCompleteAddress));
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -193,7 +200,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             SharedPreferences preferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
             String organizerLocationName = preferences.getString("location", null);
 
-            addressButton.setText(organizerLocationName);
+            addressTextView.setText(organizerLocationName);
             // Use GeoUtils to obtain the complete address from location name
             geoUtils = new GeoUtils(this, Locale.getDefault());
             eventCompleteAddress = geoUtils.getAddressFromLocationName(organizerLocationName);
@@ -245,7 +252,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             }
             boolean isAnyFiledEmpty = isEmpty(name) || isEmpty(date) || isEmpty(hour)
                     || isEmpty(maxAttendees) || isEmpty(price) || isEmpty(description)
-                    || addressButton.getText().toString().isEmpty() ||  selectedGenre.equals("")
+                    || addressTextView.getText().toString().isEmpty() ||  selectedGenre.equals("")
                     || eventDate.compareTo(currentCalendar.getTime()) < 0;
 
             if (isAnyFiledEmpty) {
@@ -387,7 +394,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
                 eventCompleteAddress = data.getParcelableExtra("pickedAddress");
                 //              geoUtils = new GeoUtils(this, Locale.getDefault());
                 //              eventCompleteAddress = geoUtils.getAddressFromLocation(newLocation);
-                addressButton.setText(GeoUtils.getAddressString(eventCompleteAddress));
+                addressTextView.setText(GeoUtils.getAddressString(eventCompleteAddress));
             } else if (requestCode == GET_IMG_FROM_GALLERY) {
                 if (data != null) {
 
@@ -475,7 +482,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         addressDict.put("latitude", String.valueOf(eventCompleteAddress.getLatitude()));
         addressDict.put("longitude", String.valueOf(eventCompleteAddress.getLongitude()));
 
-        Event event = new Event(name.getText().toString(), eventDate, addressButton.getText().toString(),
+        Event event = new Event(name.getText().toString(), eventDate, addressTextView.getText().toString(),
                 selectedGenre, organizerId, maxAttendees.getText().toString(), price.getText().toString(),
                 description.getText().toString(), photoId, addressDict);
 

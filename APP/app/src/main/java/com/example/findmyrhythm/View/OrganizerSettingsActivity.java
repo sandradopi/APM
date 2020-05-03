@@ -34,6 +34,9 @@ public class OrganizerSettingsActivity extends OrganizerMenuDrawerActivity {
 
         setMenuItemChecked(R.id.nav_settings);
 
+        TextView toolbarTitle = findViewById(R.id.toolbar_title);
+        toolbarTitle.setText("Ajustes");
+
         persistentOrgInfo = PersistentOrganizerInfo.getPersistentOrganizerInfo(getApplicationContext());
 
         final String rating = persistentOrgInfo.getRating();

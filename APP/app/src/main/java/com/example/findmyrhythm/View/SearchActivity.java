@@ -52,7 +52,7 @@ public class SearchActivity extends UserMenuDrawerActivity implements OnMapReady
             }
         });
 
-        TextView toolbarTitle = findViewById(R.id.tvTitle);
+        TextView toolbarTitle = findViewById(R.id.toolbar_title);
         toolbarTitle.setText("Buscador");
 
     }

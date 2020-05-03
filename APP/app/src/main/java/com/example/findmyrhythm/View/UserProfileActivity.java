@@ -1,36 +1,21 @@
 package com.example.findmyrhythm.View;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.findmyrhythm.Model.BitmapDownloaderTask;
 import com.example.findmyrhythm.Model.EventService;
 import com.example.findmyrhythm.Model.IOFiles;
 import com.example.findmyrhythm.R;
 import com.google.android.material.tabs.TabLayout;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.findmyrhythm.View.tabs.SectionsPagerAdapter;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserInfo;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.concurrent.ExecutionException;
 
 public class UserProfileActivity extends UserMenuDrawerActivity {
     private static final String TAG = "Perfil Usuario";
@@ -55,7 +40,7 @@ public class UserProfileActivity extends UserMenuDrawerActivity {
 
         setMenuItemChecked(R.id.nav_profile);
 
-        TextView toolbarTitle = findViewById(R.id.tvTitle);
+        TextView toolbarTitle = findViewById(R.id.toolbar_title);
         toolbarTitle.setText("Perfil");
 
         SharedPreferences preferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);

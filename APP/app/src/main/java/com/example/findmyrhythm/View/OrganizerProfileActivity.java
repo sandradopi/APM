@@ -39,6 +39,9 @@ public class OrganizerProfileActivity extends OrganizerMenuDrawerActivity {
 //        getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);
 
 
+        TextView toolbarTitle = findViewById(R.id.toolbar_title);
+        toolbarTitle.setText("Perfil");
+
 
         SectionsPagerAdapterOrg sectionsPagerAdapter = new SectionsPagerAdapterOrg(this, getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.view_pager);
