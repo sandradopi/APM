@@ -83,7 +83,7 @@ public class OrganizerLogActivity extends AppCompatActivity {
         name.setText(currentUser.getDisplayName());
         email.setText(currentUser.getEmail());
 
-        Locale spanish = new Locale("es", "ES");
+        final Locale spanish = new Locale("es", "ES");
         geocoder = new Geocoder(this, spanish);
 
 
@@ -101,7 +101,16 @@ public class OrganizerLogActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 try {
-                    startActivityForResult(new Intent(getApplicationContext(), SelectAddressOnMapActivity.class), 1);
+                    Address organizerAddress;
+                    // Pass organizer's address in bundle. If it does not exist, initialize an address at (0,0).
+                    if (organizerAddressesList.isEmpty()) {
+                        organizerAddress = new Address(spanish);
+                        organizerAddress.setLatitude(0.0);
+                        organizerAddress.setLongitude(0.0);
+                    } else {
+                        organizerAddress = organizerAddressesList.get(0);
+                    }
+                    startActivityForResult(new Intent(getApplicationContext(), SelectAddressOnMapActivity.class).putExtra("organizerAddress", organizerAddress), 1);
                 } catch (Exception e) {
                     Log.w(TAG, e.toString());
                 }
@@ -118,13 +127,13 @@ public class OrganizerLogActivity extends AppCompatActivity {
 
                 // Check if every field are covered. If not ask for the user to cover them.
                 if (GenericUtils.isEmpty(name) || GenericUtils.isEmpty(nickname) || GenericUtils.isEmpty(email) || GenericUtils.isEmpty(biography) || (organizerAddressesList.isEmpty())) {
-                    Toast.makeText(OrganizerLogActivity.this, "Porfavor rellene todos los campos", Toast.LENGTH_LONG).show();
+                    Toast.makeText(OrganizerLogActivity.this, "Por favor rellene todos los campos", Toast.LENGTH_LONG).show();
                     return;
                 }
 
                 // Validate email
                 if (!GenericUtils.isValidEmail(email)) {
-                    email.setError("Invalid email format");
+                    email.setError("Formato de email inválido");
                     return;
                 }
 
