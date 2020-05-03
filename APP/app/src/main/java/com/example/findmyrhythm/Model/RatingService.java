@@ -55,6 +55,16 @@ public class RatingService {
             return 0f;
     }
 
+    /*public Boolean isRated (String userId, String eventId) {
+
+        return ratingDAO.isRated(userId, eventId);
+    }*/
+
+    public Rating isRated (String userId, String eventId) {
+
+        return ratingDAO.isRated(userId, eventId);
+    }
+
     public String createRating(Rating rating) {
 
         try {

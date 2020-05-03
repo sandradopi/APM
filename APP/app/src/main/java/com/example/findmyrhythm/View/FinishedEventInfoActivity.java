@@ -37,6 +37,8 @@ import com.example.findmyrhythm.Model.UserService;
 import com.example.findmyrhythm.R;
 import com.example.findmyrhythm.View.tabs.RatingsAdapter;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 
 import java.io.ByteArrayInputStream;
@@ -57,7 +59,7 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
     ArrayList<Rating> ratings = new ArrayList<>();
     ArrayList<String> comments = new ArrayList<>();
     ArrayList<Float> scores = new ArrayList<>();
-    ArrayList<String> names = new ArrayList<>();
+    Rating rated;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -70,9 +72,6 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Event
-        //Event
-       // Gson gson = new Gson();
-      //  final Event eventSelect = gson.fromJson(getIntent().getStringExtra("EVENT"), Event.class);
         final String eventSelectId = getIntent().getStringExtra("EVENT");
         SharedPreferences sharedPreferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
         final String account_type = sharedPreferences.getString("account_type", null);
@@ -87,7 +86,8 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
             eventSelect = persistentInfo.getEvent(eventSelectId);
 
         }
-        
+
+        new isRated().execute();
         new getPhoto().execute();
 
         //View
@@ -134,7 +134,7 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
                     if (event.getAction() == MotionEvent.ACTION_UP) {
                         Log.w(TAG, "Score event");
                         FragmentManager fragmentManager = getSupportFragmentManager();
-                        ScoreEventDialog dialog = new ScoreEventDialog().newInstance(name.getText().toString(), eventSelect.getId());
+                        ScoreEventDialog dialog = new ScoreEventDialog().newInstance(name.getText().toString(), eventSelect.getId(), rated);
                         dialog.show(fragmentManager, "tagAlerta");
                     }
                 }
@@ -148,6 +148,7 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
     public void onDialogPositiveClick() {
         // User touched the dialog's positive button
         new getRatingsMedia().execute();
+        new isRated().execute();
         new getComments().execute();
         new getUsers().execute();
     }
@@ -276,6 +277,29 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
             final ListView listview = (ListView) findViewById(R.id.ratingList);
             RatingsAdapter adapter = new RatingsAdapter(getApplicationContext(), comments, scores, names);
             listview.setAdapter(adapter);
+        }
+    }
+
+    private class isRated extends AsyncTask<Void, Void, Void> {
+
+        final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        RatingService ratingService = new RatingService();
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            rated = ratingService.isRated(currentUser.getUid(), eventSelect.getId());
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+
         }
     }
 

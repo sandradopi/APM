@@ -1,5 +1,7 @@
 package com.example.findmyrhythm.Model;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.google.firebase.database.DataSnapshot;
@@ -12,6 +14,10 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 public class RatingDAO extends GenericDAO<Rating> {
+
+    Rating rated = new Rating();
+    //Boolean isRated = false;
+    private static final String TAG = "RatingDAO";
 
     public RatingDAO() { super(Rating.class, "ratings"); }
 
@@ -122,5 +128,77 @@ public class RatingDAO extends GenericDAO<Rating> {
         }
         return ratingsByUser;
     }
+
+    public Rating isRated (final String idUser, final String idEvent) {
+        DatabaseReference table = getTable();
+
+        // Lock
+        final CountDownLatch lock = new CountDownLatch(1);
+
+        // Loop through the event Ids, getting the headers
+        table.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    Rating rating = child.getValue(Rating.class);
+                    if (rating.getUserId().contains(idUser)) {
+                        if (rating.getEventId().contains(idEvent))
+                            rated = rating;
+                    }
+                }
+                lock.countDown();
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                lock.countDown();
+            }
+        });
+        // Wait for all data to be retrieved
+        try {
+            lock.await();
+        }
+        catch (InterruptedException e) {
+            //Log.e(TAG, "Thread was interrupted while waiting for syncronisation with Firebase call");
+        }
+        return rated;
+    }
+
+    /*public Boolean isRated (final String idUser, final String idEvent) {
+        DatabaseReference table = getTable();
+
+        // Lock
+        final CountDownLatch lock = new CountDownLatch(1);
+
+        // Loop through the event Ids, getting the headers
+        table.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    Rating rating = child.getValue(Rating.class);
+                    if (rating.getUserId().contains(idUser)) {
+                        if (rating.getEventId().contains(idEvent))
+                            isRated = true;
+                    }
+                }
+                lock.countDown();
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                lock.countDown();
+            }
+        });
+        // Wait for all data to be retrieved
+        try {
+            lock.await();
+        }
+        catch (InterruptedException e) {
+            //Log.e(TAG, "Thread was interrupted while waiting for syncronisation with Firebase call");
+        }
+        return isRated;
+    }*/
 
 }
