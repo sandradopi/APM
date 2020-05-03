@@ -4,10 +4,15 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.IBinder;
+import android.os.PowerManager;
+import android.provider.Settings;
+import android.support.v4.media.session.PlaybackStateCompat;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -38,6 +43,8 @@ import java.util.stream.StreamSupport;
 public class EventNotificationListener implements ValueEventListener {
 
     private static final String TAG = "EventNotifListener";
+    private static String NOTIFICATION_GROUP = "com.android.EVENT_NOTIFICATION";
+    private static int GROUP_ID = -1;
     private Context mContext;
     private static EventNotificationListener instance = null;
     private User user = null;
@@ -86,22 +93,6 @@ public class EventNotificationListener implements ValueEventListener {
 
     private void sendNotification(Event event) {
 
-        // Get a reference to the Notification Manager
-       /* NotificationManager mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
-
-        Intent resultIntent = new Intent(mContext, UserProfileActivity.class);
-
-        PendingIntent pIntent = PendingIntent.getActivity(mContext, 1201, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        Notification.Builder mBuilder = new Notification.Builder(mContext)
-                .setSmallIcon(R.drawable.logo_white)
-                .setContentTitle("Find my Rhythm")
-                .setContentText("Tienes un nuevo evento figura! Su Nombre es: " + event.getName())
-                .setAutoCancel(true)
-                .setContentIntent(pIntent);
-
-        mNotificationManager.notify(001, mBuilder.build());*/
-
        OrganizerService service = new OrganizerService();
        try {
            Organizer organizer = service.getOrganizer(event.getOrganizerId());
@@ -112,14 +103,26 @@ public class EventNotificationListener implements ValueEventListener {
            PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 1902, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(mContext);
+
            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mContext, "myChannel")
                    .setSmallIcon(R.drawable.status_bar_icon)
                    .setContentTitle(event.getName())
                    .setDefaults(NotificationCompat.DEFAULT_ALL)
-                   .setContentText(organizer.getName() + " ha creado un evento que te puede interesar!")
+                   .setContentText("- Evento de " + organizer.getName())
                    .setColor(Color.argb(0, 179, 86, 168))
                    .setContentIntent(pendingIntent)
+                   .setGroup(NOTIFICATION_GROUP)
+                   .setStyle(new NotificationCompat.BigTextStyle().bigText(organizer.getName() + " ha creado un evento que te puede interesar!").setSummaryText("Evento Recomendado"))
                    .setAutoCancel(true);
+
+           NotificationCompat.Builder groupBuilder = new NotificationCompat.Builder(mContext, "myChannel")
+                   .setContentTitle("Resumen")
+                   .setContentText("Content Text")
+                   .setSmallIcon(R.drawable.status_bar_icon)
+                   .setStyle(new NotificationCompat.InboxStyle())
+                   .setColor(Color.argb(0, 179, 86, 168))
+                   .setGroup(NOTIFICATION_GROUP)
+                   .setGroupSummary(true);
 
 
            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -130,14 +133,13 @@ public class EventNotificationListener implements ValueEventListener {
                notificationManager.createNotificationChannel(mChannel);
            }
 
+           notificationManager.notify(i, mBuilder.build());
+            notificationManager.notify(GROUP_ID, groupBuilder.build());
 
-           notificationManager.notify(0, mBuilder.build());
 
        } catch (InstanceNotFoundException e) {
            Log.e(TAG, "Instance of organizer has not been found");
        }
-
-
 
     }
 
@@ -201,4 +203,6 @@ public class EventNotificationListener implements ValueEventListener {
     public void onCancelled(@NonNull DatabaseError databaseError) {
 
     }
+
+
 }

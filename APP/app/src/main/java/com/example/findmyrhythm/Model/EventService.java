@@ -1,10 +1,15 @@
 package com.example.findmyrhythm.Model;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.util.Log;
+
+import androidx.core.app.NotificationManagerCompat;
 
 import com.example.findmyrhythm.Model.Exceptions.DuplicatedInstanceException;
 import com.example.findmyrhythm.Model.Exceptions.InstanceNotFoundException;
+import com.example.findmyrhythm.View.UserLogActivity;
 
 import java.util.ArrayList;
 
@@ -72,6 +77,7 @@ public class EventService {
         listener.setContext(context);
         listener.setUser(userId);
         eventDAO.addChildEventListener(listener);
+
         Log.i(TAG, "NotifListener added");
     }
 

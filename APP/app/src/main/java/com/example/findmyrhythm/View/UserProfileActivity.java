@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.findmyrhythm.Model.BitmapDownloaderTask;
+import com.example.findmyrhythm.Model.EndlessService;
 import com.example.findmyrhythm.Model.EventService;
 import com.example.findmyrhythm.Model.IOFiles;
 import com.example.findmyrhythm.R;
@@ -75,7 +77,13 @@ public class UserProfileActivity extends UserMenuDrawerActivity {
         } catch (FileNotFoundException e) {
             imageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_logo));
         }
-
+        Intent intent = new Intent(this, EndlessService.class);
+        intent.putExtra("SERVICE_STATE", true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(intent);
+            return;
+        }
+        startService(intent);
     }
 
     @Override
@@ -93,7 +101,7 @@ public class UserProfileActivity extends UserMenuDrawerActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-        EventService service = new EventService();
-        service.unSubscribeEventNotificationListener();
+        /*EventService service = new EventService();
+        service.unSubscribeEventNotificationListener();*/
     }
 }

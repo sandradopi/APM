@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -12,7 +13,9 @@ import android.util.Log;
 import com.example.findmyrhythm.Model.Attendee;
 import com.example.findmyrhythm.Model.AttendeeDAO;
 import com.example.findmyrhythm.Model.AttendeeService;
+import com.example.findmyrhythm.Model.EndlessService;
 import com.example.findmyrhythm.Model.Event;
+import com.example.findmyrhythm.Model.EventNotificationListener;
 import com.example.findmyrhythm.Model.EventService;
 import com.example.findmyrhythm.Model.IOFiles;
 import com.example.findmyrhythm.Model.PersistentOrganizerInfo;
@@ -73,8 +76,9 @@ public class SplashActivity extends AppCompatActivity {
                         PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
                         eventsToAttendIds = attendeeService.findAttendeeByUser(currentUser.getUid());
 
-                        EventService service = new EventService();
-                        service.subscribeEventNotificationListener(SplashActivity.this, currentUser.getUid());
+
+                        /*EventService service = new EventService();
+                        service.subscribeEventNotificationListener(SplashActivity.this, currentUser.getUid());*/
 
                         for (String idEvent : eventsToAttendIds) {
                             Event event = eventService.getEvent(idEvent);
