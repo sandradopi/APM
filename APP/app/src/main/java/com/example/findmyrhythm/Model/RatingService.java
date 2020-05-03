@@ -29,9 +29,13 @@ public class RatingService {
         return ratingDAO.findRatingsByEventId(eventId);
     }
 
+    public ArrayList<String> getRatingsByUser(String userId) {
+        return ratingDAO.findRatingsByUserId(userId);
+    }
+
     public Float getMediaByEvent (String eventId) {
 
-        ArrayList<Float> ratings = ratingDAO.findRatingsById(eventId);
+        ArrayList<Float> ratings = ratingDAO.findScoreRatingsById(eventId);
         float sum = 0;
         if (!ratings.isEmpty()) {
             for (float r : ratings)
@@ -44,7 +48,7 @@ public class RatingService {
 
     public Float getMediaByUser (String userId) {
 
-        ArrayList<Float> ratings = ratingDAO.findRatingsByUserId(userId);
+        ArrayList<Float> ratings = ratingDAO.findScoreRatingsByUserId(userId);
         float sum = 0;
         if (!ratings.isEmpty()) {
             for (float r : ratings)
@@ -55,10 +59,6 @@ public class RatingService {
             return 0f;
     }
 
-    /*public Boolean isRated (String userId, String eventId) {
-
-        return ratingDAO.isRated(userId, eventId);
-    }*/
 
     public Rating isRated (String userId, String eventId) {
 

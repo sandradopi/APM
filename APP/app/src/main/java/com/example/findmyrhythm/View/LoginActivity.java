@@ -24,6 +24,8 @@ import com.example.findmyrhythm.Model.Organizer;
 import com.example.findmyrhythm.Model.OrganizerService;
 import com.example.findmyrhythm.Model.PersistentOrganizerInfo;
 import com.example.findmyrhythm.Model.PersistentUserInfo;
+import com.example.findmyrhythm.Model.Rating;
+import com.example.findmyrhythm.Model.RatingService;
 import com.example.findmyrhythm.Model.User;
 import com.example.findmyrhythm.Model.UserService;
 import com.example.findmyrhythm.R;
@@ -302,6 +304,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private class RecoverUserTask extends AsyncTask<User, Void, Void> {
 
         ArrayList<Event> events;
+        ArrayList<String> ratedEvents;
 
         @Override
         protected Void doInBackground(User... user) {
@@ -309,10 +312,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             AttendeeService attendeeService = new AttendeeService();
             events = attendeeService.getEventsByUser(user[0].getId());
 
+            RatingService ratingService = new RatingService();
+            ratedEvents = ratingService.getRatingsByUser(user[0].getId());
+
+
             PersistentUserInfo persistentUserInfo = new PersistentUserInfo(user[0].getId(),user[0].getName(),
                     user[0].getUsername(),user[0].getEmail(), user[0].getBiography(), user[0].getBirthdate(),
                     user[0].getSubscribedLocations(), user[0].getSubscribedGenres(), events,
-                    new ArrayList<Event>());
+                    new ArrayList<Event>(), ratedEvents);
 
             PersistentUserInfo.setPersistentUserInfo(getApplicationContext(), persistentUserInfo);
 

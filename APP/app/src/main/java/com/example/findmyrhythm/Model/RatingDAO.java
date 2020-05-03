@@ -21,7 +21,7 @@ public class RatingDAO extends GenericDAO<Rating> {
 
     public RatingDAO() { super(Rating.class, "ratings"); }
 
-    public ArrayList<Float> findRatingsById (final String idEvent) {
+    public ArrayList<Float> findScoreRatingsById (final String idEvent) {
         DatabaseReference table = getTable();
         final ArrayList<Float> ratingsByEvent = new ArrayList<Float>();
 
@@ -93,7 +93,43 @@ public class RatingDAO extends GenericDAO<Rating> {
         return ratingsByEvent;
     }
 
-    public ArrayList<Float> findRatingsByUserId (final String idUser) {
+    public ArrayList<String> findRatingsByUserId (final String idUser) {
+        DatabaseReference table = getTable();
+        final ArrayList<String> ratingsByUser = new ArrayList<>();
+
+        // Lock
+        final CountDownLatch lock = new CountDownLatch(1);
+
+        // Loop through the event Ids, getting the headers
+        table.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    Rating rating = child.getValue(Rating.class);
+                    if (rating.getUserId().contains(idUser)) {
+                        ratingsByUser.add(rating.getEventId());
+                    }
+                }
+                lock.countDown();
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                lock.countDown();
+            }
+        });
+        // Wait for all data to be retrieved
+        try {
+            lock.await();
+        }
+        catch (InterruptedException e) {
+            //Log.e(TAG, "Thread was interrupted while waiting for syncronisation with Firebase call");
+        }
+        return ratingsByUser;
+    }
+
+    public ArrayList<Float> findScoreRatingsByUserId (final String idUser) {
         DatabaseReference table = getTable();
         final ArrayList<Float> ratingsByUser = new ArrayList<>();
 
@@ -164,41 +200,5 @@ public class RatingDAO extends GenericDAO<Rating> {
         }
         return rated;
     }
-
-    /*public Boolean isRated (final String idUser, final String idEvent) {
-        DatabaseReference table = getTable();
-
-        // Lock
-        final CountDownLatch lock = new CountDownLatch(1);
-
-        // Loop through the event Ids, getting the headers
-        table.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    Rating rating = child.getValue(Rating.class);
-                    if (rating.getUserId().contains(idUser)) {
-                        if (rating.getEventId().contains(idEvent))
-                            isRated = true;
-                    }
-                }
-                lock.countDown();
-            }
-
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                lock.countDown();
-            }
-        });
-        // Wait for all data to be retrieved
-        try {
-            lock.await();
-        }
-        catch (InterruptedException e) {
-            //Log.e(TAG, "Thread was interrupted while waiting for syncronisation with Firebase call");
-        }
-        return isRated;
-    }*/
 
 }

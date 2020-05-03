@@ -16,13 +16,19 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.findmyrhythm.Model.Event;
 import com.example.findmyrhythm.Model.IOFiles;
 import com.example.findmyrhythm.Model.OrganizerService;
+import com.example.findmyrhythm.Model.PersistentUserInfo;
 import com.example.findmyrhythm.Model.Rating;
 import com.example.findmyrhythm.Model.RatingService;
 import com.example.findmyrhythm.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.ArrayList;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class ScoreEventDialog extends DialogFragment {
 
@@ -90,6 +96,8 @@ public class ScoreEventDialog extends DialogFragment {
                         public void onClick(DialogInterface dialog, int id) {
                             rate = bar.getRating();
                             new createRating().execute();
+                            PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
+                            persistentUserInfo.addRatedEvent(getApplicationContext(), eventId);
                             Toast.makeText(getActivity(), "Evento valorado con éxito",  Toast.LENGTH_SHORT).show();
                             Log.w("VALORAR", dialog.toString());
                             listener.onDialogPositiveClick();

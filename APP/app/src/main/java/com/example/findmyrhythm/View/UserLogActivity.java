@@ -102,7 +102,7 @@ public class UserLogActivity extends AppCompatActivity implements View.OnClickLi
 
         PersistentUserInfo persistentUserInfo = new PersistentUserInfo(currentUser.getUid(),name.getText().toString(),
                 nickname.getText().toString(),email.getText().toString(), biography.getText().toString(),
-                birthDate.getText().toString(), locations, genres, new ArrayList<Event>(), new ArrayList<Event>());
+                birthDate.getText().toString(), locations, genres, new ArrayList<Event>(), new ArrayList<Event>(), new ArrayList<String>());
 
         PersistentUserInfo.setPersistentUserInfo(getApplicationContext(), persistentUserInfo);
 
