@@ -2,14 +2,20 @@ package com.example.findmyrhythm.View;
 
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+<<<<<<< HEAD
 import android.net.Uri;
 import android.os.Build;
+=======
+>>>>>>> master
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+<<<<<<< HEAD
 import com.example.findmyrhythm.Model.BitmapDownloaderTask;
 import com.example.findmyrhythm.Model.EndlessService;
+=======
+>>>>>>> master
 import com.example.findmyrhythm.Model.EventService;
 import com.example.findmyrhythm.Model.IOFiles;
 import com.example.findmyrhythm.R;
