@@ -85,13 +85,9 @@ public class SplashActivity extends AppCompatActivity {
                             persistentUserInfo.addRatedEvent(getApplicationContext(), eventId);
                         }
 
-<<<<<<< HEAD
                         /*EventService service = new EventService();
                         service.subscribeEventNotificationListener(SplashActivity.this, currentUser.getUid());*/
-=======
-                        EventService service = new EventService();
-                        service.subscribeEventNotificationListener(SplashActivity.this, currentUser.getUid());
->>>>>>> master
+
 
                         for (String idEvent : eventsToAttendIds) {
                             Event event = eventService.getEvent(idEvent);

@@ -122,6 +122,7 @@ public class EventNotificationListener implements ValueEventListener {
                    .setStyle(new NotificationCompat.InboxStyle())
                    .setColor(Color.argb(0, 179, 86, 168))
                    .setGroup(NOTIFICATION_GROUP)
+                   .setAutoCancel(true)
                    .setGroupSummary(true);
 
 
