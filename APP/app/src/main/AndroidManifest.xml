@@ -68,9 +68,6 @@
             android:name=".View.GreetingsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".View.OrganizerInfoDialog"
-            android:theme="@android:style/Theme.Dialog" />
-        <activity
             android:name=".View.OrganizerProfileActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

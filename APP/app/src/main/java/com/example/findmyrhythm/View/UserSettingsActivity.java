@@ -7,12 +7,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.findmyrhythm.Model.Event;
 import com.example.findmyrhythm.Model.PersistentUserInfo;
 import com.example.findmyrhythm.Model.User;
 import com.example.findmyrhythm.Model.UserService;
@@ -20,11 +17,8 @@ import com.example.findmyrhythm.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
-
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class UserSettingsActivity extends UserMenuDrawerActivity {
     private static final String TAG = "Ajustes Usuario";
@@ -48,7 +42,7 @@ public class UserSettingsActivity extends UserMenuDrawerActivity {
 
         setMenuItemChecked(R.id.nav_settings);
 
-        TextView toolbarTitle = findViewById(R.id.tvTitle);
+        TextView toolbarTitle = findViewById(R.id.toolbar_title);
         toolbarTitle.setText("Ajustes");
 
         persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());

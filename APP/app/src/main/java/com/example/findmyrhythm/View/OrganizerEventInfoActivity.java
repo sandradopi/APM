@@ -62,6 +62,9 @@ public class OrganizerEventInfoActivity extends AppCompatActivity implements OnM
         getSupportActionBar().setCustomView(R.layout.layout_actionbar_empty);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        TextView toolbarTitle = findViewById(R.id.toolbar_title);
+        toolbarTitle.setText("Información del evento");
+
         //Event
         Gson gson = new Gson();
        // final Event eventSelect = gson.fromJson(getIntent().getStringExtra("EVENT"), Event.class);

@@ -40,7 +40,7 @@
                     android:id="@+id/profile"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
-                    android:layout_weight="3"
+                    android:layout_weight="5"
                     android:layout_gravity="center_horizontal"
                     android:clickable="true"
                     android:focusable="true"
@@ -50,56 +50,23 @@
                     app:civ_border_color="#FFFFFFFF"
                     app:civ_border_width="3dp" />
 
-                <TableRow
+
+                <TextView
+                    android:id="@+id/organizer_name"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_marginTop="10dp"
                     android:layout_weight="1"
-                    android:orientation="horizontal">
+                    android:gravity="center"
+                    android:layout_margin="5dp"
+                    android:autoSizeTextType="uniform"
+                    android:autoSizeMaxTextSize="25sp"
+                    android:autoSizeStepGranularity="1sp"
+                    android:autoSizeMinTextSize="15sp"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:text="Playa Club" />
 
-                    <RelativeLayout
-                        android:layout_height="match_parent"
-                        android:layout_width="0dp"
-                        android:layout_weight="2">
 
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_height="match_parent"
-                        android:layout_width="0dp"
-                        android:layout_weight="2.5">
-
-                        <TextView
-                            android:id="@+id/organizer_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:autoSizeTextType="uniform"
-                            android:autoSizeMaxTextSize="25sp"
-                            android:autoSizeStepGranularity="1sp"
-                            android:autoSizeMinTextSize="15sp"
-                            android:textColor="@android:color/white"
-                            android:textStyle="bold"
-                            android:text="Playa Club" />
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_height="match_parent"
-                        android:layout_width="0dp"
-                        android:layout_weight="2">
-
-                        <ImageView
-                            android:id="@+id/info"
-                            android:layout_height="match_parent"
-                            android:layout_width="wrap_content"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:src="@drawable/ic_info_24px"/>
-
-                    </RelativeLayout>
-
-                </TableRow>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -125,6 +92,19 @@
                     android:autoSizeMinTextSize="10sp"
                     android:textColor="@android:color/white"
                     android:text="A Coruña, España"/>
+
+                <RatingBar
+                    android:id="@+id/score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="-20dp"
+                    android:isIndicator="true"
+                    android:numStars="5"
+                    android:scaleX="0.4"
+                    android:scaleY="0.4"
+                    android:stepSize="0.5"
+                    android:theme="@style/CustomRatingBar" />
 
 
             </LinearLayout>

@@ -59,6 +59,7 @@ public class NextEventsFragmentOrg extends Fragment {
         String[] events = new String[eventsize];
         String[] dates = new String[eventsize];
         String[] prices = new String[eventsize];
+        final String[] ids = new String[eventsize];
 
         int i = 0;
         for (Event event : nextEvents) {
@@ -68,6 +69,7 @@ public class NextEventsFragmentOrg extends Fragment {
                 df = new SimpleDateFormat("dd/MM/yy", java.util.Locale.getDefault());
                 dates[i] = df.format(date);
                 prices[i] = String.valueOf(event.getPrice()).concat("€");
+                ids[i]=event.getId();
                 i++;
             }
         }
@@ -81,7 +83,7 @@ public class NextEventsFragmentOrg extends Fragment {
 
                 Intent intent = new Intent(getActivity(), OrganizerEventInfoActivity.class);
               //  String eventJson = (new Gson()).toJson(nextEvents.get((int) id));
-                intent.putExtra("EVENT", nextEvents.get((int) id).getId());
+                intent.putExtra("EVENT", ids[(int)id]);
                 intent.putExtra("RECOMMENDED", false);
                 getActivity().startActivity(intent);
 

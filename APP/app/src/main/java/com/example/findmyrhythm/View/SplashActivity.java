@@ -20,6 +20,8 @@ import com.example.findmyrhythm.Model.EventService;
 import com.example.findmyrhythm.Model.IOFiles;
 import com.example.findmyrhythm.Model.PersistentOrganizerInfo;
 import com.example.findmyrhythm.Model.PersistentUserInfo;
+import com.example.findmyrhythm.Model.Rating;
+import com.example.findmyrhythm.Model.RatingService;
 import com.example.findmyrhythm.Model.User;
 import com.example.findmyrhythm.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -76,6 +78,12 @@ public class SplashActivity extends AppCompatActivity {
                         PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
                         eventsToAttendIds = attendeeService.findAttendeeByUser(currentUser.getUid());
 
+                        RatingService ratingService = new RatingService();
+                        ArrayList<String> eventsRated = ratingService.getRatingsByUser(currentUser.getUid());
+
+                        for (String eventId : eventsRated) {
+                            persistentUserInfo.addRatedEvent(getApplicationContext(), eventId);
+                        }
 
                         /*EventService service = new EventService();
                         service.subscribeEventNotificationListener(SplashActivity.this, currentUser.getUid());*/

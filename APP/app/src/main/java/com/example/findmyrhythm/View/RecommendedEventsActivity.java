@@ -5,21 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import androidx.fragment.app.Fragment;
 
 import com.example.findmyrhythm.Model.Event;
 import com.example.findmyrhythm.Model.EventService;
@@ -31,18 +23,11 @@ import com.example.findmyrhythm.Model.User;
 import com.example.findmyrhythm.Model.UserService;
 import com.example.findmyrhythm.R;
 import com.example.findmyrhythm.View.tabs.ListAdapterNext;
-import com.example.findmyrhythm.View.tabs.ListAdapterRecomended;
-import com.example.findmyrhythm.View.tabs.NextEventsFragment;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.gson.Gson;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.concurrent.ExecutionException;
 
 public class RecommendedEventsActivity extends UserMenuDrawerActivity {
 
@@ -72,7 +57,7 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
         eventCost = findViewById(R.id.eventCost);
         eventGenre = findViewById(R.id.category);
 
-        TextView toolbarTitle = findViewById(R.id.tvTitle);
+        TextView toolbarTitle = findViewById(R.id.toolbar_title);
         toolbarTitle.setText("Recomendados");
 //        toolbarTitle.setGravity(Gravity.CENTER_HORIZONTAL);
 

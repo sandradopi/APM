@@ -21,7 +21,7 @@
             android:layout_gravity="end">
 
             <TextView
-                android:id="@+id/tvTitle"
+                android:id="@+id/toolbar_title"
                 style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
                 android:text="@string/app_name"
                 android:layout_width="match_parent"

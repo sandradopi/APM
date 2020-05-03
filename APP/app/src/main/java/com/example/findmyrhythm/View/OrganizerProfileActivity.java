@@ -6,13 +6,16 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.findmyrhythm.Model.IOFiles;
+import com.example.findmyrhythm.Model.RatingService;
 import com.example.findmyrhythm.R;
 import com.example.findmyrhythm.View.tabs.SectionsPagerAdapter;
 import com.example.findmyrhythm.View.tabs.SectionsPagerAdapterOrg;
@@ -39,6 +42,9 @@ public class OrganizerProfileActivity extends OrganizerMenuDrawerActivity {
 //        getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);
 
 
+        TextView toolbarTitle = findViewById(R.id.toolbar_title);
+        toolbarTitle.setText("Perfil");
+
 
         SectionsPagerAdapterOrg sectionsPagerAdapter = new SectionsPagerAdapterOrg(this, getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.view_pager);
@@ -64,21 +70,6 @@ public class OrganizerProfileActivity extends OrganizerMenuDrawerActivity {
         }
 
 
-
-        ImageView infoButton = findViewById(R.id.info);
-        infoButton.setClickable(true);
-        infoButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                Log.w(TAG, "Ha clickeado en el dialogo de la información del local");
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                OrganizerInfoDialog dialogo = new OrganizerInfoDialog();
-                dialogo.show(fragmentManager, "tagAlerta");
-
-            }
-        });
-
         FloatingActionButton addEvent = findViewById(R.id.floatingActionButton4);
         addEvent.setClickable(true);
         addEvent.setOnClickListener(new View.OnClickListener() {
@@ -92,6 +83,29 @@ public class OrganizerProfileActivity extends OrganizerMenuDrawerActivity {
         });
 
 
+    }
+
+    private class getRatingsMediaByUser extends AsyncTask<Void, Void, Void> {
+
+        RatingService ratingService = new RatingService();
+        Float ratingsMedia;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            ratingsMedia = ratingService.getMediaByUser(currentUser.getUid());
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            RatingBar bar=(RatingBar)findViewById(R.id.score);
+            bar.setRating(ratingsMedia);
+        }
     }
 
     @Override

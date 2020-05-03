@@ -14,37 +14,9 @@
         android:orientation="vertical"
         android:background="@color/primary700">
 
-        <LinearLayout
-            android:id="@+id/orgSettings"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/profiles_border"
-                android:gravity="end">
-
-                <ImageView
-                    android:id="@+id/edit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:src="@drawable/ic_settings"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_gravity="end" />
-
-            </TableRow>
-
-        </LinearLayout>
-
 
 
         <LinearLayout
-            android:layout_below="@+id/orgSettings"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -67,54 +39,19 @@
                 app:civ_border_color="#FFFFFFFF"
                 app:civ_border_width="3dp" />
 
-            <TableRow
+            <TextView
+                android:id="@+id/organizer_name"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:orientation="horizontal">
-
-                <RelativeLayout
-                    android:layout_height="match_parent"
-                    android:layout_width="0dp"
-                    android:layout_weight="2">
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="3">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:autoSizeMaxTextSize="26sp"
-                        android:autoSizeMinTextSize="10sp"
-                        android:autoSizeStepGranularity="1sp"
-                        android:autoSizeTextType="uniform"
-                        android:gravity="center"
-                        android:text="Playa Club"
-                        android:textColor="@android:color/white"
-                        android:textStyle="bold" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_height="match_parent"
-                    android:layout_width="0dp"
-                    android:layout_weight="2">
-
-                    <ImageView
-                        android:id="@+id/info"
-                        android:layout_height="match_parent"
-                        android:layout_width="wrap_content"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:src="@drawable/ic_info_24px"/>
-
-                </RelativeLayout>
-
-            </TableRow>
+                android:autoSizeMaxTextSize="26sp"
+                android:autoSizeMinTextSize="10sp"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:gravity="center"
+                android:text="Playa Club"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -139,6 +76,19 @@
                 android:autoSizeMinTextSize="10sp"
                 android:textColor="@android:color/white"
                 android:text="A Coruña, España"/>
+
+            <RatingBar
+                android:id="@+id/score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="-10dp"
+                android:clickable="false"
+                android:numStars="5"
+                android:scaleX="0.4"
+                android:scaleY="0.4"
+                android:stepSize="0.5"
+                android:theme="@style/CustomRatingBar" />
 
             <LinearLayout
                 android:layout_width="match_parent"

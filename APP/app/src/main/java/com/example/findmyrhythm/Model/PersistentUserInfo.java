@@ -16,19 +16,20 @@ public class PersistentUserInfo extends User {
 
     private ArrayList<Event> events;
     private ArrayList<Event> recommended;
+    private ArrayList<String> ratedEvents;
 
-    public PersistentUserInfo(String id, String name, String username, String email, String biography, String birthdate, ArrayList<String> subscribedLocations, ArrayList<String> subscribedGenres, ArrayList<Event> events,ArrayList<Event> recommended) {
+    public PersistentUserInfo(String id, String name, String username, String email, String biography, String birthdate, ArrayList<String> subscribedLocations, ArrayList<String> subscribedGenres, ArrayList<Event> events, ArrayList<Event> recommended, ArrayList<String> ratedEvents) {
         super(id, name, username, email, biography, birthdate, subscribedLocations, subscribedGenres);
         this.events = events;
         this.recommended=recommended;
+        this.ratedEvents = ratedEvents;
     }
 
     public ArrayList<Event> getEvents() {
         return events;
     }
-    public ArrayList<Event> getEventsRecommended () {
-        return recommended;
-    }
+    public ArrayList<Event> getEventsRecommended () { return recommended; }
+    public ArrayList<String> getRatedEvents() { return ratedEvents; }
 
     public Event getEventRecommended(String id){
         System.out.println(id);
@@ -51,6 +52,8 @@ public class PersistentUserInfo extends User {
         }
         return null;
     }
+
+    public void setRatedEvents(ArrayList<String> ratedEvents) { this.ratedEvents = ratedEvents; }
 
     public void setEvents(ArrayList<Event> events) {
         this.events = events;
@@ -104,6 +107,12 @@ public class PersistentUserInfo extends User {
 
         }
         persistentInfo.setEvents(events);
+        setPersistentUserInfo(context, persistentInfo);
+    }
+
+    public void addRatedEvent(Context context, String eventId) {
+        PersistentUserInfo persistentInfo = getPersistentUserInfo(context);
+        persistentInfo.getRatedEvents().add(eventId);
         setPersistentUserInfo(context, persistentInfo);
     }
 

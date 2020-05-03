@@ -59,6 +59,7 @@ public class NextEventsFragment extends Fragment {
         String[] events = new String[eventsize];
         String[] dates = new String[eventsize];
         String[] prices = new String[eventsize];
+        final String[] ids = new String[eventsize];
 
         int i = 0;
         for (Event event : nextEvents) {
@@ -68,6 +69,7 @@ public class NextEventsFragment extends Fragment {
             df = new SimpleDateFormat("dd/MM/yy", java.util.Locale.getDefault());
             dates[i] = df.format(date);
             prices[i] = String.valueOf(event.getPrice()).concat("€");
+            ids[i]=event.getId();
             i++;
             }
         }
@@ -79,7 +81,7 @@ public class NextEventsFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
                 Intent intent = new Intent(getActivity(), EventInfoActivity.class);
-                intent.putExtra("EVENT", nextEvents.get((int) id).getId());
+                intent.putExtra("EVENT", ids[(int)id]);
                 intent.putExtra("RECOMMENDED", false);
                 getActivity().startActivity(intent);
 
