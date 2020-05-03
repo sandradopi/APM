@@ -122,6 +122,7 @@ public class SelectAddressOnMapActivity extends FragmentActivity implements OnMa
                         marker = mMap.addMarker(new MarkerOptions().position(latLng).title(GeoUtils.getAddressString(address)));
                         mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
                         marker.showInfoWindow();
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
                         selectedAddress = address;
                     }
                 } catch (IOException e) {

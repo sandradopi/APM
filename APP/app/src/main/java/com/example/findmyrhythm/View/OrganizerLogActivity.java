@@ -200,7 +200,9 @@ public class OrganizerLogActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 Address completeAddress = data.getParcelableExtra("pickedAddress");
                 Toast.makeText(getApplicationContext(),completeAddress.getSubAdminArea(),Toast.LENGTH_SHORT).show();
-
+                // Update the address to the new address selected from the map
+                organizerAddressesList = new ArrayList<>();
+                organizerAddressesList.add(completeAddress);
                 selectedAddressView.setText(GeoUtils.getAddressString(completeAddress));
             }
         }
