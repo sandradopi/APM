@@ -36,6 +36,12 @@ public class PhotoService {
 
     }
 
+    public void modifyPhoto(Photo original, Photo photo) {
+            // Insert event
+            photoDAO.modify(original,photo);
+
+    }
+
     public void updatePhoto(Photo photo) {
         photoDAO.update(photo);
     }

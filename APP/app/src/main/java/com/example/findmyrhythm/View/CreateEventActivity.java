@@ -65,6 +65,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
     private static final int PICK_IMAGE = 100;
     private static final String NO_IMAGE = "no_image";
 
+    private static final String DEFAULT_IMAGE_ID = "-M6PpLTdOhq0sFbyNrHz";
     private static final String READ_EXTERNAL_STORAGE = Manifest.permission.READ_EXTERNAL_STORAGE;
     private static final String WRITE_EXTERNAL_STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE;
     private static final int STORAGE_PERMISSION_CODE = 1896;
@@ -80,7 +81,8 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
     private Button saveButton;
     private Button uploadPhotoButton;
     private Spinner genresSpinner;
-
+    private Photo photoOriginal;
+    private String photoOriginalId;
     private Address eventCompleteAddress;
 //    private Location organizerLocation;
     private GeoUtils geoUtils;
@@ -276,7 +278,9 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         @Override
         protected Void doInBackground(Void... voids) {
             photo = photoService.getPhoto(eventSelect.getEventImage());
+            photoOriginal= photo;
             photoId = photo.getId();
+            photoOriginalId = photoId;
             return null;
         }
     }
@@ -467,7 +471,22 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
 
         return photoId;
     }
+    private void modifyEncodedPhoto(Bitmap bitmapImage) {
 
+        Photo photo;
+        String photoId;
+        String bitmapEncoded;
+        byte[] byteArray;
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+
+        bitmapImage.compress(Bitmap.CompressFormat.PNG, 10, stream);
+        byteArray = stream.toByteArray();
+        bitmapEncoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+        bitmapImage.recycle();
+        photo = new Photo(bitmapEncoded);
+        photoService.modifyPhoto(photoOriginal, photo);
+
+    }
 
     private Event makeEvent(String organizerId) {
         //bitmapEncoded = NO_IMAGE;
@@ -508,8 +527,15 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             if (imageBitmap != null) {
                 photoId = createEncodedPhoto(imageBitmap);
             } else {
-                Bitmap icon = BitmapFactory.decodeResource(getResources(),R.drawable.logo_white);
-                photoId = createEncodedPhoto(icon);
+                Photo defaultP = photoService.getPhoto(DEFAULT_IMAGE_ID);
+                if (defaultP != null){
+                    photoId= DEFAULT_IMAGE_ID;
+                }
+                else{
+                    Bitmap icon = BitmapFactory.decodeResource(getResources(),R.drawable.logo_white);
+                    photoId = createEncodedPhoto(icon);
+                }
+
             }
 
             Event event = makeEvent(organizerId);
@@ -553,8 +579,11 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             //bitmapEncoded = NO_IMAGE;
             //String path= imageUri.getEncodedPath();
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            if (imageBitmap != null && photo == null) {
-                photoId = createEncodedPhoto(imageBitmap);
+            if (imageBitmap != null &&  photoOriginalId!=DEFAULT_IMAGE_ID) {
+                modifyEncodedPhoto(imageBitmap);
+            }
+            else if (imageBitmap !=null && photoOriginalId==DEFAULT_IMAGE_ID){
+                createEncodedPhoto(imageBitmap);
             }
 
             Event event = makeEvent(organizerId);

@@ -117,6 +117,10 @@ public class GenericDAO <T extends Entity> {
         getTable().child(entity.getId()).setValue(entity);
     }
 
+    public void modify(T entityO, T entity) {
+        getTable().child(entityO.getId()).setValue(entity);
+    }
+
     // Deletes an entity with specified id
     public void delete(String id) {
         getTable().child(id).removeValue();
