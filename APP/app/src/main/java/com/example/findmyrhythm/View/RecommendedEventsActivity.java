@@ -131,14 +131,17 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
 
             int orientation = getResources().getConfiguration().orientation;
             if(orientation == Configuration.ORIENTATION_LANDSCAPE || isTablet(getApplicationContext())){
-                Event e = events.get(0);
-                eventName.setText(e.getName());
-                eventDate.setText(e.getEventDate().toString());
-                eventDescContent.setText(e.getDescription());
-                eventLocationContent.setText(e.getLocation());
-                eventCapacity.setText(e.getMaxAttendees());
-                eventCost.setText(e.getPrice());
-                eventGenre.setText(e.getGenre());
+                if(!events.isEmpty()){
+                    Event e = events.get(0);
+                    eventName.setText(e.getName());
+                    eventDate.setText(e.getEventDate().toString());
+                    eventDescContent.setText(e.getDescription());
+                    eventLocationContent.setText(e.getLocation());
+                    eventCapacity.setText(e.getMaxAttendees());
+                    eventCost.setText(e.getPrice());
+                    eventGenre.setText(e.getGenre());
+                }
+
 
 
             }
