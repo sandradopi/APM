@@ -39,6 +39,26 @@
                 android:importantForAutofill="no"
                 android:inputType="text"
                 android:textSize="16sp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="4dp"
+                android:importantForAutofill="no"
+                android:text="Descripción"
+                android:textSize="18sp"
+                android:textStyle="bold|italic" />
+
+            <EditText
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:hint="Description"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/Dia_titulo"
