@@ -1,9 +1,15 @@
 package com.example.findmyrhythm.View;
 
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
+import android.Manifest;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.location.Address;
+import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +25,9 @@ import com.example.findmyrhythm.Model.PersistentUserInfo;
 import com.example.findmyrhythm.Model.User;
 import com.example.findmyrhythm.Model.UserService;
 import com.example.findmyrhythm.Model.Utils.GeoUtils;
+import com.example.findmyrhythm.Model.Utils.PermissionUtils;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -28,17 +37,21 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.findmyrhythm.R;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 
 public class SearchEventsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private EditText searchText;
+    private FusedLocationProviderClient fusedLocationClient;
+    private static final int LOCATION_PERMISSION_CODE = 7346;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +64,10 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        GeoUtils.checkLocationEnabled(SearchEventsActivity.this);
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
     }
 
@@ -68,7 +85,14 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
+        if (ContextCompat.checkSelfPermission(SearchEventsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            getMyLastLocation();
+        } else {
+            // Permission to access the location is missing. Show rationale and request permission
+            PermissionUtils.requestPermission(SearchEventsActivity.this, LOCATION_PERMISSION_CODE,
+                    Manifest.permission.ACCESS_FINE_LOCATION, true);
+        }
 
         searchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -84,6 +108,22 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
             }
         });
 
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode != LOCATION_PERMISSION_CODE) {
+            return;
+        }
+
+        if (PermissionUtils.isPermissionGranted(permissions, grantResults, Manifest.permission.ACCESS_FINE_LOCATION)) {
+            // Enable the my location layer if the permission has been granted.
+            getMyLastLocation();
+        } else {
+            // TODO: Permission was denied. Display an error message
+            // ...
+        }
     }
 
 
@@ -109,8 +149,9 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
         protected void onPostExecute(final ArrayList<Event> events) {
             LatLngBounds.Builder builder = new LatLngBounds.Builder();
             for (Event event : events) {
-                HashMap<String, String> address = event.getCompleteAddress();
-                LatLng latLng = new LatLng(Double.parseDouble(address.get("latitude")), Double.parseDouble(address.get("longitude")));
+                HashMap<String, Object> address = event.getCompleteAddress();
+                LatLng latLng = new LatLng((Double) Objects.requireNonNull(address.get("latitude")),
+                        (Double) Objects.requireNonNull(address.get("longitude")));
                 Marker marker = mMap.addMarker(new MarkerOptions().position(latLng).title(event.getName()));
                 builder.include(marker.getPosition());
                 LatLngBounds bounds = builder.build();
@@ -125,7 +166,21 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
 
     }
 
+    private void getMyLastLocation() {
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            // Logic to handle location object
+                            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
 
+                        }
+                    }
+                });
+    }
 
 
 }

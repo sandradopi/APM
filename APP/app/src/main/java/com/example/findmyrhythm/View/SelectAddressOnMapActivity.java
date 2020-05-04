@@ -82,6 +82,7 @@ public class SelectAddressOnMapActivity extends FragmentActivity implements OnMa
         // Get the organizer's location
         selectedAddress = getIntent().getParcelableExtra("organizerAddress");
 
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
     }
 
@@ -205,8 +206,6 @@ public class SelectAddressOnMapActivity extends FragmentActivity implements OnMa
 
 
     private void getMyLastLocation() {
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-
         fusedLocationClient.getLastLocation()
                 .addOnSuccessListener(this, new OnSuccessListener<Location>() {
                     @Override

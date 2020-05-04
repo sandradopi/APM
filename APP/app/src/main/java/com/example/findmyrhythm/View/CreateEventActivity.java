@@ -205,11 +205,11 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
 
             Geocoder geocoder = new Geocoder(this, spanish);
 
-            HashMap<String, String> completeAddressDict = eventSelect.getCompleteAddress();
+            HashMap<String, Object> completeAddressDict = eventSelect.getCompleteAddress();
             List<Address> addresses = null;
             try {
-                Double latitude = Double.valueOf(Objects.requireNonNull(completeAddressDict.get("latitude")));
-                Double longitude = Double.valueOf(Objects.requireNonNull(completeAddressDict.get("longitude")));
+                Double latitude = (Double) Objects.requireNonNull(completeAddressDict.get("latitude"));
+                Double longitude = (Double) Objects.requireNonNull(completeAddressDict.get("longitude"));
                 addresses = geocoder.getFromLocation(latitude, longitude, 1);
                 for (Address address : addresses) {
                     eventCompleteAddress = address;
@@ -539,14 +539,14 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         //bitmapEncoded = NO_IMAGE;
         //String path= imageUri.getEncodedPath();
         // creating a My HashTable Dictionary
-        HashMap<String, String> addressDict = new HashMap<>();
+        HashMap<String, Object> addressDict = new HashMap<>();
 
         // Using a few dictionary Class methods
         // using put method
         addressDict.put("province", eventCompleteAddress.getSubAdminArea());
         addressDict.put("full_address", GeoUtils.getAddressString(eventCompleteAddress)); // Double
-        addressDict.put("latitude", String.valueOf(eventCompleteAddress.getLatitude()));
-        addressDict.put("longitude", String.valueOf(eventCompleteAddress.getLongitude()));
+        addressDict.put("latitude", eventCompleteAddress.getLatitude());
+        addressDict.put("longitude", eventCompleteAddress.getLongitude());
 
         Event event = new Event(name.getText().toString(), eventDate, addressTextView.getText().toString(),
                 selectedGenre, organizerId, maxAttendees.getText().toString(), price.getText().toString(),

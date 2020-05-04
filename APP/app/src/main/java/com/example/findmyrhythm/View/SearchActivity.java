@@ -19,6 +19,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class SearchActivity extends UserMenuDrawerActivity implements OnMapReadyCallback {
 
+    // TODO: eliminar esta clase si finalmente no se usa
+
     private static final String TEXT = "text";
     // Array of strings...
     ListView simpleList;
