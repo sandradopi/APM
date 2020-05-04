@@ -39,7 +39,7 @@ public class EventDAO extends GenericDAO<Event> {
 
         // TODO: Descomentar estas partes después de hacer las pruebas
         for (final String location : user.getSubscribedLocations()) {
-            table.orderByChild("location").equalTo(location).addValueEventListener(new ValueEventListener() {
+            table.orderByChild("completeAddress/province").equalTo(location).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     /*Event event;
