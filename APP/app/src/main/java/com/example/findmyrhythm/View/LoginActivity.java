@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.findmyrhythm.Model.AttendeeService;
 import com.example.findmyrhythm.Model.Event;
@@ -291,8 +292,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             if (user==null && organizer==null) {
-                Intent intent = new Intent(LoginActivity.this, GreetingsActivity.class);
-                startActivity(intent);
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                EulaDialog dialogo = new EulaDialog();
+                dialogo.show(fragmentManager, "tagAlerta");
+                //Intent intent = new Intent(LoginActivity.this, GreetingsActivity.class);
+                //startActivity(intent);
             } else if (user!=null && organizer==null) {
                 showUseExistentAccountDialog(user, organizer);
             } else if (user==null && organizer!=null) {
