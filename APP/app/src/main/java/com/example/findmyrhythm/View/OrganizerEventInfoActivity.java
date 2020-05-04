@@ -137,18 +137,11 @@ public class OrganizerEventInfoActivity extends AppCompatActivity implements OnM
         final PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
 
         @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-        }
-
-        @Override
         protected Void doInBackground(Void... voids) {
             Event eventSelect;
             final boolean recommended = getIntent().getExtras().getBoolean("RECOMMENDED");
             if(recommended) {
                 eventSelect  = persistentUserInfo.getEventRecommended(eventSelectId);
-
             } else{
                 eventSelect = persistentUserInfo.getEvent(eventSelectId);
             }

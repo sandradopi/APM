@@ -1,11 +1,19 @@
 package com.example.findmyrhythm.Model.Utils;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationManager;
+import android.provider.Settings;
 import android.provider.Telephony;
 import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -44,6 +52,36 @@ public class GeoUtils {
             return address;
         }
     }
+
+
+    public static void checkLocationEnabled(final Activity activity){
+        LocationManager lm = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
+        boolean gps_enabled = false;
+        boolean network_enabled = false;
+
+        try {
+            gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        } catch(Exception ex) {}
+
+        try {
+            network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        } catch(Exception ex) {}
+
+        if(!gps_enabled && !network_enabled) {
+            // notify user
+            new AlertDialog.Builder(activity)
+                    .setMessage("El GPS no está activado")
+                    .setPositiveButton("Abrir ajustes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                            activity.startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                        }
+                    })
+                    .setNegativeButton("Cancelar",null)
+                    .show();
+        }
+    }
+
 
     public static String getAddressString(Address fullAddress) {
         String address = fullAddress.getAddressLine(0);

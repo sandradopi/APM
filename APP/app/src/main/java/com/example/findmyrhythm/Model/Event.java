@@ -12,12 +12,12 @@ public class Event extends Entity{
     private String name;
     private Date eventDate;
     private String location, genre, organizerId, maxAttendees, price, description, eventImage;
-    private HashMap<String, String> completeAddress;
+    private HashMap<String, Object> completeAddress;
 
     public Event() {}
 
     public Event(String name, Date date, String location, String genre, String organizerId, String maxAttendees,
-                 String price, String description, String eventImage, HashMap<String, String> completeAddress) {
+                 String price, String description, String eventImage, HashMap<String, Object> completeAddress) {
         this.name = name;
         this.eventDate = date;
         this.location = location;
@@ -117,11 +117,11 @@ public class Event extends Entity{
         this.eventImage = eventImage;
     }
 
-    public HashMap<String, String> getCompleteAddress() {
+    public HashMap<String, Object> getCompleteAddress() {
         return completeAddress;
     }
 
-    public void setCompleteAddress(HashMap<String, String> completeAddress) {
+    public void setCompleteAddress(HashMap<String, Object> completeAddress) {
         this.completeAddress = completeAddress;
     }
 }
