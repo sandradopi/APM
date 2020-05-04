@@ -27,6 +27,9 @@ import com.example.findmyrhythm.Model.UserService;
 import com.example.findmyrhythm.Model.Utils.GeoUtils;
 import com.example.findmyrhythm.Model.Utils.PermissionUtils;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -52,6 +55,8 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
     private EditText searchText;
     private FusedLocationProviderClient fusedLocationClient;
     private static final int LOCATION_PERMISSION_CODE = 7346;
+    private LocationRequest locationRequest;
+    private LocationCallback locationCallback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,6 +132,41 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
     }
 
 
+    private void getMyLastLocation() {
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            // Logic to handle location object
+                            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
+
+                        } else {
+                            locationRequest = LocationRequest.create();
+                            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+                            locationRequest.setInterval(20 * 1000);
+                            locationCallback = new LocationCallback() {
+                                @Override
+                                public void onLocationResult(LocationResult locationResult) {
+                                    if (locationResult == null) {
+                                        return;
+                                    }
+                                    for (Location location : locationResult.getLocations()) {
+                                        if (location != null) {
+                                            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
+                                        }
+                                    }
+                                }
+                            };
+                        }
+                    }
+                });
+    }
+
+
     private class getEvents extends AsyncTask<String, Void, ArrayList<Event>> {
         @Override
         protected void onPreExecute() {
@@ -164,22 +204,6 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
             }
         }
 
-    }
-
-    private void getMyLastLocation() {
-        fusedLocationClient.getLastLocation()
-                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        // Got last known location. In some rare situations this can be null.
-                        if (location != null) {
-                            // Logic to handle location object
-                            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
-
-                        }
-                    }
-                });
     }
 
 
