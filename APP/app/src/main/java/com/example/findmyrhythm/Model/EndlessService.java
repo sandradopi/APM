@@ -93,13 +93,13 @@ public class EndlessService extends Service {
         }
 
         startForeground(-2, notification);
+        sNotificationManager.deleteNotificationChannel("serviceChannel");
+        sNotificationManager.cancelAll();
 
         EventService service = new EventService();
         //NotificationManagerCompat sNotificationManager = NotificationManagerCompat.from(context);
-
         service.subscribeEventNotificationListener(this, FirebaseAuth.getInstance().getCurrentUser().getUid());
-        sNotificationManager.deleteNotificationChannel("serviceChannel");
-        sNotificationManager.cancel(-2);
+
     }
 
     private void stopService() {

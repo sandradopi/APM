@@ -68,13 +68,7 @@ public class UserProfileActivity extends UserMenuDrawerActivity {
         } catch (FileNotFoundException e) {
             imageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_logo));
         }
-        Intent intent = new Intent(this, EndlessService.class);
-        intent.putExtra("SERVICE_STATE", true);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startForegroundService(intent);
-            return;
-        }
-        startService(intent);
+
     }
 
     @Override
@@ -85,6 +79,14 @@ public class UserProfileActivity extends UserMenuDrawerActivity {
         ViewPager viewPager = findViewById(R.id.view_pager);
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
         viewPager.setAdapter(sectionsPagerAdapter);
+
+        Intent intent = new Intent(this, EndlessService.class);
+        intent.putExtra("SERVICE_STATE", true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(intent);
+            return;
+        }
+        startService(intent);
 
     }
 

@@ -179,8 +179,10 @@ public class EventNotificationListener implements ValueEventListener {
                                 value = i.next();
                             } while (i.hasNext());
 
-
-                        event = value.getValue(Event.class);
+                        if (value != null)
+                            event = value.getValue(Event.class);
+                        else
+                            return;
                     }
 
 
