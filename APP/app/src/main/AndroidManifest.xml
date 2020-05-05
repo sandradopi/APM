@@ -101,9 +101,6 @@
             android:label="@string/title_activity_perfil_usuario_tabs"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".View.SearchActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".View.RecommendedEventsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".View.CreateEventActivity" />

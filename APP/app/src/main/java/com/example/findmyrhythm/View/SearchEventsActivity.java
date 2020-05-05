@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -186,6 +187,12 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
                     public void onInfoWindowClick(Marker marker) {
                         String id = (String) marker.getTag();
                         Log.e(TAG + " >>> ", id);
+
+                        Intent intent = new Intent(SearchEventsActivity.this, EventInfoActivity.class);
+                        intent.putExtra("EVENT", id);
+                        intent.putExtra("RECOMMENDED", false);
+                        startActivity(intent);
+
                     }
                 });
                 return v;
