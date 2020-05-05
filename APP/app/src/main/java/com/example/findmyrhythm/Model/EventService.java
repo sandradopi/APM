@@ -87,4 +87,14 @@ public class EventService {
         Log.i(TAG, "NotifListener removed");
     }
 
+
+    public String findEventNameById(String id) {
+        try {
+            return eventDAO.findEventNameById(id);
+        } catch (InstanceNotFoundException e) {
+            Log.e(TAG, "getEvent: Event not found");
+        }
+        return null;
+    }
+
 }

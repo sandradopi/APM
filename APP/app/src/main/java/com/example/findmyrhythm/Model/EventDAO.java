@@ -57,6 +57,47 @@ public class EventDAO extends GenericDAO<Event> {
     }
 
 
+    public String findEventNameById (String entityId) throws InstanceNotFoundException {
+
+        DatabaseReference table = getTable();
+
+        // Placeholder for the data retrieved from the DB
+        final ArrayList<String> names = new ArrayList<>();
+
+        //Lock to wait for the data
+        final CountDownLatch lock = new CountDownLatch(1);
+
+        table.child(entityId).child("name").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                names.add(dataSnapshot.getValue(String.class));
+                // Data retrieved, release lock
+                lock.countDown();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Cancelled, release lock
+                lock.countDown();
+            }
+        });
+
+        try {
+            lock.await();
+        } catch (InterruptedException e) {
+            Log.e(TAG, "findById thread interrupted");
+        }
+
+        // Check that some data was retrieved
+        if (names.get(0) == null) {
+            throw new InstanceNotFoundException();
+        }
+
+        // Return entity
+        return names.get(0);
+    }
+
+
     @Override
     public String modify(Event entity) throws InstanceNotFoundException {
         String eventId =  super.modify(entity);

@@ -70,6 +70,7 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
     private LocationCallback locationCallback;
     private GeoFire geoFire;
     private HashSet<String> retrievedEvents = new HashSet<>();
+    private HashSet<EventMarker> eventMarkers = new HashSet<>();
     private HashSet<GeoLocation> retrievedLocations = new HashSet<>();
 
     @Override
@@ -91,6 +92,24 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("locations");
         geoFire = new GeoFire(ref);
 
+    }
+
+    private class EventMarker {
+        String id;
+        GeoLocation location;
+        String name;
+
+        public EventMarker(String id, GeoLocation location) {
+            this.id = id;
+            this.location = location;
+            this.name = null;
+        }
+
+        public EventMarker(String id, GeoLocation location, String name) {
+            this.id = id;
+            this.location = location;
+            this.name = name;
+        }
     }
 
 
@@ -167,42 +186,26 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
     }
 
 
-    private class showEvent extends AsyncTask<String, Void, Event> {
+    private class showEventMarker extends AsyncTask<Object, Void, EventMarker> {
 
         @Override
-        protected Event doInBackground(String... eventIds) {
-            String eventId = eventIds[0];
+        protected EventMarker doInBackground(Object... objects) {
+            String eventId = (String) objects[0];
+            GeoLocation location = (GeoLocation) objects[1];
             EventService eventService = new EventService();
-            Event event;
-
-            event = eventService.getEvent(eventId);
-
-            return event;
+            String eventName = eventService.findEventNameById(eventId);
+            return new EventMarker(eventId, location, eventName);
         }
 
 
         @Override
-        protected void onPostExecute(final Event event) {
-            showEventOnMap(event);
+        protected void onPostExecute(final EventMarker eventMarker) {
+            Log.e(">>>>>>>>>>>>>>>", eventMarker.name);
+
+            LatLng latLng = new LatLng(eventMarker.location.latitude, eventMarker.location.longitude);
+            mMap.addMarker(new MarkerOptions().position(latLng).title(eventMarker.name));
         }
 
-    }
-
-    private void showEventOnMap(Event event) {
-        LatLngBounds.Builder builder = new LatLngBounds.Builder();
-
-        HashMap<String, Object> address = event.getCompleteAddress();
-        LatLng latLng = new LatLng((Double) Objects.requireNonNull(address.get("latitude")),
-                (Double) Objects.requireNonNull(address.get("longitude")));
-        Marker marker = mMap.addMarker(new MarkerOptions().position(latLng).title(event.getName()));
-        builder.include(marker.getPosition());
-        LatLngBounds bounds = builder.build();
-        LatLng center = bounds.getCenter();
-        builder.include(new LatLng(center.latitude-0.01f,center.longitude-0.01f));
-        builder.include(new LatLng(center.latitude+0.01f,center.longitude+0.01f));
-        bounds = builder.build();
-        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
-        marker.showInfoWindow();
     }
 
 
@@ -211,25 +214,14 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
         SearchEventsActivity.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                /* TODO: Quizás se podría hacer de forma más eficiente, no descargando de nuevo el
+                *   nombre si ya se ha descargado */
                 //Your code to run in GUI thread here
-                for (GeoLocation location : retrievedLocations) {
-                    LatLng latLng = new LatLng(location.latitude, location.longitude);
-                    mMap.addMarker(new MarkerOptions().position(latLng));
+                for (EventMarker eventMarker : eventMarkers) {
+                    new showEventMarker().execute(eventMarker.id, eventMarker.location);
                 }
-            }//public void run() {
+            }
         });
-
-        //LatLngBounds.Builder builder = new LatLngBounds.Builder();
-//        LatLng latLng = new LatLng(location.latitude, location.longitude);
-//        mMap.addMarker(new MarkerOptions().position(latLng)); //.title(event.getName()));
-        //builder.include(marker.getPosition());
-        // LatLngBounds bounds = builder.build();
-        // LatLng center = bounds.getCenter();
-        //builder.include(new LatLng(center.latitude-0.01f,center.longitude-0.01f));
-        //builder.include(new LatLng(center.latitude+0.01f,center.longitude+0.01f));
-        //bounds = builder.build();
-        //mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
-        // marker.showInfoWindow();
     }
 
 
@@ -247,8 +239,8 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
             public void onKeyEntered(final String key, final GeoLocation location) {
                 retrievedEvents.add(key);
                 retrievedLocations.add(location);
+                eventMarkers.add(new EventMarker(key, location));
                 Log.e("..", String.format("Key %s entered the search area at [%f,%f]", key, location.latitude, location.longitude));
-                Toast.makeText(getApplicationContext(),key,Toast.LENGTH_SHORT).show();
 
             }
 
