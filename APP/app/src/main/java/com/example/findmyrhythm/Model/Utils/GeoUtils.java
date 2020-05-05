@@ -16,6 +16,8 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class GeoUtils {
@@ -42,15 +44,18 @@ public class GeoUtils {
     }
 
     public Address getAddressFromLocationName(String locationName) {
-        Address address = new Address(this.locale);
+        List<Address> addresses = new ArrayList<>();
+        Address address = null;
         try {
             Geocoder geocoder = new Geocoder(this.context, this.locale);
-            address =  geocoder.getFromLocationName(locationName, 1).get(0);
-            return address;
+            addresses =  geocoder.getFromLocationName(locationName, 1);
+            for (Address addr : addresses) {
+                address = addr;
+            }
         } catch (IOException exception) {
             Log.w(TAG, exception.toString());
-            return address;
         }
+        return address;
     }
 
 

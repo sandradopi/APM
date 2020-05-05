@@ -17,6 +17,7 @@ import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.findmyrhythm.Model.Event;
 import com.example.findmyrhythm.Model.EventService;
@@ -26,6 +27,10 @@ import com.example.findmyrhythm.Model.User;
 import com.example.findmyrhythm.Model.UserService;
 import com.example.findmyrhythm.Model.Utils.GeoUtils;
 import com.example.findmyrhythm.Model.Utils.PermissionUtils;
+import com.firebase.geofire.GeoFire;
+import com.firebase.geofire.GeoLocation;
+import com.firebase.geofire.GeoQuery;
+import com.firebase.geofire.GeoQueryEventListener;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -40,13 +45,19 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.findmyrhythm.R;
+import com.google.android.gms.maps.model.VisibleRegion;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 
 public class SearchEventsActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -57,6 +68,9 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
     private static final int LOCATION_PERMISSION_CODE = 7346;
     private LocationRequest locationRequest;
     private LocationCallback locationCallback;
+    private GeoFire geoFire;
+    private HashSet<String> retrievedEvents = new HashSet<>();
+    private HashSet<GeoLocation> retrievedLocations = new HashSet<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +87,9 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
         GeoUtils.checkLocationEnabled(SearchEventsActivity.this);
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("locations");
+        geoFire = new GeoFire(ref);
 
     }
 
@@ -110,6 +127,151 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
                     return true;
                 }
                 return false;
+            }
+        });
+
+        mMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
+            @Override
+            public void onCameraIdle() {
+                Log.e("-------------","Listener 1");
+                VisibleRegion visibleRegion = mMap.getProjection().getVisibleRegion();
+                LatLngBounds mapLatLngBounds = visibleRegion.latLngBounds;
+
+                float[] diagonalDistance = new float[1];
+                double diagonalDistanceDouble;
+                double radius;
+
+                Location.distanceBetween(
+                        visibleRegion.farLeft.latitude,
+                        visibleRegion.farLeft.longitude,
+                        visibleRegion.nearRight.latitude,
+                        visibleRegion.nearRight.longitude,
+                        diagonalDistance
+                );
+
+                diagonalDistanceDouble = diagonalDistance[0];
+                radius = (diagonalDistanceDouble / (2.0 * 1000.0));
+
+                double latitude = mapLatLngBounds.getCenter().latitude;
+                double longitude = mapLatLngBounds.getCenter().longitude;
+
+                Toast.makeText(getApplicationContext(),radius+"",Toast.LENGTH_SHORT).show();
+
+                // Toast.makeText(getApplicationContext(),latitude+ " "+longitude,Toast.LENGTH_SHORT).show();
+
+                getNearbyEvents(new GeoLocation(latitude, longitude), radius);
+
+            }
+        });
+
+    }
+
+
+    private class showEvent extends AsyncTask<String, Void, Event> {
+
+        @Override
+        protected Event doInBackground(String... eventIds) {
+            String eventId = eventIds[0];
+            EventService eventService = new EventService();
+            Event event;
+
+            event = eventService.getEvent(eventId);
+
+            return event;
+        }
+
+
+        @Override
+        protected void onPostExecute(final Event event) {
+            showEventOnMap(event);
+        }
+
+    }
+
+    private void showEventOnMap(Event event) {
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+
+        HashMap<String, Object> address = event.getCompleteAddress();
+        LatLng latLng = new LatLng((Double) Objects.requireNonNull(address.get("latitude")),
+                (Double) Objects.requireNonNull(address.get("longitude")));
+        Marker marker = mMap.addMarker(new MarkerOptions().position(latLng).title(event.getName()));
+        builder.include(marker.getPosition());
+        LatLngBounds bounds = builder.build();
+        LatLng center = bounds.getCenter();
+        builder.include(new LatLng(center.latitude-0.01f,center.longitude-0.01f));
+        builder.include(new LatLng(center.latitude+0.01f,center.longitude+0.01f));
+        bounds = builder.build();
+        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
+        marker.showInfoWindow();
+    }
+
+
+    private void showMarkersOnMap() {
+
+        SearchEventsActivity.this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                //Your code to run in GUI thread here
+                for (GeoLocation location : retrievedLocations) {
+                    LatLng latLng = new LatLng(location.latitude, location.longitude);
+                    mMap.addMarker(new MarkerOptions().position(latLng));
+                }
+            }//public void run() {
+        });
+
+        //LatLngBounds.Builder builder = new LatLngBounds.Builder();
+//        LatLng latLng = new LatLng(location.latitude, location.longitude);
+//        mMap.addMarker(new MarkerOptions().position(latLng)); //.title(event.getName()));
+        //builder.include(marker.getPosition());
+        // LatLngBounds bounds = builder.build();
+        // LatLng center = bounds.getCenter();
+        //builder.include(new LatLng(center.latitude-0.01f,center.longitude-0.01f));
+        //builder.include(new LatLng(center.latitude+0.01f,center.longitude+0.01f));
+        //bounds = builder.build();
+        //mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
+        // marker.showInfoWindow();
+    }
+
+
+    public void getNearbyEvents(GeoLocation geoLocation, Double radius) {
+
+        /* TODO: Buscar eventos cerca de mí o dentro de los límites del mapa.
+         *   Enlaces de interés:
+         * https://stackoverflow.com/questions/50631432/android-query-nearby-locations-from-firebase
+         * https://stackoverflow.com/questions/43357990/query-for-nearby-locations
+         * (especialmente el segundo) */
+
+        GeoQuery geoQuery = geoFire.queryAtLocation(geoLocation,radius);
+        geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
+            @Override
+            public void onKeyEntered(final String key, final GeoLocation location) {
+                retrievedEvents.add(key);
+                retrievedLocations.add(location);
+                Log.e("..", String.format("Key %s entered the search area at [%f,%f]", key, location.latitude, location.longitude));
+                Toast.makeText(getApplicationContext(),key,Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onKeyExited(String key) {
+                System.out.println(String.format("Key %s is no longer in the search area", key));
+            }
+
+            @Override
+            public void onKeyMoved(String key, GeoLocation location) {
+                System.out.println(String.format("Key %s moved within the search area to [%f,%f]", key, location.latitude, location.longitude));
+            }
+
+            @Override
+            public void onGeoQueryReady() {
+                System.out.println("All initial data has been loaded and events have been fired!");
+                showMarkersOnMap();
+
+            }
+
+            @Override
+            public void onGeoQueryError(DatabaseError error) {
+                System.err.println("There was an error with this query: " + error);
             }
         });
 
@@ -157,6 +319,11 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
                                         if (location != null) {
                                             LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
                                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
+
+                                            // Remove the request once it is received it, as we don't need continuous updates
+                                            if (fusedLocationClient != null) {
+                                                fusedLocationClient.removeLocationUpdates(locationCallback);
+                                            }
                                         }
                                     }
                                 }
@@ -168,10 +335,6 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
 
 
     private class getEvents extends AsyncTask<String, Void, ArrayList<Event>> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
 
         @Override
         protected ArrayList<Event> doInBackground(String... searchTexts) {

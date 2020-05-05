@@ -5,6 +5,12 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.findmyrhythm.Model.Exceptions.DuplicatedInstanceException;
+import com.example.findmyrhythm.Model.Exceptions.InstanceNotFoundException;
+import com.firebase.geofire.GeoFire;
+import com.firebase.geofire.GeoLocation;
+import com.firebase.geofire.GeoQuery;
+import com.firebase.geofire.GeoQueryEventListener;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -16,18 +22,60 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 
 public class EventDAO extends GenericDAO<Event> {
 
     private String TAG = "EventDAO";
+    private GeoFire geoFire;
 
     public EventDAO() {
         super(Event.class, "events");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("locations");
+        geoFire = new GeoFire(ref);
     }
 
-    public ArrayList<Event> getRecommendedEvents(User user) {
 
+    @Override
+    public String insert(Event entity) throws DuplicatedInstanceException {
+
+        String eventId = super.insert(entity);
+
+        Double latitude = (Double) (Objects.requireNonNull(entity.getCompleteAddress().get("latitude")));
+        Double longitude = (Double) (Objects.requireNonNull(entity.getCompleteAddress().get("longitude")));
+        geoFire.setLocation(eventId, new GeoLocation(latitude, longitude), new
+                GeoFire.CompletionListener(){
+                    @Override
+                    public void onComplete(String key, DatabaseError error) {
+                        //Do some stuff if you want to
+                    }
+                });
+
+        return eventId;
+
+    }
+
+
+    @Override
+    public String modify(Event entity) throws InstanceNotFoundException {
+        String eventId =  super.modify(entity);
+
+        Double latitude = (Double) (Objects.requireNonNull(entity.getCompleteAddress().get("latitude")));
+        Double longitude = (Double) (Objects.requireNonNull(entity.getCompleteAddress().get("longitude")));
+        geoFire.setLocation(eventId, new GeoLocation(latitude, longitude), new
+                GeoFire.CompletionListener(){
+                    @Override
+                    public void onComplete(String key, DatabaseError error) {
+                        //Do some stuff if you want to
+                    }
+                });
+
+        return  eventId;
+    }
+
+
+    public ArrayList<Event> getRecommendedEvents(User user) {
 
         final ArrayList<Event> locationEvents = new ArrayList<>();
         ArrayList<Event> recommendedEvents = new ArrayList<>();
@@ -76,7 +124,6 @@ public class EventDAO extends GenericDAO<Event> {
                 recommendedEvents.add(event);
             }
         }
-
 
 //        for (String genre : user.getSubscribedGenres()) {
 //
@@ -194,13 +241,17 @@ public class EventDAO extends GenericDAO<Event> {
         return eventsCreated;
     }
 
+
     public void addChildEventListener (ValueEventListener listener) {
         DatabaseReference table = getTable();
         table.addValueEventListener(listener);
     }
 
+
     public void removeChildEventListener (ValueEventListener listener) {
         DatabaseReference table = getTable();
         table.removeEventListener(listener);
     }
+
+
 }
