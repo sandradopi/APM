@@ -202,6 +202,10 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
         mMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
             @Override
             public void onCameraIdle() {
+                if (! searchText.getText().toString().isEmpty()) {
+                    return;
+                }
+
                 Log.e("-------------","Listener 1");
                 VisibleRegion visibleRegion = mMap.getProjection().getVisibleRegion();
                 LatLngBounds mapLatLngBounds = visibleRegion.latLngBounds;
@@ -399,6 +403,7 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
                 LatLng latLng = new LatLng((Double) Objects.requireNonNull(address.get("latitude")),
                         (Double) Objects.requireNonNull(address.get("longitude")));
                 Marker marker = mMap.addMarker(new MarkerOptions().position(latLng).title(event.getName()));
+                marker.setTag(event.getId());
                 builder.include(marker.getPosition());
                 LatLngBounds bounds = builder.build();
                 LatLng center = bounds.getCenter();
