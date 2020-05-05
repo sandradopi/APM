@@ -254,37 +254,4 @@ public class EventDAO extends GenericDAO<Event> {
     }
 
 
-    public List<Event> getNearbyEvents() {
-        GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(37.78, -122.40),1);
-        geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
-            @Override
-            public void onKeyEntered(String key, GeoLocation location) {
-                Log.e(TAG, String.format("Key %s entered the search area at [%f,%f]", key, location.latitude, location.longitude));
-            }
-
-            @Override
-            public void onKeyExited(String key) {
-                System.out.println(String.format("Key %s is no longer in the search area", key));
-            }
-
-            @Override
-            public void onKeyMoved(String key, GeoLocation location) {
-                System.out.println(String.format("Key %s moved within the search area to [%f,%f]", key, location.latitude, location.longitude));
-            }
-
-            @Override
-            public void onGeoQueryReady() {
-                System.out.println("All initial data has been loaded and events have been fired!");
-            }
-
-            @Override
-            public void onGeoQueryError(DatabaseError error) {
-                System.err.println("There was an error with this query: " + error);
-            }
-        });
-
-        return null;
-    }
-
-
 }
