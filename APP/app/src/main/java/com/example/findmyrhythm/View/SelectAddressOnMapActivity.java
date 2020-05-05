@@ -71,8 +71,8 @@ public class SelectAddressOnMapActivity extends FragmentActivity implements OnMa
         myLocation = findViewById(R.id.my_location);
         submit_location = findViewById(R.id.submit_location);
 
-        Locale spanish = new Locale("es", "ES");
-        geocoder = new Geocoder(this, spanish);
+        Locale locale = Locale.getDefault(); // new Locale("es", "ES");
+        geocoder = new Geocoder(this, locale);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()

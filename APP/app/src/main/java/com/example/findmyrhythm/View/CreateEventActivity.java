@@ -46,6 +46,13 @@ import com.example.findmyrhythm.Model.PersistentOrganizerInfo;
 import com.example.findmyrhythm.Model.Photo;
 import com.example.findmyrhythm.Model.PhotoService;
 import com.example.findmyrhythm.R;
+import com.firebase.geofire.GeoFire;
+import com.firebase.geofire.GeoLocation;
+import com.firebase.geofire.GeoQuery;
+import com.firebase.geofire.GeoQueryEventListener;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 
 import java.io.ByteArrayOutputStream;
@@ -124,29 +131,12 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
 //        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
 //        useUserDefaultLocation = true;
-        final Locale spanish = new Locale("es", "ES");
+        final Locale locale = Locale.getDefault(); // new Locale("es", "ES");
         calendar = Calendar.getInstance();
         addressTextView = findViewById(R.id.address);
         exploreMapButton = findViewById(R.id.exploreMap);
-        eventCompleteAddress = null;
         exploreMapButton.setText("Explorar en el mapa");
-        exploreMapButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    Address organizerAddress;
-                    // Pass event's address in bundle. If it does not exist, initialize an address at (0,0).
-                    if (eventCompleteAddress == null) {
-                        organizerAddress = new Address(spanish);
-                        organizerAddress.setLatitude(0.0);
-                        organizerAddress.setLongitude(0.0);
-                    }
-                    startActivityForResult(new Intent(getApplicationContext(), SelectAddressOnMapActivity.class).putExtra("organizerAddress", eventCompleteAddress), SET_LOCATION);
-                } catch (Exception e) {
-                    Log.w(TAG, e.toString());
-                }
-            }
-        });
+
         // Reference to the different EditText containing the event info
         maxAttendees = findViewById(R.id.max_attendees);
         price = findViewById(R.id.price);
@@ -181,6 +171,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             }
         });
 
+        // boolean isPresent = Geocoder.isPresent();
 
         //No tengo claro si se deberia hacer así
         final String eventSelectId = getIntent().getStringExtra("EVENT");
@@ -203,7 +194,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             description.setText(eventSelect.getDescription());
             selectedGenre = eventSelect.getGenre();
 
-            Geocoder geocoder = new Geocoder(this, spanish);
+            Geocoder geocoder = new Geocoder(this, locale);
 
             HashMap<String, Object> completeAddressDict = eventSelect.getCompleteAddress();
             List<Address> addresses = null;
@@ -235,6 +226,25 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             geoUtils = new GeoUtils(this, Locale.getDefault());
             eventCompleteAddress = geoUtils.getAddressFromLocationName(organizerLocationName);
         }
+
+        exploreMapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    Address organizerAddress;
+                    // Pass event's address in bundle. If it does not exist, initialize an address at (0,0).
+                    if (eventCompleteAddress == null) {
+                        organizerAddress = new Address(locale);
+                        organizerAddress.setLatitude(0.0);
+                        organizerAddress.setLongitude(0.0);
+                    }
+                    startActivityForResult(new Intent(getApplicationContext(), SelectAddressOnMapActivity.class).putExtra("organizerAddress", eventCompleteAddress), SET_LOCATION);
+                } catch (Exception e) {
+                    Log.w(TAG, e.toString());
+                }
+            }
+        });
+
     }
 
 
@@ -548,6 +558,8 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         addressDict.put("latitude", eventCompleteAddress.getLatitude());
         addressDict.put("longitude", eventCompleteAddress.getLongitude());
 
+        Log.e(TAG, (new GeoLocation(eventCompleteAddress.getLatitude(), eventCompleteAddress.getLongitude())).toString());;
+
         Event event = new Event(name.getText().toString(), eventDate, addressTextView.getText().toString(),
                 selectedGenre, organizerId, maxAttendees.getText().toString(), price.getText().toString(),
                 description.getText().toString(), photoId, addressDict);
@@ -557,11 +569,6 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
 
 
     private class AddEventTask extends AsyncTask<Void, Void, Event> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
 
         @Override
         protected Event doInBackground(Void... voids) {

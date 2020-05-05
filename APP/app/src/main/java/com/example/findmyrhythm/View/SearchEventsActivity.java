@@ -157,6 +157,11 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
                                         if (location != null) {
                                             LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
                                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
+
+                                            // Remove the request once it is received it, as we don't need continuous updates
+                                            if (fusedLocationClient != null) {
+                                                fusedLocationClient.removeLocationUpdates(locationCallback);
+                                            }
                                         }
                                     }
                                 }
@@ -168,10 +173,6 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
 
 
     private class getEvents extends AsyncTask<String, Void, ArrayList<Event>> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
 
         @Override
         protected ArrayList<Event> doInBackground(String... searchTexts) {
@@ -206,5 +207,11 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
 
     }
 
+
+    /* TODO: Buscar eventos cerca de mí o dentro de los límites del mapa.
+     *   Enlaces de interés:
+     * https://stackoverflow.com/questions/50631432/android-query-nearby-locations-from-firebase
+     * https://stackoverflow.com/questions/43357990/query-for-nearby-locations
+     * (especialmente el segundo) */
 
 }

@@ -83,8 +83,8 @@ public class OrganizerLogActivity extends AppCompatActivity {
         name.setText(currentUser.getDisplayName());
         email.setText(currentUser.getEmail());
 
-        final Locale spanish = new Locale("es", "ES");
-        geocoder = new Geocoder(this, spanish);
+        final Locale locale = Locale.getDefault(); // new Locale("es", "ES");
+        geocoder = new Geocoder(this, locale);
 
 
         if (ContextCompat.checkSelfPermission(OrganizerLogActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -104,7 +104,7 @@ public class OrganizerLogActivity extends AppCompatActivity {
                     Address organizerAddress;
                     // Pass organizer's address in bundle. If it does not exist, initialize an address at (0,0).
                     if (organizerAddressesList.isEmpty()) {
-                        organizerAddress = new Address(spanish);
+                        organizerAddress = new Address(locale);
                         organizerAddress.setLatitude(0.0);
                         organizerAddress.setLongitude(0.0);
                     } else {
