@@ -30,7 +30,7 @@
 
                 <fragment
                     android:id="@+id/finishedEventInfo"
-                    android:name="com.example.findmyrhythm.View.tabs.FinishedEventInfoFragment"
+                    android:name="com.apmuei.findmyrhythm.View.tabs.FinishedEventInfoFragment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
