@@ -87,7 +87,7 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
         geoFire = new GeoFire(ref);
 
 
-        Toast.makeText(getApplicationContext(),"Haz click en los marcadores para ver el título del evento, y en este si quieres ver toda la información.",Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), getString(R.string.search_events_usage_info), Toast.LENGTH_LONG).show();
 
     }
 

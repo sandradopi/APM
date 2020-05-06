@@ -89,7 +89,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         SignInButton signInButton = findViewById(R.id.sign_in_button);
         findViewById(R.id.sign_in_button).setOnClickListener(this);
         TextView textView = (TextView) signInButton.getChildAt(0);
-        textView.setText("Continuar con Google");
+        textView.setText(R.string.continue_with_google);
 
         // Initialize Facebook Login button
         mCallbackManager = CallbackManager.Factory.create();

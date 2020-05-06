@@ -12,7 +12,23 @@
     <string name="authFail">Autenticación fallada</string>
     <string name="authExi">Autenticación exitosa</string>
 
+    <!--  SearchEventsActivity  -->
+    <string name="search_events_usage_info">Haz click en los marcadores para ver el título del evento, y en este si quieres ver toda su información.</string>
 
+    <!--  CreateEventActivity  -->
+    <string name="create_event">Crear evento</string>
+    <string name="edit_event">Editar evento</string>
+    <string name="change_poster">Cambiar cartel</string>
+    <string name="save_edited_event">MODIFICAR</string>
+
+    <!--  EventInfoActivity  -->
+    <string name="signed_up">Apuntado</string>
+    <string name="to_sign_up">Apuntarse</string>
+
+    <!--  EventInfoActivity  -->
+    <string name="continue_with_google">Continuar con Google</string>
+
+    <!--  ...  -->
     <string name="navigation_drawer_open">Abriendo menú</string>
     <string name="navigation_drawer_close">Cerrando menú</string>
     <string name="title_click">Title click</string>
