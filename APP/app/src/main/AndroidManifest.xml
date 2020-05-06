@@ -55,6 +55,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -90,7 +91,6 @@
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data android:scheme="@string/fb_login_protocol_scheme" />
@@ -100,13 +100,13 @@
             android:name="com.apmuei.findmyrhythm.View.UserProfileActivity"
             android:label="@string/title_activity_perfil_usuario_tabs"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="com.apmuei.findmyrhythm.View.SearchActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name="com.apmuei.findmyrhythm.View.RecommendedEventsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity android:name="com.apmuei.findmyrhythm.View.CreateEventActivity" />
+
         <activity
             android:name="com.apmuei.findmyrhythm.View.OrganizerSettingsActivity"
             android:label="@string/title_activity_ajustes_organizador"

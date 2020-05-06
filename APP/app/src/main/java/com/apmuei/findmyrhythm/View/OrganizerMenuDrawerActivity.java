@@ -26,9 +26,6 @@ public class OrganizerMenuDrawerActivity extends MenuDrawerActivity {
                 case R.id.nav_profile:
                     startActivity(new Intent(this, OrganizerProfileActivity.class));
                     break;
-                case R.id.nav_search:
-                    startActivity(new Intent(this, SearchEventsActivity.class));
-                    break;
                 case R.id.nav_settings:
                     startActivity(new Intent(this, OrganizerSettingsActivity.class));
                     break;

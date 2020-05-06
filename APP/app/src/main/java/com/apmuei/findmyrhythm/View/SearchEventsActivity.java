@@ -5,12 +5,14 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -50,7 +52,9 @@ import java.util.HashSet;
 import java.util.Objects;
 
 
-public class SearchEventsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class SearchEventsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+
+    private final static String TAG = "SearchEvents";
 
     private GoogleMap mMap;
     private EditText searchText;
@@ -83,6 +87,12 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
         geoFire = new GeoFire(ref);
 
     }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        return false;
+    }
+
 
     private class EventMarker {
         String id;
@@ -139,9 +149,53 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
             }
         });
 
+        // Set a listener for marker click.
+        mMap.setOnMarkerClickListener(this);
+
+        mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+
+            // Use default InfoWindow frame
+            @Override
+            public View getInfoWindow(Marker args) {
+                return null;
+            }
+
+            // Defines the contents of the InfoWindow
+            @Override
+            public View getInfoContents(Marker args) {
+
+                // Getting view from the layout file info_window_layout
+                View v = getLayoutInflater().inflate(R.layout.window_info_layout, null);
+
+                // Getting the position from the marker
+                LatLng clickMarkerLatLng = args.getPosition();
+
+                TextView title = (TextView) v.findViewById(R.id.title);
+                title.setText(args.getTitle());
+
+                mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                    public void onInfoWindowClick(Marker marker) {
+                        String id = (String) marker.getTag();
+                        Log.e(TAG + " >>> ", id);
+
+                        Intent intent = new Intent(SearchEventsActivity.this, EventInfoActivity.class);
+                        intent.putExtra("EVENT", id);
+                        intent.putExtra("RECOMMENDED", false);
+                        startActivity(intent);
+
+                    }
+                });
+                return v;
+            }
+        });
+
         mMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
             @Override
             public void onCameraIdle() {
+                if (! searchText.getText().toString().isEmpty()) {
+                    return;
+                }
+
                 Log.e("-------------","Listener 1");
                 VisibleRegion visibleRegion = mMap.getProjection().getVisibleRegion();
                 LatLngBounds mapLatLngBounds = visibleRegion.latLngBounds;
@@ -193,7 +247,8 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
             Log.e(">>>>>>>>>>>>>>>", eventMarker.name);
 
             LatLng latLng = new LatLng(eventMarker.location.latitude, eventMarker.location.longitude);
-            mMap.addMarker(new MarkerOptions().position(latLng).title(eventMarker.name));
+            Marker marker = mMap.addMarker(new MarkerOptions().position(latLng).title(eventMarker.name));
+            marker.setTag(eventMarker.id);
         }
 
     }
@@ -338,6 +393,7 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
                 LatLng latLng = new LatLng((Double) Objects.requireNonNull(address.get("latitude")),
                         (Double) Objects.requireNonNull(address.get("longitude")));
                 Marker marker = mMap.addMarker(new MarkerOptions().position(latLng).title(event.getName()));
+                marker.setTag(event.getId());
                 builder.include(marker.getPosition());
                 LatLngBounds bounds = builder.build();
                 LatLng center = bounds.getCenter();
