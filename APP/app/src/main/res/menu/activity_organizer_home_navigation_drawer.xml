@@ -11,15 +11,6 @@
             android:title="@string/menu_profile" />
     </group>
 
-    <group
-        android:id="@+id/group1"
-        android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_search"
-            android:icon="@drawable/ic_menu_search"
-            android:title="@string/menu_search" />
-    </group>
-
     <item android:title="">
         <menu>
             <group android:checkableBehavior="single">

@@ -44,10 +44,7 @@ import com.apmuei.findmyrhythm.Model.PersistentOrganizerInfo;
 import com.apmuei.findmyrhythm.Model.Photo;
 import com.apmuei.findmyrhythm.Model.PhotoService;
 import com.apmuei.findmyrhythm.R;
-import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
-import com.firebase.geofire.GeoQuery;
-import com.firebase.geofire.GeoQueryEventListener;
 import com.google.gson.Gson;
 
 import java.io.ByteArrayOutputStream;
