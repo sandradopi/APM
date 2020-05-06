@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.findmyrhythm">
+    package="com.apmuei.findmyrhythm">
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -24,7 +24,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <service android:name=".Model.EndlessService"
+        <service android:name="com.apmuei.findmyrhythm.Model.EndlessService"
             android:enabled="true"
             android:exported="false">
 
@@ -42,15 +42,15 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".View.SearchEventsActivity"
+            android:name="com.apmuei.findmyrhythm.View.SearchEventsActivity"
             android:label="@string/title_activity_search_events"></activity>
         <activity
-            android:name=".View.SelectAddressOnMapActivity"
+            android:name="com.apmuei.findmyrhythm.View.SelectAddressOnMapActivity"
             android:label="@string/title_activity_search_events"></activity>
-        <activity android:name=".View.LocationsSettingsActivity" />
-        <activity android:name=".View.GenresSettingsActivity" />
+        <activity android:name="com.apmuei.findmyrhythm.View.LocationsSettingsActivity" />
+        <activity android:name="com.apmuei.findmyrhythm.View.GenresSettingsActivity" />
         <activity
-            android:name=".View.SplashActivity"
+            android:name="com.apmuei.findmyrhythm.View.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -58,20 +58,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".View.OrganizerLogActivity" />
-        <activity android:name=".View.UserLogActivity" />
-        <activity android:name=".View.SetGenresActivity" />
+        <activity android:name="com.apmuei.findmyrhythm.View.OrganizerLogActivity" />
+        <activity android:name="com.apmuei.findmyrhythm.View.UserLogActivity" />
+        <activity android:name="com.apmuei.findmyrhythm.View.SetGenresActivity" />
         <activity
-            android:name=".View.SetLocationActivity">
+            android:name="com.apmuei.findmyrhythm.View.SetLocationActivity">
         </activity>
         <activity
-            android:name=".View.GreetingsActivity"
+            android:name="com.apmuei.findmyrhythm.View.GreetingsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".View.OrganizerProfileActivity"
+            android:name="com.apmuei.findmyrhythm.View.OrganizerProfileActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".View.LoginActivity"
+            android:name="com.apmuei.findmyrhythm.View.LoginActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
@@ -97,27 +97,27 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".View.UserProfileActivity"
+            android:name="com.apmuei.findmyrhythm.View.UserProfileActivity"
             android:label="@string/title_activity_perfil_usuario_tabs"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".View.SearchActivity"
+            android:name="com.apmuei.findmyrhythm.View.SearchActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".View.RecommendedEventsActivity"
+            android:name="com.apmuei.findmyrhythm.View.RecommendedEventsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".View.CreateEventActivity" />
+        <activity android:name="com.apmuei.findmyrhythm.View.CreateEventActivity" />
         <activity
-            android:name=".View.OrganizerSettingsActivity"
+            android:name="com.apmuei.findmyrhythm.View.OrganizerSettingsActivity"
             android:label="@string/title_activity_ajustes_organizador"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".View.UserSettingsActivity"
+            android:name="com.apmuei.findmyrhythm.View.UserSettingsActivity"
             android:label="@string/title_activity_ajustes_usuario"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".View.EventInfoActivity" />
-        <activity android:name=".View.OrganizerEventInfoActivity" />
-        <activity android:name=".View.FinishedEventInfoActivity" />
+        <activity android:name="com.apmuei.findmyrhythm.View.EventInfoActivity" />
+        <activity android:name="com.apmuei.findmyrhythm.View.OrganizerEventInfoActivity" />
+        <activity android:name="com.apmuei.findmyrhythm.View.FinishedEventInfoActivity" />
     </application>
 
 </manifest>

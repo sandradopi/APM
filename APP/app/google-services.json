@@ -8,12 +8,108 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:304555561167:android:865f074db99552d87f27ba",
+        "android_client_info": {
+          "package_name": "com.apmuei.findmyrhythm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "304555561167-13pcbn8fscvmra4f4q2m3edtr86sb3pq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVHl938e_Ru_3baYU-miCXBsHtBV-WHFc"
+        },
+        {
+          "current_key": "AIzaSyDoUjZ-mIeMBqumb22ITJAQ5AO-ZTlTMws"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "304555561167-13pcbn8fscvmra4f4q2m3edtr86sb3pq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:304555561167:android:834291ec25e720a17f27ba",
         "android_client_info": {
           "package_name": "com.example.findmyrhythm"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "304555561167-m1d9gqi4k02v3io32cnbdb3uvrqlh6kh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.findmyrhythm",
+            "certificate_hash": "278eea3f48f6cce9a6d8c213b01db0824181bde4"
+          }
+        },
+        {
+          "client_id": "304555561167-tk9dgmfujqqjuaim0uv1e3ui6gq717gi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.findmyrhythm",
+            "certificate_hash": "586f507d084859f189df9c3cc48d03f6cad36904"
+          }
+        },
+        {
+          "client_id": "304555561167-7qubu3m1kngvb3rnpnp9vm6mi4sudu5s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.findmyrhythm",
+            "certificate_hash": "a86a0238cb3347298396765783ea056f4a1d6d89"
+          }
+        },
+        {
+          "client_id": "304555561167-676csoivod6cmuv3fo3u3knfhcvi1brk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.findmyrhythm",
+            "certificate_hash": "af675ea2ef5dc01d8429514cc6f8dcabd3aa802d"
+          }
+        },
+        {
+          "client_id": "304555561167-d57e0b6u2q5me8q7kojb1urdr8rrc8ml.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.findmyrhythm",
+            "certificate_hash": "b6dc036f8901e91d74e96822724aac97c5f8c45d"
+          }
+        },
+        {
+          "client_id": "304555561167-ftve7id4g5tkiuhiehmcej01i1k5ti6d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.findmyrhythm",
+            "certificate_hash": "42893ec6e89bf68a53dbbfebfd3df214a89d939c"
+          }
+        },
+        {
+          "client_id": "304555561167-audg07gd29veg4ndbfrh48tpv4dbni75.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.findmyrhythm",
+            "certificate_hash": "586b2fbf0dc421f8d6b2d9017c2fd0350c8dc27c"
+          }
+        },
+        {
+          "client_id": "304555561167-1nnluemgjg3391l3l73bo7mc6htc1183.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.findmyrhythm",
+            "certificate_hash": "446d4efaa4bf91013851ec3d65ad3383f2dc5624"
+          }
+        },
         {
           "client_id": "304555561167-bier2nu97qp8hgt28tj1hqpqomai0oqj.apps.googleusercontent.com",
           "client_type": 1,
@@ -28,6 +124,9 @@
         }
       ],
       "api_key": [
+        {
+          "current_key": "AIzaSyAVHl938e_Ru_3baYU-miCXBsHtBV-WHFc"
+        },
         {
           "current_key": "AIzaSyDoUjZ-mIeMBqumb22ITJAQ5AO-ZTlTMws"
         }

@@ -16,7 +16,7 @@
 
         <fragment
             android:id="@+id/eventInfo"
-            android:name="com.example.findmyrhythm.View.tabs.OrganizerEventInfoFragment"
+            android:name="com.apmuei.findmyrhythm.View.tabs.OrganizerEventInfoFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

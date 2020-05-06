@@ -44,7 +44,7 @@
         android:layout_weight="1">
 
 
-        <fragment android:name="com.example.findmyrhythm.View.EventInfoFragment"
+        <fragment android:name="com.apmuei.findmyrhythm.View.EventInfoFragment"
             android:id="@+id/event_info"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
