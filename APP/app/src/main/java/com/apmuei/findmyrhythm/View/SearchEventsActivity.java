@@ -1,6 +1,7 @@
 package com.apmuei.findmyrhythm.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
@@ -54,7 +55,7 @@ import java.util.Objects;
 
 public class SearchEventsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
-    private final static String TAG = "SearchEvents";
+    private final static String TAG = "SearchEventsA";
 
     private GoogleMap mMap;
     private EditText searchText;
@@ -63,9 +64,8 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
     private LocationRequest locationRequest;
     private LocationCallback locationCallback;
     private GeoFire geoFire;
-    private HashSet<String> retrievedEvents = new HashSet<>();
     private HashSet<EventMarker> eventMarkers = new HashSet<>();
-    private HashSet<GeoLocation> retrievedLocations = new HashSet<>();
+    private HashSet<EventMarker> newEventMarkers = new HashSet<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +86,11 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("locations");
         geoFire = new GeoFire(ref);
 
+
+        Toast.makeText(getApplicationContext(), getString(R.string.search_events_usage_info), Toast.LENGTH_LONG).show();
+
     }
+
 
     @Override
     public boolean onMarkerClick(Marker marker) {
@@ -99,16 +103,33 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
         GeoLocation location;
         String name;
 
-        public EventMarker(String id, GeoLocation location) {
+        EventMarker(String id, GeoLocation location) {
             this.id = id;
             this.location = location;
             this.name = null;
         }
 
-        public EventMarker(String id, GeoLocation location, String name) {
+        EventMarker(String id, GeoLocation location, String name) {
             this.id = id;
             this.location = location;
             this.name = name;
+        }
+
+        @Override
+        public int hashCode() {
+            return id.hashCode();
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (obj == null || getClass() != obj.getClass()) {
+                return false;
+            }
+            EventMarker eventMarker = (EventMarker) obj;
+            return this.id.equals(eventMarker.id);
         }
     }
 
@@ -218,7 +239,7 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
                 double latitude = mapLatLngBounds.getCenter().latitude;
                 double longitude = mapLatLngBounds.getCenter().longitude;
 
-                Toast.makeText(getApplicationContext(),radius+"",Toast.LENGTH_SHORT).show();
+                // Toast.makeText(getApplicationContext(),radius+"",Toast.LENGTH_SHORT).show();
 
                 // Toast.makeText(getApplicationContext(),latitude+ " "+longitude,Toast.LENGTH_SHORT).show();
 
@@ -262,9 +283,10 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
                 /* TODO: Quizás se podría hacer de forma más eficiente, no descargando de nuevo el
                 *   nombre si ya se ha descargado */
                 //Your code to run in GUI thread here
-                for (EventMarker eventMarker : eventMarkers) {
+                for (EventMarker eventMarker : newEventMarkers) {
                     new showEventMarker().execute(eventMarker.id, eventMarker.location);
                 }
+                newEventMarkers.clear();
             }
         });
     }
@@ -282,10 +304,12 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
         geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
             @Override
             public void onKeyEntered(final String key, final GeoLocation location) {
-                retrievedEvents.add(key);
-                retrievedLocations.add(location);
-                eventMarkers.add(new EventMarker(key, location));
-                Log.e("..", String.format("Key %s entered the search area at [%f,%f]", key, location.latitude, location.longitude));
+                EventMarker eventMarker = new EventMarker(key, location);
+                if (! eventMarkers.contains(eventMarker)) {
+                    eventMarkers.add(eventMarker);
+                    newEventMarkers.add(eventMarker);
+                    Log.d("..", String.format("Key %s entered the search area at [%f,%f]", key, location.latitude, location.longitude));
+                }
 
             }
 

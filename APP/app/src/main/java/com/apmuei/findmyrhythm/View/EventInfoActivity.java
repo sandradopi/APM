@@ -36,10 +36,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCallback {
-    String joined_text = "Apuntado";
-    String join_event_text = "Apuntarse";
+    String signedUpText = getString(R.string.signed_up);
+    String toSignUpText = getString(R.string.to_sign_up);
     TextView name, date, description, location, genre, time, eventMaxAttendees, eventPrice;
-    Boolean joined = false;
+    Boolean isSignedUp = false;
 
 
     @Override
@@ -95,9 +95,9 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
         final Button joinButton = (Button) findViewById(R.id.joinBtn);
         //If is a atendee of the event
         if (persistentUserInfo.getEvents().contains(event)) {
-            joinButton.setText(joined_text);
+            joinButton.setText(signedUpText);
             joinButton.setBackgroundColor(0xFF673AB7);
-            joined = true;
+            isSignedUp = true;
         }
 
         joinButton.setOnClickListener( new View.OnClickListener() {
@@ -105,14 +105,14 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
             @Override
             public void onClick(View v) {
 
-                if(joined){
+                if(isSignedUp){
                     new unSubscribe().execute();
-                    joinButton.setText(join_event_text);
+                    joinButton.setText(toSignUpText);
                     joinButton.setBackgroundColor(0xFFB3A1CE);
 
                 }else{
                     new Subscribe().execute();
-                    joinButton.setText(joined_text);
+                    joinButton.setText(signedUpText);
                     joinButton.setBackgroundColor(0xFF673AB7);
                 }
 
@@ -238,7 +238,7 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
             attendeeService.deleteAttendeeByEvent(eventSelect.getId());
             persistentUserInfo.deleteEvent(getApplicationContext(),eventSelect);
             persistentUserInfo.addUniqueEventRecommended(getApplicationContext(), eventSelect);
-            joined = false;
+            isSignedUp = false;
             return null;
         }
 
@@ -258,7 +258,7 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
             attendeeService.createAttendee(currentUser.getUid(), eventSelect.getId());
             persistentUserInfo.addEvent(getApplicationContext(),eventSelect);
             persistentUserInfo.deleteRecommendedEvent(getApplicationContext(), eventSelect);
-            joined = true;
+            isSignedUp = true;
 
             return null;
         }

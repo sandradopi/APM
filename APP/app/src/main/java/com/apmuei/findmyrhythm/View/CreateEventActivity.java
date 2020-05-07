@@ -147,7 +147,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         uploadPhotoButton = findViewById(R.id.button_load_picture);
 
         TextView toolbarTitle = findViewById(R.id.toolbar_title);
-        toolbarTitle.setText("Crear evento");
+        toolbarTitle.setText(getString(R.string.create_event));
         uploadPhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -168,7 +168,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         //No tengo claro si se deberia hacer así
         final String eventSelectId = getIntent().getStringExtra("EVENT");
         if (eventSelectId != null && !eventSelectId.isEmpty()) {
-            toolbarTitle.setText("Editar evento");
+            toolbarTitle.setText(getString(R.string.edit_event));
             modifyEvent = true;
             persistentOrganizerInfo = PersistentOrganizerInfo.getPersistentOrganizerInfo(getApplicationContext());
             eventSelect = persistentOrganizerInfo.getEvent(eventSelectId);
@@ -202,8 +202,8 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
                 e.printStackTrace();
             }
 
-            saveButton.setText("MODIFICAR");
-            uploadPhotoButton.setText("Cambiar cartel");
+            saveButton.setText(getString(R.string.save_edited_event));
+            uploadPhotoButton.setText(getString(R.string.change_poster));
             new getPhoto().execute();
             String[] genresArr = getResources().getStringArray(R.array.categories);
             genresSpinner.setSelection(Arrays.asList(genresArr).indexOf(selectedGenre));
