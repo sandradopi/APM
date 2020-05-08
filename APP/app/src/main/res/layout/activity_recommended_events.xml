@@ -1,23 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:background="@color/primaryBackgroundDark"
     android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/titulo"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:gravity="center_horizontal"
-            android:layout_weight="0.5"
-            android:layout_marginTop="40dp"
-            android:text="@string/recomendados_para_ti"
-            android:textSize="24sp"
-            android:textStyle="bold|italic" />
-
 
         <ListView
             android:id="@+id/eventslist2"
