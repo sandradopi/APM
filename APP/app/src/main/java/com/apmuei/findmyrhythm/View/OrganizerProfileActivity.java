@@ -13,7 +13,9 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.apmuei.findmyrhythm.Model.Event;
 import com.apmuei.findmyrhythm.Model.IOFiles;
+import com.apmuei.findmyrhythm.Model.PersistentOrganizerInfo;
 import com.apmuei.findmyrhythm.Model.RatingService;
 import com.apmuei.findmyrhythm.R;
 import com.apmuei.findmyrhythm.View.tabs.SectionsPagerAdapterOrg;
@@ -21,6 +23,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 
 public class OrganizerProfileActivity extends OrganizerMenuDrawerActivity {
@@ -33,16 +36,8 @@ public class OrganizerProfileActivity extends OrganizerMenuDrawerActivity {
 
         setMenuItemChecked(R.id.nav_profile);
 
-//        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-//        getSupportActionBar().setCustomView(R.layout.layout_actionbar_empty);
-//
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);
-
-
         TextView toolbarTitle = findViewById(R.id.toolbar_title);
         toolbarTitle.setText("Perfil");
-
 
         SectionsPagerAdapterOrg sectionsPagerAdapter = new SectionsPagerAdapterOrg(this, getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.view_pager);
@@ -54,6 +49,16 @@ public class OrganizerProfileActivity extends OrganizerMenuDrawerActivity {
         SharedPreferences preferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
         String organizerName = preferences.getString("name", null);
         String userEmail = preferences.getString("email", null);
+
+        PersistentOrganizerInfo persistentOrganizerInfo = PersistentOrganizerInfo.getPersistentOrganizerInfo(getApplicationContext());
+        ArrayList<Event> createdEvents = persistentOrganizerInfo.getEvents();
+        ArrayList<String> eventIds = new ArrayList<String>();
+        for (Event e : createdEvents) {
+            eventIds.add(e.getId());
+        }
+
+        new getRatingsMediaByUser().execute(eventIds);
+
         TextView organizerNameView = findViewById(R.id.organizer_name);
 //        TextView userLocationView = findViewById(R.id.user_location);
 //        userLocationView.setText();
@@ -83,7 +88,7 @@ public class OrganizerProfileActivity extends OrganizerMenuDrawerActivity {
 
     }
 
-    private class getRatingsMediaByUser extends AsyncTask<Void, Void, Void> {
+    private class getRatingsMediaByUser extends AsyncTask<ArrayList<String>, Void, Void> {
 
         RatingService ratingService = new RatingService();
         Float ratingsMedia;
@@ -94,8 +99,8 @@ public class OrganizerProfileActivity extends OrganizerMenuDrawerActivity {
         }
 
         @Override
-        protected Void doInBackground(Void... voids) {
-            ratingsMedia = ratingService.getMediaByUser(currentUser.getUid());
+        protected Void doInBackground(ArrayList<String>... createdEvents) {
+            ratingsMedia = ratingService.getMediaOrganizer(createdEvents[0]);
             return null;
         }
 
