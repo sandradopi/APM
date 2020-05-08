@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.apmuei.findmyrhythm.Model.IOFiles;
 import com.apmuei.findmyrhythm.R;
+import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -174,6 +175,8 @@ public abstract class MenuDrawerActivity extends AppCompatActivity implements Na
                                             startActivity(new Intent(MenuDrawerActivity.this, LoginActivity.class));
                                         }
                                     });
+                        } else if (finalProvider.equals("facebook.com")) {
+                            LoginManager.getInstance().logOut();
                         }
 
                     }
