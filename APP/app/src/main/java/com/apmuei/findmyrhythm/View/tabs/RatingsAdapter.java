@@ -29,8 +29,7 @@ public class RatingsAdapter extends ArrayAdapter<String> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View rowView = inflater.inflate(R.layout.list_row_ratings, parent, false);
         TextView commentView = (TextView) rowView.findViewById(R.id.comment);
         TextView userView = (TextView) rowView.findViewById(R.id.user);

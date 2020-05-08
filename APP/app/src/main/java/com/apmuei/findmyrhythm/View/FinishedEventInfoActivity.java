@@ -84,12 +84,6 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
         //View
         setContentView(R.layout.activity_finished_event_info);
 
-        /*RatingsAdapter ratingsAdapter = new RatingsAdapter(this, getSupportFragmentManager());
-        ViewPager viewPager = findViewById(R.id.eventPager);
-        viewPager.setAdapter(ratingsAdapter);
-        TabLayout tabs = findViewById(R.id.eventTabs);
-
-        tabs.setupWithViewPager(viewPager);*/
         new getComments().execute();
         new getUsers().execute();
 
