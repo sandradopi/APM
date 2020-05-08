@@ -1,7 +1,6 @@
 package com.apmuei.findmyrhythm.View;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
@@ -33,11 +32,11 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
@@ -272,6 +271,7 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
             LatLng latLng = new LatLng(eventMarker.location.latitude, eventMarker.location.longitude);
             Marker marker = mMap.addMarker(new MarkerOptions().position(latLng).title(eventMarker.name));
             marker.setTag(eventMarker.id);
+            marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
         }
 
     }
@@ -428,6 +428,7 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
                         (Double) Objects.requireNonNull(address.get("longitude")));
                 Marker marker = mMap.addMarker(new MarkerOptions().position(latLng).title(event.getName()));
                 marker.setTag(event.getId());
+                marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
                 builder.include(marker.getPosition());
                 LatLngBounds bounds = builder.build();
                 LatLng center = bounds.getCenter();

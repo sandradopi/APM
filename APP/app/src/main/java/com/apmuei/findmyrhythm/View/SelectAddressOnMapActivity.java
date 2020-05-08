@@ -100,6 +100,7 @@ public class SelectAddressOnMapActivity extends FragmentActivity implements OnMa
             marker = mMap.addMarker(new MarkerOptions().position(new LatLng(
                     selectedAddress.getLatitude(), selectedAddress.getLongitude())).visible(true));
             marker.setTitle(GeoUtils.getAddressString(selectedAddress));
+            marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
             marker.showInfoWindow();
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(
                     selectedAddress.getLatitude(), selectedAddress.getLongitude()), 15));
@@ -117,6 +118,7 @@ public class SelectAddressOnMapActivity extends FragmentActivity implements OnMa
                     for (Address address : addresses) {
                         marker.remove();
                         marker = mMap.addMarker(new MarkerOptions().position(latLng).title(GeoUtils.getAddressString(address)));
+                        marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
                         mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
                         marker.showInfoWindow();
                         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
@@ -141,6 +143,7 @@ public class SelectAddressOnMapActivity extends FragmentActivity implements OnMa
                             LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
                             marker.remove();
                             marker = mMap.addMarker(new MarkerOptions().position(latLng).title(GeoUtils.getAddressString(address)));
+                            marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
                             marker.showInfoWindow();
                             selectedAddress = address;
@@ -219,8 +222,8 @@ public class SelectAddressOnMapActivity extends FragmentActivity implements OnMa
                                 marker = mMap.addMarker(new MarkerOptions().position(latLng));
                                 for (Address address : addresses) {
                                     marker.setTitle(GeoUtils.getAddressString(addresses.get(0)));
+                                    marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
                                     marker.showInfoWindow();
-                                    //marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.arrow));
                                     selectedAddress = address;
                                 }
                                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
