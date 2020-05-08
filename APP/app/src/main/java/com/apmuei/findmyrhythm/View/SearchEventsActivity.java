@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -32,6 +33,7 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -365,21 +367,25 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
                             // Logic to handle location object
                             LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
+                            mMap.setMyLocationEnabled(true);
 
                         } else {
                             locationRequest = LocationRequest.create();
-                            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
                             locationRequest.setInterval(20 * 1000);
+                            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
                             locationCallback = new LocationCallback() {
                                 @Override
                                 public void onLocationResult(LocationResult locationResult) {
                                     if (locationResult == null) {
+                                        Log.e(TAG, "NULL LOCATION RESULT");
                                         return;
                                     }
                                     for (Location location : locationResult.getLocations()) {
                                         if (location != null) {
                                             LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
                                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
+                                            mMap.setMyLocationEnabled(true);
 
                                             // Remove the request once it is received it, as we don't need continuous updates
                                             if (fusedLocationClient != null) {
@@ -389,6 +395,10 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
                                     }
                                 }
                             };
+
+                            fusedLocationClient.requestLocationUpdates(locationRequest,
+                                    locationCallback,
+                                    Looper.getMainLooper());
                         }
                     }
                 });
