@@ -36,8 +36,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCallback {
-    String signedUpText = getString(R.string.signed_up);
-    String toSignUpText = getString(R.string.to_sign_up);
+    String signedUpText;
+    String toSignUpText;
     TextView name, date, description, location, genre, time, eventMaxAttendees, eventPrice;
     Boolean isSignedUp = false;
 
@@ -54,6 +54,9 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
         //Vista
         setContentView(R.layout.activity_event_info);
 
+        signedUpText = getString(R.string.signed_up);
+        toSignUpText = getString(R.string.to_sign_up);
+
         eventMaxAttendees = findViewById(R.id.eventCapacity);
         eventPrice = findViewById(R.id.eventCost);
         name = findViewById(R.id.eventName);
@@ -62,7 +65,6 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
         time =  findViewById(R.id.eventTime);
         description = findViewById(R.id.eventDescContent);
         location = findViewById(R.id.eventLocationContent);
-
 
         //Event
         //Gson gson = new Gson();
