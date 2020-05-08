@@ -84,6 +84,7 @@ public class OrganizerLogActivity extends AppCompatActivity {
         final Locale locale = Locale.getDefault(); // new Locale("es", "ES");
         geocoder = new Geocoder(this, locale);
 
+        GeoUtils.checkLocationEnabled(OrganizerLogActivity.this);
 
         if (ContextCompat.checkSelfPermission(OrganizerLogActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {

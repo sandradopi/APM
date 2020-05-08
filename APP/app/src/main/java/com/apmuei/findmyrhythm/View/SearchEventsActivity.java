@@ -81,8 +81,6 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        GeoUtils.checkLocationEnabled(SearchEventsActivity.this);
-
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("locations");
@@ -148,6 +146,8 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
+        GeoUtils.checkLocationEnabled(SearchEventsActivity.this);
 
         if (ContextCompat.checkSelfPermission(SearchEventsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {

@@ -118,7 +118,7 @@ public class SelectAddressOnMapActivity extends FragmentActivity implements OnMa
                         marker = mMap.addMarker(new MarkerOptions().position(latLng).title(GeoUtils.getAddressString(address)));
                         mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
                         marker.showInfoWindow();
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
                         selectedAddress = address;
                     }
                 } catch (IOException e) {
@@ -157,6 +157,8 @@ public class SelectAddressOnMapActivity extends FragmentActivity implements OnMa
         myLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                GeoUtils.checkLocationEnabled(SelectAddressOnMapActivity.this);
 
                 if (ContextCompat.checkSelfPermission(SelectAddressOnMapActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
                         == PackageManager.PERMISSION_GRANTED) {
