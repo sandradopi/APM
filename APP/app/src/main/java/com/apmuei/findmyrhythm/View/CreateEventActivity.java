@@ -632,7 +632,8 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             else if (imageBitmap !=null){
                 createEncodedPhoto(imageBitmap);
             }
-            else{
+
+            else if (!photoOriginalId.equals(DEFAULT_IMAGE_ID)){
                 deletePhoto(photo);
             }
 
