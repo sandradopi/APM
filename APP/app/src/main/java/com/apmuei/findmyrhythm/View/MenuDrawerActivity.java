@@ -177,6 +177,7 @@ public abstract class MenuDrawerActivity extends AppCompatActivity implements Na
                                     });
                         } else if (finalProvider.equals("facebook.com")) {
                             LoginManager.getInstance().logOut();
+                            startActivity(new Intent(MenuDrawerActivity.this, LoginActivity.class));
                         }
 
                     }
