@@ -34,4 +34,9 @@
         <item name="colorControlActivated">@color/primaryDark</item>
     </style>
 
+    <style name="CustomGoldRatingBar"
+        parent="android:style/Widget.RatingBar">
+        <item name="colorControlActivated">@color/gold</item>
+    </style>
+
 </resources>

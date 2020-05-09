@@ -45,9 +45,9 @@ public class RatingService {
             return 0f;
     }
 
-    public Float getMediaByUser (String userId) {
+    public Float getMediaOrganizer (ArrayList<String> events) {
 
-        ArrayList<Float> ratings = ratingDAO.findScoreRatingsByUserId(userId);
+        ArrayList<Float> ratings = ratingDAO.findScoreRatingsByOrganizer(events);
         float sum = 0;
         if (!ratings.isEmpty()) {
             for (float r : ratings)
