@@ -1,6 +1,7 @@
 package com.apmuei.findmyrhythm.View;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -51,6 +52,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -89,7 +91,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
     private Photo photoOriginal;
     private String photoOriginalId;
     private Address eventCompleteAddress;
-    private GeoUtils geoUtils;
+//    private GeoUtils geoUtils;
 
     private int mYear, mMonth, mDay, mHour, mMinute;
     private Uri imageUri;
@@ -176,31 +178,20 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             name.setText(eventSelect.getName());
 
             eventDate= eventSelect.getEventDate();
-
-
             DateFormat df = new SimpleDateFormat("dd/MM/yy", java.util.Locale.getDefault());
             DateFormat df2 = new SimpleDateFormat("HH:mm", java.util.Locale.getDefault());
             date.setText(df.format(eventDate));
             hour.setText(df2.format(eventDate));
+
             maxAttendees.setText(eventSelect.getMaxAttendees());
             description.setText(eventSelect.getDescription());
             selectedGenre = eventSelect.getGenre();
 
-            Geocoder geocoder = new Geocoder(this, locale);
-
             HashMap<String, Object> completeAddressDict = eventSelect.getCompleteAddress();
-            List<Address> addresses = null;
-            try {
-                Double latitude = (Double) Objects.requireNonNull(completeAddressDict.get("latitude"));
-                Double longitude = (Double) Objects.requireNonNull(completeAddressDict.get("longitude"));
-                addresses = geocoder.getFromLocation(latitude, longitude, 1);
-                for (Address address : addresses) {
-                    eventCompleteAddress = address;
-                    addressTextView.setText(GeoUtils.getAddressString(eventCompleteAddress));
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            Double latitude = (Double) Objects.requireNonNull(completeAddressDict.get("latitude"));
+            Double longitude = (Double) Objects.requireNonNull(completeAddressDict.get("longitude"));
+
+            new GeocoderAsyncTask(this, latitude, longitude).execute();
 
             saveButton.setText(getString(R.string.save_edited_event));
             uploadPhotoButton.setText(getString(R.string.change_poster));
@@ -214,57 +205,66 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             String organizerLocationName = preferences.getString("location", null);
 
             addressTextView.setText(organizerLocationName);
-            // Use GeoUtils to obtain the complete address from location name
-            geoUtils = new GeoUtils(this, Locale.getDefault());
-            eventCompleteAddress = geoUtils.getAddressFromLocationName(organizerLocationName);
+            new GeocoderAsyncTask(this, organizerLocationName).execute();
         }
 
         exploreMapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    Address organizerAddress;
-                    // Pass event's address in bundle. If it does not exist, initialize an address at (0,0).
-                    if (eventCompleteAddress == null) {
-                        organizerAddress = new Address(locale);
-                        organizerAddress.setLatitude(0.0);
-                        organizerAddress.setLongitude(0.0);
-                    }
-                    startActivityForResult(new Intent(getApplicationContext(), SelectAddressOnMapActivity.class).putExtra("organizerAddress", eventCompleteAddress), SET_LOCATION);
-                } catch (Exception e) {
-                    Log.w(TAG, e.toString());
+                Intent intent = new Intent(getApplicationContext(), SelectAddressOnMapActivity.class);
+                if (eventCompleteAddress != null) {
+                    intent.putExtra("organizerAddress", eventCompleteAddress);
                 }
+                startActivityForResult(intent, SET_LOCATION);
             }
         });
 
     }
 
+    public class GeocoderAsyncTask extends AsyncTask<String, Void, Address> {
+        Double latitude = null;
+        Double longitude = null;
+        String locationName = null;
+        Activity activity;
 
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//
-//        if (useUserDefaultLocation) {
-//            // Retrieve organizer's location name
-//            SharedPreferences preferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
-//            String organizerLocationName = preferences.getString("location", null);
-//
-//            addressButton.setText(organizerLocationName);
-//            // Use GeoUtils to obtain the complete address from location name
-//            geoUtils = new GeoUtils(this, Locale.getDefault());
-//            eventCompleteAddress = geoUtils.getAddressFromLocationName(organizerLocationName);
-//            // Set the default text location in the view
-////            // Initialize the new location through the Location Manager
-////            LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-////            Criteria crta = new Criteria();
-////            String provider = lm.getBestProvider(crta, true);
-////            organizerLocation = new Location(provider);
-////            // Set location coordinates which had been obtained before and are stored in
-////            // the complete address
-////            organizerLocation.setLatitude(organizerCompleteAddress.getLatitude());
-////            organizerLocation.setLongitude(organizerCompleteAddress.getLongitude());
-//        }
-//    }
+        GeocoderAsyncTask(Activity activity, double latitude, double longitude) {
+            this.activity = activity;
+            this. latitude = latitude;
+            this.longitude = longitude;
+        }
+
+        GeocoderAsyncTask(Activity activity, String locationName) {
+            this.activity = activity;
+            this.locationName = locationName;
+        }
+
+        @Override
+        protected Address doInBackground(String... params) {
+            List<Address> addresses = new ArrayList<>();
+            Address result = null;
+
+            Geocoder geocoder = new Geocoder(activity, Locale.getDefault());
+            try {
+                if (locationName != null) {
+                    //while (addresses.size() == 0 || addresses.get(0) == null)
+                    addresses = geocoder.getFromLocationName(locationName, 1);
+                } else {
+                    addresses = geocoder.getFromLocation(latitude, longitude, 1);
+                }
+                Log.e("Addresses", "-->" + addresses);
+                result = addresses.get(0);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(Address result) {
+            eventCompleteAddress = result;
+            addressTextView.setText(GeoUtils.getAddressString(result));
+        }
+    }
 
 
     @Override

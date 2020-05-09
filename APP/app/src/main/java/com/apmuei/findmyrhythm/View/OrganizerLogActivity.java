@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -32,6 +33,10 @@ import com.apmuei.findmyrhythm.Model.Utils.PermissionUtils;
 import com.apmuei.findmyrhythm.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -119,11 +124,6 @@ public class OrganizerLogActivity extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*TODO: PROBABLY IT WOULD BE WISE TO GET THE LOCATION NOT BY GETTING THE TEXT OF THE EDITTEXT
-                 * BUT BY INTRODUCING THE CITY, PROVINCE, STREET ETC SEPARATED BY USING THE GOOGLE MAP APP.
-                 * IT WOULD MAKE EASIER THE CHECK OF EVENTS TO USERS AFTERWARDS.
-                 */
-
                 // Check if every field are covered. If not ask for the user to cover them.
                 if (GenericUtils.isEmpty(name) || GenericUtils.isEmpty(nickname) || GenericUtils.isEmpty(email) || GenericUtils.isEmpty(biography) || (organizerAddressesList.isEmpty())) {
                     Toast.makeText(OrganizerLogActivity.this, "Por favor rellene todos los campos", Toast.LENGTH_LONG).show();
@@ -139,7 +139,6 @@ public class OrganizerLogActivity extends AppCompatActivity {
                 //TODO: Introduce into database by getting the value of every field. Check Android Service.
                 createOrganizer();
 
-                //TODO: Intent to new Activity
                 Log.w(TAG, "Creación de la cuenta del organizador");
                 Toast.makeText(OrganizerLogActivity.this, getString(R.string.notiCreation), Toast.LENGTH_SHORT).show();
 
@@ -168,27 +167,53 @@ public class OrganizerLogActivity extends AppCompatActivity {
 
 
     private void getMyLastLocation() {
-
         mFusedLocationClient.getLastLocation()
                 .addOnSuccessListener(this, new OnSuccessListener<Location>() {
                     @Override
                     public void onSuccess(Location location) {
                         // Got last known location. In some rare situations this can be null.
                         if (location != null) {
-                            // Logic to handle location object
-                            List<Address> addresses = null;
-                            try {
-                                addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                                for (Address address : addresses) {
-                                    organizerAddressesList.add(address);
-                                    selectedAddressView.setText(GeoUtils.getAddressString(address));
-                                }
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+                            new GeocoderAsyncTask(OrganizerLogActivity.this,
+                                    location.getLatitude(), location.getLongitude()).execute();
                         }
                     }
                 });
+    }
+
+
+
+    public class GeocoderAsyncTask extends AsyncTask<String, Void, Address> {
+        Double latitude = null;
+        Double longitude = null;
+        Activity activity;
+
+        GeocoderAsyncTask(Activity activity, double latitude, double longitude) {
+            this.activity = activity;
+            this. latitude = latitude;
+            this.longitude = longitude;
+        }
+
+        @Override
+        protected Address doInBackground(String... params) {
+            List<Address> addresses;
+            Address result = null;
+
+            Geocoder geocoder = new Geocoder(activity, Locale.getDefault());
+            try {
+                addresses = geocoder.getFromLocation(latitude, longitude, 1);
+                Log.e("Addresses", "-->" + addresses);
+                result = addresses.get(0);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(Address result) {
+            organizerAddressesList.add(result);
+            selectedAddressView.setText(GeoUtils.getAddressString(result));
+        }
     }
 
 

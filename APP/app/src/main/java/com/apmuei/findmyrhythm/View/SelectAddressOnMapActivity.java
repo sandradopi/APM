@@ -5,10 +5,12 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -37,6 +39,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import android.location.Geocoder;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -96,39 +99,18 @@ public class SelectAddressOnMapActivity extends FragmentActivity implements OnMa
         mMap = googleMap;
 
         // Check if there is a selected location and put the marker there.
-        if ((selectedAddress.getLatitude() != 0) && (selectedAddress.getLongitude() != 0)) {
-            marker = mMap.addMarker(new MarkerOptions().position(new LatLng(
-                    selectedAddress.getLatitude(), selectedAddress.getLongitude())).visible(true));
-            marker.setTitle(GeoUtils.getAddressString(selectedAddress));
-            marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
-            marker.showInfoWindow();
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(
-                    selectedAddress.getLatitude(), selectedAddress.getLongitude()), 15));
+        if (selectedAddress != null) {
+             new GeocoderAsyncTask(SelectAddressOnMapActivity.this,
+                     selectedAddress.getLatitude(), selectedAddress.getLongitude(), "move_zoom").execute();
         } else {
-            marker = mMap.addMarker(new MarkerOptions().position(new LatLng(
-                    0, 0)).visible(false));
+            setMyLocationPermissions();
         }
 
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
-
-                try {
-                    List<Address> addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
-                    for (Address address : addresses) {
-                        marker.remove();
-                        marker = mMap.addMarker(new MarkerOptions().position(latLng).title(GeoUtils.getAddressString(address)));
-                        marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
-                        mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-                        marker.showInfoWindow();
-                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
-                        selectedAddress = address;
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+                new GeocoderAsyncTask(SelectAddressOnMapActivity.this, latLng.latitude,
+                        latLng.longitude, "animate").execute();
             }
         });
 
@@ -136,21 +118,8 @@ public class SelectAddressOnMapActivity extends FragmentActivity implements OnMa
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    try {
-                        List<Address> addresses = geocoder.getFromLocationName(searchText.getText().toString(), 1);
-                        for (Address address : addresses) {
-                            Log.e(TAG, GeoUtils.getAddressString(address));
-                            LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
-                            marker.remove();
-                            marker = mMap.addMarker(new MarkerOptions().position(latLng).title(GeoUtils.getAddressString(address)));
-                            marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
-                            marker.showInfoWindow();
-                            selectedAddress = address;
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    new GeocoderAsyncTask(SelectAddressOnMapActivity.this,
+                            searchText.getText().toString(), "move_zoom").execute();
                     return true;
                 }
                 return false;
@@ -161,17 +130,7 @@ public class SelectAddressOnMapActivity extends FragmentActivity implements OnMa
         myLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                GeoUtils.checkLocationEnabled(SelectAddressOnMapActivity.this);
-
-                if (ContextCompat.checkSelfPermission(SelectAddressOnMapActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
-                        == PackageManager.PERMISSION_GRANTED) {
-                    getMyLastLocation();
-                } else {
-                    // Permission to access the location is missing. Show rationale and request permission
-                    PermissionUtils.requestPermission(SelectAddressOnMapActivity.this, LOCATION_PERMISSION_CODE,
-                            Manifest.permission.ACCESS_FINE_LOCATION, true);
-                }
+                setMyLocationPermissions();
             }
         });
 
@@ -187,6 +146,20 @@ public class SelectAddressOnMapActivity extends FragmentActivity implements OnMa
             }
         });
 
+    }
+
+
+    private void setMyLocationPermissions() {
+        GeoUtils.checkLocationEnabled(SelectAddressOnMapActivity.this);
+
+        if (ContextCompat.checkSelfPermission(SelectAddressOnMapActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            getMyLastLocation();
+        } else {
+            // Permission to access the location is missing. Show rationale and request permission
+            PermissionUtils.requestPermission(SelectAddressOnMapActivity.this, LOCATION_PERMISSION_CODE,
+                    Manifest.permission.ACCESS_FINE_LOCATION, true);
+        }
     }
 
 
@@ -214,25 +187,101 @@ public class SelectAddressOnMapActivity extends FragmentActivity implements OnMa
                         // Got last known location. In some rare situations this can be null.
                         if (location != null) {
                             // Logic to handle location object
-                            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-                            List<Address> addresses = null;
-                            try {
-                                addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
-                                marker.remove();
-                                marker = mMap.addMarker(new MarkerOptions().position(latLng));
-                                for (Address address : addresses) {
-                                    marker.setTitle(GeoUtils.getAddressString(addresses.get(0)));
-                                    marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
-                                    marker.showInfoWindow();
-                                    selectedAddress = address;
-                                }
-                                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+                            new GeocoderAsyncTask(SelectAddressOnMapActivity.this,
+                                    location.getLatitude(), location.getLongitude(), "move_zoom").execute();
+                        } else {
+                            marker = mMap.addMarker(new MarkerOptions().position(
+                                    new LatLng(0, 0)).visible(false));
                         }
                     }
                 });
+    }
+
+
+
+    public class GeocoderAsyncTask extends AsyncTask<String, Void, Address> {
+        Double latitude = null;
+        Double longitude = null;
+        String locationName = null;
+        String zoom = "animate_15";
+        Activity activity;
+
+        GeocoderAsyncTask(Activity activity, double latitude, double longitude) {
+            this.activity = activity;
+            this. latitude = latitude;
+            this.longitude = longitude;
+        }
+
+        GeocoderAsyncTask(Activity activity, String locationName) {
+            this.activity = activity;
+            this.locationName = locationName;
+        }
+
+        GeocoderAsyncTask(Activity activity, double latitude, double longitude, String zoom) {
+            this(activity, latitude, longitude);
+            this.zoom = zoom;
+        }
+
+        GeocoderAsyncTask(Activity activity, String locationName, String zoom) {
+            this(activity, locationName);
+            this.zoom = zoom;
+        }
+
+        @Override
+        protected Address doInBackground(String... params) {
+            List<Address> addresses = new ArrayList<>();
+            Address result = null;
+
+            Geocoder geocoder = new Geocoder(activity, Locale.getDefault());
+            try {
+                if (locationName != null) {
+                    //while (addresses.size() == 0 || addresses.get(0) == null)
+                    addresses = geocoder.getFromLocationName(locationName, 1);
+                } else {
+                    addresses = geocoder.getFromLocation(latitude, longitude, 1);
+                }
+                Log.e("Addresses", "-->" + addresses);
+                result = addresses.get(0);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(Address result) {
+            LatLng latLng;
+            if (locationName != null) {
+                latLng = new LatLng(result.getLatitude(), result.getLongitude());
+            } else {
+                latLng = new LatLng(latitude, longitude);
+            }
+            if (marker != null) {
+                marker.remove();
+            }
+            marker = mMap.addMarker(new MarkerOptions().position(latLng));
+            marker.setTitle(GeoUtils.getAddressString(result));
+            marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
+            marker.showInfoWindow();
+            switch (zoom) {
+                case "animate":
+                    mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+                    break;
+                case "animate_zoom":
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+                    break;
+                case "move":
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                    break;
+                case "move_zoom":
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+                    break;
+                default:
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                    break;
+            }
+            selectedAddress = result;
+        }
     }
 
 }
