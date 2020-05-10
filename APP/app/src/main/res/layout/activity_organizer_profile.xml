@@ -142,11 +142,11 @@
         android:id="@+id/floatingActionButton4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:backgroundTint="#AD86E0"
+        android:layout_gravity="end|bottom"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
+        app:backgroundTint="@color/primaryBackgroundDark"
         app:srcCompat="@drawable/ic_add"
-        tools:ignore="VectorDrawableCompat"
-        android:layout_gravity="end|bottom" />
+        tools:ignore="VectorDrawableCompat" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

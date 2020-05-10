@@ -38,6 +38,17 @@ public class SensorActivity extends Activity implements SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         float amountOfLight = sensorEvent.values[0];
+        if(sensorEvent.sensor.getType() == Sensor.TYPE_LIGHT){
+            //setTheme(android.R.style.Theme_Light);
+            //recreate();
+
+        }
+        else {
+           // setTheme(android.R.style.Theme_Dark);
+           // recreate();
+        }
+
+
     }
 
     @Override
