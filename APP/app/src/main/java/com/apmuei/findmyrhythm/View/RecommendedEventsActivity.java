@@ -27,6 +27,8 @@ import com.apmuei.findmyrhythm.View.tabs.ListAdapterNext;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 
 public class RecommendedEventsActivity extends UserMenuDrawerActivity {
@@ -109,25 +111,29 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
 
             Log.e("DEBUG", events.toString());
 
-            String[] names = new String[events.size()];
-            String[] dates = new String[events.size()];
-            String[] prices = new String[events.size()];
-            final String[] ids = new String[events.size()];
 
-            Date date;
-            DateFormat df;
-            int i = 0;
-            for (Event event : events) {
-                ids[i] = event.getId();
-                names[i] = event.getName();
-                date = event.getEventDate();
-                df = new SimpleDateFormat("dd/MM/yy", java.util.Locale.getDefault());
-                dates[i] = df.format(date);
-                prices[i] = String.valueOf(event.getPrice().concat("€"));
-                i++;
-            }
+            final ArrayList<Event> nextEventsFiltered= new ArrayList<Event>();
+            final ArrayList<String> prices= new ArrayList<String>();
+            Date actualDate = new Date();
 
-            ListAdapterNext adapter = new ListAdapterNext(RecommendedEventsActivity.this, names, dates, prices);
+
+                for (Event event : events) {
+                    if(event.getEventDate().compareTo(actualDate) > 0  ) {
+                        nextEventsFiltered.add(event);
+
+                    }
+                }
+                Comparator c = Collections.reverseOrder();
+                Collections.sort(nextEventsFiltered,c);
+
+
+                for (Event event : nextEventsFiltered) {
+                    prices.add(String.valueOf(event.getPrice()).concat("€"));
+
+                }
+
+
+            ListAdapterNext adapter = new ListAdapterNext(RecommendedEventsActivity.this, nextEventsFiltered, prices);
 
             int orientation = getResources().getConfiguration().orientation;
             if(orientation == Configuration.ORIENTATION_LANDSCAPE || isTablet(getApplicationContext())){

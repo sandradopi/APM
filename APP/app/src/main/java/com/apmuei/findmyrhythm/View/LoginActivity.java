@@ -405,14 +405,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         new RecoverUserTask().execute(user);
                     }
                 });
-        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ninguna",
+        /* alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ninguna",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         Intent intent = new Intent(LoginActivity.this, GreetingsActivity.class);
                         startActivity(intent);
                     }
-                });
+                });*/
         alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Organizador",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -427,6 +427,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void showUseExistentAccountDialog(final User user, final Organizer organizer) {
         AlertDialog alertDialog = new AlertDialog.Builder(this).create();
         final String account = (organizer != null) ? "organizer" : "user";
+        final String noaccount = (organizer != null) ? "user" : "organizer";
+
         alertDialog.setTitle("Cuenta existente");
         alertDialog.setMessage("Se ha detectado una cuenta previa de "+account+", ¿la quieres utilizar?");
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Sí",
@@ -439,12 +441,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             new RecoverUserTask().execute(user);
                     }
                 });
-        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No",
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Crear cuenta de " + noaccount,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        Intent intent = new Intent(LoginActivity.this, GreetingsActivity.class);
-                        startActivity(intent);
+                        if(noaccount.equals("organizer")){
+                            Intent intent = new Intent(LoginActivity.this, OrganizerLogActivity.class);
+                            startActivity(intent);
+                        }else{
+                            Intent intent = new Intent(LoginActivity.this, SetLocationActivity.class);
+                            startActivity(intent);
+                        }
+                        //Intent intent = new Intent(LoginActivity.this, GreetingsActivity.class);
+                        //startActivity(intent);
                     }
                 });
         alertDialog.show();

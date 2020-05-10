@@ -3,7 +3,7 @@ package com.apmuei.findmyrhythm.Model;
 import java.util.Date;
 import java.util.HashMap;
 
-public class Event extends Entity{
+public class Event extends Entity implements Comparable<Event>{
 
     private String name;
     private Date eventDate;
@@ -119,6 +119,12 @@ public class Event extends Entity{
 
     public void setCompleteAddress(HashMap<String, Object> completeAddress) {
         this.completeAddress = completeAddress;
+    }
+
+
+    @Override
+    public int compareTo(Event event) {
+        return getEventDate().compareTo(event.getEventDate());
     }
 }
 

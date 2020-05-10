@@ -1,6 +1,6 @@
 package com.apmuei.findmyrhythm.Model;
 
-public class Entity {
+public abstract class Entity {
 
     // Primary key of every entities
     private  String id;
@@ -30,4 +30,6 @@ public class Entity {
         Entity entity = (Entity) o;
         return id.equals(entity.id);
     }
+
+
 }

@@ -19,6 +19,9 @@ import com.apmuei.findmyrhythm.View.FinishedEventInfoActivity;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
@@ -33,44 +36,31 @@ public class PastEventsFragmentOrg extends Fragment {
         View view = inflater.inflate(R.layout.fragment_past_events, container, false);
         Date date;
         ListView mListView;
+        Date actualDate = new Date();
         mListView = (ListView) view.findViewById(R.id.eventlist);
         PersistentOrganizerInfo persistentOrganicerInfo = PersistentOrganizerInfo.getPersistentOrganizerInfo(getApplicationContext());
         final ArrayList<Event> pastEvents= persistentOrganicerInfo.getEvents();
+        final ArrayList<Event> pastEventsFiltered= new ArrayList<Event>();
+        final ArrayList<String> rates= new ArrayList<String>();
 
 
-        int eventsize = 0;
-        Date actualDate = new Date();
         for (Event event : pastEvents) {
             if(event.getEventDate().compareTo(actualDate) < 0  ) {
-                eventsize++;
+                pastEventsFiltered.add(event);
+                rates.add(null);
             }
         }
+        Comparator c = Collections.reverseOrder();
+        Collections.sort(pastEventsFiltered,c);
 
-        String[] events = new String[eventsize];
-        String[] dates = new String[eventsize];
-        String[] rates = new String[eventsize];
-        final String[] ids = new String[eventsize];
-
-        int i = 0;
-        for (Event event : pastEvents) {
-            if(event.getEventDate().compareTo(actualDate) < 0  ) {
-                events[i] = event.getName();
-                date = event.getEventDate();
-                DateFormat df = new SimpleDateFormat("dd/MM/yy", java.util.Locale.getDefault());
-                dates[i] = df.format(date);
-                rates[i] = null;
-                ids[i]=event.getId();
-                i++;
-            }
-        }
-        mListView.setAdapter(new ListAdapterPast(this.requireContext(), events, dates, rates));
+        mListView.setAdapter(new ListAdapterPast(this.requireContext(), pastEventsFiltered, rates));
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
                 Intent intent = new Intent(getActivity(), FinishedEventInfoActivity.class);
                 //String eventJson = (new Gson()).toJson(pastEvents.get((int) id));
-                intent.putExtra("EVENT", ids[(int)id]);
+                intent.putExtra("EVENT", pastEventsFiltered.get((int)id).getId());
                 intent.putExtra("RECOMMENDED", false);
                 getActivity().startActivity(intent);
 

@@ -19,6 +19,8 @@ import com.apmuei.findmyrhythm.View.EventInfoActivity;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
@@ -33,52 +35,41 @@ public class NextEventsFragment extends Fragment {
 
 
         View view = inflater.inflate(R.layout.fragment_next_events, container, false);
-
+        Date actualDate = new Date();
         ListView mListView;
         mListView = (ListView) view.findViewById(R.id.eventlist);
 
-        final DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", java.util.Locale.getDefault());
+
         PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
         final ArrayList<Event> nextEvents= persistentUserInfo.getEvents();
+        final ArrayList<Event> nextEventsFiltered= new ArrayList<Event>();
+        final ArrayList<String> prices= new ArrayList<String>();
 
 
-        Date date;
-        DateFormat df;
-        Date actualDate = new Date();
-        int eventsize = 0;
 
-        for (Event event : nextEvents) {
-            if(event.getEventDate().compareTo(actualDate) > 0  ) {
-                eventsize++;
-            }
-        }
 
-        String[] events = new String[eventsize];
-        String[] dates = new String[eventsize];
-        String[] prices = new String[eventsize];
-        final String[] ids = new String[eventsize];
-
-        int i = 0;
         for (Event event : nextEvents) {
            if(event.getEventDate().compareTo(actualDate) > 0  ){
-            events[i] = event.getName();
-            date = event.getEventDate();
-            df = new SimpleDateFormat("dd/MM/yy", java.util.Locale.getDefault());
-            dates[i] = df.format(date);
-            prices[i] = String.valueOf(event.getPrice()).concat("€");
-            ids[i]=event.getId();
-            i++;
+               nextEventsFiltered.add(event);
             }
         }
+        Comparator c = Collections.reverseOrder();
+        Collections.sort(nextEventsFiltered,c);
 
-        mListView.setAdapter(new ListAdapterNext(this.requireContext(), events, dates, prices));
+
+        for (Event event : nextEventsFiltered) {
+            prices.add(String.valueOf(event.getPrice()).concat("€"));
+
+        }
+
+        mListView.setAdapter(new ListAdapterNext(this.requireContext(), nextEventsFiltered, prices));
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
                 Intent intent = new Intent(getActivity(), EventInfoActivity.class);
-                intent.putExtra("EVENT", ids[(int)id]);
+                intent.putExtra("EVENT",  nextEventsFiltered.get((int)id).getId());
                 intent.putExtra("RECOMMENDED", false);
                 getActivity().startActivity(intent);
 

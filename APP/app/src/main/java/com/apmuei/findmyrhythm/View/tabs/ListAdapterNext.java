@@ -7,21 +7,26 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.apmuei.findmyrhythm.Model.Event;
 import com.apmuei.findmyrhythm.R;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 public class ListAdapterNext extends BaseAdapter {
 
     Context context;
-    String[] events;
-    String[] dates;
-    String[] prices;
+    ArrayList<Event> events;
+    //String[] dates;
+    ArrayList<String> prices;
     private static LayoutInflater inflater = null;
 
-    public ListAdapterNext(Context context, String[] events, String[] dates, String[] prices) {
+
+    public ListAdapterNext(Context context, ArrayList<Event> events, ArrayList<String> prices) {
         // TODO Auto-generated constructor stub
         this.context = context;
         this.events = events;
-        this.dates = dates;
         this.prices = prices;
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -30,12 +35,12 @@ public class ListAdapterNext extends BaseAdapter {
     @Override
     public int getCount() {
         // TODO Auto-generated method stub
-        return events.length;
+        return events.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return events[position];
+        return events.get(position);
     }
 
     @Override
@@ -51,12 +56,13 @@ public class ListAdapterNext extends BaseAdapter {
         if (vi == null)
             vi = inflater.inflate(R.layout.list_row_next, null);
         TextView event = (TextView) vi.findViewById(R.id.event);
-        event.setText(events[position]);
+        event.setText(events.get(position).getName());
         TextView date = (TextView) vi.findViewById(R.id.date);
-        date.setText(dates[position]);
-        if (prices.length != 0) {
+        DateFormat df = new SimpleDateFormat("dd/MM/yy", java.util.Locale.getDefault());
+        date.setText(df.format(events.get(position).getEventDate()));
+        if (prices.size() != 0) {
             TextView price = (TextView) vi.findViewById(R.id.price);
-            price.setText(prices[position]);
+            price.setText(prices.get(position));
         }
         return vi;
     }
