@@ -78,6 +78,8 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
 
             PersistentOrganizerInfo persistentInfo = PersistentOrganizerInfo.getPersistentOrganizerInfo(getApplicationContext());
             eventSelect = persistentInfo.getEvent(eventSelectId);
+
+            rateButton.setVisibility(View.GONE);
         }
         else {
             PersistentUserInfo persistentInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
