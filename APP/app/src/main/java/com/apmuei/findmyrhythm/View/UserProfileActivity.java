@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.apmuei.findmyrhythm.Model.EndlessService;
 
 import com.apmuei.findmyrhythm.Model.IOFiles;
+import com.apmuei.findmyrhythm.Model.PersistentUserInfo;
 import com.apmuei.findmyrhythm.R;
 import com.google.android.material.tabs.TabLayout;
 
@@ -53,8 +54,10 @@ public class UserProfileActivity extends UserMenuDrawerActivity {
         String userName = preferences.getString("name", null);
         String userEmail = preferences.getString("email", null);
         TextView userNameView = findViewById(R.id.user_name);
-//        TextView userLocationView = findViewById(R.id.user_location);
-//        userLocationView.setText();
+        TextView userLocationView = findViewById(R.id.user_location);
+        PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
+        // Display the first location which the user subscribed to
+        userLocationView.setText(persistentUserInfo.getSubscribedLocations().get(0));
         userNameView.setText(userName);
 
 

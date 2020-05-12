@@ -41,7 +41,6 @@ public class SetLocationActivity extends AppCompatActivity implements AdapterVie
     private static final int LOCATION_PERMISSION_CODE = 7448;
     private FusedLocationProviderClient mFusedLocationClient;
     private Geocoder geocoder;
-    private String userLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,8 +123,10 @@ public class SetLocationActivity extends AppCompatActivity implements AdapterVie
                         // Got last known location. In some rare situations this can be null.
                         if (location != null) {
                             Address address = GeoUtils.getAddressFromLocation(geocoder, location);
-                            userLocation = address.getSubAdminArea();
+                            String userLocation = address.getSubAdminArea();
                             addProvince(userLocation);
+                            // User's location is the first one by default and it will be shown in his/her profile
+                            selectedProvinces.add(0, userLocation);
                         }
                     }
                 });

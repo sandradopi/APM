@@ -75,8 +75,7 @@
                     android:autoSizeMaxTextSize="14sp"
                     android:autoSizeStepGranularity="1sp"
                     android:autoSizeMinTextSize="10sp"
-                    android:textColor="@android:color/white"
-                    android:text="A Coruña, España"/>
+                    android:textColor="@android:color/white"/>
 
 
             </LinearLayout>
