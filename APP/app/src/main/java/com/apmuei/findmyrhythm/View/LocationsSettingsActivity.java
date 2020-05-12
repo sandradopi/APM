@@ -54,7 +54,7 @@ public class LocationsSettingsActivity extends AppCompatActivity implements Adap
         provinces = (AutoCompleteTextView) findViewById(R.id.auto_province);
         String selflocation = getResources().getString(R.string.selfLocation);
         String[] countries = getResources().getStringArray(R.array.provinces_array);
-        CustomAutoCompleteAdapater adapter = new CustomAutoCompleteAdapater(this, android.R.layout.simple_list_item_1, selflocation, countries);
+        CustomAutoCompleteAdapater adapter = new CustomAutoCompleteAdapater(this, android.R.layout.simple_list_item_1, countries);
         adapter.setOnSelfLocationListener(this);
 
         provinces.setThreshold(0);

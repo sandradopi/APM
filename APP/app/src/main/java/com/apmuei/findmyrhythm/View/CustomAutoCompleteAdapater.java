@@ -37,12 +37,11 @@ public class CustomAutoCompleteAdapater extends BaseAdapter implements Filterabl
     // our listener
     private OnSelfLocationListener mListener;
 
-    public CustomAutoCompleteAdapater(Context context, int resource, String selflocation, String[] objects) {
+    public CustomAutoCompleteAdapater(Context context, int resource, String[] objects) {
 
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mResource = mDropDownResource = resource;
         mObjects = Arrays.asList(objects);
-        mLocationText = selflocation;
 
     }
 
@@ -58,11 +57,6 @@ public class CustomAutoCompleteAdapater extends BaseAdapter implements Filterabl
 
     @Override
     public Object getItem(int position) {
-
-        // If is the first position return self location
-        if (position == 0)
-            return mLocationText;
-
         // Return the selected province
         return mObjects.get(position);
     }
@@ -98,22 +92,10 @@ public class CustomAutoCompleteAdapater extends BaseAdapter implements Filterabl
 
         text.setText(getItem(position).toString());
 
-        if (position == 0) {
+        // It's a real item. Set click listener to null and reset to original state
+        view.setOnClickListener(null);
+        view.setClickable(false); //MAYBE WRONG?
 
-            // Bind Click Listener
-            view.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    if (mListener != null)
-                        mListener.onSelfLocationClicked();
-                }
-            });
-
-        } else {
-            // It's a real item. Set click listener to null and reset to original state
-            view.setOnClickListener(null);
-            view.setClickable(false); //MAYBE WRONG?
-        }
 
         return view;
     }

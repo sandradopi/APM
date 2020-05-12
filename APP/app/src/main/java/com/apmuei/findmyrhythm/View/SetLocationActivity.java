@@ -6,16 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,7 +19,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.apmuei.findmyrhythm.Model.Utils.GeoUtils;
 import com.apmuei.findmyrhythm.Model.Utils.PermissionUtils;
@@ -33,12 +28,10 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
-public class SetLocationActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, CustomAutoCompleteAdapater.OnSelfLocationListener, View.OnClickListener {
+public class SetLocationActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, View.OnClickListener {
 
     AutoCompleteTextView provinces;
     ArrayList<String> selectedProvinces = new ArrayList<String>();
@@ -48,6 +41,7 @@ public class SetLocationActivity extends AppCompatActivity implements AdapterVie
     private static final int LOCATION_PERMISSION_CODE = 7448;
     private FusedLocationProviderClient mFusedLocationClient;
     private Geocoder geocoder;
+    private String userLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +67,7 @@ public class SetLocationActivity extends AppCompatActivity implements AdapterVie
 
         String selfLocation = getResources().getString(R.string.selfLocation);
         String[] countries = getResources().getStringArray(R.array.provinces_array);
-        CustomAutoCompleteAdapater adapter = new CustomAutoCompleteAdapater(this, android.R.layout.simple_list_item_1, selfLocation, countries);
-        adapter.setOnSelfLocationListener(this);
+        CustomAutoCompleteAdapater adapter = new CustomAutoCompleteAdapater(this, android.R.layout.simple_list_item_1, countries);
 
         provinces.setThreshold(0);
         provinces.setAdapter(adapter);
@@ -95,16 +88,6 @@ public class SetLocationActivity extends AppCompatActivity implements AdapterVie
         }
 
 
-    }
-
-    @Override
-    public void onSelfLocationClicked() {
-
-        Toast toast = Toast.makeText(getApplicationContext(), "GET THE LOCATION OF THE USER WITH GPS. ASK IF GPS IS NOT ACTIVATED", Toast.LENGTH_LONG);
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        toast.show();
-
-        //TODO: GET THE PROVINCE FROM GPS, ADD IT AND SET THE VALUE INTO THE AUTOCOMPLETE TEXT VIEW.
     }
 
     @Override
@@ -141,34 +124,11 @@ public class SetLocationActivity extends AppCompatActivity implements AdapterVie
                         // Got last known location. In some rare situations this can be null.
                         if (location != null) {
                             Address address = GeoUtils.getAddressFromLocation(geocoder, location);
-                            List<String> myLocation = new ArrayList<String>();
-                            myLocation.add(address.getLocality());
-                            provinces.setText(myLocation.get(0));
+                            userLocation = address.getSubAdminArea();
+                            addProvince(userLocation);
                         }
                     }
                 });
-    }
-
-    public class UserLocationAsyncTask extends AsyncTask<String, Void, Location> {
-        Location location;
-        Activity activity;
-
-        UserLocationAsyncTask(Activity activity, Location location) {
-            this.activity = activity;
-            this.location = location;
-        }
-
-        @Override
-        protected Location doInBackground(String... params) {
-            return location;
-        }
-
-        @Override
-        protected void onPostExecute(Location result) {
-            List<String> myLocation = new ArrayList<String>();
-            myLocation.add(result.toString());
-            provinces.setText(myLocation.get(0));
-        }
     }
 
     public void addProvince(final String province) {
