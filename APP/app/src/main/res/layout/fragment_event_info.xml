@@ -31,7 +31,7 @@
                 android:layout_alignParentEnd="true"
                 android:background="@color/primaryBackgroundDark"
                 android:clickable="false"
-                android:text="Apuntarse"
+                android:text="@string/join_event_btn"
                 android:textColor="@color/white" />
         </RelativeLayout>
 

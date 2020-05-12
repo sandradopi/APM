@@ -14,6 +14,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
@@ -51,11 +52,15 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
     ArrayList<String> comments = new ArrayList<>();
     ArrayList<Float> scores = new ArrayList<>();
     Rating rated;
+    Button rateButton;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //View
+        setContentView(R.layout.activity_finished_event_info);
 
         //ToolBar
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -67,6 +72,8 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
         SharedPreferences sharedPreferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
         final String account_type = sharedPreferences.getString("account_type", null);
 
+        rateButton = (Button) findViewById(R.id.rateButton);
+
         if (account_type.equals("organizer")) {
 
             PersistentOrganizerInfo persistentInfo = PersistentOrganizerInfo.getPersistentOrganizerInfo(getApplicationContext());
@@ -75,14 +82,16 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
         else {
             PersistentUserInfo persistentInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
             eventSelect = persistentInfo.getEvent(eventSelectId);
-
+            //If event is already rated
+            if (persistentInfo.getRatedEvents().contains(eventSelect.getId())) {
+                rateButton.setText(getString(R.string.rated_btn));
+            }
         }
+
+
 
         new isRated().execute();
         new getPhoto().execute();
-
-        //View
-        setContentView(R.layout.activity_finished_event_info);
 
         new getComments().execute();
         new getUsers().execute();
@@ -111,8 +120,8 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
         // SCORES LOGIC
         RatingBar bar=(RatingBar)findViewById(R.id.pastEventScore);
         new getRatingsMedia().execute();
-        bar.setClickable(true);
-        bar.setOnTouchListener(new View.OnTouchListener() {
+        bar.setClickable(false);
+        rateButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch (View view, MotionEvent event) {
                 if (account_type.equals("user")) {
@@ -132,10 +141,12 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
     @Override
     public void onDialogPositiveClick() {
         // User touched the dialog's positive button
+        rateButton.setText(getString(R.string.rated_btn));
         new getRatingsMedia().execute();
         new isRated().execute();
         new getComments().execute();
         new getUsers().execute();
+
     }
 
     private class getPhoto extends AsyncTask<Void, Void, Void> {

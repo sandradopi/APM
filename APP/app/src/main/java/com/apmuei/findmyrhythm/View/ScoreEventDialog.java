@@ -83,7 +83,7 @@ public class ScoreEventDialog extends DialogFragment {
 
 
         else {
-            bar.setRating(3.5f);
+            bar.setRating(0f);
 
             builder.setTitle("Valorar evento " + eventName)
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
