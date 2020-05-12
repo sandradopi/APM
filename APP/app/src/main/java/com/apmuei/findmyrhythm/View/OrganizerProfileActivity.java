@@ -60,8 +60,8 @@ public class OrganizerProfileActivity extends OrganizerMenuDrawerActivity {
         new getRatingsMediaByUser().execute(eventIds);
 
         TextView organizerNameView = findViewById(R.id.organizer_name);
-//        TextView userLocationView = findViewById(R.id.user_location);
-//        userLocationView.setText();
+        TextView userLocationView = findViewById(R.id.organizer_location);
+        userLocationView.setText(persistentOrganizerInfo.getLocation());
         organizerNameView.setText(organizerName);
 
         ImageView imageView = findViewById(R.id.profile);

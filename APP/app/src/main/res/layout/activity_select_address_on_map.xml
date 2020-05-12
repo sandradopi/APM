@@ -40,7 +40,7 @@
             android:textColor="#000"
             android:id="@+id/input_search"
             android:background="@null"
-            android:hint ="Buscar..."
+            android:hint ="@string/search"
             android:inputType="textNoSuggestions"
             android:imeOptions="actionSearch"/>
 

@@ -48,7 +48,7 @@
                 android:id="@+id/userName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nombre"
+                android:hint="@string/name"
                 android:textSize="14sp"/>
 
 
@@ -65,7 +65,7 @@
                 android:id="@+id/userNickname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Usuario"
+                android:hint="@string/user"
                 android:textSize="14sp"/>
 
 
@@ -83,7 +83,7 @@
                 android:id="@+id/userEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email"
+                android:hint="@string/email1"
                 android:textSize="14sp"/>
 
 
@@ -102,7 +102,7 @@
                 android:id="@+id/userBirthdate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Fecha de nacimiento"
+                android:hint="@string/birthdate"
                 android:inputType="date"
                 android:textSize="14sp"/>
 
@@ -121,7 +121,7 @@
                 android:id="@+id/userBiography"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Biografía"
+                android:hint="@string/biography"
                 android:textSize="14sp"/>
 
         </LinearLayout>

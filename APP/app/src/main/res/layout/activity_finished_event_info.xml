@@ -51,10 +51,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_centerHorizontal="true"
-                android:text="VALORACIONES"
+                android:text="@string/ratings_tab"
                 android:layout_margin="10dp"
                 android:textColor="@color/white"
-                android:textSize="16dp"></TextView>
+                android:textSize="16dp"/>
 
         </RelativeLayout>
 
