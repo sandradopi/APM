@@ -21,7 +21,7 @@ android:layout_width="match_parent">
         android:layout_gravity="center_horizontal"
         android:drawableStart="@drawable/ic_keyboard_arrow_left_24px"
         android:minWidth="0dp"
-        android:text="Atrás"
+        android:text="@string/back"
         style="?android:attr/borderlessButtonStyle"
         android:textSize="15sp"
         android:textColor="#FFF" />
@@ -36,7 +36,7 @@ android:layout_width="match_parent">
             android:id="@+id/pageNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1"
+            android:text="@string/page"
             android:textSize="15sp"
             android:textColor="#FFF">
         </TextView>
@@ -44,7 +44,7 @@ android:layout_width="match_parent">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="/3"
+            android:text="@string/total_page"
             android:textSize="15sp"
             android:textColor="#FFF">
         </TextView>
@@ -60,7 +60,7 @@ android:layout_width="match_parent">
         android:layout_gravity="center_horizontal"
         android:drawableEnd="@drawable/ic_keyboard_arrow_right_24px"
         android:minWidth="0dp"
-        android:text="Siguiente"
+        android:text="@string/next"
         android:background="?attr/selectableItemBackground"
         style="?android:attr/borderlessButtonStyle"
         android:textSize="15sp"

@@ -63,8 +63,7 @@
                     android:autoSizeStepGranularity="1sp"
                     android:autoSizeMinTextSize="15sp"
                     android:textColor="@android:color/white"
-                    android:textStyle="bold"
-                    android:text="Playa Club" />
+                    android:textStyle="bold"/>
 
 
 
@@ -78,9 +77,10 @@
                     android:autoSizeStepGranularity="1sp"
                     android:autoSizeMinTextSize="10sp"
                     android:textColor="@android:color/white"
-                    android:text="Organización"/>
+                    android:text="@string/organizador"/>
 
                 <TextView
+                    android:id="@+id/organizer_location"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
@@ -90,8 +90,7 @@
                     android:autoSizeMaxTextSize="14sp"
                     android:autoSizeStepGranularity="1sp"
                     android:autoSizeMinTextSize="10sp"
-                    android:textColor="@android:color/white"
-                    android:text="A Coruña, España"/>
+                    android:textColor="@android:color/white"/>
 
                 <RatingBar
                     android:id="@+id/score"

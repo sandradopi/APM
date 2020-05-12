@@ -52,7 +52,7 @@
                     android:layout_rowWeight="2"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="20dp"
-                    android:contentDescription="pop">
+                    android:contentDescription="@string/pop">
 
                     <FrameLayout
                         android:layout_width="match_parent"
@@ -86,7 +86,7 @@
                     android:layout_rowWeight="2"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="20dp"
-                    android:contentDescription="rock">
+                    android:contentDescription="@string/rock">
 
                     <FrameLayout
                         android:layout_width="match_parent"
@@ -120,7 +120,7 @@
                     android:layout_rowWeight="2"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="20dp"
-                    android:contentDescription="hip-hop">
+                    android:contentDescription="@string/hiphop">
 
                     <FrameLayout
                         android:layout_width="match_parent"
@@ -155,7 +155,7 @@
                     android:layout_rowWeight="2"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="20dp"
-                    android:contentDescription="latin">
+                    android:contentDescription="@string/latin">
 
                     <FrameLayout
                         android:layout_width="match_parent"
@@ -190,7 +190,7 @@
                     android:layout_rowWeight="2"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="20dp"
-                    android:contentDescription="dance">
+                    android:contentDescription="@string/dance">
 
                     <FrameLayout
                         android:layout_width="match_parent"
@@ -224,7 +224,7 @@
                     android:layout_rowWeight="2"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="20dp"
-                    android:contentDescription="indie">
+                    android:contentDescription="@string/indie">
 
                     <FrameLayout
                         android:layout_width="match_parent"
@@ -258,7 +258,7 @@
                     android:layout_rowWeight="2"
                     android:layout_marginBottom="20dp"
                     android:layout_marginEnd="16dp"
-                    android:contentDescription="classic">
+                    android:contentDescription="@string/classic">
 
                     <FrameLayout
                         android:layout_width="match_parent"
@@ -292,7 +292,7 @@
                     android:layout_rowWeight="2"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="20dp"
-                    android:contentDescription="reggae">
+                    android:contentDescription="@string/reggae">
 
                     <FrameLayout
                         android:layout_width="match_parent"
@@ -325,7 +325,7 @@
                     android:layout_columnWeight="1"
                     android:layout_rowWeight="2"
                     android:layout_marginEnd="16dp"
-                    android:contentDescription="trap">
+                    android:contentDescription="@string/trap">
 
                     <FrameLayout
                         android:layout_width="match_parent"

@@ -1,34 +1,67 @@
 <resources>
     <string name="app_name">FIND MY RHYTHM</string>
-    <string name="action_settings">Settings</string>
-    <string name="nombre">Nombre</string>
-    <string name="direccion">Dirección</string>
-    <string name="fecha">Fecha</string>
+
     <string name="facebook_app_id">134346024586492</string>
     <string name="fb_login_protocol_scheme">fb134346024586492</string>
-    <string name="titleLogin">Login</string>
+
+    <!-- Example strings -->
+    <string name="email">maria.lopez@mail.com</string>
     <string name="descripPlaya">Sonidos eclécticos de vanguardia y música en directo en una discoteca y sala de conciertos abierta en 1957.</string>
     <string name="dirPlaya">Discoteca Playa Club Andén de Riazor, S/n, 15011 A Coruña</string>
-    <string name="authFail">Autenticación fallada</string>
-    <string name="authExi">Autenticación exitosa</string>
+    <string name="example_description">Suecia es un grupo de Indie Rock con toques Shoegaze originario de la ciudad de Murcia (España) y formado en 2013.</string>
+    <string name="date_example">20/08/2020</string>
+    <string name="hour_example">10:30</string>
+    <string name="capacity_example">150</string>
+    <string name="price_example">20€</string>
 
     <!--  SearchEventsActivity  -->
     <string name="search_events_usage_info">Haz click en los marcadores para ver el título del evento, y en este si quieres ver toda su información.</string>
+    <string name="search">Buscar...</string>
 
     <!--  CreateEventActivity  -->
     <string name="create_event">Crear evento</string>
     <string name="edit_event">Editar evento</string>
     <string name="change_poster">Cambiar cartel</string>
     <string name="save_edited_event">MODIFICAR</string>
+    <string name="description">Descripción</string>
+    <string name="event_description">Dirección del evento</string>
+    <string name="category">Categoría</string>
+    <string name="eventPhoto">Cartel del evento</string>
+    <string name="addPhoto">Añadir foto</string>
 
     <!--  EventInfoActivity  -->
     <string name="signed_up">Apuntado</string>
     <string name="to_sign_up">Apuntarse</string>
+    <string name="information">Información</string>
+    <string name="edit">Editar</string>
 
-    <!--  EventInfoActivity  -->
+    <!--  Login  -->
+    <string name="titleLogin">Login</string>
     <string name="continue_with_google">Continuar con Google</string>
+    <string name="continue_with_facebook">Continuar con Facebook</string>
+    <string name="authFail">Autenticación fallada</string>
+    <string name="authExi">Autenticación exitosa</string>
 
-    <!--  ...  -->
+    <!-- FinishedEventInfo -->
+    <string name="rate_btn">Valorar</string>
+    <string name="rated_btn">Editar valoración</string>
+    <string name="ratings_tab">VALORACIONES</string>
+    <string name="rated_value">Puntuación:</string>
+    <string name="comment">Comentario:</string>
+    <string name="add_comment">Introduzca comentario</string>
+
+    <!-- Settings -->
+    <string name="add_local_name">Introducir nombre del local</string>
+    <string name="add_user_name">Introducir nombre de usuario</string>
+    <string name="add_email">Introducir email</string>
+    <string name="add_local_biography">Introducir biografía</string>
+    <string name="add_location">Introducir localización</string>
+    <string name="add_name">Introducir nombre completo</string>
+    <string name="add_birthdate">Introducir fecha de nacimiento</string>
+    <string name="add_genres">Géneros</string>
+    <string name="add_locations">Localizaciones</string>
+
+    <!-- Menu -->
     <string name="navigation_drawer_open">Abriendo menú</string>
     <string name="navigation_drawer_close">Cerrando menú</string>
     <string name="title_click">Title click</string>
@@ -38,17 +71,27 @@
     <string name="menu_notifications">Notificaciones</string>
     <string name="menu_settings">Ajustes</string>
     <string name="menu_logout">Cerrar sesión</string>
-    <string name="email">maria.lopez@mail.com</string>
     <string name="title_activity_search">Map</string>
 
+    <!-- Navigation Bottom Bar -->
+    <string name="page">1</string>
+    <string name="total_page">/3</string>
+    <string name="next">Siguiente</string>
+    <string name="back">Atrás</string>
+
+    <!-- General -->
     <string name="name">Nombre</string>
+    <string name="nombre">Nombre</string>
     <string name="username">Nombre de usuario</string>
     <string name="email2">Correo</string>
     <string name="biography">Biografía</string>
+    <string name="direccion">Dirección</string>
+    <string name="fecha">Fecha</string>
     <string name="birthdate">Fecha de nacimiento</string>
     <string name="notifications">Notificaciones</string>
     <string name="save">Guardar</string>
     <string name="settings">Ajustes</string>
+    <string name="action_settings">Settings</string>
     <string name="guardar">Sus ajustes han sido guardados con éxito</string>
     <string name="desnoti">Notificaciones desactivadas</string>
     <string name="noti">Notificaciones activadas</string>
@@ -76,7 +119,6 @@
     <string name="permission_required_toast">Location permission is required for this demo.</string>
 
     <!-- Strings for the creation of the profile of the users -->
-
     <string name="genresListID">SubscribedGenres</string>
     <string name="locationsListID">SubscribedLocations</string>
     <string name="intro1">Bienvenid@ a</string>
@@ -85,8 +127,7 @@
     <string name="organizador">Organización</string>
     <string name="organizador_text">Podrás buscar eventos, crearlos y ser valorado.</string>
     <string name="user">Usuario</string>
-    <string name="usuario_text">Podrás buscar eventos, asistir a ellos y acceder
- a un muro de comentarios con otros usuarios.</string>
+    <string name="usuario_text">Podrás buscar eventos, asistir a ellos y acceder a un muro de comentarios con otros usuarios.</string>
     <string name="location1">Selecciona tus</string>
     <string name="location2">ubicaciones favoritas</string>
     <string name="user_location">Ubicación</string>
@@ -106,19 +147,19 @@
     <string name="trap">Trap</string>
     <string name="log1">Ya queda poco...</string>
     <string name="log2">Cuéntanos más sobre ti</string>
+    <string name="localName">Nombre del local</string>
     <string name="email1">Correo</string>
     <string name="orglocation">Localización de la organización</string>
     <string name="notiCreation">Perfil creado con éxito</string>
     <string name="join_event_btn">Apuntarse</string>
     <string name="joined_event_btn">Perfil creado con éxito</string>
-    <string name="rate_btn">Valorar</string>
-    <string name="rated_btn">Editar valoración</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_search_events">Search Events</string>
     <string name="title_activity_search_organizer_location">Choose your location</string>
-    <string name="categoria" />
+
 
     <string name="eula">This End-User License Agreement ("EULA") is a legal agreement between <b>you and UDC</b>.
         \nThis EULA agreement governs your acquisition and use of our <i>FIND MY RHYTHM</i> software ("Software") directly from UDC or indirectly through a UDC authorized reseller or distributor (a "Reseller").

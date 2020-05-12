@@ -78,8 +78,7 @@
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeMinTextSize="10sp"
                 android:textColor="@android:color/white"
-                android:textStyle="bold"
-                android:text="María López" />
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/user_location"

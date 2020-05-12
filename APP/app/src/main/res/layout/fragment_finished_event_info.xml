@@ -83,7 +83,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginBottom="15dp"
-                    android:text="PartyOn"
+                    android:text="@string/nombre_del_evento"
                     android:textSize="25sp"
                     android:textStyle="bold" />
 
@@ -98,7 +98,7 @@
                     android:id="@+id/eventDesc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Información"
+                    android:text="@string/information"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -114,7 +114,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="10dp"
-                    android:text="Suecia es un grupo de Indie Rock con toques Shoegaze originario de la ciudad de Murcia (España) y formado en 2013."
+                    android:text="@string/example_description"
                     android:textSize="15sp" />
 
                 <TableRow
@@ -134,7 +134,7 @@
                         android:layout_marginStart="6dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="20/08/2020"
+                        android:text="@string/date_example"
                         android:textColor="#707070"
                         android:textSize="18sp" />
                 </TableRow>
@@ -156,7 +156,7 @@
                         android:layout_marginStart="6dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="10:30"
+                        android:text="@string/hour_example"
                         android:textColor="#707070"
                         android:textSize="18sp" />
                 </TableRow>
@@ -173,7 +173,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:text="Dirección"
+                    android:text="@string/direccion"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -189,7 +189,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="10dp"
-                    android:text="Discoteca Playa Club Andén de Riazor, S/n,15011 A Coruña"
+                    android:text="@string/dirPlaya"
                     android:textSize="15sp" />
 
             </LinearLayout>

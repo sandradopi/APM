@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:textColorHint="@color/blueish"
                 android:textColor="@color/lightgray"
-                android:hint="Introducir nombre del local"
+                android:hint="@string/add_local_name"
                 android:textSize="14sp"/>
 
             <TextView
@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:textColorHint="@color/blueish"
                 android:textColor="@color/lightgray"
-                android:hint="Introducir nombre de usuario"
+                android:hint="@string/add_user_name"
                 android:textSize="14sp"/>
 
             <TextView
@@ -73,7 +73,7 @@
                 android:layout_height="wrap_content"
                 android:textColorHint="@color/blueish"
                 android:textColor="@color/lightgray"
-                android:hint="Introducir email"
+                android:hint="@string/add_email"
                 android:textSize="14sp"/>
 
             <TextView
@@ -92,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:textColorHint="@color/blueish"
                 android:textColor="@color/lightgray"
-                android:hint="Introducir biografía"
+                android:hint="@string/add_local_biography"
                 android:textSize="14sp"/>
 
             <TextView
@@ -111,7 +111,7 @@
                 android:layout_height="wrap_content"
                 android:textColorHint="@color/blueish"
                 android:textColor="@color/lightgray"
-                android:hint="Introducir localización"
+                android:hint="@string/add_location"
                 android:textSize="14sp"/>
 
             <LinearLayout

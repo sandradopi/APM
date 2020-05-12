@@ -45,7 +45,7 @@
                 android:layout_marginTop="32dp"
                 android:layout_marginBottom="4dp"
                 android:importantForAutofill="no"
-                android:text="Descripción"
+                android:text="@string/description"
                 android:textSize="18sp"
                 android:textStyle="bold|italic" />
 
@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="16dp"
-                android:hint="Description"
+                android:hint="@string/description"
                 android:importantForAutofill="no"
                 android:inputType="text"
                 android:textSize="16sp" />
@@ -168,7 +168,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="13dp"
                 android:layout_marginBottom="4dp"
-                android:text="Categoria"
+                android:text="@string/category"
                 android:importantForAutofill="no"
                 android:textSize="18sp"
                 android:textStyle="bold|italic" />
@@ -185,7 +185,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="13dp"
                 android:layout_marginBottom="4dp"
-                android:text="Cartel del evento"
+                android:text="@string/eventPhoto"
                 android:importantForAutofill="no"
                 android:textSize="18sp"
                 android:textStyle="bold|italic" />
@@ -195,7 +195,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
-                android:text="Añadir foto"
+                android:text="@string/addPhoto"
                 android:layout_gravity="center"/>
 
 

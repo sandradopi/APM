@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:text="Puntuación:"
+        android:text="@string/rated_value"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         android:textSize="16dp" />
 
@@ -30,18 +30,6 @@
             android:numStars="5"
             android:theme="@style/CustomRatingBar"/>
 
-        <!--<RatingBar
-            android:id="@+id/pastEventScore"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginLeft="-60dp"
-            android:clickable="false"
-            android:numStars="5"
-            android:scaleX="0.4"
-            android:scaleY="0.4"
-            android:theme="@style/CustomRatingBar" />-->
-
     </TableRow>
 
 
@@ -51,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/score"
         android:layout_marginTop="5dp"
-        android:text="Comentario:"
+        android:text="@string/comment"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         android:textSize="16dp" />
 
@@ -62,7 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/scoreComment"
         android:layout_marginTop="5dp"
-        android:hint="Introduzca comentario"
+        android:hint="@string/add_comment"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 </RelativeLayout>
 
