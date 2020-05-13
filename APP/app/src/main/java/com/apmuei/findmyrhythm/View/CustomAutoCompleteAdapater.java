@@ -144,8 +144,6 @@ public class CustomAutoCompleteAdapater extends BaseAdapter implements Filterabl
 
                 final int count = values.size();
                 final ArrayList<String> newValues = new ArrayList<String>();
-                // THIS FIRST ELEMENT WILL NOT BE USED, IS THE ONE THAT WILL BE OCCUPIED BY THE SELF LOCATION TEXT
-                newValues.add("");
 
                 for (int i = 0; i < count; i++) {
                     final String value = values.get(i);
