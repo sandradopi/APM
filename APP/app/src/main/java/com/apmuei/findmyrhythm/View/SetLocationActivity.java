@@ -1,11 +1,17 @@
 package com.apmuei.findmyrhythm.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,19 +19,28 @@ import android.widget.AutoCompleteTextView;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.apmuei.findmyrhythm.Model.Utils.GeoUtils;
+import com.apmuei.findmyrhythm.Model.Utils.PermissionUtils;
 import com.apmuei.findmyrhythm.R;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
-public class SetLocationActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, CustomAutoCompleteAdapater.OnSelfLocationListener, View.OnClickListener {
+public class SetLocationActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, View.OnClickListener {
 
     AutoCompleteTextView provinces;
     ArrayList<String> selectedProvinces = new ArrayList<String>();
     GridLayout locations;
     FloatingActionButton next;
+
+    private static final int LOCATION_PERMISSION_CODE = 7448;
+    private FusedLocationProviderClient mFusedLocationClient;
+    private Geocoder geocoder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,30 +51,42 @@ public class SetLocationActivity extends AppCompatActivity implements AdapterVie
         getSupportActionBar().setCustomView(R.layout.layout_actionbar_empty);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        // Initialize Google API
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        // Get the current locale
+        final Locale locale = Locale.getDefault();
+        // Initialize geocoder
+        geocoder = new Geocoder(this, locale);
+
+        provinces = (AutoCompleteTextView) findViewById(R.id.auto_province);
+
         next = (FloatingActionButton) findViewById(R.id.next);
         next.setOnClickListener(this);
 
-        provinces = (AutoCompleteTextView) findViewById(R.id.auto_province);
-        String selflocation = getResources().getString(R.string.selfLocation);
+
+        String selfLocation = getResources().getString(R.string.selfLocation);
         String[] countries = getResources().getStringArray(R.array.provinces_array);
-        CustomAutoCompleteAdapater adapter = new CustomAutoCompleteAdapater(this, android.R.layout.simple_list_item_1, selflocation, countries);
-        adapter.setOnSelfLocationListener(this);
+        CustomAutoCompleteAdapater adapter = new CustomAutoCompleteAdapater(this, android.R.layout.simple_list_item_1, countries);
 
         provinces.setThreshold(0);
         provinces.setAdapter(adapter);
         provinces.setOnItemClickListener(this);
 
         locations = (GridLayout) findViewById(R.id.locations);
-    }
 
-    @Override
-    public void onSelfLocationClicked() {
+        GeoUtils.checkLocationEnabled(SetLocationActivity.this);
 
-        Toast toast = Toast.makeText(getApplicationContext(), "GET THE LOCATION OF THE USER WITH GPS. ASK IF GPS IS NOT ACTIVATED", Toast.LENGTH_LONG);
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        toast.show();
+        // Check for permissions and call for last know location
+        if (ContextCompat.checkSelfPermission(SetLocationActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            getMyLastLocation();
+        } else {
+            // Permission to access the location is missing. Show rationale and request permission
+            PermissionUtils.requestPermission(SetLocationActivity.this, LOCATION_PERMISSION_CODE,
+                    Manifest.permission.ACCESS_FINE_LOCATION, true);
+        }
 
-        //TODO: GET THE PROVINCE FROM GPS, ADD IT AND SET THE VALUE INTO THE AUTOCOMPLETE TEXT VIEW.
+
     }
 
     @Override
@@ -73,7 +100,39 @@ public class SetLocationActivity extends AppCompatActivity implements AdapterVie
 
     }
 
-    public void addProvince(final String province){
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode != LOCATION_PERMISSION_CODE) {
+            return;
+        }
+
+        if (PermissionUtils.isPermissionGranted(permissions, grantResults, Manifest.permission.ACCESS_FINE_LOCATION)) {
+            // Enable the my location layer if the permission has been granted.
+            getMyLastLocation();
+        } else {
+            // TODO: Permission was denied. Display an error message
+            // ...
+        }
+    }
+
+    private void getMyLastLocation() {
+        mFusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            Address address = GeoUtils.getAddressFromLocation(geocoder, location);
+                            String userLocation = address.getSubAdminArea();
+                            addProvince(userLocation);
+                            // User's location is the first one by default and it will be shown in his/her profile
+                            selectedProvinces.add(0, userLocation);
+                        }
+                    }
+                });
+    }
+
+    public void addProvince(final String province) {
 
         final TextView text = new TextView(this);
         text.setText(province);

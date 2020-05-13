@@ -28,10 +28,9 @@ public class GeoUtils {
         this.locale = locale;
     }
 
-    public Address getAddressFromLocation(Location location) {
-        Address address = new Address(this.locale);
+    public static Address getAddressFromLocation(Geocoder geocoder, Location location) {
+        Address address = new Address(Locale.getDefault());
         try {
-            Geocoder geocoder = new Geocoder(this.context, this.locale);
             address =  geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1).get(0);
             return address;
         } catch (IOException exception) {
@@ -39,22 +38,6 @@ public class GeoUtils {
             return address;
         }
     }
-
-    public Address getAddressFromLocationName(String locationName) {
-        List<Address> addresses = new ArrayList<>();
-        Address address = null;
-        try {
-            Geocoder geocoder = new Geocoder(this.context, this.locale);
-            addresses =  geocoder.getFromLocationName(locationName, 1);
-            for (Address addr : addresses) {
-                address = addr;
-            }
-        } catch (IOException exception) {
-            Log.w(TAG, exception.toString());
-        }
-        return address;
-    }
-
 
     public static void checkLocationEnabled(final Activity activity){
         LocationManager lm = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
