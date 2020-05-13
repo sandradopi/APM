@@ -108,6 +108,9 @@ public class UserLogActivity extends AppCompatActivity implements View.OnClickLi
         Toast.makeText(UserLogActivity.this, getString(R.string.notiCreation),  Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent(this, UserProfileActivity.class);
+        // Flags for start a new activity and clear all stack
+        // This prevents users from going back once they have registered
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 
@@ -121,6 +124,11 @@ public class UserLogActivity extends AppCompatActivity implements View.OnClickLi
     public boolean onOptionsItemSelected(MenuItem item) {
         finish();
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 
     private class CreateUserTask extends AsyncTask<Void,Void,Void> {
@@ -150,10 +158,7 @@ public class UserLogActivity extends AppCompatActivity implements View.OnClickLi
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-
             IOFiles.downloadProfilePicture(currentUser, getApplicationContext());
-
-            finish();
         }
     }
 }

@@ -143,6 +143,9 @@ public class OrganizerLogActivity extends AppCompatActivity {
                 Toast.makeText(OrganizerLogActivity.this, getString(R.string.notiCreation), Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(OrganizerLogActivity.this, OrganizerProfileActivity.class);
+                // Flags for start a new activity and clear all stack
+                // This prevents organizers from going back once they have registered
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
