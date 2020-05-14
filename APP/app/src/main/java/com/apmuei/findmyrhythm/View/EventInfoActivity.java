@@ -73,9 +73,8 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
         //final Event eventSelect = gson.fromJson(getIntent().getStringExtra("EVENT"), Event.class);
         final PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
         Event eventSelect;
-        final boolean recommended = getIntent().getExtras().getBoolean("RECOMMENDED");
-        final String eventSelectId = getIntent().getStringExtra("EVENT");
-        Log.e("IDACTIVITY", eventSelectId);
+        final boolean recommended = getIntent().getExtras().getBoolean(getString(R.string.recommended));
+        final String eventSelectId = getIntent().getStringExtra(getString(R.string.EVENT));
 
         if(recommended) {
             eventSelect  = persistentUserInfo.getEventRecommended(eventSelectId);
@@ -100,7 +99,7 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
         //If is a atendee of the event
         if (persistentUserInfo.getEvents().contains(event)) {
             joinButton.setText(signedUpText);
-            joinButton.setBackgroundColor(0xFF673AB7);
+            joinButton.setBackgroundColor(getResources().getColor(R.color.join_btn_1));
             isSignedUp = true;
         }
 
@@ -112,12 +111,12 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
                 if(isSignedUp){
                     new unSubscribe().execute();
                     joinButton.setText(toSignUpText);
-                    joinButton.setBackgroundColor(0xFFB3A1CE);
+                    joinButton.setBackgroundColor(getResources().getColor(R.color.join_btn_2));
 
                 }else{
                     new Subscribe().execute();
                     joinButton.setText(signedUpText);
-                    joinButton.setBackgroundColor(0xFF673AB7);
+                    joinButton.setBackgroundColor(getResources().getColor(R.color.join_btn_1));
                 }
 
             }
@@ -127,8 +126,8 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
 
     private void setEventInfo(Event event) {
         Date dateF = event.getEventDate();
-        DateFormat df = new SimpleDateFormat("dd/MM/yy", java.util.Locale.getDefault());
-        DateFormat df2 = new SimpleDateFormat("HH:mm", java.util.Locale.getDefault());
+        DateFormat df = new SimpleDateFormat(getString(R.string.date_pattern), java.util.Locale.getDefault());
+        DateFormat df2 = new SimpleDateFormat(getString(R.string.hour_pattern), java.util.Locale.getDefault());
         date.setText(df.format(dateF));
         time.setText(df2.format(dateF));
 
@@ -136,8 +135,8 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
         description.setText(event.getDescription());
         location.setText(event.getLocation());
         genre.setText(event.getGenre());
-        eventMaxAttendees.setText(String.valueOf(event.getMaxAttendees())+" personas");
-        eventPrice.setText(String.valueOf(event.getPrice())+"€");
+        eventMaxAttendees.setText(String.valueOf(event.getMaxAttendees())+ " " + getString(R.string.people));
+        eventPrice.setText(String.valueOf(event.getPrice())+ getString(R.string.euro));
     }
 
 
@@ -188,7 +187,7 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
 
     private class getPhoto extends AsyncTask<Void, Void, Photo> {
 
-        final String eventSelectId = getIntent().getStringExtra("EVENT");
+        final String eventSelectId = getIntent().getStringExtra(getString(R.string.EVENT));
         final PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
 
         @Override
@@ -199,7 +198,7 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
         @Override
         protected Photo doInBackground(Void... voids) {
             Event eventSelect;
-            final boolean recommended = getIntent().getExtras().getBoolean("RECOMMENDED");
+            final boolean recommended = getIntent().getExtras().getBoolean(getString(R.string.recommended));
             if(recommended) {
               eventSelect  = persistentUserInfo.getEventRecommended(eventSelectId);
 
@@ -231,7 +230,7 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
 
 
     private class unSubscribe extends AsyncTask<Void, Void, Void> {
-        final String eventSelectId = getIntent().getStringExtra("EVENT");
+        final String eventSelectId = getIntent().getStringExtra(getString(R.string.EVENT));
         final PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
 
         @Override
@@ -249,7 +248,7 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
     }
 
     private class Subscribe extends AsyncTask<Void, Void, Void> {
-        final String eventSelectId = getIntent().getStringExtra("EVENT");
+        final String eventSelectId = getIntent().getStringExtra(getString(R.string.EVENT));
         final PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
         final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 

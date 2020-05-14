@@ -28,12 +28,33 @@
     <string name="category">Categoría</string>
     <string name="eventPhoto">Cartel del evento</string>
     <string name="addPhoto">Añadir foto</string>
+    <string name="explore_map">Explorar en el mapa</string>
+    <string name="EVENT">EVENT</string>
+    <string name="date_pattern">dd/MM/yy</string>
+    <string name="hour_pattern">HH:mm</string>
+    <string name="latitude">latitude</string>
+    <string name="longitude">longitude</string>
+    <string name="province">province</string>
+    <string name="full_address">full_address</string>
+    <string name="org_address">organizerAddress</string>
+    <string name="toast_fill">Please cover every field shown in the screen</string>
+    <string name="change_pic_mssg">Desea quitar la imagen seleccionada?</string>
+    <string name="hour1">0:0</string>
+    <string name="hour2">0:</string>
+    <string name="hour3">:0</string>
+    <string name="hour4">:</string>
+    <string name="toast_created">¡Concierto creado con éxito!</string>
+    <string name="toast_modified">¡Concierto modificado con éxito!</string>
+
 
     <!--  EventInfoActivity  -->
     <string name="signed_up">Apuntado</string>
     <string name="to_sign_up">Apuntarse</string>
     <string name="information">Información</string>
     <string name="edit">Editar</string>
+    <string name="recommended">RECOMMENDED</string>
+    <string name="people">personas</string>
+    <string name="org">organizer</string>
 
     <!--  Login  -->
     <string name="titleLogin">Login</string>
@@ -49,6 +70,9 @@
     <string name="rated_value">Puntuación:</string>
     <string name="comment">Comentario:</string>
     <string name="add_comment">Introduzca comentario</string>
+    <string name="usr">user</string>
+    <string name="tag_alert">tagAlerta</string>
+    <string name="existing_id">Tried to insert an existing id</string>
 
     <!-- Settings -->
     <string name="add_local_name">Introducir nombre del local</string>
@@ -60,6 +84,9 @@
     <string name="add_birthdate">Introducir fecha de nacimiento</string>
     <string name="add_genres">Géneros</string>
     <string name="add_locations">Localizaciones</string>
+    <string name="GENRES">GENRES</string>
+    <string name="LOCATIONS">LOCATIONS</string>
+    <string name="toast_gps">GET THE LOCATION OF THE USER WITH GPS. ASK IF GPS IS NOT ACTIVATED</string>
 
     <!-- Menu -->
     <string name="navigation_drawer_open">Abriendo menú</string>
@@ -80,6 +107,8 @@
     <string name="back">Atrás</string>
 
     <!-- General -->
+    <string name="yes">Sí</string>
+    <string name="no">No</string>
     <string name="name">Nombre</string>
     <string name="nombre">Nombre</string>
     <string name="username">Nombre de usuario</string>
@@ -154,13 +183,18 @@
     <string name="join_event_btn">Apuntarse</string>
     <string name="joined_event_btn">Perfil creado con éxito</string>
 
+    <!-- Preferences -->
+    <string name="preferences">PREFERENCES</string>
+    <string name="pref_location">location</string>
+    <string name="pref_fb_id">fb_id</string>
+    <string name="pref_account_type">account_type</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_search_events">Search Events</string>
     <string name="title_activity_search_organizer_location">Choose your location</string>
 
-
+    <string name="eula_title">End-User License Agreement (EULA) of Findmyrhythm</string>
     <string name="eula">This End-User License Agreement ("EULA") is a legal agreement between <b>you and UDC</b>.
         \nThis EULA agreement governs your acquisition and use of our <i>FIND MY RHYTHM</i> software ("Software") directly from UDC or indirectly through a UDC authorized reseller or distributor (a "Reseller").
         \nPlease read this EULA agreement carefully before completing the installation process and using the <i>FIND MY RHYTHM</i> software. It provides a license to use the <i>FIND MY RHYTHM</i> software and contains warranty information and liability disclaimers.

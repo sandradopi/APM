@@ -43,7 +43,7 @@ public class LocationsSettingsActivity extends AppCompatActivity implements Adap
 
         Bundle b = getIntent().getExtras();
         //if (b.getStringArrayList("GENRES") != null)
-        selectedProvinces = b.getStringArrayList("LOCATIONS");
+        selectedProvinces = b.getStringArrayList(getString(R.string.LOCATIONS));
         for (String i : selectedProvinces) {
             addProvince(i);
         }
@@ -66,7 +66,7 @@ public class LocationsSettingsActivity extends AppCompatActivity implements Adap
     @Override
     public void onSelfLocationClicked() {
 
-        Toast toast = Toast.makeText(getApplicationContext(), "GET THE LOCATION OF THE USER WITH GPS. ASK IF GPS IS NOT ACTIVATED", Toast.LENGTH_LONG);
+        Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.toast_gps), Toast.LENGTH_LONG);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
 
@@ -82,7 +82,6 @@ public class LocationsSettingsActivity extends AppCompatActivity implements Adap
             addProvince(value);
         }
         provinces.setText("");
-        Log.e("DEBUG", "ADDED");
 
     }
 
@@ -113,7 +112,7 @@ public class LocationsSettingsActivity extends AppCompatActivity implements Adap
 
         //TODO: PASS TO THE GENRES CLASS THE ARRAYlIST OF LOCATIONS AND WHEN ALL THE INFORMATION IS KNOWN ADD THE USER IN THE DATABASE.
         Intent intent = new Intent(this, UserSettingsActivity.class);
-        intent.putStringArrayListExtra("LOCATIONS", selectedProvinces);
+        intent.putStringArrayListExtra(getString(R.string.LOCATIONS), selectedProvinces);
         setResult(RESULT_OK, intent);
         finish();
 

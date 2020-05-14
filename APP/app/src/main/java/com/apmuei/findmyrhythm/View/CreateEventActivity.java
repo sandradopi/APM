@@ -130,7 +130,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         calendar = Calendar.getInstance();
         addressTextView = findViewById(R.id.address);
         exploreMapButton = findViewById(R.id.exploreMap);
-        exploreMapButton.setText("Explorar en el mapa");
+        exploreMapButton.setText(getString(R.string.explore_map));
 
         // Reference to the different EditText containing the event info
         maxAttendees = findViewById(R.id.max_attendees);
@@ -170,7 +170,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         // boolean isPresent = Geocoder.isPresent();
 
         //No tengo claro si se deberia hacer así
-        final String eventSelectId = getIntent().getStringExtra("EVENT");
+        final String eventSelectId = getIntent().getStringExtra(getString(R.string.EVENT));
         if (eventSelectId != null && !eventSelectId.isEmpty()) {
             toolbarTitle.setText(getString(R.string.edit_event));
             modifyEvent = true;
@@ -180,8 +180,8 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             name.setText(eventSelect.getName());
 
             eventDate= eventSelect.getEventDate();
-            DateFormat df = new SimpleDateFormat("dd/MM/yy", java.util.Locale.getDefault());
-            DateFormat df2 = new SimpleDateFormat("HH:mm", java.util.Locale.getDefault());
+            DateFormat df = new SimpleDateFormat(getString(R.string.date_pattern), java.util.Locale.getDefault());
+            DateFormat df2 = new SimpleDateFormat(getString(R.string.hour_pattern), java.util.Locale.getDefault());
             date.setText(df.format(eventDate));
             hour.setText(df2.format(eventDate));
 
@@ -190,8 +190,8 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             selectedGenre = eventSelect.getGenre();
 
             HashMap<String, Object> completeAddressDict = eventSelect.getCompleteAddress();
-            Double latitude = (Double) Objects.requireNonNull(completeAddressDict.get("latitude"));
-            Double longitude = (Double) Objects.requireNonNull(completeAddressDict.get("longitude"));
+            Double latitude = (Double) Objects.requireNonNull(completeAddressDict.get(getString(R.string.latitude)));
+            Double longitude = (Double) Objects.requireNonNull(completeAddressDict.get(getString(R.string.longitude)));
             new GeocoderAsyncTask(this, latitude, longitude).execute();
 
 
@@ -203,8 +203,8 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
 
         } else {
             // Set organizer location as default location
-            SharedPreferences preferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
-            String organizerLocationName = preferences.getString("location", null);
+            SharedPreferences preferences = getSharedPreferences(getString(R.string.preferences), MODE_PRIVATE);
+            String organizerLocationName = preferences.getString(getString(R.string.pref_location), null);
 
             addressTextView.setText(organizerLocationName);
             new GeocoderAsyncTask(this, organizerLocationName).execute();
@@ -215,7 +215,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), SelectAddressOnMapActivity.class);
                 if (eventCompleteAddress != null) {
-                    intent.putExtra("organizerAddress", eventCompleteAddress);
+                    intent.putExtra(getString(R.string.org_address), eventCompleteAddress);
                 }
                 startActivityForResult(intent, SET_LOCATION);
             }
@@ -253,7 +253,6 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
                 } else {
                     addresses = geocoder.getFromLocation(latitude, longitude, 1);
                 }
-                Log.e("Addresses", "-->" + addresses);
                 result = addresses.get(0);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -288,7 +287,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
                     || (eventDate.compareTo(currentCalendar.getTime()) < 0);
 
             if (isAnyFiledEmpty) {
-                Toast.makeText(this, "Please cover every field shown in the screen", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getString(R.string.toast_fill), Toast.LENGTH_LONG).show();
                 return;
             }
 
@@ -305,8 +304,8 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
 
     public void showAlert(){
         AlertDialog.Builder builder = new AlertDialog.Builder(CreateEventActivity.this);
-        builder.setMessage("Desea quitar la imagen seleccionada?")
-                .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+        builder.setMessage(getString(R.string.change_pic_mssg))
+                .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if (!photoOriginalId.equals(DEFAULT_IMAGE_ID)){
@@ -318,7 +317,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
                         }
                     }
                 })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                .setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -372,7 +371,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
                                           int monthOfYear, int dayOfMonth) {
 
                         Date fecha = new Date(year, monthOfYear, dayOfMonth);
-                        DateFormat df = new SimpleDateFormat("dd/MM/yy", java.util.Locale.getDefault());
+                        DateFormat df = new SimpleDateFormat(getString(R.string.date_pattern), java.util.Locale.getDefault());
                         date.setText(df.format(fecha));
                         calendar.set(Calendar.YEAR, year);
                         calendar.set(Calendar.MONTH, monthOfYear);
@@ -404,13 +403,13 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
                         calendar.set(Calendar.MINUTE, minute);
 
                         if (hourOfDay == 0 && minute == 0) {
-                            hour.setText(hourOfDay + "0:0" + minute);
+                            hour.setText(hourOfDay + getString(R.string.hour1) + minute);
                         } else if (hourOfDay == 0) {
-                            hour.setText(hourOfDay + "0:" + minute);
+                            hour.setText(hourOfDay + getString(R.string.hour2) + minute);
                         } else if (minute == 0) {
-                            hour.setText(hourOfDay + ":0" + minute);
+                            hour.setText(hourOfDay + getString(R.string.hour3) + minute);
                         } else {
-                            hour.setText(hourOfDay + ":" + minute);
+                            hour.setText(hourOfDay + getString(R.string.hour4) + minute);
                         }
                     }
                 }, mHour, mMinute, false);
@@ -554,10 +553,10 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
 
         // Using a few dictionary Class methods
         // using put method
-        addressDict.put("province", eventCompleteAddress.getSubAdminArea());
-        addressDict.put("full_address", GeoUtils.getAddressString(eventCompleteAddress)); // Double
-        addressDict.put("latitude", eventCompleteAddress.getLatitude());
-        addressDict.put("longitude", eventCompleteAddress.getLongitude());
+        addressDict.put(getString(R.string.province), eventCompleteAddress.getSubAdminArea());
+        addressDict.put(getString(R.string.full_address), GeoUtils.getAddressString(eventCompleteAddress)); // Double
+        addressDict.put(getString(R.string.latitude), eventCompleteAddress.getLatitude());
+        addressDict.put(getString(R.string.longitude), eventCompleteAddress.getLongitude());
 
         Log.e(TAG, (new GeoLocation(eventCompleteAddress.getLatitude(), eventCompleteAddress.getLongitude())).toString());;
 
@@ -602,8 +601,8 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         @Override
         protected Event doInBackground(Void... voids) {
             // Get the id of the organizer
-            SharedPreferences preferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
-            final String organizerId = preferences.getString("fb_id", null);
+            SharedPreferences preferences = getSharedPreferences(getString(R.string.preferences), MODE_PRIVATE);
+            final String organizerId = preferences.getString(getString(R.string.pref_fb_id), null);
 
             eventDate = calendar.getTime();
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -636,11 +635,11 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         @Override
         protected void onPostExecute(Event event) {
             super.onPostExecute(event);
-            Toast.makeText(getApplicationContext(), "¡Concierto creado con éxito!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.toast_created), Toast.LENGTH_LONG).show();
             String eventJson = (new Gson()).toJson(event);
             // Start the activity to show the event info
             Intent intent = new Intent(CreateEventActivity.this, OrganizerEventInfoActivity.class);
-            intent.putExtra("EVENT", event.getId());
+            intent.putExtra(getString(R.string.EVENT), event.getId());
             startActivity(intent);
             finish();
         }
@@ -657,8 +656,8 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         @Override
         protected Event doInBackground(Void... voids) {
             // Get the id of the organizer
-            SharedPreferences preferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
-            final String organizerId = preferences.getString("fb_id", null);
+            SharedPreferences preferences = getSharedPreferences(getString(R.string.preferences), MODE_PRIVATE);
+            final String organizerId = preferences.getString(getString(R.string.pref_fb_id), null);
 
             //bitmapEncoded = NO_IMAGE;
             //String path= imageUri.getEncodedPath();
@@ -686,11 +685,11 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         @Override
         protected void onPostExecute(Event event) {
             super.onPostExecute(event);
-            Toast.makeText(getApplicationContext(), "¡Concierto modificado con éxito!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.toast_modified), Toast.LENGTH_LONG).show();
             String eventJson = (new Gson()).toJson(event);
             // Start the activity to show the event info
             Intent intent = new Intent(CreateEventActivity.this, OrganizerEventInfoActivity.class);
-            intent.putExtra("EVENT", event.getId());
+            intent.putExtra(getString(R.string.EVENT), event.getId());
             startActivity(intent);
             finish();
         }

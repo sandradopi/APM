@@ -69,13 +69,13 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Event
-        final String eventSelectId = getIntent().getStringExtra("EVENT");
-        SharedPreferences sharedPreferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
-        final String account_type = sharedPreferences.getString("account_type", null);
+        final String eventSelectId = getIntent().getStringExtra(getString(R.string.EVENT));
+        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.preferences), MODE_PRIVATE);
+        final String account_type = sharedPreferences.getString(getString(R.string.pref_account_type), null);
 
         rateButton = (Button) findViewById(R.id.rateButton);
 
-        if (account_type.equals("organizer")) {
+        if (account_type.equals(getString(R.string.org))) {
 
             PersistentOrganizerInfo persistentInfo = PersistentOrganizerInfo.getPersistentOrganizerInfo(getApplicationContext());
             eventSelect = persistentInfo.getEvent(eventSelectId);
@@ -112,8 +112,8 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
         name.setText(eventSelect.getName());
         Date dateF;
         dateF = eventSelect.getEventDate();
-        DateFormat df = new SimpleDateFormat("dd/MM/yy", java.util.Locale.getDefault());
-        DateFormat df2 = new SimpleDateFormat("HH:mm", java.util.Locale.getDefault());
+        DateFormat df = new SimpleDateFormat(getString(R.string.date_pattern), java.util.Locale.getDefault());
+        DateFormat df2 = new SimpleDateFormat(getString(R.string.hour_pattern), java.util.Locale.getDefault());
         date.setText(df.format(dateF));
         time.setText(df2.format(dateF));
         descripcion.setText(eventSelect.getDescription());
@@ -128,12 +128,11 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
         rateButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch (View view, MotionEvent event) {
-                if (account_type.equals("user")) {
+                if (account_type.equals(getString(R.string.usr))) {
                     if (event.getAction() == MotionEvent.ACTION_UP) {
-                        Log.w(TAG, "Score event");
                         FragmentManager fragmentManager = getSupportFragmentManager();
                         ScoreEventDialog dialog = new ScoreEventDialog().newInstance(name.getText().toString(), eventSelect.getId(), rated);
-                        dialog.show(fragmentManager, "tagAlerta");
+                        dialog.show(fragmentManager, getString(R.string.tag_alert));
                     }
                 }
                 return true;
@@ -155,7 +154,7 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
 
     private class getPhoto extends AsyncTask<Void, Void, Void> {
 
-        final String eventSelectId = getIntent().getStringExtra("EVENT");
+        final String eventSelectId = getIntent().getStringExtra(getString(R.string.EVENT));
         final PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
 
         @Override
@@ -166,7 +165,7 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
         @Override
         protected Void doInBackground(Void... voids) {
             Event eventSelect;
-            final boolean recommended = getIntent().getExtras().getBoolean("RECOMMENDED");
+            final boolean recommended = getIntent().getExtras().getBoolean(getString(R.string.recommended));
             if(recommended) {
                 eventSelect  = persistentUserInfo.getEventRecommended(eventSelectId);
 
@@ -261,7 +260,7 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
                 try {
                     users.add(userService.getUser(r.getUserId()));
                 } catch (InstanceNotFoundException e) {
-                    Log.e(TAG, "tried to insert an existing id");
+                    Log.e(TAG, getString(R.string.existing_id));
                     return null;
                 }
             }
