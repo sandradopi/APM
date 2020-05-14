@@ -84,6 +84,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="10dp"
+                android:scrollbars="vertical"
+                android:maxLines="4"
                 android:text=""
                 android:textSize="15sp" />
 

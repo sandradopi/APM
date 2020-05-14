@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
@@ -52,6 +53,7 @@ public class OrganizerEventInfoActivity extends AppCompatActivity implements OnM
         TextView toolbarTitle = findViewById(R.id.toolbar_title);
         toolbarTitle.setText("Información del evento");
 
+
         //Event
         Gson gson = new Gson();
        // final Event eventSelect = gson.fromJson(getIntent().getStringExtra("EVENT"), Event.class);
@@ -71,6 +73,7 @@ public class OrganizerEventInfoActivity extends AppCompatActivity implements OnM
                 Intent intent = new Intent(OrganizerEventInfoActivity.this, CreateEventActivity.class);
                 intent.putExtra("EVENT",  eventSelect.getId());
                 startActivity(intent);
+                finish();
             }
         });
     }
@@ -84,6 +87,7 @@ public class OrganizerEventInfoActivity extends AppCompatActivity implements OnM
         TextView eventDate = findViewById(R.id.eventDate);
         TextView eventLocation = findViewById(R.id.eventLocationContent);
         TextView eventDescrip = findViewById(R.id.eventDescContent);
+        eventDescrip.setMovementMethod(new ScrollingMovementMethod());
         TextView eventTime = findViewById(R.id.eventTime);
         TextView category = findViewById(R.id.category);
 

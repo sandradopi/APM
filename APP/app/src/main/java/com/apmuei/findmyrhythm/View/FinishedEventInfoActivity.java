@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Base64;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -102,6 +103,7 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
         name = findViewById(R.id.eventName);
         date =  findViewById(R.id.eventDate);
         descripcion = findViewById(R.id.eventDescContent);
+        descripcion.setMovementMethod(new ScrollingMovementMethod());
         ubication = findViewById(R.id.eventLocationContent);
         time = findViewById(R.id.eventTime);
         category = findViewById(R.id.category);

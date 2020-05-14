@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -64,6 +65,7 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
         date =  findViewById(R.id.eventDate);
         time =  findViewById(R.id.eventTime);
         description = findViewById(R.id.eventDescContent);
+        description.setMovementMethod(new ScrollingMovementMethod());
         location = findViewById(R.id.eventLocationContent);
 
         //Event

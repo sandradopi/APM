@@ -80,13 +80,18 @@
             android:paddingStart="3sp"
             android:paddingEnd="3sp">
 
+
+
             <TextView
                 android:id="@+id/eventDesc"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="15dp"
+                android:scrollbars="vertical"
+                android:maxLines="4"
                 android:text="@string/information"
                 android:textSize="15sp"
                 android:textStyle="bold" />
+
 
             <View
                 android:id="@+id/divider6"
@@ -97,7 +102,7 @@
             <TextView
                 android:id="@+id/eventDescContent"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="56dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="10dp"
                 android:text="@string/example_description"

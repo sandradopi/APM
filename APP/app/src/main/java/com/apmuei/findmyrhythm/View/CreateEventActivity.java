@@ -72,7 +72,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
     private static final int PICK_IMAGE = 100;
     private static final String NO_IMAGE = "no_image";
 
-    private String DEFAULT_IMAGE_ID = "-M6PpLTdOhq0sFbyNrHz";
+    private String DEFAULT_IMAGE_ID = "";
     private static final String READ_EXTERNAL_STORAGE = Manifest.permission.READ_EXTERNAL_STORAGE;
     private static final String WRITE_EXTERNAL_STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE;
     private static final int STORAGE_PERMISSION_CODE = 1896;
@@ -86,6 +86,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
     private Button exploreMapButton;
     private TextView addressTextView;
     private Button saveButton;
+    private Photo defaultP;
     private Button uploadPhotoButton;
     private Spinner genresSpinner;
     private Photo photoOriginal;
@@ -160,6 +161,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             @Override
             public boolean onLongClick(View view) {
                 showAlert();
+
                 //Toast.makeText(CreateEventActivity.this, "Borrar foto", Toast.LENGTH_LONG).show();
                 return true;
             }
@@ -190,8 +192,8 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             HashMap<String, Object> completeAddressDict = eventSelect.getCompleteAddress();
             Double latitude = (Double) Objects.requireNonNull(completeAddressDict.get("latitude"));
             Double longitude = (Double) Objects.requireNonNull(completeAddressDict.get("longitude"));
-
             new GeocoderAsyncTask(this, latitude, longitude).execute();
+
 
             saveButton.setText(getString(R.string.save_edited_event));
             uploadPhotoButton.setText(getString(R.string.change_poster));
@@ -276,16 +278,14 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             openDialogTime();
         } else if (view == saveButton) {
             Calendar currentCalendar = Calendar.getInstance();
-            Date eventDate;
-            if (eventSelect != null) {
-                eventDate = eventSelect.getEventDate();
-            } else {
-                eventDate = calendar.getTime();
-            }
+
+            if (eventSelect==null) eventDate = calendar.getTime();
+
+
             boolean isAnyFiledEmpty = GenericUtils.isEmpty(name) || GenericUtils.isEmpty(date) || GenericUtils.isEmpty(hour)
                     || GenericUtils.isEmpty(maxAttendees) || GenericUtils.isEmpty(price) || GenericUtils.isEmpty(description)
                     || GenericUtils.isEmpty(addressTextView) || selectedGenre.equals("")
-                    || eventDate.compareTo(currentCalendar.getTime()) < 0;
+                    || (eventDate.compareTo(currentCalendar.getTime()) < 0);
 
             if (isAnyFiledEmpty) {
                 Toast.makeText(this, "Please cover every field shown in the screen", Toast.LENGTH_LONG).show();
@@ -295,6 +295,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             if (modifyEvent) {
                 new ModifyEventTask().execute();
             } else {
+
                 // TODO: CHECK IF DESCRIPTION AND IMAGE EXISTS.
                 new AddEventTask().execute();
             }
@@ -308,7 +309,13 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
                 .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        imageBitmap=null;
+                        if (!photoOriginalId.equals(DEFAULT_IMAGE_ID)){
+                           // deletePhoto(photo);
+                            new deletePhoto().execute();
+                        }
+                        else {
+                            imageBitmap = null;
+                        }
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -319,6 +326,20 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
                 });
         AlertDialog ad= builder.create();
         ad.show();
+    }
+
+    public void deletePhoto(Photo photo){
+
+        photoService.deletePhoto(photo.getId());
+        Photo defaultP = new Photo();
+        defaultP = photoService.getPhoto(DEFAULT_IMAGE_ID);
+            if (defaultP != null) {
+                photoId = DEFAULT_IMAGE_ID;
+            } else {
+                Bitmap icon = BitmapFactory.decodeResource(getResources(), R.drawable.logo_white);
+                photoId = createEncodedPhoto(icon);
+                DEFAULT_IMAGE_ID = photoId;
+        }
     }
 
     private class getPhoto extends AsyncTask<Void, Void, Void> {
@@ -332,6 +353,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             return null;
         }
     }
+
 
 
     public void openDialogDate() {
@@ -348,9 +370,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
                     @Override
                     public void onDateSet(DatePicker view, int year,
                                           int monthOfYear, int dayOfMonth) {
-                        // Por que month of year + 1???
-                        //date.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-                        String textdate = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
+
                         Date fecha = new Date(year, monthOfYear, dayOfMonth);
                         DateFormat df = new SimpleDateFormat("dd/MM/yy", java.util.Locale.getDefault());
                         date.setText(df.format(fecha));
@@ -524,18 +544,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         photoService.updatePhoto(photo);
 
     }
-    private void deletePhoto(Photo photo){
-        photoService.deletePhoto(photo.getId());
-        Photo defaultP = photoService.getPhoto(DEFAULT_IMAGE_ID);
-        if (defaultP != null){
-            photoId= DEFAULT_IMAGE_ID;
-        }
-        else{
-            Bitmap icon = BitmapFactory.decodeResource(getResources(),R.drawable.logo_white);
-            photoId = createEncodedPhoto(icon);
-            DEFAULT_IMAGE_ID = photoId;
-        }
-    }
+
 
     private Event makeEvent(String organizerId) {
         //bitmapEncoded = NO_IMAGE;
@@ -559,6 +568,34 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         return event;
     }
 
+    private class deletePhoto extends AsyncTask<Void, Void, Photo> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+
+        @Override
+        protected Photo doInBackground(Void... voids) {
+            photoService.deletePhoto(photo.getId());
+            Photo defaultP = photoService.getPhoto(DEFAULT_IMAGE_ID);
+
+            return defaultP;
+        }
+
+        @Override
+        protected void onPostExecute(Photo defaultP) {
+            if (defaultP.getEventImage() != null) {
+                photoId = DEFAULT_IMAGE_ID;
+            } else {
+                Bitmap icon = BitmapFactory.decodeResource(getResources(), R.drawable.logo_white);
+                photoId = createEncodedPhoto(icon);
+                DEFAULT_IMAGE_ID = photoId;
+            }
+
+        }
+    }
 
     private class AddEventTask extends AsyncTask<Void, Void, Event> {
 
@@ -574,7 +611,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
                 photoId = createEncodedPhoto(imageBitmap);
             } else {
                 Photo defaultP = photoService.getPhoto(DEFAULT_IMAGE_ID);
-                if (defaultP != null){
+                if (defaultP.getEventImage() != null){
                     photoId= DEFAULT_IMAGE_ID;
                 }
                 else{
@@ -632,11 +669,11 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             else if (imageBitmap !=null){
                 createEncodedPhoto(imageBitmap);
             }
-
+    /*
             else if (!photoOriginalId.equals(DEFAULT_IMAGE_ID)){
                 deletePhoto(photo);
             }
-
+*/
             Event event = makeEvent(organizerId);
 
             Event e = persistentOrganizerInfo.modifyEvent(getApplicationContext(), eventSelect, event);

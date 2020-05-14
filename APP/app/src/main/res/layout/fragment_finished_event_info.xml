@@ -99,6 +99,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/information"
+                    android:scrollbars="vertical"
+                    android:maxLines="4"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
