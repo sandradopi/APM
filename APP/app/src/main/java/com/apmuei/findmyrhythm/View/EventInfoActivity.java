@@ -3,6 +3,7 @@ package com.apmuei.findmyrhythm.View;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -18,9 +19,12 @@ import android.widget.TextView;
 import com.apmuei.findmyrhythm.Model.AttendeeService;
 import com.apmuei.findmyrhythm.Model.Event;
 import com.apmuei.findmyrhythm.Model.EventService;
+import com.apmuei.findmyrhythm.Model.Exceptions.InstanceNotFoundException;
 import com.apmuei.findmyrhythm.Model.PersistentUserInfo;
 import com.apmuei.findmyrhythm.Model.Photo;
 import com.apmuei.findmyrhythm.Model.PhotoService;
+import com.apmuei.findmyrhythm.Model.User;
+import com.apmuei.findmyrhythm.Model.UserService;
 import com.apmuei.findmyrhythm.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -41,7 +45,8 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
     String toSignUpText;
     TextView name, date, description, location, genre, time, eventMaxAttendees, eventPrice;
     Boolean isSignedUp = false;
-
+    Event eventSelect;
+    User user;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,7 +62,6 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
 
         signedUpText = getString(R.string.signed_up);
         toSignUpText = getString(R.string.to_sign_up);
-
         eventMaxAttendees = findViewById(R.id.eventCapacity);
         eventPrice = findViewById(R.id.eventCost);
         name = findViewById(R.id.eventName);
@@ -72,7 +76,7 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
         //Gson gson = new Gson();
         //final Event eventSelect = gson.fromJson(getIntent().getStringExtra("EVENT"), Event.class);
         final PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
-        Event eventSelect;
+
         final boolean recommended = getIntent().getExtras().getBoolean(getString(R.string.recommended));
         final String eventSelectId = getIntent().getStringExtra(getString(R.string.EVENT));
 
@@ -230,17 +234,28 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
 
 
     private class unSubscribe extends AsyncTask<Void, Void, Void> {
-        final String eventSelectId = getIntent().getStringExtra(getString(R.string.EVENT));
         final PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
 
         @Override
         protected Void doInBackground(Void... voids) {
-            Event eventSelect;
+
             AttendeeService attendeeService = new AttendeeService();
-            eventSelect = persistentUserInfo.getEvent(eventSelectId);
+            UserService userService = new UserService();
             attendeeService.deleteAttendeeByEvent(eventSelect.getId());
             persistentUserInfo.deleteEvent(getApplicationContext(),eventSelect);
-            persistentUserInfo.addUniqueEventRecommended(getApplicationContext(), eventSelect);
+
+            try {
+                SharedPreferences preferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
+                user = userService.getUser(preferences.getString("fb_id", null));
+
+            } catch (InstanceNotFoundException e) {
+                Log.e("DEBUG", "InstanceNotFoundException");
+            }
+
+            if (user.getSubscribedGenres().contains(eventSelect.getGenre()) && user.getSubscribedLocations().contains(eventSelect.getLocation())) {
+                persistentUserInfo.addUniqueEventRecommended(getApplicationContext(), eventSelect);
+            }
+
             isSignedUp = false;
             return null;
         }
@@ -248,16 +263,14 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
     }
 
     private class Subscribe extends AsyncTask<Void, Void, Void> {
-        final String eventSelectId = getIntent().getStringExtra(getString(R.string.EVENT));
         final PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
         final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
 
         @Override
         protected Void doInBackground(Void... voids) {
-            Event eventSelect;
+
             AttendeeService attendeeService = new AttendeeService();
-            eventSelect  = persistentUserInfo.getEventRecommended(eventSelectId);
             attendeeService.createAttendee(currentUser.getUid(), eventSelect.getId());
             persistentUserInfo.addEvent(getApplicationContext(),eventSelect);
             persistentUserInfo.deleteRecommendedEvent(getApplicationContext(), eventSelect);

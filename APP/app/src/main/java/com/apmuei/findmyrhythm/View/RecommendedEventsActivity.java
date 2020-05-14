@@ -137,8 +137,8 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
 
             int orientation = getResources().getConfiguration().orientation;
             if(orientation == Configuration.ORIENTATION_LANDSCAPE || isTablet(getApplicationContext())){
-                if(!events.isEmpty()){
-                    Event e = events.get(0);
+                if(!nextEventsFiltered.isEmpty()){
+                    Event e = nextEventsFiltered.get(0);
                     eventName.setText(e.getName());
                     eventDate.setText(e.getEventDate().toString());
                     eventDescContent.setText(e.getDescription());
@@ -159,7 +159,7 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
                     int orientation = getResources().getConfiguration().orientation;
 
                     if(orientation == Configuration.ORIENTATION_LANDSCAPE || isTablet(getApplicationContext())){
-                        Event e = events.get((int) id);
+                        Event e = nextEventsFiltered.get((int) id);
                         eventName.setText(e.getName());
                         eventDate.setText(e.getEventDate().toString());
                         eventDescContent.setText(e.getDescription());
@@ -172,9 +172,7 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
 
                     else if (orientation == Configuration.ORIENTATION_PORTRAIT){
                         Intent intent = new Intent(RecommendedEventsActivity.this, EventInfoActivity.class);
-                        // String eventJson = (new Gson()).toJson(events.get((int) id));
-                        // intent.putExtra("ID", ids[(int) id]);
-                        intent.putExtra("EVENT", events.get((int) id).getId());
+                        intent.putExtra("EVENT", nextEventsFiltered.get((int) id).getId());
                         intent.putExtra("RECOMMENDED", true);
                         RecommendedEventsActivity.this.startActivity(intent);
                     }

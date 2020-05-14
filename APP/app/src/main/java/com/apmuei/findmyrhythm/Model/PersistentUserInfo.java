@@ -34,8 +34,6 @@ public class PersistentUserInfo extends User {
     public Event getEventRecommended(String id){
         System.out.println(id);
         for (Event event:recommended){
-            System.out.println("HOLAAAAAA"+event.getId());
-
             if(event.getId().equals(id)) return event;
         }
         return null;
