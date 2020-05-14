@@ -38,17 +38,21 @@ public class SensorActivity extends Activity implements SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         float amountOfLight = sensorEvent.values[0];
+        System.out.println("HOLA");
         if(sensorEvent.sensor.getType() == Sensor.TYPE_LIGHT){
-            System.out.println("HE CAMBIADO");
-            setTheme(android.R.style.Theme_Light);
-            recreate();
+
+            if((amountOfLight < 100)){
+                System.out.println("MUCHA LUZ");
+                setTheme(android.R.style.Theme_Light);
+                recreate();
+            }else{
+                System.out.println("NORMAL O POCA");
+                setTheme(android.R.style.Theme_Black);
+                recreate();
+            }
 
         }
-        else {
-            System.out.println("ELSE");
-            setTheme(android.R.style.Theme_Black);
-            recreate();
-        }
+
 
 
     }
