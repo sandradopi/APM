@@ -41,7 +41,7 @@ public class SensorActivity extends Activity implements SensorEventListener {
         System.out.println("HOLA");
         if(sensorEvent.sensor.getType() == Sensor.TYPE_LIGHT){
 
-            if((amountOfLight < 100)){
+            if((amountOfLight > 100)){
                 System.out.println("MUCHA LUZ");
                 setTheme(android.R.style.Theme_Light);
                 recreate();
