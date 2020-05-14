@@ -5,8 +5,13 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -39,6 +44,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.apmuei.findmyrhythm.R;
@@ -54,10 +60,11 @@ import java.util.HashSet;
 import java.util.Objects;
 
 
-public class SearchEventsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+public class SearchEventsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, SensorEventListener {
 
     private final static String TAG = "SearchEventsA";
-
+    private SensorManager sensorManager;
+    private Sensor light;
     private GoogleMap mMap;
     private EditText searchText;
     private FusedLocationProviderClient fusedLocationClient;
@@ -68,12 +75,21 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
     private HashSet<EventMarker> eventMarkers = new HashSet<>();
     private HashSet<EventMarker> newEventMarkers = new HashSet<>();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_events);
 
         searchText = findViewById(R.id.input_search);
+
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        light = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+
+        if (light == null) {
+            System.out.println("No sensor light");
+
+        }
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -90,11 +106,55 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        sensorManager.registerListener(this, light, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        sensorManager.unregisterListener(this);
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        float amountOfLight = sensorEvent.values[0];
+        if(sensorEvent.sensor.getType() == Sensor.TYPE_LIGHT){
+
+            if((amountOfLight > 20000)){
+                System.out.println("MUCHA LUZ");
+                if(mMap!=null){
+                    boolean success = mMap.setMapStyle(
+                            MapStyleOptions.loadRawResourceStyle(
+                                    this, R.raw.style_json_default));
+                }
+
+            }else{
+                System.out.println("NORMAL O POCA");
+                if(mMap!=null){
+                boolean success = mMap.setMapStyle(
+                        MapStyleOptions.loadRawResourceStyle(
+                                this, R.raw.style_json));
+                }
+
+            }
+
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+
+    }
+
 
     @Override
     public boolean onMarkerClick(Marker marker) {
         return false;
     }
+
 
 
     private class EventMarker {
@@ -145,6 +205,7 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
 
         GeoUtils.checkLocationEnabled(SearchEventsActivity.this);
 
