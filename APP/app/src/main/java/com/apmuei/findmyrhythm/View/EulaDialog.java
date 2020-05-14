@@ -25,8 +25,8 @@ public class EulaDialog extends DialogFragment {
         LayoutInflater inflater = requireActivity().getLayoutInflater();
 
         builder.setView(inflater.inflate(R.layout.activity_eula_dialog, null));
-        builder.setTitle("End-User License Agreement (EULA) of Findmyrhythm")
-                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+        builder.setTitle(getString(R.string.eula_title))
+                .setPositiveButton(getString(R.string.submit), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                         Intent i= new Intent(getApplicationContext(),GreetingsActivity.class);
