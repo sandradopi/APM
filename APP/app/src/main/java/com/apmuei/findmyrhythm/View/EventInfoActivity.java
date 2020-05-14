@@ -181,6 +181,7 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
 
         @Override
         protected void onPostExecute(final Event event) {
+            eventSelect = event;
             setEventInfo(event);
             configureJoinButton(event);
             new getPhoto().execute();
