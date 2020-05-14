@@ -123,7 +123,7 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
         float amountOfLight = sensorEvent.values[0];
         if(sensorEvent.sensor.getType() == Sensor.TYPE_LIGHT){
 
-            if((amountOfLight > 100)){
+            if((amountOfLight > 50)){
 
                 if(mMap!=null){
                     boolean success = mMap.setMapStyle(
