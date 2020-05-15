@@ -80,8 +80,7 @@ public class OrganizerEventInfoActivity extends AppCompatActivity implements OnM
 
 
     private void showEventInfo(Event event) {
-        EditText eventName = findViewById(R.id.eventName);
-        eventName.setEnabled(false);
+        TextView eventName = findViewById(R.id.eventName);
         TextView eventMaxAttendees = findViewById(R.id.eventCapacity);
         TextView eventPrice = findViewById(R.id.eventCost);
         TextView eventDate = findViewById(R.id.eventDate);
