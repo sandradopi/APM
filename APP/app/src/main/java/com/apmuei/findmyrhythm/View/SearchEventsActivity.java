@@ -6,7 +6,6 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,17 +13,16 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.location.Address;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,8 +59,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Objects;
 
 
@@ -78,8 +78,16 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
     private LocationRequest locationRequest;
     private LocationCallback locationCallback;
     private GeoFire geoFire;
-    private HashSet<EventMarker> eventMarkers = new HashSet<>();
-    private HashSet<EventMarker> newEventMarkers = new HashSet<>();
+
+    FragmentManager fragmentManager;
+    SearchFiltersDialogFragment searchFiltersDialogFragment;
+
+    private HashSet<EventMarker> eventMarkersSet = new HashSet<>();
+    private HashSet<EventMarker> removedEventMarkersSet = new HashSet<>();
+    private HashSet<EventMarker> newEventMarkersSet = new HashSet<>();
+
+    // Filter values:
+    private boolean showPastEvents = false;
 
 
     @Override
@@ -106,6 +114,10 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("locations");
         geoFire = new GeoFire(ref);
 
+        // Dialog with the search filters
+        fragmentManager = getSupportFragmentManager();
+        searchFiltersDialogFragment = new SearchFiltersDialogFragment();
+
 
         Toast.makeText(getApplicationContext(), getString(R.string.search_events_usage_info), Toast.LENGTH_LONG).show();
 
@@ -120,20 +132,28 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
 
 
     public void showSearchFiltersDialog() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        final SearchFiltersDialogFragment searchFiltersDialogFragment = new SearchFiltersDialogFragment();
 
         searchFiltersDialogFragment.show(fragmentManager, "dialog");
 
         // https://stackoverflow.com/questions/33866579/getting-view-of-dialogfragment
         fragmentManager.executePendingTransactions();
 
-        View view = searchFiltersDialogFragment.getView();
+        final View view = searchFiltersDialogFragment.getView();
         assert view != null;
         Button applyFilters = view.findViewById(R.id.apply);
         applyFilters.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // searchFiltersDialogFragment.
+                // Filter events by date
+                CheckBox showPast = view.findViewById(R.id.checkBox_show_past_events);
+                if (! showPast.isChecked()) {
+                    removePastEvents();
+                    showPastEvents = false;
+                } else {
+                    showRemovedPastEvents();
+                    showPastEvents = true;
+                }
+
+
                 Toast.makeText(getApplicationContext(), "Filtros aplicados", Toast.LENGTH_SHORT).show();
                 searchFiltersDialogFragment.dismiss();
             }
@@ -142,10 +162,39 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
         Button cancelFilters = view.findViewById(R.id.cancel);
         cancelFilters.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                CheckBox showPast = view.findViewById(R.id.checkBox_show_past_events);
+                showPast.setChecked(showPastEvents);
                 searchFiltersDialogFragment.dismiss();
             }
         });
 
+    }
+
+    private void showRemovedPastEvents() {
+        for (Iterator<EventMarker> i = removedEventMarkersSet.iterator(); i.hasNext();) {
+            EventMarker eventMarker = i.next();
+            Date eventDate = eventMarker.event.getEventDate();
+            Date currentDate = new Date();
+            if (eventDate.before(currentDate)) {
+                i.remove();
+                eventMarkersSet.add(addMarkerToMap(eventMarker));
+            }
+        }
+    }
+
+
+    private void removePastEvents() {
+
+        for (Iterator<EventMarker> i = eventMarkersSet.iterator(); i.hasNext();) {
+            EventMarker eventMarker = i.next();
+            Date eventDate = eventMarker.event.getEventDate();
+            Date currentDate = new Date();
+            if (eventDate.before(currentDate)) {
+                eventMarker.marker.remove();
+                i.remove();
+                removedEventMarkersSet.add(eventMarker);
+            }
+        }
     }
 
 
@@ -203,6 +252,7 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
     private class EventMarker {
         String id;
         Event event;
+        Marker marker;
 
         EventMarker(String id, Event event) {
             this.id = id;
@@ -367,14 +417,37 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
         protected void onPostExecute(final EventMarker eventMarker) {
             Log.e(">>>>>>>>>>>>>>>", eventMarker.event.getName());
 
-            HashMap address = eventMarker.event.getCompleteAddress();
-            LatLng latLng = new LatLng((Double) Objects.requireNonNull(address.get("latitude")),
-                    (Double) Objects.requireNonNull(address.get("longitude")));
-            Marker marker = mMap.addMarker(new MarkerOptions().position(latLng).title(eventMarker.event.getName()));
-            marker.setTag(eventMarker.id);
-            marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
+            eventMarkersSet.remove(eventMarker);
+
+            if (showPastEvents) {
+                // All the information is added to the EventMarker by updating it
+                EventMarker updatedMarker = addMarkerToMap(eventMarker);
+                eventMarkersSet.add(updatedMarker);
+            } else {
+                Date eventDate = eventMarker.event.getEventDate();
+                Date currentDate = new Date();
+                if (eventDate.before(currentDate)) {
+                    removedEventMarkersSet.add(eventMarker);
+                } else {
+                    EventMarker updatedMarker = addMarkerToMap(eventMarker);
+                    eventMarkersSet.add(updatedMarker);
+                }
+
+            }
         }
 
+    }
+
+
+    private EventMarker addMarkerToMap(EventMarker eventMarker) {
+        HashMap address = eventMarker.event.getCompleteAddress();
+        LatLng latLng = new LatLng((Double) Objects.requireNonNull(address.get("latitude")),
+                (Double) Objects.requireNonNull(address.get("longitude")));
+        Marker marker = mMap.addMarker(new MarkerOptions().position(latLng).title(eventMarker.event.getName()));
+        marker.setTag(eventMarker.id);
+        marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
+        eventMarker.marker = marker;
+        return eventMarker;
     }
 
 
@@ -384,10 +457,10 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
             @Override
             public void run() {
                 //Your code to run in GUI thread here
-                for (EventMarker eventMarker : newEventMarkers) {
+                for (EventMarker eventMarker : newEventMarkersSet) {
                     new showEventMarker().execute(eventMarker.id);
                 }
-                newEventMarkers.clear();
+                newEventMarkersSet.clear();
             }
         });
     }
@@ -404,9 +477,9 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
             @Override
             public void onKeyEntered(final String key, final GeoLocation location) {
                 EventMarker eventMarker = new EventMarker(key);
-                if (! eventMarkers.contains(eventMarker)) {
-                    eventMarkers.add(eventMarker);
-                    newEventMarkers.add(eventMarker);
+                if (! eventMarkersSet.contains(eventMarker)) {
+                    eventMarkersSet.add(eventMarker);
+                    newEventMarkersSet.add(eventMarker);
                     Log.d("..", String.format("Key %s entered the search area at [%f,%f]", key, location.latitude, location.longitude));
                 }
 
