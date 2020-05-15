@@ -346,7 +346,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
     public void openDialogDate() {
 
         // Get Current Date
-        if(eventSelect.getId()==null) {
+        if(eventSelect==null) {
             final Calendar currentCalendar = Calendar.getInstance();
             mYear = currentCalendar.get(Calendar.YEAR);
             mMonth = currentCalendar.get(Calendar.MONTH);
@@ -383,7 +383,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
     public void openDialogTime() {
 
         // Get Current Time if new event
-        if(eventSelect.getId()==null) {
+        if(eventSelect==null) {
             final Calendar c = Calendar.getInstance();
             mHour = c.get(Calendar.HOUR_OF_DAY);
             mMinute = c.get(Calendar.MINUTE);
