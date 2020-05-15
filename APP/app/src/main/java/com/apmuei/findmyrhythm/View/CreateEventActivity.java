@@ -184,7 +184,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             DateFormat df2 = new SimpleDateFormat(getString(R.string.hour_pattern), java.util.Locale.getDefault());
             date.setText(df.format(eventDate));
             hour.setText(df2.format(eventDate));
-
+            calendar.setTime(eventDate);
             maxAttendees.setText(eventSelect.getMaxAttendees());
             description.setText(eventSelect.getDescription());
             selectedGenre = eventSelect.getGenre();
@@ -278,7 +278,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         } else if (view == saveButton) {
             Calendar currentCalendar = Calendar.getInstance();
 
-            if (eventSelect==null) eventDate = calendar.getTime();
+            eventDate = calendar.getTime();
 
 
             boolean isAnyFiledEmpty = GenericUtils.isEmpty(name) || GenericUtils.isEmpty(date) || GenericUtils.isEmpty(hour)
@@ -327,19 +327,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         ad.show();
     }
 
-    public void deletePhoto(Photo photo){
 
-        photoService.deletePhoto(photo.getId());
-        Photo defaultP = new Photo();
-        defaultP = photoService.getPhoto(DEFAULT_IMAGE_ID);
-            if (defaultP != null) {
-                photoId = DEFAULT_IMAGE_ID;
-            } else {
-                Bitmap icon = BitmapFactory.decodeResource(getResources(), R.drawable.logo_white);
-                photoId = createEncodedPhoto(icon);
-                DEFAULT_IMAGE_ID = photoId;
-        }
-    }
 
     private class getPhoto extends AsyncTask<Void, Void, Void> {
 
@@ -358,10 +346,17 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
     public void openDialogDate() {
 
         // Get Current Date
-        final Calendar currentCalendar = Calendar.getInstance();
-        mYear = currentCalendar.get(Calendar.YEAR);
-        mMonth = currentCalendar.get(Calendar.MONTH);
-        mDay = currentCalendar.get(Calendar.DAY_OF_MONTH);
+        if(eventSelect.getId()==null) {
+            final Calendar currentCalendar = Calendar.getInstance();
+            mYear = currentCalendar.get(Calendar.YEAR);
+            mMonth = currentCalendar.get(Calendar.MONTH);
+            mDay = currentCalendar.get(Calendar.DAY_OF_MONTH);
+        }
+        else{
+            mYear = calendar.get(Calendar.YEAR);
+            mMonth = calendar.get(Calendar.MONTH);
+            mDay = calendar.get(Calendar.DAY_OF_MONTH);
+        }
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                 new DatePickerDialog.OnDateSetListener() {
@@ -387,11 +382,16 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
 
     public void openDialogTime() {
 
-        // Get Current Time
-        final Calendar c = Calendar.getInstance();
-        mHour = c.get(Calendar.HOUR_OF_DAY);
-        mMinute = c.get(Calendar.MINUTE);
-
+        // Get Current Time if new event
+        if(eventSelect.getId()==null) {
+            final Calendar c = Calendar.getInstance();
+            mHour = c.get(Calendar.HOUR_OF_DAY);
+            mMinute = c.get(Calendar.MINUTE);
+        }
+        else{
+            mHour = calendar.get(Calendar.HOUR_OF_DAY);
+            mMinute = calendar.get(Calendar.MINUTE);
+        }
         // Launch Time Picker Dialog
         TimePickerDialog timePickerDialog = new TimePickerDialog(this,
                 new TimePickerDialog.OnTimeSetListener() {
@@ -604,7 +604,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             SharedPreferences preferences = getSharedPreferences(getString(R.string.preferences), MODE_PRIVATE);
             final String organizerId = preferences.getString(getString(R.string.pref_fb_id), null);
 
-            eventDate = calendar.getTime();
+          //  eventDate = calendar.getTime();
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             if (imageBitmap != null) {
                 photoId = createEncodedPhoto(imageBitmap);
