@@ -58,6 +58,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -336,22 +338,26 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
             @Override
             public View getInfoContents(Marker args) {
 
-                // Getting view from the layout file info_window_layout
+                // Getting view from the layout file window_info_layout
                 View v = getLayoutInflater().inflate(R.layout.window_info_layout, null);
 
-                // Getting the position from the marker
-                LatLng clickMarkerLatLng = args.getPosition();
-
-                TextView title = (TextView) v.findViewById(R.id.title);
+                TextView title = v.findViewById(R.id.title);
                 title.setText(args.getTitle());
+
+                Event event = (Event) args.getTag();
+                DateFormat df = new SimpleDateFormat("dd/MM/yy", java.util.Locale.getDefault());
+
+                TextView snippet = v.findViewById(R.id.snippet);
+                assert event != null;
+                snippet.setText(df.format(event.getEventDate()));
 
                 mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                     public void onInfoWindowClick(Marker marker) {
-                        String id = (String) marker.getTag();
-                        Log.e(TAG + " >>> ", id);
+                        Event event = (Event) marker.getTag();
+                        Log.e(TAG + " >>> ", event.getId());
 
                         Intent intent = new Intent(SearchEventsActivity.this, EventInfoActivity.class);
-                        intent.putExtra("EVENT", id);
+                        intent.putExtra("EVENT", event.getId());
                         intent.putExtra("RECOMMENDED", false);
                         startActivity(intent);
 
@@ -444,7 +450,7 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
         LatLng latLng = new LatLng((Double) Objects.requireNonNull(address.get("latitude")),
                 (Double) Objects.requireNonNull(address.get("longitude")));
         Marker marker = mMap.addMarker(new MarkerOptions().position(latLng).title(eventMarker.event.getName()));
-        marker.setTag(eventMarker.id);
+        marker.setTag(eventMarker.event);
         marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
         eventMarker.marker = marker;
         return eventMarker;
@@ -597,7 +603,7 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
                 LatLng latLng = new LatLng((Double) Objects.requireNonNull(address.get("latitude")),
                         (Double) Objects.requireNonNull(address.get("longitude")));
                 Marker marker = mMap.addMarker(new MarkerOptions().position(latLng).title(event.getName()));
-                marker.setTag(event.getId());
+                marker.setTag(event);
                 marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
                 builder.include(marker.getPosition());
                 LatLngBounds bounds = builder.build();
