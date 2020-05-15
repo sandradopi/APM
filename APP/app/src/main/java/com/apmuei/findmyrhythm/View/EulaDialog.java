@@ -11,6 +11,8 @@ import androidx.fragment.app.DialogFragment;
 
 import com.apmuei.findmyrhythm.R;
 
+import java.net.Inet4Address;
+
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class EulaDialog extends DialogFragment {
@@ -30,6 +32,7 @@ public class EulaDialog extends DialogFragment {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                         Intent i= new Intent(getApplicationContext(),GreetingsActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         getApplicationContext().startActivity(i);
 
                     }
