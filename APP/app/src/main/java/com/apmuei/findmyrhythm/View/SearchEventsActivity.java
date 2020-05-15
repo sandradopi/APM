@@ -3,6 +3,7 @@ package com.apmuei.findmyrhythm.View;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
 import android.content.Context;
@@ -50,6 +51,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.apmuei.findmyrhythm.R;
 import com.google.android.gms.maps.model.VisibleRegion;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -103,6 +105,16 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
 
 
         Toast.makeText(getApplicationContext(), getString(R.string.search_events_usage_info), Toast.LENGTH_LONG).show();
+
+        FloatingActionButton searchFiltersFAB = findViewById(R.id.search_filters);
+        searchFiltersFAB.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // TODO: Open filters dialog
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                SearchFiltersDialogFragment searchFiltersDialogFragment = new SearchFiltersDialogFragment();
+                searchFiltersDialogFragment.show(fragmentManager, "dialog");
+            }
+        });
 
     }
 
