@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
@@ -29,6 +30,7 @@ import android.widget.Toast;
 
 import com.apmuei.findmyrhythm.Model.Event;
 import com.apmuei.findmyrhythm.Model.EventService;
+import com.apmuei.findmyrhythm.Model.SearchFilters;
 import com.apmuei.findmyrhythm.Model.Utils.GeoUtils;
 import com.apmuei.findmyrhythm.Model.Utils.PermissionUtils;
 import com.firebase.geofire.GeoFire;
@@ -68,22 +70,27 @@ import java.util.Iterator;
 import java.util.Objects;
 
 
-public class SearchEventsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, SensorEventListener {
+public class SearchEventsActivity extends FragmentActivity implements FiltersDialogInterface,
+        OnMapReadyCallback, GoogleMap.OnMarkerClickListener, SensorEventListener {
 
+    // Constants:
     private final static String TAG = "SearchEventsA";
+    private static final int LOCATION_PERMISSION_CODE = 7346;
+
     private SensorManager sensorManager;
     private Sensor light;
     private GoogleMap mMap;
     private EditText searchText;
     private FusedLocationProviderClient fusedLocationClient;
-    private static final int LOCATION_PERMISSION_CODE = 7346;
     private LocationRequest locationRequest;
     private LocationCallback locationCallback;
     private GeoFire geoFire;
 
+    // Filters dialog fragment:
     FragmentManager fragmentManager;
     SearchFiltersDialogFragment searchFiltersDialogFragment;
 
+    // Event sets:
     private HashSet<EventMarker> eventMarkersSet = new HashSet<>();
     private HashSet<EventMarker> removedEventMarkersSet = new HashSet<>();
     private HashSet<EventMarker> newEventMarkersSet = new HashSet<>();
@@ -91,6 +98,10 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
     // Filter values:
     private boolean showPastEvents = false;
 
+
+    //================================================================================
+    // Activity Lifecycle
+    //================================================================================
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,7 +130,7 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
         // Dialog with the search filters
         fragmentManager = getSupportFragmentManager();
         searchFiltersDialogFragment = new SearchFiltersDialogFragment();
-
+        searchFiltersDialogFragment.setInterface(this);
 
         Toast.makeText(getApplicationContext(), getString(R.string.search_events_usage_info), Toast.LENGTH_LONG).show();
 
@@ -133,6 +144,67 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        sensorManager.registerListener(this, light, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        sensorManager.unregisterListener(this);
+    }
+
+
+    //================================================================================
+    // Light Sensor
+    //================================================================================
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) { }
+
+
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        float amountOfLight = sensorEvent.values[0];
+        if(sensorEvent.sensor.getType() == Sensor.TYPE_LIGHT){
+
+            if((amountOfLight > 50)){
+
+                if(mMap!=null){
+                    boolean success = mMap.setMapStyle(
+                            MapStyleOptions.loadRawResourceStyle(
+                                    this, R.raw.style_json_default));
+                }
+
+            }else{
+
+                if(mMap!=null){
+                    boolean success = mMap.setMapStyle(
+                            MapStyleOptions.loadRawResourceStyle(
+                                    this, R.raw.style_json));
+                }
+
+            }
+
+        }
+    }
+
+
+    //================================================================================
+    // Filters Dialog
+    //================================================================================
+
+    @Override
+    public void finishEvent() {
+        Log.e(TAG, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> finishEvent");
+        SearchFilters searchFilters = searchFiltersDialogFragment.getSearchFilters();
+        Log.e(TAG, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> finishEvent - " + searchFilters.isShowPastEvents());
+    }
+
+
     public void showSearchFiltersDialog() {
 
         searchFiltersDialogFragment.show(fragmentManager, "dialog");
@@ -143,23 +215,23 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
         final View view = searchFiltersDialogFragment.getView();
         assert view != null;
         Button applyFilters = view.findViewById(R.id.apply);
-        applyFilters.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Filter events by date
-                CheckBox showPast = view.findViewById(R.id.checkBox_show_past_events);
-                if (! showPast.isChecked()) {
-                    removePastEvents();
-                    showPastEvents = false;
-                } else {
-                    showRemovedPastEvents();
-                    showPastEvents = true;
-                }
-
-
-                Toast.makeText(getApplicationContext(), "Filtros aplicados", Toast.LENGTH_SHORT).show();
-                searchFiltersDialogFragment.dismiss();
-            }
-        });
+//        applyFilters.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                // Filter events by date
+//                CheckBox showPast = view.findViewById(R.id.checkBox_show_past_events);
+//                if (! showPast.isChecked()) {
+//                    removePastEvents();
+//                    showPastEvents = false;
+//                } else {
+//                    showRemovedPastEvents();
+//                    showPastEvents = true;
+//                }
+//
+//
+//                Toast.makeText(getApplicationContext(), "Filtros aplicados", Toast.LENGTH_SHORT).show();
+//                searchFiltersDialogFragment.dismiss();
+//            }
+//        });
 
         Button cancelFilters = view.findViewById(R.id.cancel);
         cancelFilters.setOnClickListener(new View.OnClickListener() {
@@ -186,7 +258,6 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
 
 
     private void removePastEvents() {
-
         for (Iterator<EventMarker> i = eventMarkersSet.iterator(); i.hasNext();) {
             EventMarker eventMarker = i.next();
             Date eventDate = eventMarker.event.getEventDate();
@@ -200,89 +271,9 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
     }
 
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        sensorManager.registerListener(this, light, SensorManager.SENSOR_DELAY_NORMAL);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        sensorManager.unregisterListener(this);
-    }
-
-    @Override
-    public void onSensorChanged(SensorEvent sensorEvent) {
-        float amountOfLight = sensorEvent.values[0];
-        if(sensorEvent.sensor.getType() == Sensor.TYPE_LIGHT){
-
-            if((amountOfLight > 50)){
-
-                if(mMap!=null){
-                    boolean success = mMap.setMapStyle(
-                            MapStyleOptions.loadRawResourceStyle(
-                                    this, R.raw.style_json_default));
-                }
-
-            }else{
-
-                if(mMap!=null){
-                boolean success = mMap.setMapStyle(
-                        MapStyleOptions.loadRawResourceStyle(
-                                this, R.raw.style_json));
-                }
-
-            }
-
-        }
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int i) {
-
-    }
-
-
-    @Override
-    public boolean onMarkerClick(Marker marker) {
-        return false;
-    }
-
-
-
-    private class EventMarker {
-        String id;
-        Event event;
-        Marker marker;
-
-        EventMarker(String id, Event event) {
-            this.id = id;
-            this.event = event;
-        }
-
-        EventMarker(String id) {
-            this.id = id;
-        }
-
-        @Override
-        public int hashCode() {
-            return id.hashCode();
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            if (this == obj) {
-                return true;
-            }
-            if (obj == null || getClass() != obj.getClass()) {
-                return false;
-            }
-            EventMarker eventMarker = (EventMarker) obj;
-            return this.id.equals(eventMarker.id);
-        }
-    }
-
+    //================================================================================
+    // Map and Markers
+    //================================================================================
 
     /**
      * Manipulates the map once available.
@@ -408,75 +399,15 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
     }
 
 
-    private class showEventMarker extends AsyncTask<String, Void, EventMarker> {
-
-        @Override
-        protected EventMarker doInBackground(String... ids) {
-            String eventId = ids[0];
-            EventService eventService = new EventService();
-            Event event = eventService.getEvent(eventId);
-            return new EventMarker(eventId, event);
-        }
-
-
-        @Override
-        protected void onPostExecute(final EventMarker eventMarker) {
-            Log.e(">>>>>>>>>>>>>>>", eventMarker.event.getName());
-
-            eventMarkersSet.remove(eventMarker);
-
-            if (showPastEvents) {
-                // All the information is added to the EventMarker by updating it
-                EventMarker updatedMarker = addMarkerToMap(eventMarker);
-                eventMarkersSet.add(updatedMarker);
-            } else {
-                Date eventDate = eventMarker.event.getEventDate();
-                Date currentDate = new Date();
-                if (eventDate.before(currentDate)) {
-                    removedEventMarkersSet.add(eventMarker);
-                } else {
-                    EventMarker updatedMarker = addMarkerToMap(eventMarker);
-                    eventMarkersSet.add(updatedMarker);
-                }
-
-            }
-        }
-
-    }
-
-
-    private EventMarker addMarkerToMap(EventMarker eventMarker) {
-        HashMap address = eventMarker.event.getCompleteAddress();
-        LatLng latLng = new LatLng((Double) Objects.requireNonNull(address.get("latitude")),
-                (Double) Objects.requireNonNull(address.get("longitude")));
-        Marker marker = mMap.addMarker(new MarkerOptions().position(latLng).title(eventMarker.event.getName()));
-        marker.setTag(eventMarker.event);
-        marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
-        eventMarker.marker = marker;
-        return eventMarker;
-    }
-
-
-    private void showMarkersOnMap() {
-
-        SearchEventsActivity.this.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                //Your code to run in GUI thread here
-                for (EventMarker eventMarker : newEventMarkersSet) {
-                    new showEventMarker().execute(eventMarker.id);
-                }
-                newEventMarkersSet.clear();
-            }
-        });
-    }
-
-
+    /**
+     * Gets nearby events for a given location (usually user last location).
+     * The library used for that is Geofire.
+     *
+     * https://firebaseopensource.com/projects/firebase/geofire-java/
+     * https://stackoverflow.com/questions/50631432/android-query-nearby-locations-from-firebase
+     * https://stackoverflow.com/questions/43357990/query-for-nearby-locations
+     */
     public void getNearbyEvents(GeoLocation geoLocation, Double radius) {
-
-        /* https://stackoverflow.com/questions/50631432/android-query-nearby-locations-from-firebase
-         * https://stackoverflow.com/questions/43357990/query-for-nearby-locations
-         */
 
         GeoQuery geoQuery = geoFire.queryAtLocation(geoLocation,radius);
         geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
@@ -488,7 +419,6 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
                     newEventMarkersSet.add(eventMarker);
                     Log.d("..", String.format("Key %s entered the search area at [%f,%f]", key, location.latitude, location.longitude));
                 }
-
             }
 
             @Override
@@ -517,22 +447,10 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
     }
 
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode != LOCATION_PERMISSION_CODE) {
-            return;
-        }
-
-        if (PermissionUtils.isPermissionGranted(permissions, grantResults, Manifest.permission.ACCESS_FINE_LOCATION)) {
-            // Enable the my location layer if the permission has been granted.
-            getMyLastLocation();
-        } else {
-            // TODO: Permission was denied. Display an error message
-            // ...
-        }
-    }
-
-
+    /**
+     * Gets last user location using FusedLocationClient.
+     * If returned location is null, it crates a location request.
+     */
     private void getMyLastLocation() {
         fusedLocationClient.getLastLocation()
                 .addOnSuccessListener(this, new OnSuccessListener<Location>() {
@@ -581,6 +499,100 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
     }
 
 
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        return false;
+    }
+
+
+    private EventMarker addMarkerToMap(EventMarker eventMarker) {
+        HashMap address = eventMarker.event.getCompleteAddress();
+        LatLng latLng = new LatLng((Double) Objects.requireNonNull(address.get("latitude")),
+                (Double) Objects.requireNonNull(address.get("longitude")));
+        Marker marker = mMap.addMarker(new MarkerOptions().position(latLng).title(eventMarker.event.getName()));
+        marker.setTag(eventMarker.event);
+        marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
+        eventMarker.marker = marker;
+        return eventMarker;
+    }
+
+
+    private void showMarkersOnMap() {
+        // Markers manipulation must be done in GUI thread
+        SearchEventsActivity.this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                for (EventMarker eventMarker : newEventMarkersSet) {
+                    new showEventMarker().execute(eventMarker.id);
+                }
+                newEventMarkersSet.clear();
+            }
+        });
+    }
+
+
+    //================================================================================
+    // Permissions
+    //================================================================================
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode != LOCATION_PERMISSION_CODE) {
+            return;
+        }
+
+        if (PermissionUtils.isPermissionGranted(permissions, grantResults, Manifest.permission.ACCESS_FINE_LOCATION)) {
+            // Enable the my location layer if the permission has been granted.
+            getMyLastLocation();
+        } else {
+            // TODO: Permission was denied. Display an error message
+            // ...
+        }
+    }
+
+
+    //================================================================================
+    // AsyncTasks
+    //================================================================================
+
+    private class showEventMarker extends AsyncTask<String, Void, EventMarker> {
+
+        @Override
+        protected EventMarker doInBackground(String... ids) {
+            String eventId = ids[0];
+            EventService eventService = new EventService();
+            Event event = eventService.getEvent(eventId);
+            return new EventMarker(eventId, event);
+        }
+
+
+        @Override
+        protected void onPostExecute(final EventMarker eventMarker) {
+            Log.e(">>>>>>>>>>>>>>>", eventMarker.event.getName());
+
+            eventMarkersSet.remove(eventMarker);
+
+            if (showPastEvents) {
+                // All the information is added to the EventMarker by updating it
+                EventMarker updatedMarker = addMarkerToMap(eventMarker);
+                eventMarkersSet.add(updatedMarker);
+            } else {
+                Date eventDate = eventMarker.event.getEventDate();
+                Date currentDate = new Date();
+                if (eventDate.before(currentDate)) {
+                    removedEventMarkersSet.add(eventMarker);
+                } else {
+                    EventMarker updatedMarker = addMarkerToMap(eventMarker);
+                    eventMarkersSet.add(updatedMarker);
+                }
+
+            }
+        }
+
+    }
+
+
+
     private class getEvents extends AsyncTask<String, Void, ArrayList<Event>> {
 
         @Override
@@ -616,6 +628,43 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
             }
         }
 
+    }
+
+
+    //================================================================================
+    // Private Classes
+    //================================================================================
+
+    private class EventMarker {
+        String id;
+        Event event;
+        Marker marker;
+
+        EventMarker(String id, Event event) {
+            this.id = id;
+            this.event = event;
+        }
+
+        EventMarker(String id) {
+            this.id = id;
+        }
+
+        @Override
+        public int hashCode() {
+            return id.hashCode();
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (obj == null || getClass() != obj.getClass()) {
+                return false;
+            }
+            EventMarker eventMarker = (EventMarker) obj;
+            return this.id.equals(eventMarker.id);
+        }
     }
 
 
