@@ -575,26 +575,37 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
             LatLngBounds.Builder builder = new LatLngBounds.Builder();
             for (Event event : events) {
                 EventMarker eventMarker = new EventMarker(event.getId(), event);
-                if (! eventMarkersSet.contains(eventMarker)) {
+//                if (! eventMarkersSet.contains(eventMarker)) {
+//                    eventMarkersSet.add(eventMarker);
+//                    newEventMarkersSet.add(eventMarker);
+//                }
+
+                Date eventDate = eventMarker.event.getEventDate();
+                Date currentDate = new Date();
+                if (!currentSearchFilters.getShowPastEvents() && eventDate.before(currentDate)) {
+                    removedEventMarkersSet.add(eventMarker);
+                } else {
+                    eventMarker.addToMap(mMap);
                     eventMarkersSet.add(eventMarker);
-                    newEventMarkersSet.add(eventMarker);
+                    builder.include(eventMarker.marker.getPosition());
                 }
 
-                eventMarker.addToMap(mMap);
+//                eventMarker.addToMap(mMap);
 
-                builder.include(eventMarker.marker.getPosition());
-
-                if (events.size() == 1) {
-                    eventMarker.marker.showInfoWindow();
-                }
             }
 
-            LatLngBounds bounds = builder.build();
-            LatLng center = bounds.getCenter();
-            builder.include(new LatLng(center.latitude-0.02f,center.longitude-0.02f));
-            builder.include(new LatLng(center.latitude+0.02f,center.longitude+0.02f));
-            bounds = builder.build();
-            mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
+            try {
+
+                LatLngBounds bounds = builder.build();
+                LatLng center = bounds.getCenter();
+                builder.include(new LatLng(center.latitude - 0.02f, center.longitude - 0.02f));
+                builder.include(new LatLng(center.latitude + 0.02f, center.longitude + 0.02f));
+                bounds = builder.build();
+                mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
+            } catch (IllegalStateException e) {
+                Toast.makeText(getApplicationContext(), "No se han encontrado eventos con ese título que cumplan con los filtros de búsqueda.", Toast.LENGTH_LONG).show();
+                Log.e(TAG, "No valid events found.");
+            }
 
         }
 
