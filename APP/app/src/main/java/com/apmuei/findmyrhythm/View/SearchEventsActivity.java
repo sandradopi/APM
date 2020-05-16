@@ -224,7 +224,7 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
             Date currentDate = new Date();
             if (eventDate.before(currentDate)) {
                 i.remove();
-                eventMarkersSet.add(addMarkerToMap(eventMarker));
+                eventMarkersSet.add(eventMarker.addToMap(mMap));
             }
         }
     }
@@ -394,8 +394,7 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
             @Override
             public void onKeyEntered(final String key, final GeoLocation location) {
                 EventMarker eventMarker = new EventMarker(key);
-                if (! eventMarkersSet.contains(eventMarker)) {
-                    eventMarkersSet.add(eventMarker);
+                if (! newEventMarkersSet.contains(eventMarker)) {
                     newEventMarkersSet.add(eventMarker);
                     Log.d("..", String.format("Key %s entered the search area at [%f,%f]", key, location.latitude, location.longitude));
                 }
@@ -489,18 +488,6 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
     }
 
 
-    private EventMarker addMarkerToMap(EventMarker eventMarker) {
-        HashMap address = eventMarker.event.getCompleteAddress();
-        LatLng latLng = new LatLng((Double) Objects.requireNonNull(address.get("latitude")),
-                (Double) Objects.requireNonNull(address.get("longitude")));
-        Marker marker = mMap.addMarker(new MarkerOptions().position(latLng).title(eventMarker.event.getName()));
-        marker.setTag(eventMarker.event);
-        marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
-        eventMarker.marker = marker;
-        return eventMarker;
-    }
-
-
     private void showMarkersOnMap() {
         // Markers manipulation must be done in GUI thread
         SearchEventsActivity.this.runOnUiThread(new Runnable() {
@@ -554,15 +541,13 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
         protected void onPostExecute(final EventMarker eventMarker) {
             Log.e(">>>>>>>>>>>>>>>", eventMarker.event.getName());
 
-            eventMarkersSet.remove(eventMarker);
-
             Date eventDate = eventMarker.event.getEventDate();
             Date currentDate = new Date();
             if (eventDate.before(currentDate)) {
                 removedEventMarkersSet.add(eventMarker);
             } else {
-                EventMarker updatedMarker = addMarkerToMap(eventMarker);
-                eventMarkersSet.add(updatedMarker);
+                eventMarker.addToMap(mMap);
+                eventMarkersSet.add(eventMarker);
             }
 
         }
@@ -595,7 +580,7 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
                     newEventMarkersSet.add(eventMarker);
                 }
 
-                eventMarker = addMarkerToMap(eventMarker);
+                eventMarker.addToMap(mMap);
 
                 builder.include(eventMarker.marker.getPosition());
 
@@ -632,6 +617,17 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
 
         EventMarker(String id) {
             this.id = id;
+        }
+
+        public EventMarker addToMap(GoogleMap map) {
+            HashMap address = this.event.getCompleteAddress();
+            LatLng latLng = new LatLng((Double) Objects.requireNonNull(address.get("latitude")),
+                    (Double) Objects.requireNonNull(address.get("longitude")));
+            Marker marker = map.addMarker(new MarkerOptions().position(latLng).title(this.event.getName()));
+            marker.setTag(this.event);
+            marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
+            this.marker = marker;
+            return this;
         }
 
         @Override
