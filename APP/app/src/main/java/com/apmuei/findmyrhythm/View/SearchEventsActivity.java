@@ -77,18 +77,24 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
     private final static String TAG = "SearchEventsA";
     private static final int LOCATION_PERMISSION_CODE = 7346;
 
+    // Sensors:
     private SensorManager sensorManager;
     private Sensor light;
-    private GoogleMap mMap;
+
+    // GUI:
     private EditText searchText;
-    private FusedLocationProviderClient fusedLocationClient;
+
+    // Map and location:
     private LocationRequest locationRequest;
     private LocationCallback locationCallback;
+    private FusedLocationProviderClient fusedLocationClient;
+    private GoogleMap mMap;
     private GeoFire geoFire;
 
     // Filters dialog fragment:
     FragmentManager fragmentManager;
     SearchFiltersDialogFragment searchFiltersDialogFragment;
+    SearchFilters currentSearchFilters;
 
     // Event sets:
     private HashSet<EventMarker> eventMarkersSet = new HashSet<>();
@@ -137,7 +143,7 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
         FloatingActionButton searchFiltersFAB = findViewById(R.id.search_filters);
         searchFiltersFAB.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                showSearchFiltersDialog();
+                searchFiltersDialogFragment.show(fragmentManager, "dialog");
             }
         });
 
@@ -169,27 +175,25 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         float amountOfLight = sensorEvent.values[0];
-        if(sensorEvent.sensor.getType() == Sensor.TYPE_LIGHT){
+        if (sensorEvent.sensor.getType() == Sensor.TYPE_LIGHT) {
 
-            if((amountOfLight > 50)){
+            boolean success;
 
-                if(mMap!=null){
-                    boolean success = mMap.setMapStyle(
-                            MapStyleOptions.loadRawResourceStyle(
-                                    this, R.raw.style_json_default));
-                }
-
-            }else{
+            if (amountOfLight > 50){
 
                 if(mMap!=null){
-                    boolean success = mMap.setMapStyle(
-                            MapStyleOptions.loadRawResourceStyle(
-                                    this, R.raw.style_json));
+                    success = mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this,
+                            R.raw.style_json_default));
                 }
 
+            } else {
+                if(mMap!=null){
+                    success = mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this,
+                            R.raw.style_json));
+                }
             }
-
         }
+
     }
 
 
@@ -197,52 +201,24 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
     // Filters Dialog
     //================================================================================
 
+    /**
+     * Interface method to enable DialogFragment->Activity communication.
+     */
     @Override
-    public void finishEvent() {
+    public void applyFilters(SearchFilters searchFilters) {
+        currentSearchFilters = searchFilters;
         Log.e(TAG, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> finishEvent");
-        SearchFilters searchFilters = searchFiltersDialogFragment.getSearchFilters();
         Log.e(TAG, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> finishEvent - " + searchFilters.isShowPastEvents());
+        // Filter events by date
+        if (! searchFilters.isShowPastEvents()) {
+            removePastEvents();
+            showPastEvents = false;
+        } else {
+            showRemovedPastEvents();
+            showPastEvents = true;
+        }
     }
 
-
-    public void showSearchFiltersDialog() {
-
-        searchFiltersDialogFragment.show(fragmentManager, "dialog");
-
-        // https://stackoverflow.com/questions/33866579/getting-view-of-dialogfragment
-        fragmentManager.executePendingTransactions();
-
-        final View view = searchFiltersDialogFragment.getView();
-        assert view != null;
-        Button applyFilters = view.findViewById(R.id.apply);
-//        applyFilters.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                // Filter events by date
-//                CheckBox showPast = view.findViewById(R.id.checkBox_show_past_events);
-//                if (! showPast.isChecked()) {
-//                    removePastEvents();
-//                    showPastEvents = false;
-//                } else {
-//                    showRemovedPastEvents();
-//                    showPastEvents = true;
-//                }
-//
-//
-//                Toast.makeText(getApplicationContext(), "Filtros aplicados", Toast.LENGTH_SHORT).show();
-//                searchFiltersDialogFragment.dismiss();
-//            }
-//        });
-
-        Button cancelFilters = view.findViewById(R.id.cancel);
-        cancelFilters.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                CheckBox showPast = view.findViewById(R.id.checkBox_show_past_events);
-                showPast.setChecked(showPastEvents);
-                searchFiltersDialogFragment.dismiss();
-            }
-        });
-
-    }
 
     private void showRemovedPastEvents() {
         for (Iterator<EventMarker> i = removedEventMarkersSet.iterator(); i.hasNext();) {
@@ -272,7 +248,7 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
 
 
     //================================================================================
-    // Map and Markers
+    // Map
     //================================================================================
 
     /**
@@ -498,6 +474,10 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
                 });
     }
 
+
+    //================================================================================
+    // Markers
+    //================================================================================
 
     @Override
     public boolean onMarkerClick(Marker marker) {

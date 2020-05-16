@@ -1,6 +1,7 @@
 package com.apmuei.findmyrhythm.View;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.CheckBox;
 import android.widget.Filter;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.apmuei.findmyrhythm.Model.SearchFilters;
@@ -24,7 +26,9 @@ public class SearchFiltersDialogFragment extends DialogFragment {
 
     private static final String TAG = "SearchFiltersDF";
 
-    private View view;
+    private View mView;
+    private CheckBox showPastEventsCheckBox;
+    private SearchFilters previousFilters = null;
 
     private FiltersDialogInterface filtersDialogInterface;
 
@@ -35,16 +39,46 @@ public class SearchFiltersDialogFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout to use as dialog or embedded fragment
-        view = inflater.inflate(R.layout.dialog_fragment_search_filters, container, false);
+        return inflater.inflate(R.layout.dialog_fragment_search_filters, container, false);
+    }
 
-        Button applyFilters = view.findViewById(R.id.apply);
-        applyFilters.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mView = view;
+
+        showPastEventsCheckBox = mView.findViewById(R.id.checkBox_show_past_events);
+
+        if (previousFilters == null) {
+            previousFilters = getSearchFilters();
+        }
+
+        Button applyFiltersButton = mView.findViewById(R.id.apply);
+        applyFiltersButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                filtersDialogInterface.finishEvent();
+                SearchFilters newFilters = getSearchFilters();
+                previousFilters = newFilters;
+                filtersDialogInterface.applyFilters(newFilters);
+                dismiss();
             }
         });
 
-        return view;
+        Button cancelButton = mView.findViewById(R.id.cancel);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                restorePreviousFilters();
+                dismiss();
+            }
+        });
+
+    }
+
+
+    @Override
+    public void onCancel(@NonNull DialogInterface dialog) {
+        restorePreviousFilters();
+        super.onCancel(dialog);
     }
 
 
@@ -52,10 +86,17 @@ public class SearchFiltersDialogFragment extends DialogFragment {
         this.filtersDialogInterface = filtersDialogInterface;
     }
 
+
     public SearchFilters getSearchFilters() {
-        CheckBox showPastCB = view.findViewById(R.id.checkBox_show_past_events);
-        return new SearchFilters(showPastCB.isChecked());
+        boolean showPast = showPastEventsCheckBox.isChecked();
+        return new SearchFilters(showPast);
     }
+
+    private void restorePreviousFilters() {
+        showPastEventsCheckBox.setChecked(previousFilters.isShowPastEvents());
+    }
+
+
 
     /** The system calls this only when creating the layout in a dialog. */
 //    @NonNull
