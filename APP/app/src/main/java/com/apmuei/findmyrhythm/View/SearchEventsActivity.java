@@ -236,7 +236,7 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
             Date eventDate = eventMarker.event.getEventDate();
             Date currentDate = new Date();
             if (eventDate.before(currentDate)) {
-                eventMarker.marker.remove();
+                eventMarker.remove();
                 i.remove();
                 removedEventMarkersSet.add(eventMarker);
             }
@@ -619,14 +619,23 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
             this.id = id;
         }
 
-        public EventMarker addToMap(GoogleMap map) {
-            HashMap address = this.event.getCompleteAddress();
-            LatLng latLng = new LatLng((Double) Objects.requireNonNull(address.get("latitude")),
-                    (Double) Objects.requireNonNull(address.get("longitude")));
-            Marker marker = map.addMarker(new MarkerOptions().position(latLng).title(this.event.getName()));
-            marker.setTag(this.event);
-            marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
-            this.marker = marker;
+        EventMarker remove() {
+            this.marker.setVisible(false);
+            return this;
+        }
+
+        EventMarker addToMap(GoogleMap map) {
+            if (marker == null) {
+                HashMap address = this.event.getCompleteAddress();
+                LatLng latLng = new LatLng((Double) Objects.requireNonNull(address.get("latitude")),
+                        (Double) Objects.requireNonNull(address.get("longitude")));
+                Marker marker = map.addMarker(new MarkerOptions().position(latLng).title(this.event.getName()));
+                marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
+                marker.setTag(this.event);
+                this.marker = marker;
+            } else {
+                this.marker.setVisible(true);
+            }
             return this;
         }
 
