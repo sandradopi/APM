@@ -7,7 +7,6 @@ import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
@@ -22,8 +21,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
-import android.widget.CheckBox;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -101,9 +99,6 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
     private HashSet<EventMarker> removedEventMarkersSet = new HashSet<>();
     private HashSet<EventMarker> newEventMarkersSet = new HashSet<>();
 
-    // Filter values:
-    private boolean showPastEvents = false;
-
 
     //================================================================================
     // Activity Lifecycle
@@ -137,6 +132,7 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
         fragmentManager = getSupportFragmentManager();
         searchFiltersDialogFragment = new SearchFiltersDialogFragment();
         searchFiltersDialogFragment.setInterface(this);
+        currentSearchFilters = SearchFiltersDialogFragment.getDefaultFilters();
 
         Toast.makeText(getApplicationContext(), getString(R.string.search_events_usage_info), Toast.LENGTH_LONG).show();
 
@@ -206,17 +202,18 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
      */
     @Override
     public void applyFilters(SearchFilters searchFilters) {
-        currentSearchFilters = searchFilters;
-        Log.e(TAG, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> finishEvent");
-        Log.e(TAG, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> finishEvent - " + searchFilters.isShowPastEvents());
-        // Filter events by date
-        if (! searchFilters.isShowPastEvents()) {
-            removePastEvents();
-            showPastEvents = false;
-        } else {
-            showRemovedPastEvents();
-            showPastEvents = true;
+        // Apply filters if they are different
+        if (! searchFilters.equals(currentSearchFilters)) {
+            Log.e(TAG, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> finishEvent - " + searchFilters.getShowPastEvents());
+            // Filter events by date
+            currentSearchFilters = searchFilters;
+            if (! searchFilters.getShowPastEvents()) {
+                removePastEvents();
+            } else {
+                showRemovedPastEvents();
+            }
         }
+
     }
 
 
@@ -281,8 +278,15 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
 
+                    // Check if no view has focus:
+                    View view = SearchEventsActivity.this.getCurrentFocus();
+                    if (view != null) {
+                        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    }
+
                     mMap.clear();
-                    new getEvents().execute(searchText.getText().toString());
+                    new getEventsByTitle().execute(searchText.getText().toString());
 
                     return true;
                 }
@@ -552,34 +556,28 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
 
             eventMarkersSet.remove(eventMarker);
 
-            if (showPastEvents) {
-                // All the information is added to the EventMarker by updating it
+            Date eventDate = eventMarker.event.getEventDate();
+            Date currentDate = new Date();
+            if (eventDate.before(currentDate)) {
+                removedEventMarkersSet.add(eventMarker);
+            } else {
                 EventMarker updatedMarker = addMarkerToMap(eventMarker);
                 eventMarkersSet.add(updatedMarker);
-            } else {
-                Date eventDate = eventMarker.event.getEventDate();
-                Date currentDate = new Date();
-                if (eventDate.before(currentDate)) {
-                    removedEventMarkersSet.add(eventMarker);
-                } else {
-                    EventMarker updatedMarker = addMarkerToMap(eventMarker);
-                    eventMarkersSet.add(updatedMarker);
-                }
-
             }
+
         }
 
     }
 
 
 
-    private class getEvents extends AsyncTask<String, Void, ArrayList<Event>> {
+    private class getEventsByTitle extends AsyncTask<String, Void, ArrayList<Event>> {
 
         @Override
         protected ArrayList<Event> doInBackground(String... searchTexts) {
             String searchText = searchTexts[0];
             EventService eventService = new EventService();
-            ArrayList<Event> events = new ArrayList<>();
+            ArrayList<Event> events;
 
             events = eventService.getEventsByTitle(searchText);
 
@@ -591,21 +589,28 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
         protected void onPostExecute(final ArrayList<Event> events) {
             LatLngBounds.Builder builder = new LatLngBounds.Builder();
             for (Event event : events) {
-                HashMap<String, Object> address = event.getCompleteAddress();
-                LatLng latLng = new LatLng((Double) Objects.requireNonNull(address.get("latitude")),
-                        (Double) Objects.requireNonNull(address.get("longitude")));
-                Marker marker = mMap.addMarker(new MarkerOptions().position(latLng).title(event.getName()));
-                marker.setTag(event);
-                marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
-                builder.include(marker.getPosition());
-                LatLngBounds bounds = builder.build();
-                LatLng center = bounds.getCenter();
-                builder.include(new LatLng(center.latitude-0.01f,center.longitude-0.01f));
-                builder.include(new LatLng(center.latitude+0.01f,center.longitude+0.01f));
-                bounds = builder.build();
-                mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
-                marker.showInfoWindow();
+                EventMarker eventMarker = new EventMarker(event.getId(), event);
+                if (! eventMarkersSet.contains(eventMarker)) {
+                    eventMarkersSet.add(eventMarker);
+                    newEventMarkersSet.add(eventMarker);
+                }
+
+                eventMarker = addMarkerToMap(eventMarker);
+
+                builder.include(eventMarker.marker.getPosition());
+
+                if (events.size() == 1) {
+                    eventMarker.marker.showInfoWindow();
+                }
             }
+
+            LatLngBounds bounds = builder.build();
+            LatLng center = bounds.getCenter();
+            builder.include(new LatLng(center.latitude-0.02f,center.longitude-0.02f));
+            builder.include(new LatLng(center.latitude+0.02f,center.longitude+0.02f));
+            bounds = builder.build();
+            mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
+
         }
 
     }

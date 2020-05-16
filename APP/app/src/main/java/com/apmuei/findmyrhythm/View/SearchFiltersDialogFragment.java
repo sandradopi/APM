@@ -1,16 +1,12 @@
 package com.apmuei.findmyrhythm.View;
 
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.Filter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -51,6 +47,7 @@ public class SearchFiltersDialogFragment extends DialogFragment {
         showPastEventsCheckBox = mView.findViewById(R.id.checkBox_show_past_events);
 
         if (previousFilters == null) {
+            // TODO: set default
             previousFilters = getSearchFilters();
         }
 
@@ -92,8 +89,12 @@ public class SearchFiltersDialogFragment extends DialogFragment {
         return new SearchFilters(showPast);
     }
 
+    public static SearchFilters getDefaultFilters() {
+        return new SearchFilters(false);
+    }
+
     private void restorePreviousFilters() {
-        showPastEventsCheckBox.setChecked(previousFilters.isShowPastEvents());
+        showPastEventsCheckBox.setChecked(previousFilters.getShowPastEvents());
     }
 
 
