@@ -96,7 +96,6 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
 
     // Event sets:
     private HashSet<EventMarker> eventMarkersSet = new HashSet<>();
-    private HashSet<EventMarker> removedEventMarkersSet = new HashSet<>();
     private HashSet<EventMarker> newEventMarkersSet = new HashSet<>();
 
 
@@ -207,40 +206,21 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
             Log.e(TAG, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> finishEvent - " + searchFilters.getShowPastEvents());
             // Filter events by date
             currentSearchFilters = searchFilters;
-            if (! searchFilters.getShowPastEvents()) {
-                removePastEvents();
-            } else {
-                showRemovedPastEvents();
+
+            for (EventMarker eventMarker : eventMarkersSet) {
+                Date eventDate = eventMarker.event.getEventDate();
+                Date currentDate = new Date();
+                if (!searchFilters.getShowPastEvents() && eventDate.before(currentDate)) {
+                    eventMarker.remove();
+                } else {
+                    // TODO: Comprobar aquí si el título coincide. Realmente lo que habría que hacer
+                    //  es aplicar siempre de nuevo todos los filtros.
+                    eventMarker.addToMap(mMap);
+                }
             }
+
         }
 
-    }
-
-
-    private void showRemovedPastEvents() {
-        for (Iterator<EventMarker> i = removedEventMarkersSet.iterator(); i.hasNext();) {
-            EventMarker eventMarker = i.next();
-            Date eventDate = eventMarker.event.getEventDate();
-            Date currentDate = new Date();
-            if (eventDate.before(currentDate)) {
-                i.remove();
-                eventMarkersSet.add(eventMarker.addToMap(mMap));
-            }
-        }
-    }
-
-
-    private void removePastEvents() {
-        for (Iterator<EventMarker> i = eventMarkersSet.iterator(); i.hasNext();) {
-            EventMarker eventMarker = i.next();
-            Date eventDate = eventMarker.event.getEventDate();
-            Date currentDate = new Date();
-            if (eventDate.before(currentDate)) {
-                eventMarker.remove();
-                i.remove();
-                removedEventMarkersSet.add(eventMarker);
-            }
-        }
     }
 
 
@@ -368,10 +348,11 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
                 double longitude = mapLatLngBounds.getCenter().longitude;
 
                 // Toast.makeText(getApplicationContext(),radius+"",Toast.LENGTH_SHORT).show();
-
                 // Toast.makeText(getApplicationContext(),latitude+ " "+longitude,Toast.LENGTH_SHORT).show();
 
                 getNearbyEvents(new GeoLocation(latitude, longitude), radius);
+
+                Log.e(TAG, eventMarkersSet.toString());
 
             }
         });
@@ -543,12 +524,10 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
 
             Date eventDate = eventMarker.event.getEventDate();
             Date currentDate = new Date();
-            if (eventDate.before(currentDate)) {
-                removedEventMarkersSet.add(eventMarker);
-            } else {
+            if (eventDate.after(currentDate)) {
                 eventMarker.addToMap(mMap);
-                eventMarkersSet.add(eventMarker);
             }
+            eventMarkersSet.add(eventMarker);
 
         }
 
@@ -574,23 +553,16 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
         protected void onPostExecute(final ArrayList<Event> events) {
             LatLngBounds.Builder builder = new LatLngBounds.Builder();
             for (Event event : events) {
+                // At this point, there are no markers in map
                 EventMarker eventMarker = new EventMarker(event.getId(), event);
-//                if (! eventMarkersSet.contains(eventMarker)) {
-//                    eventMarkersSet.add(eventMarker);
-//                    newEventMarkersSet.add(eventMarker);
-//                }
 
                 Date eventDate = eventMarker.event.getEventDate();
                 Date currentDate = new Date();
-                if (!currentSearchFilters.getShowPastEvents() && eventDate.before(currentDate)) {
-                    removedEventMarkersSet.add(eventMarker);
-                } else {
+                if (currentSearchFilters.getShowPastEvents() || eventDate.after(currentDate)) {
                     eventMarker.addToMap(mMap);
-                    eventMarkersSet.add(eventMarker);
                     builder.include(eventMarker.marker.getPosition());
                 }
-
-//                eventMarker.addToMap(mMap);
+                eventMarkersSet.add(eventMarker);
 
             }
 
@@ -631,7 +603,9 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
         }
 
         EventMarker remove() {
-            this.marker.setVisible(false);
+            if (this.marker != null) {
+                this.marker.setVisible(false);
+            }
             return this;
         }
 
@@ -648,6 +622,12 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
                 this.marker.setVisible(true);
             }
             return this;
+        }
+
+        @NonNull
+        @Override
+        public String toString() {
+            return id;
         }
 
         @Override
