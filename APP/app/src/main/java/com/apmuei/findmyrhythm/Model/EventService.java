@@ -47,8 +47,8 @@ public class EventService {
 
     }
 
-    public ArrayList<Event> getEventsByTitle(String token) {
-        return eventDAO.getEventsByTitle(token);
+    public ArrayList<Event> getEventsByTitle(SearchFilters searchFilters) {
+        return eventDAO.getEventsByTitle(searchFilters);
     }
 
     public void updateEvent(Event event) {

@@ -8,13 +8,14 @@
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:textStyle="bold"
         android:textColor="@color/black"/>
 
     <TextView
         android:id="@+id/snippet"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"/>
 
 </LinearLayout>
