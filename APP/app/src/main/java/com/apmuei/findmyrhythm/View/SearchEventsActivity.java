@@ -201,11 +201,13 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
      */
     @Override
     public void applyFilters(SearchFilters searchFilters) {
-        if (! searchEditText.getText().toString().isEmpty()) {
+        String searchText = searchEditText.getText().toString();
+        searchFilters.setSearchText(searchText);
+
+        if (! searchText.isEmpty()) {
             mMap.clear();
 
-            searchFilters.setSearchText(searchEditText.getText().toString());
-            updateCurrentFilters(searchFilters);
+            currentSearchFilters = searchFilters;
 
             new getEventsByTitle().execute(searchFilters);
         } else {
@@ -213,7 +215,7 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
             if (! searchFilters.equals(currentSearchFilters)) {
                 Log.e(TAG, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> finishEvent - " + searchFilters.getShowPastEvents());
                 // Filter events by date
-                updateCurrentFilters(searchFilters);
+                currentSearchFilters = searchFilters;
 
                 for (EventMarker eventMarker : eventMarkersSet) {
                     applyFiltersToEventMarker(eventMarker, searchFilters);
@@ -222,15 +224,6 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
             }
         }
 
-    }
-
-    private void updateCurrentFilters(SearchFilters searchFilters) {
-        searchFilters.setSearchText(searchEditText.getText().toString());
-        currentSearchFilters = searchFilters;
-    }
-
-    private void updateCurrentFilters() {
-        currentSearchFilters.setSearchText(searchEditText.getText().toString());
     }
 
 
@@ -300,7 +293,7 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
                     // Remove all markers from map
                     mMap.clear();
 
-                    updateCurrentFilters();
+                    currentSearchFilters.setSearchText(searchEditText.getText().toString());
 
                     new getEventsByTitle().execute(currentSearchFilters);
 
