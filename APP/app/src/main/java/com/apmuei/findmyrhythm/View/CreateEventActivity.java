@@ -623,13 +623,14 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
 
             Event event = makeEvent(organizerId);
 
-            eventService.createEvent(event);
+           eventService.createEvent(event);
 
             //event.setEventImage(path);
             final PersistentOrganizerInfo persistentOrganizerInfo = PersistentOrganizerInfo.getPersistentOrganizerInfo(getApplicationContext());
 
             persistentOrganizerInfo.addEvent(getApplicationContext(), event);
             return event;
+
         }
 
         @Override

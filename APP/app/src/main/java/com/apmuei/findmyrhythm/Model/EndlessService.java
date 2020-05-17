@@ -17,6 +17,9 @@ import androidx.core.app.NotificationManagerCompat;
 import com.apmuei.findmyrhythm.R;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class EndlessService extends Service {
 
     //End-less Service
@@ -26,6 +29,9 @@ public class EndlessService extends Service {
     private static final String TAG = "EndlessService";
 
 
+    public EndlessService() {
+        super();
+    }
 
     @Nullable
     @Override
@@ -37,12 +43,8 @@ public class EndlessService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         if (intent != null) {
-            boolean state = intent.getExtras().getBoolean("SERVICE_STATE", false);
-
-            if (state)
                 startService();
-            else
-                stopService();
+                startTimer();
         }
         return START_STICKY;
 
@@ -57,7 +59,11 @@ public class EndlessService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        stopForeground(true);
+
+        Intent broadcastIntent = new Intent(this, SensorRestarterBroadcastReceiver.class);
+        sendBroadcast(broadcastIntent);
+
+        stoptimertask();
     }
 
     private void startService() {
@@ -74,28 +80,7 @@ public class EndlessService extends Service {
         wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "EndlessService::NotificationLock");
         wakeLock.acquire(10000);
 
-        NotificationManagerCompat sNotificationManager = NotificationManagerCompat.from(this);
-
-        Notification notification = new NotificationCompat.Builder(this, "serviceChannel")
-                .setContentTitle("Endless Service")
-                .setContentText("Content Text")
-                .setSmallIcon(R.drawable.status_bar_icon)
-                .setPriority(Notification.PRIORITY_MIN)
-                .build();
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel sChannel = new NotificationChannel("serviceChannel", "serviceNotif", NotificationManager.IMPORTANCE_HIGH);
-            sChannel.enableLights(true);
-            sChannel.enableVibration(true);
-            sNotificationManager.createNotificationChannel(sChannel);
-        }
-
-        startForeground(-2, notification);
-        sNotificationManager.deleteNotificationChannel("serviceChannel");
-        sNotificationManager.cancelAll();
-
         EventService service = new EventService();
-        //NotificationManagerCompat sNotificationManager = NotificationManagerCompat.from(context);
         service.subscribeEventNotificationListener(this, FirebaseAuth.getInstance().getCurrentUser().getUid());
 
     }
@@ -105,8 +90,43 @@ public class EndlessService extends Service {
         if (wakeLock.isHeld())
             wakeLock.release();
 
-        stopForeground(true);
         stopSelf();
         isServiceStarted = false;
     }
+
+    private Timer timer;
+    private TimerTask timerTask;
+    long oldTime=0;
+    public int counter=0;
+
+    public void startTimer() {
+        //set a new Timer
+        timer = new Timer();
+
+        //initialize the TimerTask's job
+        initializeTimerTask();
+
+        //schedule the timer, to wake up every 1 second
+        timer.schedule(timerTask, 1000, 1000); //
+    }
+
+    /**
+     * it sets the timer to print the counter every x seconds
+     */
+    public void initializeTimerTask() {
+        timerTask = new TimerTask() {
+            public void run() {
+                Log.i("in timer", "in timer ++++  "+ (counter++));
+            }
+        };
+    }
+
+    public void stoptimertask() {
+        //stop the timer, if it's not already null
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+        }
+    }
+
 }
