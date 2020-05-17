@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
@@ -34,6 +35,7 @@ public class EventNotificationListener implements ValueEventListener {
     private User user = null;
     private boolean userLoaded = false;
     private int i = 0;
+    private String lastEventId = "";
 
     private EventNotificationListener() {
 
@@ -130,7 +132,12 @@ public class EventNotificationListener implements ValueEventListener {
 
     public boolean checkValidEvent(Event event) {
 
-        return  (user.getSubscribedLocations().contains(event.getLocation()) && user.getSubscribedGenres().contains(event.getGenre()));
+        String location = null;
+
+        while (location == null)
+            location =  event.getCompleteAddress().get("province").toString();
+
+        return  (user.getSubscribedLocations().contains(location) && user.getSubscribedGenres().contains(event.getGenre()) && !lastEventId.equals(event.getId()));
     }
 
     @Override
@@ -172,9 +179,12 @@ public class EventNotificationListener implements ValueEventListener {
 
                     if (userLoaded && i > 1 && checkValidEvent(event)) {
 
+                        lastEventId = event.getId();
                         persistentUserInfo.addUniqueEventRecommended(mContext, event);
                         sendNotification(event);
                     }
+
+                    lastEventId = event.getId();
 
                 } catch (NullPointerException e ) {
                     Log.e(TAG, "There has been a null pointer exception when calculating the notification");
