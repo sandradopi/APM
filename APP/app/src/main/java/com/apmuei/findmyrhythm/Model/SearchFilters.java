@@ -2,7 +2,7 @@ package com.apmuei.findmyrhythm.Model;
 
 public class SearchFilters {
     private boolean showPastEvents;
-    private String titlePart;
+    private String searchText = "";
 
     public SearchFilters(boolean showPastEvents) {
         this.showPastEvents = showPastEvents;
@@ -12,8 +12,12 @@ public class SearchFilters {
         return showPastEvents;
     }
 
-    public String getTitlePart() {
-        return titlePart;
+    public String getSearchText() {
+        return searchText;
+    }
+
+    public void setSearchText(String searchText) {
+        this.searchText = searchText;
     }
 
     @Override
@@ -26,8 +30,9 @@ public class SearchFilters {
         }
         SearchFilters searchFilters = (SearchFilters) obj;
         boolean sameShowPast = (this.showPastEvents == (searchFilters.getShowPastEvents()));
+        boolean sameSearchText = searchText.equals(searchFilters.getSearchText());
 
-        return sameShowPast;
+        return sameShowPast && sameSearchText;
     }
 
 }

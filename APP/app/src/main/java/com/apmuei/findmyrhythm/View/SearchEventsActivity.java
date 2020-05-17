@@ -64,7 +64,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Objects;
 
 
@@ -80,7 +79,7 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
     private Sensor light;
 
     // GUI:
-    private EditText searchText;
+    private EditText searchEditText;
 
     // Map and location:
     private LocationRequest locationRequest;
@@ -108,7 +107,7 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_events);
 
-        searchText = findViewById(R.id.input_search);
+        searchEditText = findViewById(R.id.input_search);
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         light = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
@@ -120,6 +119,7 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
+        assert mapFragment != null;
         mapFragment.getMapAsync(this);
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -205,21 +205,44 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
         if (! searchFilters.equals(currentSearchFilters)) {
             Log.e(TAG, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> finishEvent - " + searchFilters.getShowPastEvents());
             // Filter events by date
-            currentSearchFilters = searchFilters;
+            updateCurrentFilters(searchFilters);
 
             for (EventMarker eventMarker : eventMarkersSet) {
-                Date eventDate = eventMarker.event.getEventDate();
-                Date currentDate = new Date();
-                if (!searchFilters.getShowPastEvents() && eventDate.before(currentDate)) {
-                    eventMarker.remove();
-                } else {
-                    // TODO: Comprobar aquí si el título coincide. Realmente lo que habría que hacer
-                    //  es aplicar siempre de nuevo todos los filtros.
-                    eventMarker.addToMap(mMap);
-                }
+                applyFiltersToEventMarker(eventMarker, searchFilters);
             }
 
         }
+
+    }
+
+    private void updateCurrentFilters(SearchFilters searchFilters) {
+        searchFilters.setSearchText(searchEditText.getText().toString());
+        currentSearchFilters = searchFilters;
+    }
+
+    private void updateCurrentFilters() {
+        currentSearchFilters.setSearchText(searchEditText.getText().toString());
+    }
+
+
+    private boolean applyFiltersToEventMarker(EventMarker eventMarker, SearchFilters searchFilters) {
+        boolean filtered;
+
+        Date eventDate = eventMarker.event.getEventDate();
+        Date currentDate = new Date();
+        filtered = (!searchFilters.getShowPastEvents() && eventDate.before(currentDate));
+
+        String searchString = searchEditText.getText().toString().toLowerCase();
+        String eventName = eventMarker.event.getName().toLowerCase();
+        filtered = filtered || (!searchString.isEmpty() && !eventName.contains(searchString));
+
+        if (filtered) {
+            eventMarker.remove();
+        } else {
+            eventMarker.addToMap(mMap);
+        }
+
+        return filtered;
 
     }
 
@@ -253,7 +276,7 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
                     Manifest.permission.ACCESS_FINE_LOCATION, true);
         }
 
-        searchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        searchEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -265,8 +288,12 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
                         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                     }
 
+                    // Remove all markers from map
                     mMap.clear();
-                    new getEventsByTitle().execute(searchText.getText().toString());
+
+                    updateCurrentFilters();
+
+                    new getEventsByTitle().execute(currentSearchFilters);
 
                     return true;
                 }
@@ -305,6 +332,7 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
                 mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                     public void onInfoWindowClick(Marker marker) {
                         Event event = (Event) marker.getTag();
+                        assert event != null;
                         Log.e(TAG + " >>> ", event.getId());
 
                         Intent intent = new Intent(SearchEventsActivity.this, EventInfoActivity.class);
@@ -321,7 +349,7 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
         mMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
             @Override
             public void onCameraIdle() {
-                if (! searchText.getText().toString().isEmpty()) {
+                if (! searchEditText.getText().toString().isEmpty()) {
                     return;
                 }
 
@@ -519,14 +547,10 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
 
 
         @Override
-        protected void onPostExecute(final EventMarker eventMarker) {
+        protected void onPostExecute(EventMarker eventMarker) {
             Log.e(">>>>>>>>>>>>>>>", eventMarker.event.getName());
 
-            Date eventDate = eventMarker.event.getEventDate();
-            Date currentDate = new Date();
-            if (eventDate.after(currentDate)) {
-                eventMarker.addToMap(mMap);
-            }
+            applyFiltersToEventMarker(eventMarker, currentSearchFilters);
             eventMarkersSet.add(eventMarker);
 
         }
@@ -535,15 +559,15 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
 
 
 
-    private class getEventsByTitle extends AsyncTask<String, Void, ArrayList<Event>> {
+    private class getEventsByTitle extends AsyncTask<SearchFilters, Void, ArrayList<Event>> {
 
         @Override
-        protected ArrayList<Event> doInBackground(String... searchTexts) {
-            String searchText = searchTexts[0];
+        protected ArrayList<Event> doInBackground(SearchFilters... searchFiltersArr) {
+            SearchFilters searchFilters = searchFiltersArr[0];
             EventService eventService = new EventService();
             ArrayList<Event> events;
 
-            events = eventService.getEventsByTitle(searchText);
+            events = eventService.getEventsByTitle(searchFilters);
 
             return events;
         }
@@ -553,21 +577,16 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
         protected void onPostExecute(final ArrayList<Event> events) {
             LatLngBounds.Builder builder = new LatLngBounds.Builder();
             for (Event event : events) {
-                // At this point, there are no markers in map
+                // At this point, there are no markers in map and the results are already filtered
                 EventMarker eventMarker = new EventMarker(event.getId(), event);
 
-                Date eventDate = eventMarker.event.getEventDate();
-                Date currentDate = new Date();
-                if (currentSearchFilters.getShowPastEvents() || eventDate.after(currentDate)) {
-                    eventMarker.addToMap(mMap);
-                    builder.include(eventMarker.marker.getPosition());
-                }
+                eventMarker.addToMap(mMap);
+                builder.include(eventMarker.marker.getPosition());
                 eventMarkersSet.add(eventMarker);
 
             }
 
             try {
-
                 LatLngBounds bounds = builder.build();
                 LatLng center = bounds.getCenter();
                 builder.include(new LatLng(center.latitude - 0.02f, center.longitude - 0.02f));
@@ -602,14 +621,13 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
             this.id = id;
         }
 
-        EventMarker remove() {
+        void remove() {
             if (this.marker != null) {
                 this.marker.setVisible(false);
             }
-            return this;
         }
 
-        EventMarker addToMap(GoogleMap map) {
+        void addToMap(GoogleMap map) {
             if (marker == null) {
                 HashMap address = this.event.getCompleteAddress();
                 LatLng latLng = new LatLng((Double) Objects.requireNonNull(address.get("latitude")),
@@ -621,7 +639,6 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
             } else {
                 this.marker.setVisible(true);
             }
-            return this;
         }
 
         @NonNull
