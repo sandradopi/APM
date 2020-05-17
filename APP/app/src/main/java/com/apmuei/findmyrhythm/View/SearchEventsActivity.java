@@ -201,16 +201,25 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
      */
     @Override
     public void applyFilters(SearchFilters searchFilters) {
-        // Apply filters if they are different
-        if (! searchFilters.equals(currentSearchFilters)) {
-            Log.e(TAG, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> finishEvent - " + searchFilters.getShowPastEvents());
-            // Filter events by date
+        if (! searchEditText.getText().toString().isEmpty()) {
+            mMap.clear();
+
+            searchFilters.setSearchText(searchEditText.getText().toString());
             updateCurrentFilters(searchFilters);
 
-            for (EventMarker eventMarker : eventMarkersSet) {
-                applyFiltersToEventMarker(eventMarker, searchFilters);
-            }
+            new getEventsByTitle().execute(searchFilters);
+        } else {
+            // Apply filters if they are different
+            if (! searchFilters.equals(currentSearchFilters)) {
+                Log.e(TAG, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> finishEvent - " + searchFilters.getShowPastEvents());
+                // Filter events by date
+                updateCurrentFilters(searchFilters);
 
+                for (EventMarker eventMarker : eventMarkersSet) {
+                    applyFiltersToEventMarker(eventMarker, searchFilters);
+                }
+
+            }
         }
 
     }
