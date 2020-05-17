@@ -3,6 +3,7 @@ package com.apmuei.findmyrhythm.View;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
 import android.content.Context;
@@ -20,12 +21,14 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.apmuei.findmyrhythm.Model.Event;
 import com.apmuei.findmyrhythm.Model.EventService;
+import com.apmuei.findmyrhythm.Model.SearchFilters;
 import com.apmuei.findmyrhythm.Model.Utils.GeoUtils;
 import com.apmuei.findmyrhythm.Model.Utils.PermissionUtils;
 import com.firebase.geofire.GeoFire;
@@ -50,50 +53,73 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.apmuei.findmyrhythm.R;
 import com.google.android.gms.maps.model.VisibleRegion;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Objects;
 
 
-public class SearchEventsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, SensorEventListener {
+public class SearchEventsActivity extends FragmentActivity implements FiltersDialogInterface,
+        OnMapReadyCallback, GoogleMap.OnMarkerClickListener, SensorEventListener {
 
+    // Constants:
     private final static String TAG = "SearchEventsA";
+    private static final int LOCATION_PERMISSION_CODE = 7346;
+
+    // Sensors:
     private SensorManager sensorManager;
     private Sensor light;
-    private GoogleMap mMap;
-    private EditText searchText;
-    private FusedLocationProviderClient fusedLocationClient;
-    private static final int LOCATION_PERMISSION_CODE = 7346;
+
+    // GUI:
+    private EditText searchEditText;
+
+    // Map and location:
     private LocationRequest locationRequest;
     private LocationCallback locationCallback;
+    private FusedLocationProviderClient fusedLocationClient;
+    private GoogleMap mMap;
     private GeoFire geoFire;
-    private HashSet<EventMarker> eventMarkers = new HashSet<>();
-    private HashSet<EventMarker> newEventMarkers = new HashSet<>();
 
+    // Filters dialog fragment:
+    FragmentManager fragmentManager;
+    SearchFiltersDialogFragment searchFiltersDialogFragment;
+    SearchFilters currentSearchFilters;
+
+    // Event sets:
+    private HashSet<EventMarker> eventMarkersSet = new HashSet<>();
+    private HashSet<EventMarker> newEventMarkersSet = new HashSet<>();
+
+
+    //================================================================================
+    // Activity Lifecycle
+    //================================================================================
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_events);
 
-        searchText = findViewById(R.id.input_search);
+        searchEditText = findViewById(R.id.input_search);
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         light = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
 
         if (light == null) {
             System.out.println("No sensor light");
-
         }
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
+        assert mapFragment != null;
         mapFragment.getMapAsync(this);
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -101,10 +127,23 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("locations");
         geoFire = new GeoFire(ref);
 
+        // Dialog with the search filters
+        fragmentManager = getSupportFragmentManager();
+        searchFiltersDialogFragment = new SearchFiltersDialogFragment();
+        searchFiltersDialogFragment.setInterface(this);
+        currentSearchFilters = SearchFiltersDialogFragment.getDefaultFilters();
 
         Toast.makeText(getApplicationContext(), getString(R.string.search_events_usage_info), Toast.LENGTH_LONG).show();
 
+        FloatingActionButton searchFiltersFAB = findViewById(R.id.search_filters);
+        searchFiltersFAB.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                searchFiltersDialogFragment.show(fragmentManager, "dialog");
+            }
+        });
+
     }
+
 
     @Override
     protected void onResume() {
@@ -112,86 +151,105 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
         sensorManager.registerListener(this, light, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
+
     @Override
     protected void onPause() {
         super.onPause();
         sensorManager.unregisterListener(this);
     }
 
+
+    //================================================================================
+    // Light Sensor
+    //================================================================================
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) { }
+
+
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         float amountOfLight = sensorEvent.values[0];
-        if(sensorEvent.sensor.getType() == Sensor.TYPE_LIGHT){
+        if (sensorEvent.sensor.getType() == Sensor.TYPE_LIGHT) {
 
-            if((amountOfLight > 50)){
+            boolean success;
 
-                if(mMap!=null){
-                    boolean success = mMap.setMapStyle(
-                            MapStyleOptions.loadRawResourceStyle(
-                                    this, R.raw.style_json_default));
-                }
-
-            }else{
+            if (amountOfLight > 50){
 
                 if(mMap!=null){
-                boolean success = mMap.setMapStyle(
-                        MapStyleOptions.loadRawResourceStyle(
-                                this, R.raw.style_json));
+                    success = mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this,
+                            R.raw.style_json_default));
                 }
 
+            } else {
+                if(mMap!=null){
+                    success = mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this,
+                            R.raw.style_json));
+                }
             }
-
         }
+
     }
 
+
+    //================================================================================
+    // Filters Dialog
+    //================================================================================
+
+    /**
+     * Interface method to enable DialogFragment->Activity communication.
+     */
     @Override
-    public void onAccuracyChanged(Sensor sensor, int i) {
+    public void applyFilters(SearchFilters searchFilters) {
+        // Apply filters if they are different
+        if (! searchFilters.equals(currentSearchFilters)) {
+            Log.e(TAG, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> finishEvent - " + searchFilters.getShowPastEvents());
+            // Filter events by date
+            updateCurrentFilters(searchFilters);
 
-    }
-
-
-    @Override
-    public boolean onMarkerClick(Marker marker) {
-        return false;
-    }
-
-
-
-    private class EventMarker {
-        String id;
-        GeoLocation location;
-        String name;
-
-        EventMarker(String id, GeoLocation location) {
-            this.id = id;
-            this.location = location;
-            this.name = null;
-        }
-
-        EventMarker(String id, GeoLocation location, String name) {
-            this.id = id;
-            this.location = location;
-            this.name = name;
-        }
-
-        @Override
-        public int hashCode() {
-            return id.hashCode();
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            if (this == obj) {
-                return true;
+            for (EventMarker eventMarker : eventMarkersSet) {
+                applyFiltersToEventMarker(eventMarker, searchFilters);
             }
-            if (obj == null || getClass() != obj.getClass()) {
-                return false;
-            }
-            EventMarker eventMarker = (EventMarker) obj;
-            return this.id.equals(eventMarker.id);
+
         }
+
     }
 
+    private void updateCurrentFilters(SearchFilters searchFilters) {
+        searchFilters.setSearchText(searchEditText.getText().toString());
+        currentSearchFilters = searchFilters;
+    }
+
+    private void updateCurrentFilters() {
+        currentSearchFilters.setSearchText(searchEditText.getText().toString());
+    }
+
+
+    private boolean applyFiltersToEventMarker(EventMarker eventMarker, SearchFilters searchFilters) {
+        boolean filtered;
+
+        Date eventDate = eventMarker.event.getEventDate();
+        Date currentDate = new Date();
+        filtered = (!searchFilters.getShowPastEvents() && eventDate.before(currentDate));
+
+        String searchString = searchEditText.getText().toString().toLowerCase();
+        String eventName = eventMarker.event.getName().toLowerCase();
+        filtered = filtered || (!searchString.isEmpty() && !eventName.contains(searchString));
+
+        if (filtered) {
+            eventMarker.remove();
+        } else {
+            eventMarker.addToMap(mMap);
+        }
+
+        return filtered;
+
+    }
+
+
+    //================================================================================
+    // Map
+    //================================================================================
 
     /**
      * Manipulates the map once available.
@@ -218,13 +276,24 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
                     Manifest.permission.ACCESS_FINE_LOCATION, true);
         }
 
-        searchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        searchEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
 
+                    // Check if no view has focus:
+                    View view = SearchEventsActivity.this.getCurrentFocus();
+                    if (view != null) {
+                        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    }
+
+                    // Remove all markers from map
                     mMap.clear();
-                    new getEvents().execute(searchText.getText().toString());
+
+                    updateCurrentFilters();
+
+                    new getEventsByTitle().execute(currentSearchFilters);
 
                     return true;
                 }
@@ -247,22 +316,27 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
             @Override
             public View getInfoContents(Marker args) {
 
-                // Getting view from the layout file info_window_layout
+                // Getting view from the layout file window_info_layout
                 View v = getLayoutInflater().inflate(R.layout.window_info_layout, null);
 
-                // Getting the position from the marker
-                LatLng clickMarkerLatLng = args.getPosition();
-
-                TextView title = (TextView) v.findViewById(R.id.title);
+                TextView title = v.findViewById(R.id.title);
                 title.setText(args.getTitle());
+
+                Event event = (Event) args.getTag();
+                DateFormat df = new SimpleDateFormat("dd/MM/yy", java.util.Locale.getDefault());
+
+                TextView snippet = v.findViewById(R.id.snippet);
+                assert event != null;
+                snippet.setText(df.format(event.getEventDate()));
 
                 mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                     public void onInfoWindowClick(Marker marker) {
-                        String id = (String) marker.getTag();
-                        Log.e(TAG + " >>> ", id);
+                        Event event = (Event) marker.getTag();
+                        assert event != null;
+                        Log.e(TAG + " >>> ", event.getId());
 
                         Intent intent = new Intent(SearchEventsActivity.this, EventInfoActivity.class);
-                        intent.putExtra("EVENT", id);
+                        intent.putExtra("EVENT", event.getId());
                         intent.putExtra("RECOMMENDED", false);
                         startActivity(intent);
 
@@ -275,7 +349,7 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
         mMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
             @Override
             public void onCameraIdle() {
-                if (! searchText.getText().toString().isEmpty()) {
+                if (! searchEditText.getText().toString().isEmpty()) {
                     return;
                 }
 
@@ -302,78 +376,37 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
                 double longitude = mapLatLngBounds.getCenter().longitude;
 
                 // Toast.makeText(getApplicationContext(),radius+"",Toast.LENGTH_SHORT).show();
-
                 // Toast.makeText(getApplicationContext(),latitude+ " "+longitude,Toast.LENGTH_SHORT).show();
 
                 getNearbyEvents(new GeoLocation(latitude, longitude), radius);
 
+                Log.e(TAG, eventMarkersSet.toString());
+
             }
         });
 
     }
 
 
-    private class showEventMarker extends AsyncTask<Object, Void, EventMarker> {
-
-        @Override
-        protected EventMarker doInBackground(Object... objects) {
-            String eventId = (String) objects[0];
-            GeoLocation location = (GeoLocation) objects[1];
-            EventService eventService = new EventService();
-            String eventName = eventService.findEventNameById(eventId);
-            return new EventMarker(eventId, location, eventName);
-        }
-
-
-        @Override
-        protected void onPostExecute(final EventMarker eventMarker) {
-            Log.e(">>>>>>>>>>>>>>>", eventMarker.name);
-
-            LatLng latLng = new LatLng(eventMarker.location.latitude, eventMarker.location.longitude);
-            Marker marker = mMap.addMarker(new MarkerOptions().position(latLng).title(eventMarker.name));
-            marker.setTag(eventMarker.id);
-            marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
-        }
-
-    }
-
-
-    private void showMarkersOnMap() {
-
-        SearchEventsActivity.this.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                /* TODO: Quizás se podría hacer de forma más eficiente, no descargando de nuevo el
-                *   nombre si ya se ha descargado */
-                //Your code to run in GUI thread here
-                for (EventMarker eventMarker : newEventMarkers) {
-                    new showEventMarker().execute(eventMarker.id, eventMarker.location);
-                }
-                newEventMarkers.clear();
-            }
-        });
-    }
-
-
+    /**
+     * Gets nearby events for a given location (usually user last location).
+     * The library used for that is Geofire.
+     *
+     * https://firebaseopensource.com/projects/firebase/geofire-java/
+     * https://stackoverflow.com/questions/50631432/android-query-nearby-locations-from-firebase
+     * https://stackoverflow.com/questions/43357990/query-for-nearby-locations
+     */
     public void getNearbyEvents(GeoLocation geoLocation, Double radius) {
-
-        /* TODO: Buscar eventos cerca de mí o dentro de los límites del mapa.
-         *   Enlaces de interés:
-         * https://stackoverflow.com/questions/50631432/android-query-nearby-locations-from-firebase
-         * https://stackoverflow.com/questions/43357990/query-for-nearby-locations
-         * (especialmente el segundo) */
 
         GeoQuery geoQuery = geoFire.queryAtLocation(geoLocation,radius);
         geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
             @Override
             public void onKeyEntered(final String key, final GeoLocation location) {
-                EventMarker eventMarker = new EventMarker(key, location);
-                if (! eventMarkers.contains(eventMarker)) {
-                    eventMarkers.add(eventMarker);
-                    newEventMarkers.add(eventMarker);
+                EventMarker eventMarker = new EventMarker(key);
+                if (! newEventMarkersSet.contains(eventMarker)) {
+                    newEventMarkersSet.add(eventMarker);
                     Log.d("..", String.format("Key %s entered the search area at [%f,%f]", key, location.latitude, location.longitude));
                 }
-
             }
 
             @Override
@@ -402,22 +435,10 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
     }
 
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode != LOCATION_PERMISSION_CODE) {
-            return;
-        }
-
-        if (PermissionUtils.isPermissionGranted(permissions, grantResults, Manifest.permission.ACCESS_FINE_LOCATION)) {
-            // Enable the my location layer if the permission has been granted.
-            getMyLastLocation();
-        } else {
-            // TODO: Permission was denied. Display an error message
-            // ...
-        }
-    }
-
-
+    /**
+     * Gets last user location using FusedLocationClient.
+     * If returned location is null, it crates a location request.
+     */
     private void getMyLastLocation() {
         fusedLocationClient.getLastLocation()
                 .addOnSuccessListener(this, new OnSuccessListener<Location>() {
@@ -466,15 +487,87 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
     }
 
 
-    private class getEvents extends AsyncTask<String, Void, ArrayList<Event>> {
+    //================================================================================
+    // Markers
+    //================================================================================
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        return false;
+    }
+
+
+    private void showMarkersOnMap() {
+        // Markers manipulation must be done in GUI thread
+        SearchEventsActivity.this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                for (EventMarker eventMarker : newEventMarkersSet) {
+                    new showEventMarker().execute(eventMarker.id);
+                }
+                newEventMarkersSet.clear();
+            }
+        });
+    }
+
+
+    //================================================================================
+    // Permissions
+    //================================================================================
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode != LOCATION_PERMISSION_CODE) {
+            return;
+        }
+
+        if (PermissionUtils.isPermissionGranted(permissions, grantResults, Manifest.permission.ACCESS_FINE_LOCATION)) {
+            // Enable the my location layer if the permission has been granted.
+            getMyLastLocation();
+        } else {
+            // TODO: Permission was denied. Display an error message
+            // ...
+        }
+    }
+
+
+    //================================================================================
+    // AsyncTasks
+    //================================================================================
+
+    private class showEventMarker extends AsyncTask<String, Void, EventMarker> {
 
         @Override
-        protected ArrayList<Event> doInBackground(String... searchTexts) {
-            String searchText = searchTexts[0];
+        protected EventMarker doInBackground(String... ids) {
+            String eventId = ids[0];
             EventService eventService = new EventService();
-            ArrayList<Event> events = new ArrayList<>();
+            Event event = eventService.getEvent(eventId);
+            return new EventMarker(eventId, event);
+        }
 
-            events = eventService.getEventsByTitle(searchText);
+
+        @Override
+        protected void onPostExecute(EventMarker eventMarker) {
+            Log.e(">>>>>>>>>>>>>>>", eventMarker.event.getName());
+
+            applyFiltersToEventMarker(eventMarker, currentSearchFilters);
+            eventMarkersSet.add(eventMarker);
+
+        }
+
+    }
+
+
+
+    private class getEventsByTitle extends AsyncTask<SearchFilters, Void, ArrayList<Event>> {
+
+        @Override
+        protected ArrayList<Event> doInBackground(SearchFilters... searchFiltersArr) {
+            SearchFilters searchFilters = searchFiltersArr[0];
+            EventService eventService = new EventService();
+            ArrayList<Event> events;
+
+            events = eventService.getEventsByTitle(searchFilters);
 
             return events;
         }
@@ -484,23 +577,92 @@ public class SearchEventsActivity extends FragmentActivity implements OnMapReady
         protected void onPostExecute(final ArrayList<Event> events) {
             LatLngBounds.Builder builder = new LatLngBounds.Builder();
             for (Event event : events) {
-                HashMap<String, Object> address = event.getCompleteAddress();
-                LatLng latLng = new LatLng((Double) Objects.requireNonNull(address.get("latitude")),
-                        (Double) Objects.requireNonNull(address.get("longitude")));
-                Marker marker = mMap.addMarker(new MarkerOptions().position(latLng).title(event.getName()));
-                marker.setTag(event.getId());
-                marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
-                builder.include(marker.getPosition());
+                // At this point, there are no markers in map and the results are already filtered
+                EventMarker eventMarker = new EventMarker(event.getId(), event);
+
+                eventMarker.addToMap(mMap);
+                builder.include(eventMarker.marker.getPosition());
+                eventMarkersSet.add(eventMarker);
+
+            }
+
+            try {
                 LatLngBounds bounds = builder.build();
                 LatLng center = bounds.getCenter();
-                builder.include(new LatLng(center.latitude-0.01f,center.longitude-0.01f));
-                builder.include(new LatLng(center.latitude+0.01f,center.longitude+0.01f));
+                builder.include(new LatLng(center.latitude - 0.02f, center.longitude - 0.02f));
+                builder.include(new LatLng(center.latitude + 0.02f, center.longitude + 0.02f));
                 bounds = builder.build();
                 mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
-                marker.showInfoWindow();
+            } catch (IllegalStateException e) {
+                Toast.makeText(getApplicationContext(), "No se han encontrado eventos con ese título que cumplan con los filtros de búsqueda.", Toast.LENGTH_LONG).show();
+                Log.e(TAG, "No valid events found.");
+            }
+
+        }
+
+    }
+
+
+    //================================================================================
+    // Private Classes
+    //================================================================================
+
+    private class EventMarker {
+        String id;
+        Event event;
+        Marker marker;
+
+        EventMarker(String id, Event event) {
+            this.id = id;
+            this.event = event;
+        }
+
+        EventMarker(String id) {
+            this.id = id;
+        }
+
+        void remove() {
+            if (this.marker != null) {
+                this.marker.setVisible(false);
             }
         }
 
+        void addToMap(GoogleMap map) {
+            if (marker == null) {
+                HashMap address = this.event.getCompleteAddress();
+                LatLng latLng = new LatLng((Double) Objects.requireNonNull(address.get("latitude")),
+                        (Double) Objects.requireNonNull(address.get("longitude")));
+                Marker marker = map.addMarker(new MarkerOptions().position(latLng).title(this.event.getName()));
+                marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
+                marker.setTag(this.event);
+                this.marker = marker;
+            } else {
+                this.marker.setVisible(true);
+            }
+        }
+
+        @NonNull
+        @Override
+        public String toString() {
+            return id;
+        }
+
+        @Override
+        public int hashCode() {
+            return id.hashCode();
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (obj == null || getClass() != obj.getClass()) {
+                return false;
+            }
+            EventMarker eventMarker = (EventMarker) obj;
+            return this.id.equals(eventMarker.id);
+        }
     }
 
 

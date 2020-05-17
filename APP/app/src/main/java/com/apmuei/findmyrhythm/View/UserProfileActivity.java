@@ -80,13 +80,13 @@ public class UserProfileActivity extends UserMenuDrawerActivity {
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
         viewPager.setAdapter(sectionsPagerAdapter);
 
-        Intent intent = new Intent(this, EndlessService.class);
-        intent.putExtra("SERVICE_STATE", true);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startForegroundService(intent);
-            return;
-        }
-        startService(intent);
+//        Intent intent = new Intent(this, EndlessService.class);
+//        intent.putExtra("SERVICE_STATE", true);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            startForegroundService(intent);
+//            return;
+//        }
+//        startService(intent);
 
     }
 

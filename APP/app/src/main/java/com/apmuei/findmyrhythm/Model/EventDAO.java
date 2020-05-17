@@ -15,6 +15,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 
@@ -189,10 +190,9 @@ public class EventDAO extends GenericDAO<Event> {
     }
 
 
-    public ArrayList<Event> getEventsByTitle(final String token) {
+    public ArrayList<Event> getEventsByTitle(final SearchFilters searchFilters) {
 
         final ArrayList<Event> events = new ArrayList<>();
-        ArrayList<Event> recommendedEvents = new ArrayList<>();
         final DatabaseReference table = getTable();
 
         final CountDownLatch lock = new CountDownLatch(1);
@@ -201,21 +201,27 @@ public class EventDAO extends GenericDAO<Event> {
         table.orderByChild("name").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                /*Event event;
-                Calendar eventCalendar = Calendar.getInstance();*/
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                boolean filtered;
 
-                    Log.e(TAG, ds.getValue(Event.class).getName());
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
                     Event event = ds.getValue(Event.class);
 
+                    assert event != null : "Event is null";
 
+                    Log.e(TAG, event.getName());
 
-                    /*event = ds.getValue(Event.class);
-                    eventCalendar.setTime(event.getEventDate());
-                    if (eventCalendar.compareTo(currentCalendar) > 0)*/
-                    if (event.getName().toLowerCase().contains(token.toLowerCase()))
-                        events.add(ds.getValue(Event.class));
+                    Date eventDate = event.getEventDate();
+                    Date currentDate = new Date();
+                    filtered = (!searchFilters.getShowPastEvents() && eventDate.before(currentDate));
+
+                    String searchString = searchFilters.getSearchText().toLowerCase();
+                    String eventName = event.getName().toLowerCase();
+                    filtered = filtered || (!searchString.isEmpty() && !eventName.contains(searchString));
+
+                    if (!filtered) {
+                        events.add(event);
+                    }
 
                 }
                 lock.countDown();
