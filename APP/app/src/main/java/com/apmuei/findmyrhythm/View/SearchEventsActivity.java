@@ -128,7 +128,7 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
 
         // Dialog with the search filters
         fragmentManager = getSupportFragmentManager();
-        searchFiltersDialogFragment = new SearchFiltersDialogFragment();
+        searchFiltersDialogFragment = new SearchFiltersDialogFragment(this);
         searchFiltersDialogFragment.setInterface(this);
         currentSearchFilters = SearchFiltersDialogFragment.getDefaultFilters(this);
 

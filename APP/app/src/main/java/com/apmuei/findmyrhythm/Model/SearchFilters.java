@@ -2,6 +2,7 @@ package com.apmuei.findmyrhythm.Model;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 
 
 public class SearchFilters {
@@ -10,13 +11,13 @@ public class SearchFilters {
     private String searchText = "";
     private int minPrize = 0;
     private int maxPrize = 10000;
-    private ArrayList<String> genres = new ArrayList<>();
+    private HashSet<String> genres = new HashSet<>();
 
     public SearchFilters(boolean showPastEvents) {
         this.showPastEvents = showPastEvents;
     }
 
-    public SearchFilters(boolean showPastEvents, int minPrize, int maxPrize, ArrayList<String> genres) {
+    public SearchFilters(boolean showPastEvents, int minPrize, int maxPrize, HashSet<String> genres) {
         this.showPastEvents = showPastEvents;
         this.minPrize = minPrize;
         this.maxPrize = maxPrize;
@@ -51,11 +52,11 @@ public class SearchFilters {
         this.maxPrize = maxPrize;
     }
 
-    public ArrayList<String> getGenres() {
+    public HashSet<String> getGenres() {
         return genres;
     }
 
-    public void setGenres(ArrayList<String> genres) {
+    public void setGenres(HashSet<String> genres) {
         this.genres = genres;
     }
 

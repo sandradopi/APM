@@ -21,6 +21,7 @@ import com.apmuei.findmyrhythm.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 
 // Source: https://developer.android.com/guide/topics/ui/dialogs
 
@@ -33,14 +34,17 @@ public class SearchFiltersDialogFragment extends DialogFragment {
     private CheckBox showPastEventsCheckBox;
     private EditText minPrizeEditText;
     private EditText maxPrizeEditText;
-    private SearchFilters previousFilters = null;
+    private SearchFilters previousFilters;
     private ArrayList<Integer> genresViewIds = new ArrayList<>(Arrays.asList(R.id.genre_rock, R.id.genre_pop,
             R.id.genre_trap, R.id.genre_classical, R.id.genre_hiphop, R.id.genre_blues, R.id.genre_dance,
             R.id.genre_indie, R.id.genre_reggae));
-    private ArrayList<CheckBox> genresCheckboxes = new ArrayList<>();
+    private HashSet<CheckBox> genresCheckboxes = new HashSet<>();
 
     private FiltersDialogInterface filtersDialogInterface;
 
+    SearchFiltersDialogFragment(Activity activity) {
+        previousFilters = getDefaultFilters(activity);
+    }
 
     /** The system calls this to get the DialogFragment's layout, regardless
      of whether it's being displayed as a dialog or an embedded fragment. */
@@ -58,19 +62,19 @@ public class SearchFiltersDialogFragment extends DialogFragment {
         mView = view;
 
         showPastEventsCheckBox = mView.findViewById(R.id.checkBox_show_past_events);
+        showPastEventsCheckBox.setSaveEnabled(false);
+        showPastEventsCheckBox.setChecked(previousFilters.getShowPastEvents());
+
         minPrizeEditText = mView.findViewById(R.id.min_prize);
         maxPrizeEditText = mView.findViewById(R.id.max_prize);
 
         for (Integer id : genresViewIds) {
             CheckBox genreCheckBox = mView.findViewById(id);
+            genreCheckBox.setSaveEnabled(false);
+            genreCheckBox.setChecked(previousFilters.getGenres().contains(genreCheckBox.getText().toString()));
             genresCheckboxes.add(genreCheckBox);
         }
 
-
-        if (previousFilters == null) {
-            // TODO: set default
-            previousFilters = getSearchFilters();
-        }
 
         Button applyFiltersButton = mView.findViewById(R.id.apply);
         applyFiltersButton.setOnClickListener(new View.OnClickListener() {
@@ -118,7 +122,7 @@ public class SearchFiltersDialogFragment extends DialogFragment {
             maxPrize = Integer.parseInt(maxPrizeString);
         }
 
-        ArrayList<String> genres = new ArrayList<>();
+        HashSet<String> genres = new HashSet<>();
         for (CheckBox genreCheckbox : genresCheckboxes) {
             if (genreCheckbox.isChecked()) {
                 genres.add(genreCheckbox.getText().toString());
@@ -131,7 +135,7 @@ public class SearchFiltersDialogFragment extends DialogFragment {
     }
 
     public static SearchFilters getDefaultFilters(Activity activity) {
-        ArrayList<String> genres = new ArrayList<>(Arrays.asList(activity.getResources().getStringArray(R.array.categories)));
+        HashSet<String> genres = new HashSet<>(Arrays.asList(activity.getResources().getStringArray(R.array.categories)));
         return new SearchFilters(false, 0, 10000, genres);
     }
 
