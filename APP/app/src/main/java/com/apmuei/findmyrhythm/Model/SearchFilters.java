@@ -32,7 +32,7 @@ public class SearchFilters {
         boolean sameShowPast = (this.showPastEvents == (searchFilters.getShowPastEvents()));
         boolean sameSearchText = searchText.equals(searchFilters.getSearchText());
 
-        return sameShowPast && sameSearchText;
+        return sameShowPast;
     }
 
 }
