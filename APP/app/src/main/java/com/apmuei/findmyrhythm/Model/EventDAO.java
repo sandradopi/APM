@@ -15,6 +15,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
@@ -125,14 +126,8 @@ public class EventDAO extends GenericDAO<Event> {
             table.orderByChild("completeAddress/province").equalTo(location).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    /*Event event;
-                    Calendar eventCalendar = Calendar.getInstance();*/
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
                         Log.e(TAG, "element");
-                        /*event = ds.getValue(Event.class);
-                        eventCalendar.setTime(event.getEventDate());
-                        if (eventCalendar.compareTo(currentCalendar) > 0)*/
-
                         locationEvents.add(ds.getValue(Event.class));
                     }
                     lock.countDown();
@@ -160,32 +155,36 @@ public class EventDAO extends GenericDAO<Event> {
             }
         }
 
-//        for (String genre : user.getSubscribedGenres()) {
-//
-//            if (event.getGenre().equals(genre)) {
-//                Log.e(TAG, event.getGenre());
-//                recommendedEvents.add(event);
-//                break;
-//            }
-//        }
-
         Log.e(TAG+">>>>>>>>>>>>>>", recommendedEvents.toString());
 
         ArrayList<String> eventsConfirmed = attendeeDAO.findAttendeeByUser(user.getId());
 
-        ArrayList<Event> finalEvents = new ArrayList<>();
+        ArrayList<Event> datelessEvents = new ArrayList<>();
 
         Log.e(TAG+">>>>>>>>>>>>>>Confirmed", eventsConfirmed.toString());
 
 
         for (Event event : recommendedEvents) {
             if (!eventsConfirmed.contains(event.getId())) {
-                finalEvents.add(event);
+                datelessEvents.add(event);
             }
         }
 
         Log.e(TAG, locationEvents.toString());
-        Log.e("FINALEVENTS", finalEvents.toString());
+        Log.e("DATELESSEVENTS", datelessEvents.toString());
+
+        Calendar currentCalendar = Calendar.getInstance();
+        Calendar eventCalendar = Calendar.getInstance();
+        ArrayList<Event> finalEvents = new ArrayList<Event>();
+
+        for (Event event : datelessEvents) {
+            eventCalendar.setTime(event.getEventDate());
+            if (eventCalendar.compareTo(currentCalendar) > 0)
+                finalEvents.add(event);
+        }
+
+        Log.e("FINALEVENTS", datelessEvents.toString());
+
         return finalEvents;
     }
 
