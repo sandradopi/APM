@@ -39,4 +39,9 @@
         <item name="colorControlActivated">@color/gold</item>
     </style>
 
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/primaryBackgroundDarker2</item>
+        <item name="colorControlActivated">@color/primary</item>
+    </style>
+
 </resources>
