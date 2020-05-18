@@ -29,7 +29,6 @@ import android.widget.Toast;
 import com.apmuei.findmyrhythm.Model.Event;
 import com.apmuei.findmyrhythm.Model.EventService;
 import com.apmuei.findmyrhythm.Model.SearchFilters;
-import com.apmuei.findmyrhythm.Model.Utils.EventUtils;
 import com.apmuei.findmyrhythm.Model.Utils.GeoUtils;
 import com.apmuei.findmyrhythm.Model.Utils.PermissionUtils;
 import com.firebase.geofire.GeoFire;
@@ -62,7 +61,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Objects;
@@ -232,7 +230,7 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
 
         searchFilters.setSearchText(searchEditText.getText().toString().toLowerCase());
 
-        boolean filtered = EventUtils.applyFiltersToEvent(eventMarker.event, searchFilters);
+        boolean filtered = SearchFilters.applyFiltersToEvent(eventMarker.event, searchFilters);
 
         if (filtered) {
             eventMarker.remove();

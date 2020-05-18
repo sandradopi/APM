@@ -1,5 +1,7 @@
 package com.apmuei.findmyrhythm.Model;
 
+import java.util.Date;
+
 public class SearchFilters {
     private boolean showPastEvents;
     private String searchText = "";
@@ -33,6 +35,20 @@ public class SearchFilters {
         boolean sameSearchText = searchText.equals(searchFilters.getSearchText());
 
         return sameShowPast;
+    }
+
+    public static boolean applyFiltersToEvent(Event event, SearchFilters searchFilters) {
+        boolean filtered;
+
+        Date eventDate = event.getEventDate();
+        Date currentDate = new Date();
+        filtered = (!searchFilters.getShowPastEvents() && eventDate.before(currentDate));
+
+        String searchString = searchFilters.getSearchText();
+        String eventName = event.getName().toLowerCase();
+        filtered = filtered || (!searchString.isEmpty() && !eventName.contains(searchString));
+
+        return filtered;
     }
 
 }
