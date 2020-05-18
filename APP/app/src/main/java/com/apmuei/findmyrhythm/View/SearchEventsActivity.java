@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.apmuei.findmyrhythm.Model.Event;
 import com.apmuei.findmyrhythm.Model.EventService;
 import com.apmuei.findmyrhythm.Model.SearchFilters;
+import com.apmuei.findmyrhythm.Model.Utils.EventUtils;
 import com.apmuei.findmyrhythm.Model.Utils.GeoUtils;
 import com.apmuei.findmyrhythm.Model.Utils.PermissionUtils;
 import com.firebase.geofire.GeoFire;
@@ -228,15 +229,10 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
 
 
     private boolean applyFiltersToEventMarker(EventMarker eventMarker, SearchFilters searchFilters) {
-        boolean filtered;
 
-        Date eventDate = eventMarker.event.getEventDate();
-        Date currentDate = new Date();
-        filtered = (!searchFilters.getShowPastEvents() && eventDate.before(currentDate));
+        searchFilters.setSearchText(searchEditText.getText().toString().toLowerCase());
 
-        String searchString = searchEditText.getText().toString().toLowerCase();
-        String eventName = eventMarker.event.getName().toLowerCase();
-        filtered = filtered || (!searchString.isEmpty() && !eventName.contains(searchString));
+        boolean filtered = EventUtils.applyFiltersToEvent(eventMarker.event, searchFilters);
 
         if (filtered) {
             eventMarker.remove();

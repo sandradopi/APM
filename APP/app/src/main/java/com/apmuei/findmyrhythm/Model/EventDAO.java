@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.apmuei.findmyrhythm.Model.Exceptions.DuplicatedInstanceException;
 import com.apmuei.findmyrhythm.Model.Exceptions.InstanceNotFoundException;
+import com.apmuei.findmyrhythm.Model.Utils.EventUtils;
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
 import com.google.firebase.database.DataSnapshot;
@@ -210,13 +211,7 @@ public class EventDAO extends GenericDAO<Event> {
 
                     Log.e(TAG, event.getName());
 
-                    Date eventDate = event.getEventDate();
-                    Date currentDate = new Date();
-                    filtered = (!searchFilters.getShowPastEvents() && eventDate.before(currentDate));
-
-                    String searchString = searchFilters.getSearchText().toLowerCase();
-                    String eventName = event.getName().toLowerCase();
-                    filtered = filtered || (!searchString.isEmpty() && !eventName.contains(searchString));
+                    filtered = EventUtils.applyFiltersToEvent(event, searchFilters);
 
                     if (!filtered) {
                         events.add(event);
