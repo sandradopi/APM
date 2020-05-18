@@ -130,7 +130,7 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
         fragmentManager = getSupportFragmentManager();
         searchFiltersDialogFragment = new SearchFiltersDialogFragment();
         searchFiltersDialogFragment.setInterface(this);
-        currentSearchFilters = SearchFiltersDialogFragment.getDefaultFilters();
+        currentSearchFilters = SearchFiltersDialogFragment.getDefaultFilters(this);
 
         Toast.makeText(getApplicationContext(), getString(R.string.search_events_usage_info), Toast.LENGTH_LONG).show();
 
@@ -399,7 +399,7 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
             @Override
             public void onKeyEntered(final String key, final GeoLocation location) {
                 EventMarker eventMarker = new EventMarker(key);
-                if (! newEventMarkersSet.contains(eventMarker)) {
+                if (! newEventMarkersSet.contains(eventMarker) && ! eventMarkersSet.contains(eventMarker)) {
                     newEventMarkersSet.add(eventMarker);
                     Log.d("..", String.format("Key %s entered the search area at [%f,%f]", key, location.latitude, location.longitude));
                 }
