@@ -33,7 +33,7 @@ public class GenresSettingsActivity extends AppCompatActivity implements View.On
 
         Bundle b = getIntent().getExtras();
         //if (b.getStringArrayList("GENRES") != null)
-        selectedGenres = b.getStringArrayList(getString(R.string.GENRES));
+        selectedGenres = b.getStringArrayList("GENRES");
         //selectedGenres = persistentUserInfo.getSubscribedGenres();
 
         pop = (CardView) findViewById(R.id.pop);
@@ -92,7 +92,7 @@ public class GenresSettingsActivity extends AppCompatActivity implements View.On
              */
 
             Intent intent = new Intent(this, UserSettingsActivity.class);
-            intent.putStringArrayListExtra(getString(R.string.GENRES), selectedGenres);
+            intent.putStringArrayListExtra("GENRES", selectedGenres);
             setResult(RESULT_OK, intent);
             finish();
 

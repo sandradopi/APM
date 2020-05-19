@@ -69,9 +69,9 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Event
-        final String eventSelectId = getIntent().getStringExtra(getString(R.string.EVENT));
-        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.preferences), MODE_PRIVATE);
-        final String account_type = sharedPreferences.getString(getString(R.string.pref_account_type), null);
+        final String eventSelectId = getIntent().getStringExtra("EVENT");
+        SharedPreferences sharedPreferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
+        final String account_type = sharedPreferences.getString("account_type", null);
 
         rateButton = (Button) findViewById(R.id.rateButton);
 
@@ -154,7 +154,7 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
 
     private class getPhoto extends AsyncTask<Void, Void, Void> {
 
-        final String eventSelectId = getIntent().getStringExtra(getString(R.string.EVENT));
+        final String eventSelectId = getIntent().getStringExtra("EVENT");
         final PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
 
         @Override
@@ -165,7 +165,7 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
         @Override
         protected Void doInBackground(Void... voids) {
             Event eventSelect;
-            final boolean recommended = getIntent().getExtras().getBoolean(getString(R.string.recommended));
+            final boolean recommended = getIntent().getExtras().getBoolean("RECOMMENDED");
             if(recommended) {
                 eventSelect  = persistentUserInfo.getEventRecommended(eventSelectId);
 
