@@ -77,8 +77,8 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
         //final Event eventSelect = gson.fromJson(getIntent().getStringExtra("EVENT"), Event.class);
         final PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
 
-        final boolean recommended = getIntent().getExtras().getBoolean(getString(R.string.recommended));
-        final String eventSelectId = getIntent().getStringExtra(getString(R.string.EVENT));
+        final boolean recommended = getIntent().getExtras().getBoolean("RECOMMENDED");
+        final String eventSelectId = getIntent().getStringExtra("EVENT");
 
         if(recommended) {
             eventSelect  = persistentUserInfo.getEventRecommended(eventSelectId);
@@ -192,7 +192,7 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
 
     private class getPhoto extends AsyncTask<Void, Void, Photo> {
 
-        final String eventSelectId = getIntent().getStringExtra(getString(R.string.EVENT));
+        final String eventSelectId = getIntent().getStringExtra("EVENT");
         final PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
 
         @Override
@@ -203,7 +203,7 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
         @Override
         protected Photo doInBackground(Void... voids) {
             Event eventSelect;
-            final boolean recommended = getIntent().getExtras().getBoolean(getString(R.string.recommended));
+            final boolean recommended = getIntent().getExtras().getBoolean("RECOMMENDED");
             if(recommended) {
               eventSelect  = persistentUserInfo.getEventRecommended(eventSelectId);
 

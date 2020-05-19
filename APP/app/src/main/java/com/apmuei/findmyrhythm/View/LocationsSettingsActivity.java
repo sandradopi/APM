@@ -43,7 +43,7 @@ public class LocationsSettingsActivity extends AppCompatActivity implements Adap
 
         Bundle b = getIntent().getExtras();
         //if (b.getStringArrayList("GENRES") != null)
-        selectedProvinces = b.getStringArrayList(getString(R.string.LOCATIONS));
+        selectedProvinces = b.getStringArrayList("LOCATIONS");
         for (String i : selectedProvinces) {
             addProvince(i);
         }
@@ -112,7 +112,7 @@ public class LocationsSettingsActivity extends AppCompatActivity implements Adap
 
         //TODO: PASS TO THE GENRES CLASS THE ARRAYlIST OF LOCATIONS AND WHEN ALL THE INFORMATION IS KNOWN ADD THE USER IN THE DATABASE.
         Intent intent = new Intent(this, UserSettingsActivity.class);
-        intent.putStringArrayListExtra(getString(R.string.LOCATIONS), selectedProvinces);
+        intent.putStringArrayListExtra("LOCATIONS", selectedProvinces);
         setResult(RESULT_OK, intent);
         finish();
 

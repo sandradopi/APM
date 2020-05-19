@@ -170,7 +170,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         // boolean isPresent = Geocoder.isPresent();
 
         //No tengo claro si se deberia hacer así
-        final String eventSelectId = getIntent().getStringExtra(getString(R.string.EVENT));
+        final String eventSelectId = getIntent().getStringExtra("EVENT");
         if (eventSelectId != null && !eventSelectId.isEmpty()) {
             toolbarTitle.setText(getString(R.string.edit_event));
             modifyEvent = true;
@@ -203,8 +203,8 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
 
         } else {
             // Set organizer location as default location
-            SharedPreferences preferences = getSharedPreferences(getString(R.string.preferences), MODE_PRIVATE);
-            String organizerLocationName = preferences.getString(getString(R.string.pref_location), null);
+            SharedPreferences preferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
+            String organizerLocationName = preferences.getString("fb_id", null);
 
             addressTextView.setText(organizerLocationName);
             new GeocoderAsyncTask(this, organizerLocationName).execute();
@@ -601,8 +601,8 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         @Override
         protected Event doInBackground(Void... voids) {
             // Get the id of the organizer
-            SharedPreferences preferences = getSharedPreferences(getString(R.string.preferences), MODE_PRIVATE);
-            final String organizerId = preferences.getString(getString(R.string.pref_fb_id), null);
+            SharedPreferences preferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
+            final String organizerId = preferences.getString("fb_id", null);
 
           //  eventDate = calendar.getTime();
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -640,7 +640,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             String eventJson = (new Gson()).toJson(event);
             // Start the activity to show the event info
             Intent intent = new Intent(CreateEventActivity.this, OrganizerEventInfoActivity.class);
-            intent.putExtra(getString(R.string.EVENT), event.getId());
+            intent.putExtra("EVENT", event.getId());
             startActivity(intent);
             finish();
         }
@@ -657,8 +657,8 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         @Override
         protected Event doInBackground(Void... voids) {
             // Get the id of the organizer
-            SharedPreferences preferences = getSharedPreferences(getString(R.string.preferences), MODE_PRIVATE);
-            final String organizerId = preferences.getString(getString(R.string.pref_fb_id), null);
+            SharedPreferences preferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
+            final String organizerId = preferences.getString("fb_id", null);
 
             //bitmapEncoded = NO_IMAGE;
             //String path= imageUri.getEncodedPath();
@@ -690,7 +690,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             String eventJson = (new Gson()).toJson(event);
             // Start the activity to show the event info
             Intent intent = new Intent(CreateEventActivity.this, OrganizerEventInfoActivity.class);
-            intent.putExtra(getString(R.string.EVENT), event.getId());
+            intent.putExtra("EVENT", event.getId());
             startActivity(intent);
             finish();
         }
