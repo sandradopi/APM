@@ -46,56 +46,65 @@ import java.util.Date;
 
 public class FinishedEventInfoActivity extends AppCompatActivity implements ScoreEventDialog.ScoreEventListener {
     private static final String TAG = "Score Event";
-    TextView name, date, descripcion, ubication, time,category;
-    Photo photoEvent;
-    PhotoService photoService= new PhotoService();
-    EventService eventService= new EventService();
-    Event eventSelect;
-    Event eventRecommeded;
-    ArrayList<Rating> ratings = new ArrayList<>();
-    ArrayList<String> comments = new ArrayList<>();
-    ArrayList<Float> scores = new ArrayList<>();
-    Rating rated;
-    Button rateButton;
+    private Event eventSelect;
+    private ArrayList<Rating> ratings = new ArrayList<>();
+    private ArrayList<String> comments = new ArrayList<>();
+    private ArrayList<Float> scores = new ArrayList<>();
+    private Rating rated;
+    private Button rateButton;
+    private String accountType;
 
-    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //View
+        // View
         setContentView(R.layout.activity_finished_event_info);
 
-        //ToolBar
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.layout_actionbar_empty);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        // ToolBar
+        ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null : "ActionBar is null";
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        actionBar.setCustomView(R.layout.layout_actionbar_empty);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
-        //Event
+        rateButton = findViewById(R.id.rateButton);
+
+        // Event
         final String eventSelectId = getIntent().getStringExtra("EVENT");
         SharedPreferences sharedPreferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
-        final String account_type = sharedPreferences.getString("account_type", null);
+        accountType = sharedPreferences.getString("account_type", null);
 
-        rateButton = (Button) findViewById(R.id.rateButton);
-
-        if (account_type.equals(getString(R.string.org))) {
+        assert accountType != null : "Invalid Account Type (null)";
+        if (accountType.equals("organizer")) {
 
             PersistentOrganizerInfo persistentInfo = PersistentOrganizerInfo.getPersistentOrganizerInfo(getApplicationContext());
             eventSelect = persistentInfo.getEvent(eventSelectId);
 
             rateButton.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             PersistentUserInfo persistentInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
             eventSelect = persistentInfo.getEvent(eventSelectId);
-            //If event is already rated
-            if (persistentInfo.getRatedEvents().contains(eventSelect.getId())) {
-                rateButton.setText(getString(R.string.rated_btn));
+            if (eventSelect != null) {
+                if (persistentInfo.getRatedEvents().contains(eventSelect.getId())) {
+                    rateButton.setText(getString(R.string.rated_btn));
+                }
             }
         }
 
 
+        if (eventSelect == null) {
+            new getEvent().execute(eventSelectId);
+            rateButton.setText(getString(R.string.rate_btn));
+        } else {
+            fillEventInfo(accountType);
+        }
 
+    }
+
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void fillEventInfo(final String accountType) {
         new isRated().execute();
         new getPhoto().execute();
 
@@ -103,13 +112,13 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
         new getUsers().execute();
 
 
-        name = findViewById(R.id.eventName);
-        date =  findViewById(R.id.eventDate);
-        descripcion = findViewById(R.id.eventDescContent);
+        final TextView name = findViewById(R.id.eventName);
+        TextView date = findViewById(R.id.eventDate);
+        TextView descripcion = findViewById(R.id.eventDescContent);
         descripcion.setMovementMethod(new ScrollingMovementMethod());
-        ubication = findViewById(R.id.eventLocationContent);
-        time = findViewById(R.id.eventTime);
-        category = findViewById(R.id.category);
+        TextView ubication = findViewById(R.id.eventLocationContent);
+        TextView time = findViewById(R.id.eventTime);
+        TextView category = findViewById(R.id.category);
 
 
         name.setText(eventSelect.getName());
@@ -131,7 +140,7 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
         rateButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch (View view, MotionEvent event) {
-                if (account_type.equals(getString(R.string.usr))) {
+                if (accountType.equals(getString(R.string.usr))) {
                     if (event.getAction() == MotionEvent.ACTION_UP) {
                         FragmentManager fragmentManager = getSupportFragmentManager();
                         ScoreEventDialog dialog = new ScoreEventDialog().newInstance(name.getText().toString(), eventSelect.getId(), rated);
@@ -140,9 +149,10 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
                 }
                 return true;
             }
-        });
 
+        });
     }
+
 
     @Override
     public void onDialogPositiveClick() {
@@ -155,51 +165,45 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
 
     }
 
-    private class getPhoto extends AsyncTask<Void, Void, Void> {
 
-        final String eventSelectId = getIntent().getStringExtra("EVENT");
-        final PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
+
+
+    //================================================================================
+    // AsyncTasks
+    //================================================================================
+
+    private class getPhoto extends AsyncTask<Void, Void, Photo> {
 
         @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
+        protected Photo doInBackground(Void... voids) {
+            PhotoService photoService= new PhotoService();
+            Photo eventPhoto = photoService.getPhoto(eventSelect.getEventImage());
+            return eventPhoto;
         }
 
         @Override
-        protected Void doInBackground(Void... voids) {
-            Event eventSelect;
-            eventSelect = persistentUserInfo.getEvent(eventSelectId);
+        protected void onPostExecute(Photo eventPhoto) {
 
-
-            photoEvent = photoService.getPhoto(eventSelect.getEventImage());
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-
-            byte[] decodedString = Base64.decode(photoEvent.getEventImage(),Base64.NO_WRAP);
+            byte[] decodedString = Base64.decode(eventPhoto.getEventImage(),Base64.NO_WRAP);
             InputStream inputStream  = new ByteArrayInputStream(decodedString);
             Bitmap bitmap  = BitmapFactory.decodeStream(inputStream);
             Bitmap imagenFinal = Bitmap.createScaledBitmap(bitmap,242,152,false);
             final ImageView imageEvent =  findViewById(R.id.imageEvent);
             imageEvent.setImageBitmap(imagenFinal);
 
-
         }
     }
-
 
 
     private class getRatingsMedia extends AsyncTask<Void, Void, Void> {
 
         RatingService ratingService = new RatingService();
         Float ratingsMedia;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -214,18 +218,13 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
         }
     }
 
+
     private class getComments extends AsyncTask<Void, Void, Void> {
-
-        RatingService ratingService = new RatingService();
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
 
         @Override
         protected Void doInBackground(Void... voids) {
             ratings.clear();
+            RatingService ratingService = new RatingService();
             ratings = ratingService.getRatingsByEvent(eventSelect.getId());
 
             return null;
@@ -244,68 +243,66 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
         }
     }
 
-    private class getUsers extends AsyncTask<Void, Void, Void> {
 
-        UserService userService = new UserService();
-        ArrayList<User> users = new ArrayList<>();
+    private class getUsers extends AsyncTask<Void, Void, ArrayList<User>> {
 
         @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
+        protected ArrayList<User> doInBackground(Void... voids) {
+            ArrayList<User> users = new ArrayList<>();
+            UserService userService = new UserService();
 
-        @Override
-        protected Void doInBackground(Void... voids) {
             for (Rating r : ratings) {
                 try {
                     users.add(userService.getUser(r.getUserId()));
                 } catch (InstanceNotFoundException e) {
                     Log.e(TAG, getString(R.string.existing_id));
-                    return null;
+                    return users;
                 }
             }
-            return null;
+            return users;
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
+        protected void onPostExecute(ArrayList<User> users) {
             ArrayList<String> names = new ArrayList<String>();
             for (User u: users) {
                 names.add(u.getName());
             }
-            final ListView listview = (ListView) findViewById(R.id.ratingList);
+            final ListView listview = findViewById(R.id.ratingList);
             RatingsAdapter adapter = new RatingsAdapter(getApplicationContext(), comments, scores, names);
             listview.setAdapter(adapter);
         }
     }
 
+
     private class isRated extends AsyncTask<Void, Void, Void> {
-
-        final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        RatingService ratingService = new RatingService();
-
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
 
         @Override
         protected Void doInBackground(Void... voids) {
+            RatingService ratingService = new RatingService();
+            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
             rated = ratingService.isRated(currentUser.getUid(), eventSelect.getId());
             return null;
         }
+    }
+
+
+    private class getEvent extends AsyncTask<String, Void, Event> {
 
         @Override
-        protected void onPostExecute(Void aVoid) {
-
+        protected Event doInBackground(String... ids) {
+            String id = ids[0];
+            EventService eventService = new EventService();
+            return eventService.getEvent(id);
         }
+
+        @Override
+        protected void onPostExecute(final Event event) {
+            eventSelect = event;
+            fillEventInfo(accountType);
+        }
+
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        finish();
-        return true;
-    }
 
 }

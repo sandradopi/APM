@@ -37,7 +37,7 @@
             android:layout_marginBottom="20dp"
             android:gravity="center"
             android:buttonTint="@color/primary700"
-            android:text="Mostrar eventos pasados" />
+            android:text="Mostrar también eventos pasados" />
     </LinearLayout>
 
 

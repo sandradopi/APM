@@ -61,6 +61,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Objects;
@@ -377,7 +378,15 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
                         assert event != null;
                         Log.d(TAG + " >>> ", event.getId());
 
-                        Intent intent = new Intent(SearchEventsActivity.this, EventInfoActivity.class);
+                        Date currentDate = new Date();
+
+                        Intent intent;
+                        if (currentDate.after(event.getEventDate())) {
+                            intent = new Intent(SearchEventsActivity.this, FinishedEventInfoActivity.class);
+                        } else {
+                            intent = new Intent(SearchEventsActivity.this, EventInfoActivity.class);
+                        }
+
                         intent.putExtra("EVENT", event.getId());
                         intent.putExtra("RECOMMENDED", false);
                         startActivity(intent);
