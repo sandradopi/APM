@@ -312,7 +312,7 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
                     currentSearchFilters.setSearchText(searchText);
 
                     // Remove all markers from map
-                    mMap.clear();
+                    hideMarkersFromMap();  // mMap.clear();
 
                     new getEventsByTitle().execute(currentSearchFilters);
 
@@ -552,6 +552,12 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
         });
     }
 
+    private void hideMarkersFromMap() {
+        for (EventMarker eventMarker : eventMarkersSet) {
+            // Log.e(TAG, eventMarker.event.getName() +" "+eventMarker.marker);
+            eventMarker.remove();
+        }
+    }
 
     //================================================================================
     // Permissions
