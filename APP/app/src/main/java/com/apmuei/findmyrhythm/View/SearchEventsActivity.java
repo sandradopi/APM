@@ -242,27 +242,9 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
                 }
             }
         }
-//        if (! searchText.isEmpty()) {
-//            if (! currentSearchFilters.equals(searchFilters)) {
-//                mMap.clear();
-//                currentSearchFilters = searchFilters;
-//                new getEventsByTitle().execute(searchFilters);
-//            }
-//        } else {
-//            // Apply filters if they are different
-//            if (! searchFilters.equals(currentSearchFilters)) {
-//                Log.e(TAG, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> finishEvent - " + searchFilters.getShowPastEvents());
-//                // Filter events by date
-//                currentSearchFilters = searchFilters;
-//
-//                for (EventMarker eventMarker : eventMarkersSet) {
-//                    applyFiltersToEventMarker(eventMarker, searchFilters);
-//                }
-//
-//            }
-//        }
 
     }
+
 
     @Override
     public String getSearchText() {
@@ -270,7 +252,7 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
     }
 
 
-    private boolean applyFiltersToEventMarker(EventMarker eventMarker, SearchFilters searchFilters) {
+    private void applyFiltersToEventMarker(EventMarker eventMarker, SearchFilters searchFilters) {
 
         boolean filtered = SearchFilters.applyFiltersToEvent(eventMarker.event, searchFilters);
 
@@ -279,8 +261,6 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
         } else {
             eventMarker.addToMap(mMap);
         }
-
-        return filtered;
 
     }
 
@@ -394,6 +374,18 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
                     }
                 });
                 return v;
+            }
+        });
+
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener()
+        {
+            @Override
+            public void onMapClick(LatLng arg0)
+            {
+                InputMethodManager inputManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                View view = getCurrentFocus();
+                assert view != null : "View is null";
+                inputManager.hideSoftInputFromWindow(view.getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
             }
         });
 

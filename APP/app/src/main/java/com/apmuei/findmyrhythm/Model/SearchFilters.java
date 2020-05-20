@@ -22,6 +22,15 @@ public class SearchFilters {
         this.genres = genres;
     }
 
+    // Copy constructor
+    public SearchFilters(SearchFilters searchFilters) {
+        this.searchText = searchFilters.getSearchText();
+        this.showPastEvents = searchFilters.getShowPastEvents();
+        this.minPrize = searchFilters.getMinPrize();
+        this.maxPrize = searchFilters.getMaxPrize();
+        this.genres = searchFilters.getGenres();
+    }
+
     public boolean getShowPastEvents() {
         return showPastEvents;
     }
