@@ -225,11 +225,9 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
      */
     @Override
     public void applyFilters(SearchFilters searchFilters) {
-        String searchText = searchEditText.getText().toString();
-        searchFilters.setSearchText(searchText);
 
         if (! currentSearchFilters.equals(searchFilters)) {
-            if (! searchText.isEmpty()) {
+            if (! searchFilters.getSearchText().isEmpty()) {
                 mMap.clear();
                 currentSearchFilters = searchFilters;
                 new getEventsByTitle().execute(searchFilters);
@@ -265,10 +263,13 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
 
     }
 
+    @Override
+    public String getSearchText() {
+        return searchEditText.getText().toString();
+    }
+
 
     private boolean applyFiltersToEventMarker(EventMarker eventMarker, SearchFilters searchFilters) {
-
-        searchFilters.setSearchText(searchEditText.getText().toString().toLowerCase());
 
         boolean filtered = SearchFilters.applyFiltersToEvent(eventMarker.event, searchFilters);
 
@@ -328,7 +329,6 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
                     mMap.clear();
 
                     SearchFilters searchFilters = currentSearchFilters;
-                    searchFilters.setSearchText(searchEditText.getText().toString());
 
                     if (! currentSearchFilters.equals(searchFilters)) {
                         new getEventsByTitle().execute(currentSearchFilters);

@@ -125,18 +125,21 @@ public class SearchFiltersDialogFragment extends DialogFragment {
         for (CheckBox genreCheckbox : genresCheckboxes) {
             if (genreCheckbox.isChecked()) {
                 genres.add(genreCheckbox.getText().toString());
-                Log.e(TAG, ">>>>" + genreCheckbox.getText().toString());
             }
         }
 
-        Log.e(TAG, "Filters: " + genres + " " + showPast + " "+ minPrize + "-" + maxPrize);
+        String searchText = filtersDialogInterface.getSearchText();
 
-        return new SearchFilters(showPast, minPrize, maxPrize, genres);
+        SearchFilters searchFilters = new SearchFilters(searchText, showPast, minPrize, maxPrize, genres);
+
+        Log.e(TAG, "Filters: " + searchFilters);
+
+        return searchFilters;
     }
 
     public static SearchFilters getDefaultFilters(Activity activity) {
         HashSet<String> genres = new HashSet<>(Arrays.asList(activity.getResources().getStringArray(R.array.categories)));
-        return new SearchFilters(false, 0, 10000, genres);
+        return new SearchFilters("",false, 0, 10000, genres);
     }
 
     private void restorePreviousFilters() {

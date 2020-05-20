@@ -1,23 +1,21 @@
 package com.apmuei.findmyrhythm.Model;
 
-import java.util.ArrayList;
+import androidx.annotation.NonNull;
+
 import java.util.Date;
 import java.util.HashSet;
 
 
 public class SearchFilters {
 
-    private boolean showPastEvents = false;
-    private String searchText = "";
-    private int minPrize = 0;
-    private int maxPrize = 10000;
-    private HashSet<String> genres = new HashSet<>();
+    private String searchText;
+    private boolean showPastEvents;
+    private int minPrize;
+    private int maxPrize;
+    private HashSet<String> genres;
 
-    public SearchFilters(boolean showPastEvents) {
-        this.showPastEvents = showPastEvents;
-    }
-
-    public SearchFilters(boolean showPastEvents, int minPrize, int maxPrize, HashSet<String> genres) {
+    public SearchFilters(String searchText, boolean showPastEvents, int minPrize, int maxPrize, HashSet<String> genres) {
+        this.searchText = searchText;
         this.showPastEvents = showPastEvents;
         this.minPrize = minPrize;
         this.maxPrize = maxPrize;
@@ -98,5 +96,9 @@ public class SearchFilters {
         return filtered;
     }
 
-
+    @NonNull
+    @Override
+    public String toString() {
+        return "<" + searchText +"> "+ showPastEvents  + " "+ minPrize + "-" + maxPrize + " " + genres;
+    }
 }
