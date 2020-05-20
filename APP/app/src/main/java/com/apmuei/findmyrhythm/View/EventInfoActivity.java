@@ -46,6 +46,7 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
     TextView name, date, description, location, genre, time, eventMaxAttendees, eventPrice;
     Boolean isSignedUp = false;
     Event eventSelect;
+    EventService eventService = new EventService();
     User user;
 
     @Override
@@ -81,7 +82,7 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
         final String eventSelectId = getIntent().getStringExtra("EVENT");
 
         if(recommended) {
-            eventSelect  = persistentUserInfo.getEventRecommended(eventSelectId);
+            new getEvent().execute(eventSelectId);
         } else {
              eventSelect = persistentUserInfo.getEvent(eventSelectId);
         }
@@ -204,15 +205,15 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
         protected Photo doInBackground(Void... voids) {
             Event eventSelect;
             final boolean recommended = getIntent().getExtras().getBoolean("RECOMMENDED");
-            if(recommended) {
-              eventSelect  = persistentUserInfo.getEventRecommended(eventSelectId);
+            if(!recommended) {
+                eventSelect = eventService.getEvent(eventSelectId);
 
             } else{
-              eventSelect = persistentUserInfo.getEvent(eventSelectId);
+                eventSelect = persistentUserInfo.getEvent(eventSelectId);
             }
 
             if (eventSelect == null) {
-                EventService eventService = new EventService();
+
                 eventSelect = eventService.getEvent(eventSelectId);
             }
             PhotoService photoService = new PhotoService();
@@ -234,6 +235,8 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
     }
 
 
+
+
     private class unSubscribe extends AsyncTask<Void, Void, Void> {
         final PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
 
@@ -253,9 +256,7 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
                 Log.e("DEBUG", "InstanceNotFoundException");
             }
 
-            if (user.getSubscribedGenres().contains(eventSelect.getGenre()) && user.getSubscribedLocations().contains(eventSelect.getLocation())) {
-                persistentUserInfo.addUniqueEventRecommended(getApplicationContext(), eventSelect);
-            }
+
 
             isSignedUp = false;
             return null;
@@ -274,7 +275,6 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
             AttendeeService attendeeService = new AttendeeService();
             attendeeService.createAttendee(currentUser.getUid(), eventSelect.getId());
             persistentUserInfo.addEvent(getApplicationContext(),eventSelect);
-            persistentUserInfo.deleteRecommendedEvent(getApplicationContext(), eventSelect);
             isSignedUp = true;
 
             return null;

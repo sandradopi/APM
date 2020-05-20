@@ -180,7 +180,7 @@ public class EventNotificationListener implements ValueEventListener {
                     if (userLoaded && i > 1 && checkValidEvent(event)) {
 
                         lastEventId = event.getId();
-                        persistentUserInfo.addUniqueEventRecommended(mContext, event);
+                        //persistentUserInfo.addUniqueEventRecommended(mContext, event);
                         sendNotification(event);
                     }
 

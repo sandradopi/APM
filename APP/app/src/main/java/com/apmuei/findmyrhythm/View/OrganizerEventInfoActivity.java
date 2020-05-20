@@ -129,12 +129,9 @@ public class OrganizerEventInfoActivity extends AppCompatActivity implements OnM
         @Override
         protected Void doInBackground(Void... voids) {
             Event eventSelect;
-            final boolean recommended = getIntent().getExtras().getBoolean("RECOMMENDED");
-            if(recommended) {
-                eventSelect  = persistentUserInfo.getEventRecommended(eventSelectId);
-            } else{
-                eventSelect = persistentUserInfo.getEvent(eventSelectId);
-            }
+
+            eventSelect = persistentUserInfo.getEvent(eventSelectId);
+
 
             photoEvent = photoService.getPhoto(eventSelect.getEventImage());
             return null;

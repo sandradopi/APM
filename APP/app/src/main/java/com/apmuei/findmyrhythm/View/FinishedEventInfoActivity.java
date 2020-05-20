@@ -22,6 +22,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.apmuei.findmyrhythm.Model.Event;
+import com.apmuei.findmyrhythm.Model.EventService;
 import com.apmuei.findmyrhythm.Model.Exceptions.InstanceNotFoundException;
 import com.apmuei.findmyrhythm.Model.PersistentOrganizerInfo;
 import com.apmuei.findmyrhythm.Model.PersistentUserInfo;
@@ -48,7 +49,9 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
     TextView name, date, descripcion, ubication, time,category;
     Photo photoEvent;
     PhotoService photoService= new PhotoService();
+    EventService eventService= new EventService();
     Event eventSelect;
+    Event eventRecommeded;
     ArrayList<Rating> ratings = new ArrayList<>();
     ArrayList<String> comments = new ArrayList<>();
     ArrayList<Float> scores = new ArrayList<>();
@@ -165,13 +168,8 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
         @Override
         protected Void doInBackground(Void... voids) {
             Event eventSelect;
-            final boolean recommended = getIntent().getExtras().getBoolean("RECOMMENDED");
-            if(recommended) {
-                eventSelect  = persistentUserInfo.getEventRecommended(eventSelectId);
+            eventSelect = persistentUserInfo.getEvent(eventSelectId);
 
-            } else{
-                eventSelect = persistentUserInfo.getEvent(eventSelectId);
-            }
 
             photoEvent = photoService.getPhoto(eventSelect.getEventImage());
             return null;
@@ -190,6 +188,8 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
 
         }
     }
+
+
 
     private class getRatingsMedia extends AsyncTask<Void, Void, Void> {
 

@@ -320,8 +320,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             PersistentUserInfo persistentUserInfo = new PersistentUserInfo(user[0].getId(),user[0].getName(),
                     user[0].getUsername(),user[0].getEmail(), user[0].getBiography(), user[0].getBirthdate(),
-                    user[0].getSubscribedLocations(), user[0].getSubscribedGenres(), events,
-                    new ArrayList<Event>(), ratedEvents);
+                    user[0].getSubscribedLocations(), user[0].getSubscribedGenres(), events, ratedEvents);
 
             PersistentUserInfo.setPersistentUserInfo(getApplicationContext(), persistentUserInfo);
 
