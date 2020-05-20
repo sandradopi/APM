@@ -61,20 +61,19 @@ public class SearchFiltersDialogFragment extends DialogFragment {
 
         mView = view;
 
+        // Reset all View elements
+        genresCheckboxes = new HashSet<>();
         showPastEventsCheckBox = mView.findViewById(R.id.checkBox_show_past_events);
-        showPastEventsCheckBox.setSaveEnabled(false);
-        showPastEventsCheckBox.setChecked(previousFilters.getShowPastEvents());
 
         minPrizeEditText = mView.findViewById(R.id.min_prize);
         maxPrizeEditText = mView.findViewById(R.id.max_prize);
 
         for (Integer id : genresViewIds) {
             CheckBox genreCheckBox = mView.findViewById(id);
-            genreCheckBox.setSaveEnabled(false);
-            genreCheckBox.setChecked(previousFilters.getGenres().contains(genreCheckBox.getText().toString()));
             genresCheckboxes.add(genreCheckBox);
         }
 
+        restorePreviousFilters();
 
         Button applyFiltersButton = mView.findViewById(R.id.apply);
         applyFiltersButton.setOnClickListener(new View.OnClickListener() {
@@ -126,10 +125,11 @@ public class SearchFiltersDialogFragment extends DialogFragment {
         for (CheckBox genreCheckbox : genresCheckboxes) {
             if (genreCheckbox.isChecked()) {
                 genres.add(genreCheckbox.getText().toString());
+                Log.e(TAG, ">>>>" + genreCheckbox.getText().toString());
             }
         }
 
-        Log.e(TAG, "########" + genres);
+        Log.e(TAG, "Filters: " + genres + " " + showPast + " "+ minPrize + "-" + maxPrize);
 
         return new SearchFilters(showPast, minPrize, maxPrize, genres);
     }
@@ -148,21 +148,6 @@ public class SearchFiltersDialogFragment extends DialogFragment {
         minPrizeEditText.setText(String.valueOf(previousFilters.getMinPrize()));
         maxPrizeEditText.setText(String.valueOf(previousFilters.getMaxPrize()));
     }
-
-
-
-    /** The system calls this only when creating the layout in a dialog. */
-//    @NonNull
-//    @Override
-//    public Dialog onCreateDialog(Bundle savedInstanceState) {
-//        // The only reason you might override this method when using onCreateView() is
-//        // to modify any dialog characteristics. For example, the dialog includes a
-//        // title by default, but your custom layout might not need it. So here you can
-//        // remove the dialog title, but you must call the superclass to get the Dialog.
-//        Dialog dialog = super.onCreateDialog(savedInstanceState);
-//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        return dialog;
-//    }
 
 }
 

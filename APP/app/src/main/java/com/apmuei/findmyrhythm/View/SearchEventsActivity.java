@@ -76,9 +76,13 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
     // Sensors:
     private SensorManager sensorManager;
     private Sensor light;
+    private int numLightSensorChanges = 0;
 
     // GUI:
     private EditText searchEditText;
+
+    // Map style
+    boolean isMapStyleDark = false;
 
     // Map and location:
     private LocationRequest locationRequest;
@@ -169,23 +173,44 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         float amountOfLight = sensorEvent.values[0];
+
         if (sensorEvent.sensor.getType() == Sensor.TYPE_LIGHT) {
+            numLightSensorChanges++;
+            boolean success = true;
 
-            boolean success;
+            // Check value every 10 updates to do not overload activity
+            if (numLightSensorChanges >= 10) {
+                numLightSensorChanges = 0;
 
-            if (amountOfLight > 50){
+                if (mMap != null) {
+                    if (amountOfLight > 50){
+                        // If style is not already light, set light style
+                        if (isMapStyleDark) {
+                            success = mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this,
+                                    R.raw.style_json_default));
+                            isMapStyleDark = false;
+                        }
 
-                if(mMap!=null){
-                    success = mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this,
-                            R.raw.style_json_default));
+                    } else {
+                        // If style is not already dark, set dark style
+                        if (! isMapStyleDark) {
+                            success = mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this,
+                                    R.raw.style_json));
+                            isMapStyleDark = true;
+                        }
+
+                    }
+
+                } else {
+                    // Map is null, so style cannot be set
+                    success = false;
                 }
 
-            } else {
-                if(mMap!=null){
-                    success = mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this,
-                            R.raw.style_json));
+                if (! success) {
+                    Log.e(TAG, "Map style could not be set.");
                 }
             }
+
         }
 
     }
@@ -203,15 +228,12 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
         String searchText = searchEditText.getText().toString();
         searchFilters.setSearchText(searchText);
 
-        if (! searchText.isEmpty()) {
-            mMap.clear();
-
-            currentSearchFilters = searchFilters;
-
-            new getEventsByTitle().execute(searchFilters);
-        } else {
-            // Apply filters if they are different
-            if (! searchFilters.equals(currentSearchFilters)) {
+        if (! currentSearchFilters.equals(searchFilters)) {
+            if (! searchText.isEmpty()) {
+                mMap.clear();
+                currentSearchFilters = searchFilters;
+                new getEventsByTitle().execute(searchFilters);
+            } else {
                 Log.e(TAG, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> finishEvent - " + searchFilters.getShowPastEvents());
                 // Filter events by date
                 currentSearchFilters = searchFilters;
@@ -219,9 +241,27 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
                 for (EventMarker eventMarker : eventMarkersSet) {
                     applyFiltersToEventMarker(eventMarker, searchFilters);
                 }
-
             }
         }
+//        if (! searchText.isEmpty()) {
+//            if (! currentSearchFilters.equals(searchFilters)) {
+//                mMap.clear();
+//                currentSearchFilters = searchFilters;
+//                new getEventsByTitle().execute(searchFilters);
+//            }
+//        } else {
+//            // Apply filters if they are different
+//            if (! searchFilters.equals(currentSearchFilters)) {
+//                Log.e(TAG, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> finishEvent - " + searchFilters.getShowPastEvents());
+//                // Filter events by date
+//                currentSearchFilters = searchFilters;
+//
+//                for (EventMarker eventMarker : eventMarkersSet) {
+//                    applyFiltersToEventMarker(eventMarker, searchFilters);
+//                }
+//
+//            }
+//        }
 
     }
 
@@ -287,9 +327,13 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
                     // Remove all markers from map
                     mMap.clear();
 
-                    currentSearchFilters.setSearchText(searchEditText.getText().toString());
+                    SearchFilters searchFilters = currentSearchFilters;
+                    searchFilters.setSearchText(searchEditText.getText().toString());
 
-                    new getEventsByTitle().execute(currentSearchFilters);
+                    if (! currentSearchFilters.equals(searchFilters)) {
+                        new getEventsByTitle().execute(currentSearchFilters);
+                        currentSearchFilters = searchFilters;
+                    }
 
                     return true;
                 }
