@@ -309,14 +309,12 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
 
                     String searchText = getSearchText();
 
-                    if (! searchText.equals(currentSearchFilters.getSearchText())) {
-                        currentSearchFilters.setSearchText(searchText);
+                    currentSearchFilters.setSearchText(searchText);
 
-                        // Remove all markers from map
-                        mMap.clear();
+                    // Remove all markers from map
+                    mMap.clear();
 
-                        new getEventsByTitle().execute(currentSearchFilters);
-                    }
+                    new getEventsByTitle().execute(currentSearchFilters);
 
                     return true;
                 }
