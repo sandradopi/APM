@@ -115,7 +115,7 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
         final TextView name = findViewById(R.id.eventName);
         TextView date = findViewById(R.id.eventDate);
         TextView descripcion = findViewById(R.id.eventDescContent);
-        descripcion.setMovementMethod(new ScrollingMovementMethod());
+      //  descripcion.setMovementMethod(new ScrollingMovementMethod());
         TextView ubication = findViewById(R.id.eventLocationContent);
         TextView time = findViewById(R.id.eventTime);
         TextView category = findViewById(R.id.category);

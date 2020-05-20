@@ -75,7 +75,55 @@
 
         </LinearLayout>
 
+
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/eventLocation"
+                android:layout_width="192dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/direccion"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/divider5"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="#A38DC3" />
+
+            <TextView
+                android:id="@+id/eventLocationContent"
+                android:layout_width="318dp"
+                android:layout_height="44dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:text="@string/dirPlaya"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+        <TextView
+            android:id="@+id/eventDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"
+            android:text="@string/information"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+        <View
+            android:id="@+id/divider6"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="#A38DC3" />
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -83,27 +131,11 @@
             android:paddingEnd="3sp">
 
 
-            <TextView
-                android:id="@+id/eventDesc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxLines="4"
-                android:scrollbars="vertical"
-                android:text="@string/information"
-                android:textSize="15sp"
-                android:textStyle="bold" />
-
-
-            <View
-                android:id="@+id/divider6"
-                android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:background="#A38DC3" />
 
             <TextView
                 android:id="@+id/eventDescContent"
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="10dp"
                 android:text="@string/example_description"
@@ -200,37 +232,9 @@
             </TableRow>
 
         </LinearLayout>
+        </ScrollView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/eventLocation"
-                android:layout_width="192dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/direccion"
-                android:textSize="15sp"
-                android:textStyle="bold" />
-
-            <View
-                android:id="@+id/divider5"
-                android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:background="#A38DC3" />
-
-            <TextView
-                android:id="@+id/eventLocationContent"
-                android:layout_width="318dp"
-                android:layout_height="44dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="10dp"
-                android:text="@string/dirPlaya"
-                android:textSize="15sp" />
-
-        </LinearLayout>
 
     </LinearLayout>
 

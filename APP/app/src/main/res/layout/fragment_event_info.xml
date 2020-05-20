@@ -58,22 +58,55 @@
                 android:textSize="25sp"
                 android:textStyle="bold" />
 
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
             <TextView
-                android:id="@+id/datos"
+                android:id="@+id/eventLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/information"
+                android:layout_marginTop="10dp"
+                android:text="@string/direccion"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
             <View
-                android:id="@+id/divider"
+                android:id="@+id/divider2"
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
                 android:background="#A38DC3" />
-        </LinearLayout>
 
-        <LinearLayout
+            <TextView
+                android:id="@+id/eventLocationContent"
+                android:layout_marginStart="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:text=""
+                android:textSize="15sp" />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/datos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/information"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="#A38DC3" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -84,8 +117,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="10dp"
-                android:scrollbars="vertical"
-                android:maxLines="4"
                 android:text=""
                 android:textSize="15sp" />
 
@@ -180,37 +211,8 @@
             </TableRow>
 
         </LinearLayout>
+         </ScrollView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/eventLocation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/direccion"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <View
-                android:id="@+id/divider2"
-                android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:background="#A38DC3" />
-
-            <TextView
-                android:id="@+id/eventLocationContent"
-                android:layout_marginStart="6dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="10dp"
-                android:text=""
-                android:textSize="15sp" />
-        </LinearLayout>
 
 
     </LinearLayout>

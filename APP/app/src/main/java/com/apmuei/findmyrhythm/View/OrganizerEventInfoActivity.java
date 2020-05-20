@@ -86,7 +86,7 @@ public class OrganizerEventInfoActivity extends AppCompatActivity implements OnM
         TextView eventDate = findViewById(R.id.eventDate);
         TextView eventLocation = findViewById(R.id.eventLocationContent);
         TextView eventDescrip = findViewById(R.id.eventDescContent);
-        eventDescrip.setMovementMethod(new ScrollingMovementMethod());
+      //  eventDescrip.setMovementMethod(new ScrollingMovementMethod());
         TextView eventTime = findViewById(R.id.eventTime);
         TextView category = findViewById(R.id.category);
 
