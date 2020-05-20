@@ -384,8 +384,9 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
             {
                 InputMethodManager inputManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                 View view = getCurrentFocus();
-                assert view != null : "View is null";
-                inputManager.hideSoftInputFromWindow(view.getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
+                if (view != null) {
+                    inputManager.hideSoftInputFromWindow(view.getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
+                }
             }
         });
 
