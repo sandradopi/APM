@@ -232,7 +232,7 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
                 currentSearchFilters = searchFilters;
                 new getEventsByTitle().execute(searchFilters);
             } else {
-                Log.e(TAG, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> finishEvent - " + searchFilters.getShowPastEvents());
+                Log.d(TAG, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> finishEvent - " + searchFilters.getShowPastEvents());
                 // Filter events by date
                 currentSearchFilters = searchFilters;
 
@@ -325,14 +325,16 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
                         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                     }
 
-                    // Remove all markers from map
-                    mMap.clear();
 
-                    SearchFilters searchFilters = currentSearchFilters;
+                    String searchText = getSearchText();
 
-                    if (! currentSearchFilters.equals(searchFilters)) {
+                    if (! searchText.equals(currentSearchFilters.getSearchText())) {
+                        currentSearchFilters.setSearchText(searchText);
+
+                        // Remove all markers from map
+                        mMap.clear();
+
                         new getEventsByTitle().execute(currentSearchFilters);
-                        currentSearchFilters = searchFilters;
                     }
 
                     return true;
@@ -373,7 +375,7 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
                     public void onInfoWindowClick(Marker marker) {
                         Event event = (Event) marker.getTag();
                         assert event != null;
-                        Log.e(TAG + " >>> ", event.getId());
+                        Log.d(TAG + " >>> ", event.getId());
 
                         Intent intent = new Intent(SearchEventsActivity.this, EventInfoActivity.class);
                         intent.putExtra("EVENT", event.getId());
@@ -393,7 +395,7 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
                     return;
                 }
 
-                Log.e("-------------","Listener 1");
+                Log.d("-------------","Listener 1");
                 VisibleRegion visibleRegion = mMap.getProjection().getVisibleRegion();
                 LatLngBounds mapLatLngBounds = visibleRegion.latLngBounds;
 
@@ -415,12 +417,12 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
                 double latitude = mapLatLngBounds.getCenter().latitude;
                 double longitude = mapLatLngBounds.getCenter().longitude;
 
-                // Toast.makeText(getApplicationContext(),radius+"",Toast.LENGTH_SHORT).show();
-                // Toast.makeText(getApplicationContext(),latitude+ " "+longitude,Toast.LENGTH_SHORT).show();
+                Log.d(TAG, radius+"");
+                Log.d(TAG, latitude+ "-"+longitude);
 
                 getNearbyEvents(new GeoLocation(latitude, longitude), radius);
 
-                Log.e(TAG, eventMarkersSet.toString());
+                Log.d(TAG, eventMarkersSet.toString());
 
             }
         });
@@ -445,30 +447,30 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
                 EventMarker eventMarker = new EventMarker(key);
                 if (! newEventMarkersSet.contains(eventMarker) && ! eventMarkersSet.contains(eventMarker)) {
                     newEventMarkersSet.add(eventMarker);
-                    Log.d("..", String.format("Key %s entered the search area at [%f,%f]", key, location.latitude, location.longitude));
+                    Log.d(TAG, String.format("Key %s entered the search area at [%f,%f]", key, location.latitude, location.longitude));
                 }
             }
 
             @Override
             public void onKeyExited(String key) {
-                System.out.println(String.format("Key %s is no longer in the search area", key));
+                Log.d(TAG, String.format("Key %s is no longer in the search area", key));
             }
 
             @Override
             public void onKeyMoved(String key, GeoLocation location) {
-                System.out.println(String.format("Key %s moved within the search area to [%f,%f]", key, location.latitude, location.longitude));
+                Log.d(TAG, String.format("Key %s moved within the search area to [%f,%f]", key, location.latitude, location.longitude));
             }
 
             @Override
             public void onGeoQueryReady() {
-                System.out.println("All initial data has been loaded and events have been fired!");
+                Log.d(TAG, "All initial data has been loaded and events have been fired!");
                 showMarkersOnMap();
 
             }
 
             @Override
             public void onGeoQueryError(DatabaseError error) {
-                System.err.println("There was an error with this query: " + error);
+                Log.e(TAG, "There was an error with this query: " + error);
             }
         });
 
@@ -588,7 +590,7 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
 
         @Override
         protected void onPostExecute(EventMarker eventMarker) {
-            Log.e(">>>>>>>>>>>>>>>", eventMarker.event.getName());
+            Log.d(">>>>>>>>>>>>>>>", eventMarker.event.getName());
 
             applyFiltersToEventMarker(eventMarker, currentSearchFilters);
             eventMarkersSet.add(eventMarker);

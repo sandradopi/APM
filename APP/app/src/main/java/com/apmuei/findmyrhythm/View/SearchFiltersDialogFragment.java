@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.RatingBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -132,7 +131,7 @@ public class SearchFiltersDialogFragment extends DialogFragment {
 
         SearchFilters searchFilters = new SearchFilters(searchText, showPast, minPrize, maxPrize, genres);
 
-        Log.e(TAG, "Filters: " + searchFilters);
+        Log.d(TAG, "Filters: " + searchFilters);
 
         return searchFilters;
     }
