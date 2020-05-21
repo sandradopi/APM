@@ -1,255 +1,260 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/search_filters_dialog"
-    android:layout_width="match_parent"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="15dp">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:layout_marginBottom="20dp"
-        android:gravity="center"
-        android:textStyle="bold"
-        android:textSize="18sp"
-        android:text="Filtros de búsqueda"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:textStyle="bold|italic"
-        android:text="Fecha"/>
-
+    android:layout_width="match_parent">
 
     <LinearLayout
+        android:id="@+id/search_filters_dialog"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="center_horizontal">
-        <CheckBox
-            android:id="@+id/checkBox_show_past_events"
-            android:layout_width="wrap_content"
+        android:padding="15dp">
+
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:layout_marginBottom="20dp"
             android:gravity="center"
-            android:buttonTint="@color/primary700"
-            android:text="Mostrar también eventos pasados" />
-    </LinearLayout>
-
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:textStyle="bold|italic"
-        android:text="Géneros"/>
-
-    <TableLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
-        <TableRow>
-            <CheckBox
-                android:id="@+id/genre_rock"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:buttonTint="@color/primary700"
-                android:checked="true"
-                android:text="Rock" />
-            <CheckBox
-                android:id="@+id/genre_pop"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:buttonTint="@color/primary700"
-                android:checked="true"
-                android:text="Pop" />
-            <CheckBox
-                android:id="@+id/genre_trap"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/primary700"
-                android:checked="true"
-                android:text="Trap" />
-        </TableRow>
-        <TableRow>
-            <CheckBox
-                android:id="@+id/genre_classical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:buttonTint="@color/primary700"
-                android:checked="true"
-                android:text="Clásica" />
-            <CheckBox
-                android:id="@+id/genre_hiphop"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:buttonTint="@color/primary700"
-                android:checked="true"
-                android:text="Hip-hop" />
-            <CheckBox
-                android:id="@+id/genre_blues"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/primary700"
-                android:checked="true"
-                android:text="Blues" />
-        </TableRow>
-        <TableRow>
-
-            <CheckBox
-                android:id="@+id/genre_dance"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:buttonTint="@color/primary700"
-                android:checked="true"
-                android:text="Dance" />
-            <CheckBox
-                android:id="@+id/genre_indie"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:buttonTint="@color/primary700"
-                android:checked="true"
-                android:text="Indie" />
-            <CheckBox
-                android:id="@+id/genre_reggae"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/primary700"
-                android:checked="true"
-                android:text="Reggae" />
-        </TableRow>
-    </TableLayout>
-
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:layout_marginTop="20dp"
-        android:textStyle="bold|italic"
-        android:text="Precio"/>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:layout_marginEnd="10dp"
-            android:text="Desde"/>
-
-        <EditText
-            android:id="@+id/min_prize"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:inputType="number"
-            android:textCursorDrawable="@drawable/color_cursor"
-            android:backgroundTint="@color/primary"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:layout_marginEnd="10dp"
-            android:text="€      hasta "/>
-
-
-        <EditText
-            android:id="@+id/max_prize"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:inputType="number"
-            android:textCursorDrawable="@drawable/color_cursor"
-            android:backgroundTint="@color/primary"/>
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:text="Filtros de búsqueda"/>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:text="€"/>
-    </LinearLayout>
+            android:textStyle="bold|italic"
+            android:text="Fecha"/>
 
 
-<!--    <TextView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:textColor="@color/black"-->
-<!--        android:layout_marginTop="20dp"-->
-<!--        android:layout_marginBottom="10dp"-->
-<!--        android:textStyle="bold|italic"-->
-<!--        android:text="Puntuación media del organizador"/>-->
-
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:orientation="vertical"-->
-<!--        android:gravity="center">-->
-
-<!--        <androidx.appcompat.widget.AppCompatRatingBar-->
-<!--            android:id="@+id/min_organizer_rating"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:theme="@style/RatingBar"/>-->
-
-<!--        <TextView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:gravity="center"-->
-<!--            android:text="estrellas o más"/>-->
-<!--    </LinearLayout>-->
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:gravity="center">
-
-        <Button
-            android:id="@+id/cancel"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/third_button"
-            android:foreground="?attr/selectableItemBackground"
-            android:padding="0dp"
-            android:clickable="true"
-            android:elevation="3dp"
-            android:minHeight="40dp"
-            android:layout_marginEnd="20dp"
-            android:text="Cancelar"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+            <CheckBox
+                android:id="@+id/checkBox_show_past_events"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:buttonTint="@color/primary700"
+                android:text="Mostrar también eventos pasados" />
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:focusable="true" />
+            android:textStyle="bold|italic"
+            android:text="Géneros"/>
 
-        <Button
-            android:id="@+id/apply"
+        <TableLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/primary_button"
-            android:padding="0dp"
-            android:foreground="?attr/selectableItemBackground"
-            android:clickable="true"
-            android:elevation="3dp"
-            android:minHeight="40dp"
-            android:layout_marginStart="10dp"
-            android:text="Aplicar"
-            android:textColor="@color/white"
-            android:focusable="true" />
+            android:layout_gravity="center_horizontal">
+            <TableRow>
+                <CheckBox
+                    android:id="@+id/genre_rock"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:buttonTint="@color/primary700"
+                    android:checked="true"
+                    android:text="Rock" />
+                <CheckBox
+                    android:id="@+id/genre_pop"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:buttonTint="@color/primary700"
+                    android:checked="true"
+                    android:text="Pop" />
+                <CheckBox
+                    android:id="@+id/genre_trap"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/primary700"
+                    android:checked="true"
+                    android:text="Trap" />
+            </TableRow>
+            <TableRow>
+                <CheckBox
+                    android:id="@+id/genre_classical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:buttonTint="@color/primary700"
+                    android:checked="true"
+                    android:text="Clásica" />
+                <CheckBox
+                    android:id="@+id/genre_hiphop"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:buttonTint="@color/primary700"
+                    android:checked="true"
+                    android:text="Hip-hop" />
+                <CheckBox
+                    android:id="@+id/genre_blues"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/primary700"
+                    android:checked="true"
+                    android:text="Blues" />
+            </TableRow>
+            <TableRow>
+
+                <CheckBox
+                    android:id="@+id/genre_dance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:buttonTint="@color/primary700"
+                    android:checked="true"
+                    android:text="Dance" />
+                <CheckBox
+                    android:id="@+id/genre_indie"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:buttonTint="@color/primary700"
+                    android:checked="true"
+                    android:text="Indie" />
+                <CheckBox
+                    android:id="@+id/genre_reggae"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/primary700"
+                    android:checked="true"
+                    android:text="Reggae" />
+            </TableRow>
+        </TableLayout>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:layout_marginTop="20dp"
+            android:textStyle="bold|italic"
+            android:text="Precio"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:layout_marginEnd="10dp"
+                android:text="Desde"/>
+
+            <EditText
+                android:id="@+id/min_prize"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:inputType="number"
+                android:textCursorDrawable="@drawable/color_cursor"
+                android:backgroundTint="@color/primary"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:layout_marginEnd="10dp"
+                android:text="€      hasta "/>
+
+
+            <EditText
+                android:id="@+id/max_prize"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:inputType="number"
+                android:textCursorDrawable="@drawable/color_cursor"
+                android:backgroundTint="@color/primary"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="€"/>
+        </LinearLayout>
+
+
+    <!--    <TextView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:textColor="@color/black"-->
+    <!--        android:layout_marginTop="20dp"-->
+    <!--        android:layout_marginBottom="10dp"-->
+    <!--        android:textStyle="bold|italic"-->
+    <!--        android:text="Puntuación media del organizador"/>-->
+
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:orientation="vertical"-->
+    <!--        android:gravity="center">-->
+
+    <!--        <androidx.appcompat.widget.AppCompatRatingBar-->
+    <!--            android:id="@+id/min_organizer_rating"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:theme="@style/RatingBar"/>-->
+
+    <!--        <TextView-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:textColor="@color/black"-->
+    <!--            android:gravity="center"-->
+    <!--            android:text="estrellas o más"/>-->
+    <!--    </LinearLayout>-->
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/third_button"
+                android:foreground="?attr/selectableItemBackground"
+                android:padding="0dp"
+                android:clickable="true"
+                android:elevation="3dp"
+                android:minHeight="40dp"
+                android:layout_marginEnd="20dp"
+                android:text="Cancelar"
+                android:textColor="@color/black"
+                android:focusable="true" />
+
+            <Button
+                android:id="@+id/apply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/primary_button"
+                android:padding="0dp"
+                android:foreground="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:elevation="3dp"
+                android:minHeight="40dp"
+                android:layout_marginStart="10dp"
+                android:text="Aplicar"
+                android:textColor="@color/white"
+                android:focusable="true" />
+        </LinearLayout>
+
     </LinearLayout>
 
-
-</LinearLayout>
+</ScrollView>
