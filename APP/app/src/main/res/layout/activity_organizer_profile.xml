@@ -115,7 +115,7 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="#AFBFD0" />
+            android:background="@color/secondary" />
 
     </com.google.android.material.appbar.AppBarLayout>
 

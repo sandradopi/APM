@@ -15,33 +15,6 @@
         android:background="@color/primary700">
 
         <LinearLayout
-            android:id="@+id/orgSettings"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/profiles_border"
-                android:gravity="end">
-
-                <ImageView
-                    android:id="@+id/edit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:src="@drawable/ic_settings"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_gravity="end" />
-
-            </TableRow>
-
-        </LinearLayout>
-
-        <LinearLayout
             android:layout_below="@+id/orgSettings"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -55,7 +28,7 @@
                 android:id="@+id/profile"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight="3"
+                android:layout_weight="4"
                 android:layout_gravity="center_horizontal"
                 android:clickable="true"
                 android:focusable="true"
@@ -108,7 +81,7 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#AFBFD0" />
+            android:background="@color/secondary" />
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/view_pager"

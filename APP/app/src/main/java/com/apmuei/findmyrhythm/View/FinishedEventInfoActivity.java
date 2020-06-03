@@ -68,6 +68,8 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
         actionBar.setCustomView(R.layout.layout_actionbar_empty);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        RatingBar bar=(RatingBar)findViewById(R.id.pastEventScore);
+
         rateButton = findViewById(R.id.rateButton);
 
         // Event
@@ -82,6 +84,8 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
             eventSelect = persistentInfo.getEvent(eventSelectId);
 
             rateButton.setVisibility(View.GONE);
+            bar.setIsIndicator(true);
+
         } else {
             PersistentUserInfo persistentInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
             eventSelect = persistentInfo.getEvent(eventSelectId);

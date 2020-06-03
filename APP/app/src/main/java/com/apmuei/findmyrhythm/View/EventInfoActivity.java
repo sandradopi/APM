@@ -104,7 +104,7 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
         //If is a atendee of the event
         if (persistentUserInfo.getEvents().contains(event)) {
             joinButton.setText(signedUpText);
-            joinButton.setBackgroundColor(getResources().getColor(R.color.join_btn_1));
+            joinButton.setBackgroundColor(getResources().getColor(R.color.primary700));
             isSignedUp = true;
         }
 
@@ -116,12 +116,12 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
                 if(isSignedUp){
                     new unSubscribe().execute();
                     joinButton.setText(toSignUpText);
-                    joinButton.setBackgroundColor(getResources().getColor(R.color.join_btn_2));
+                    joinButton.setBackgroundColor(getResources().getColor(R.color.primaryBackgroundDarker2));
 
                 }else{
                     new Subscribe().execute();
                     joinButton.setText(signedUpText);
-                    joinButton.setBackgroundColor(getResources().getColor(R.color.join_btn_1));
+                    joinButton.setBackgroundColor(getResources().getColor(R.color.primary700));
                 }
 
             }

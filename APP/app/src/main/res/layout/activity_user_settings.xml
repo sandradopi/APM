@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0d1117"
+    android:background="@color/secondaryBackground"
     android:orientation="vertical">
 
     <ScrollView
@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
-                android:textColor="@color/lightgray"
+                android:textColor="@color/textColorSecondary"
                 android:text="@string/name"
                 android:textStyle="bold">
             </TextView>
@@ -31,8 +31,8 @@
                 android:id="@+id/userFullName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColorHint="@color/blueish"
-                android:textColor="@color/lightgray"
+                android:textColorHint="@color/secondary"
+                android:textColor="@color/textColorSecondary"
                 android:hint="@string/add_name"
                 android:textSize="14sp"/>
 
@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:textSize="16sp"
-                android:textColor="@color/lightgray"
+                android:textColor="@color/textColorSecondary"
                 android:text="@string/username"
                 android:textStyle="bold">
             </TextView>
@@ -50,8 +50,8 @@
                 android:id="@+id/userNickname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColorHint="@color/blueish"
-                android:textColor="@color/lightgray"
+                android:textColorHint="@color/secondary"
+                android:textColor="@color/textColorSecondary"
                 android:hint="@string/add_user_name"
                 android:textSize="14sp"/>
 
@@ -60,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:textSize="16sp"
-                android:textColor="@color/lightgray"
+                android:textColor="@color/textColorSecondary"
                 android:text="@string/email2"
                 android:textStyle="bold">
             </TextView>
@@ -69,8 +69,8 @@
                 android:id="@+id/userEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColorHint="@color/blueish"
-                android:textColor="@color/lightgray"
+                android:textColorHint="@color/secondary"
+                android:textColor="@color/textColorSecondary"
                 android:hint="@string/add_email"
                 android:textSize="14sp"/>
 
@@ -79,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:textSize="16sp"
-                android:textColor="@color/lightgray"
+                android:textColor="@color/textColorSecondary"
                 android:text="@string/biography"
                 android:textStyle="bold">
             </TextView>
@@ -88,8 +88,8 @@
                 android:id="@+id/userBiography"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColorHint="@color/blueish"
-                android:textColor="@color/lightgray"
+                android:textColorHint="@color/secondary"
+                android:textColor="@color/textColorSecondary"
                 android:hint="@string/add_local_biography"
                 android:textSize="14sp"/>
 
@@ -98,7 +98,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:textSize="16sp"
-                android:textColor="@color/lightgray"
+                android:textColor="@color/textColorSecondary"
                 android:text="@string/birthdate"
                 android:textStyle="bold">
             </TextView>
@@ -107,8 +107,8 @@
                 android:id="@+id/userBirthdate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColorHint="@color/blueish"
-                android:textColor="@color/lightgray"
+                android:textColorHint="@color/secondary"
+                android:textColor="@color/textColorSecondary"
                 android:hint="@string/add_birthdate"
                 android:textSize="14sp"/>
 

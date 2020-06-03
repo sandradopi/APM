@@ -78,7 +78,7 @@
                 android:id="@+id/divider2"
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
-                android:background="#A38DC3" />
+                android:background="@color/primaryBackgroundDarker" />
 
             <TextView
                 android:id="@+id/eventLocationContent"
@@ -102,7 +102,7 @@
             android:id="@+id/divider"
             android:layout_width="match_parent"
             android:layout_height="3dp"
-            android:background="#A38DC3" />
+            android:background="@color/primaryBackgroundDarker" />
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -138,7 +138,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:textColor="#707070"
+                    android:textColor="@color/secondary"
                     android:textSize="18sp" />
 
             </TableRow>
@@ -162,7 +162,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:text=""
-                    android:textColor="#707070"
+                    android:textColor="@color/secondary"
                     android:textSize="18sp" />
             </TableRow>
 
@@ -184,7 +184,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:textColor="#707070"
+                    android:textColor="@color/secondary"
                     android:textSize="18sp" />
             </TableRow>
 
@@ -206,7 +206,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:textColor="#707070"
+                    android:textColor="@color/secondary"
                     android:textSize="18sp" />
             </TableRow>
 

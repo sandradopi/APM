@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0d1117"
+    android:background="@color/secondaryBackground"
     android:orientation="vertical">
 
     <LinearLayout
@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/genresSettings"
-            android:textColor="@color/lightgray"
+            android:textColor="@color/textColorSecondary"
             android:textSize="25sp"
             android:textStyle="bold" />
 
