@@ -87,8 +87,8 @@ public abstract class MenuDrawerActivity extends AppCompatActivity implements Na
         header.findViewById(R.id.header_title).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MenuDrawerActivity.this, getString(R.string.title_click),
-                        Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MenuDrawerActivity.this, getString(R.string.title_click),
+                        //Toast.LENGTH_SHORT).show();
             }
         });
 

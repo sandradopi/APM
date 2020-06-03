@@ -423,7 +423,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         final String noaccount = (organizer != null) ? "user" : "organizer";
 
         alertDialog.setTitle(R.string.account_exist);
-        alertDialog.setMessage(R.string.account_previous+account+R.string.account_use);
+        alertDialog.setMessage(getString(R.string.account_previous) + account + getString(R.string.account_use));
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Sí",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {

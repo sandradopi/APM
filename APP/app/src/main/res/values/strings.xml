@@ -73,9 +73,9 @@
     <string name="usuario_log">Usuario</string>
     <string name="organicer_log">Organizador</string>
     <string name="account_exist">Cuenta existente</string>
-    <string name="account_previous">Se ha detectado una cuenta previa de </string>
+    <string name="account_previous">Se ha detectado una cuenta previa de\u0020</string>
     <string name="account_use"> , ¿la quieres utilizar?</string>
-    <string name="account_create">Crear cuenta de </string>
+    <string name="account_create">Crear cuenta de\u0020 </string>
 
 
     <string name="two_accounts"> Se han detectado dos cuentas previas: una de usuario y otra de organizador, ¿cuál quieres utilizar?
@@ -134,7 +134,6 @@
     <!-- Menu -->
     <string name="navigation_drawer_open">Abriendo menú</string>
     <string name="navigation_drawer_close">Cerrando menú</string>
-    <string name="title_click">Title click</string>
     <string name="menu_profile">Perfil</string>
     <string name="menu_recommended">Recomendados</string>
     <string name="menu_search">Buscador</string>
