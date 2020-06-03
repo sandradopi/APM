@@ -104,7 +104,7 @@ public class UserLogActivity extends AppCompatActivity implements View.OnClickLi
         service.subscribeEventNotificationListener(this, currentUser.getUid());
 
         //TODO: Intent to new Activity
-        Log.w(TAG, "Creación de la cuenta del usuario");
+        //Log.w(TAG, "Creación de la cuenta del usuario");
         Toast.makeText(UserLogActivity.this, getString(R.string.notiCreation),  Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent(this, UserProfileActivity.class);

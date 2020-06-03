@@ -57,14 +57,12 @@ public class AttendeeService {
         for (String eventID : eventsIDs) {
             Event event = eventService.getEvent(eventID);
             events.add(event);
-            Log.e("DEBUG", eventID);
         }
-        Log.e("DEBUG", events.toString());
+
         return events;
     }
 
     public void deleteAttendeeByEvent(String idEvent) {
-        Log.e("IDSERVICE", idEvent);
         attendeeDAO.deleteAttendeeByEvent(idEvent);
     }
 

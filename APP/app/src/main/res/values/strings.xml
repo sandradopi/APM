@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">FIND MY RHYTHM</string>
-
     <string name="facebook_app_id">134346024586492</string>
     <string name="fb_login_protocol_scheme">fb134346024586492</string>
 
@@ -44,6 +43,8 @@
     <string name="hour4">:</string>
     <string name="toast_created">¡Concierto creado con éxito!</string>
     <string name="toast_modified">¡Concierto modificado con éxito!</string>
+    <string name="mapa">¡Concierto modificado con éxito!</string>
+
 
 
     <!--  EventInfoActivity  -->
@@ -54,12 +55,31 @@
     <string name="people">personas</string>
     <string name="org">organizer</string>
 
+
+
+    <!--  Notification  -->
+    <string name="notificacion">ha creado un evento que te puede interesar!</string>
+    <string name="summary">"Evento Recomendado"</string>
+    <string name="summary_title">"Resumen"</string>
+
+
     <!--  Login  -->
     <string name="titleLogin">Login</string>
     <string name="continue_with_google">Continuar con Google</string>
     <string name="continue_with_facebook">Continuar con Facebook</string>
     <string name="authFail">Autenticación fallada</string>
     <string name="authExi">Autenticación exitosa</string>
+    <string name="select">Selecciona tu cuenta</string>
+    <string name="usuario_log">Usuario</string>
+    <string name="organicer_log">Organizador</string>
+    <string name="account_exist">Cuenta existente</string>
+    <string name="account_previous">Se ha detectado una cuenta previa de </string>
+    <string name="account_use"> , ¿la quieres utilizar?</string>
+    <string name="account_create">Crear cuenta de </string>
+
+
+    <string name="two_accounts"> Se han detectado dos cuentas previas: una de usuario y otra de organizador, ¿cuál quieres utilizar?
+</string>
 
     <!-- FinishedEventInfo -->
     <string name="rate_btn">Valorar</string>
@@ -71,6 +91,33 @@
     <string name="usr">user</string>
     <string name="tag_alert">tagAlerta</string>
     <string name="existing_id">Tried to insert an existing id</string>
+
+    <!-- OrganizerEventInfo -->
+    <string name="info_organizer">Información del evento</string>
+
+    <!-- OrganizerLogActivity -->
+    <string name="fields_complete">Por favor rellene todos los campos</string>
+    <string name="email_format">Formato de email inválido</string>
+    <string name="map_exlore">Explorar en el mapa</string>
+
+    <!-- OrganizerSettingActivity -->
+    <string name="organizer_settings">Ajustes</string>
+
+    <!-- RecommendedEventsActivity -->
+    <string name="recommended">Recomendados</string>
+    <string name="spinner">Estamos buscando los mejores eventos para ti...</string>
+
+    <!-- ScroreEventDialog -->
+    <string name="edit_valoration">Editar valoración del evento </string>
+    <string name="valoration_success">Evento valorado con éxito</string>
+    <string name="valoration_event">Valorar evento</string>
+
+
+    <!-- UserProfileActivity -->
+    <string name="profile_user">Perfil</string>
+
+
+
 
     <!-- Settings -->
     <string name="add_local_name">Introducir nombre del local</string>
@@ -95,6 +142,9 @@
     <string name="menu_settings">Ajustes</string>
     <string name="menu_logout">Cerrar sesión</string>
     <string name="title_activity_search">Map</string>
+    <string name="ask_logout">¿Seguro que quieres cerrar sesión?</string>
+    <string name="menu_option">Opción del menú no implementada!!</string>
+
 
     <!-- Navigation Bottom Bar -->
     <string name="page">1</string>

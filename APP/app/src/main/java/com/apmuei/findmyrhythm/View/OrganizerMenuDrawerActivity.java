@@ -33,7 +33,7 @@ public class OrganizerMenuDrawerActivity extends MenuDrawerActivity {
                     showExitDialog();
                     break;
                 default:
-                    throw new IllegalArgumentException("menu option not implemented!!");
+                    throw new IllegalArgumentException(getString(R.string.menu_option));
             }
         }
 

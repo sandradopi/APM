@@ -100,7 +100,7 @@ public class OrganizerLogActivity extends AppCompatActivity {
                     Manifest.permission.ACCESS_FINE_LOCATION, true);
         }
 
-        exploreMapButton.setText("Explorar en el mapa");
+        exploreMapButton.setText(R.string.map_exlore);
         exploreMapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -126,20 +126,20 @@ public class OrganizerLogActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // Check if every field are covered. If not ask for the user to cover them.
                 if (GenericUtils.isEmpty(name) || GenericUtils.isEmpty(nickname) || GenericUtils.isEmpty(email) || GenericUtils.isEmpty(biography) || (organizerAddressesList.isEmpty())) {
-                    Toast.makeText(OrganizerLogActivity.this, "Por favor rellene todos los campos", Toast.LENGTH_LONG).show();
+                    Toast.makeText(OrganizerLogActivity.this, R.string.fields_complete, Toast.LENGTH_LONG).show();
                     return;
                 }
 
                 // Validate email
                 if (!GenericUtils.isValidEmail(email)) {
-                    email.setError("Formato de email inválido");
+                    email.setError(getString(R.string.email_format));
                     return;
                 }
 
                 //TODO: Introduce into database by getting the value of every field. Check Android Service.
                 createOrganizer();
 
-                Log.w(TAG, "Creación de la cuenta del organizador");
+                //Log.w(TAG, "Creación de la cuenta del organizador");
                 Toast.makeText(OrganizerLogActivity.this, getString(R.string.notiCreation), Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(OrganizerLogActivity.this, OrganizerProfileActivity.class);

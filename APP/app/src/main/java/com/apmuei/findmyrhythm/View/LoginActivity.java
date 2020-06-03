@@ -139,7 +139,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, R.string.authFail, Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
 
@@ -236,7 +236,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                            Toast.makeText(LoginActivity.this, R.string.authFail,
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
@@ -395,24 +395,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     public void showSelectAccountDialog(final User user, final Organizer organizer) {
         AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        alertDialog.setTitle("Selecciona tu cuenta");
-        alertDialog.setMessage("Se han detectado dos cuentas previas: una de usuario y otra de organizador, ¿cuál quieres utilizar?");
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Usuario",
+        alertDialog.setTitle(R.string.select);
+        alertDialog.setMessage(getString(R.string.two_accounts));
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.usuario_log),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         new RecoverUserTask().execute(user);
                     }
                 });
-        /* alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ninguna",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        Intent intent = new Intent(LoginActivity.this, GreetingsActivity.class);
-                        startActivity(intent);
-                    }
-                });*/
-        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Organizador",
+
+
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.organicer_log),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -428,8 +422,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         final String account = (organizer != null) ? "organizer" : "user";
         final String noaccount = (organizer != null) ? "user" : "organizer";
 
-        alertDialog.setTitle("Cuenta existente");
-        alertDialog.setMessage("Se ha detectado una cuenta previa de "+account+", ¿la quieres utilizar?");
+        alertDialog.setTitle(R.string.account_exist);
+        alertDialog.setMessage(R.string.account_previous+account+R.string.account_use);
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Sí",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -440,7 +434,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             new RecoverUserTask().execute(user);
                     }
                 });
-        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Crear cuenta de " + noaccount,
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.account_create) + noaccount,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

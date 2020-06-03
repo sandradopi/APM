@@ -98,7 +98,7 @@ public class EventNotificationListener implements ValueEventListener {
                    .setColor(Color.argb(0, 179, 86, 168))
                    .setContentIntent(pendingIntent)
                    .setGroup(NOTIFICATION_GROUP)
-                   .setStyle(new NotificationCompat.BigTextStyle().bigText(organizer.getName() + " ha creado un evento que te puede interesar!").setSummaryText("Evento Recomendado"))
+                   .setStyle(new NotificationCompat.BigTextStyle().bigText(organizer.getName() + R.string.notificacion).setSummaryText("Evento Recomendado"))
                    .setAutoCancel(true);
 
            NotificationCompat.Builder groupBuilder = new NotificationCompat.Builder(mContext, "myChannel")

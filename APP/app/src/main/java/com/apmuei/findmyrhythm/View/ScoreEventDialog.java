@@ -67,12 +67,12 @@ public class ScoreEventDialog extends DialogFragment {
             bar.setRating(score);
             commentView.setText(comment);
 
-            builder.setTitle("Editar valoración del evento " + eventName)
+            builder.setTitle(R.string.edit_valoration + eventName)
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             rate = bar.getRating();
                             new updateRating().execute();
-                            Toast.makeText(getActivity(), "Evento valorado con éxito",  Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), R.string.valoration_success,  Toast.LENGTH_SHORT).show();
                             Log.w("VALORAR", dialog.toString());
                             listener.onDialogPositiveClick();
                             dialog.cancel();
@@ -85,14 +85,14 @@ public class ScoreEventDialog extends DialogFragment {
         else {
             bar.setRating(0f);
 
-            builder.setTitle("Valorar evento " + eventName)
+            builder.setTitle(R.string.valoration_event + eventName)
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             rate = bar.getRating();
                             new createRating().execute();
                             PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
                             persistentUserInfo.addRatedEvent(getApplicationContext(), eventId);
-                            Toast.makeText(getActivity(), "Evento valorado con éxito",  Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), R.string.valoration_success,  Toast.LENGTH_SHORT).show();
                             Log.w("VALORAR", dialog.toString());
                             listener.onDialogPositiveClick();
                             dialog.cancel();

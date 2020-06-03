@@ -170,7 +170,6 @@ public class EventDAO extends GenericDAO<Event> {
         }
 
         Log.e(TAG, locationEvents.toString());
-        Log.e("DATELESSEVENTS", datelessEvents.toString());
 
         Calendar currentCalendar = Calendar.getInstance();
         Calendar eventCalendar = Calendar.getInstance();
@@ -182,7 +181,6 @@ public class EventDAO extends GenericDAO<Event> {
                 finalEvents.add(event);
         }
 
-        Log.e("FINALEVENTS", datelessEvents.toString());
 
         return finalEvents;
     }

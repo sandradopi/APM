@@ -87,9 +87,6 @@ public class GenresSettingsActivity extends AppCompatActivity implements View.On
 
         if (view == save) {
 
-            /*TODO: CHECK THAT THE GENRES ARRAY HAS AT LEAST 1 GENRE.
-               PASS TO THE FINAL VIEW THE ARRAY WITH THE LOCATIONS AND THE GENRES.
-             */
 
             Intent intent = new Intent(this, UserSettingsActivity.class);
             intent.putStringArrayListExtra("GENRES", selectedGenres);

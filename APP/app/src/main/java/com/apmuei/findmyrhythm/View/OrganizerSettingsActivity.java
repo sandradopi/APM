@@ -30,7 +30,7 @@ public class OrganizerSettingsActivity extends OrganizerMenuDrawerActivity {
         setMenuItemChecked(R.id.nav_settings);
 
         TextView toolbarTitle = findViewById(R.id.toolbar_title);
-        toolbarTitle.setText("Ajustes");
+        toolbarTitle.setText(R.string.organizer_settings);
 
         persistentOrgInfo = PersistentOrganizerInfo.getPersistentOrganizerInfo(getApplicationContext());
 
@@ -62,7 +62,7 @@ public class OrganizerSettingsActivity extends OrganizerMenuDrawerActivity {
 
             @Override
             public void onClick(View view) {
-                Log.w(TAG, "Ha clickeado en guardar ajustes");
+                //Log.w(TAG, "Ha clickeado en guardar ajustes");
 
                 persistentOrgInfo.updateInfo(getApplicationContext(), nameView.getText().toString(), usernameView.getText().toString(), emailView.getText().toString(), biographyView.getText().toString(), locationView.getText().toString());
 

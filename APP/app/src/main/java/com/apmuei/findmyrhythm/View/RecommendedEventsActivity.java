@@ -60,7 +60,7 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
         eventGenre = findViewById(R.id.category);
 
         TextView toolbarTitle = findViewById(R.id.toolbar_title);
-        toolbarTitle.setText("Recomendados");
+        toolbarTitle.setText(R.string.recommended);
 //        toolbarTitle.setGravity(Gravity.CENTER_HORIZONTAL);
 
         new getEvents().execute();
@@ -79,7 +79,7 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progress=ProgressDialog.show(RecommendedEventsActivity.this,"","Estamos buscando los mejores eventos para ti...",false);
+            progress=ProgressDialog.show(RecommendedEventsActivity.this,"",getString(R.string.spinner),false);
         }
 
         @Override
@@ -93,7 +93,6 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
                 User user = userService.getUser(preferences.getString("fb_id", null));
 
                 events = eventService.getRecommendedEvents(user);
-                Log.e("AQUI", events.toString());
                 //persistentUserInfo.addEventRecommended(getApplicationContext(), events);
 
             } catch (InstanceNotFoundException e) {
@@ -108,8 +107,6 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
         protected void onPostExecute(final ArrayList<Event> events) {
             progress.dismiss();
             super.onPostExecute(events);
-
-            Log.e("DEBUG", events.toString());
 
 
             final ArrayList<Event> nextEventsFiltered= new ArrayList<Event>();

@@ -158,8 +158,8 @@ public abstract class MenuDrawerActivity extends AppCompatActivity implements Na
 
     public void showExitDialog() {
         AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        alertDialog.setTitle("Cerrar sesión");
-        alertDialog.setMessage("¿Seguro que quieres cerrar sesión?");
+        alertDialog.setTitle(R.string.menu_logout);
+        alertDialog.setMessage(getString(R.string.ask_logout));
         final String finalProvider = provider;
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Sí",
                 new DialogInterface.OnClickListener() {

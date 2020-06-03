@@ -79,7 +79,7 @@ public class OrganizerProfileActivity extends OrganizerMenuDrawerActivity {
 
             @Override
             public void onClick(View view) {
-                Log.w(TAG, "Ha clickeado en añadir nuevo evento");
+                //Log.w(TAG, "Ha clickeado en añadir nuevo evento");
                 Intent intent = new Intent(OrganizerProfileActivity.this, CreateEventActivity.class);
                 startActivity(intent);
             }

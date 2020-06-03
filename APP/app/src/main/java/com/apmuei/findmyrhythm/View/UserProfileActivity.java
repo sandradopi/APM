@@ -51,7 +51,7 @@ public class UserProfileActivity extends UserMenuDrawerActivity {
         setMenuItemChecked(R.id.nav_profile);
 
         TextView toolbarTitle = findViewById(R.id.toolbar_title);
-        toolbarTitle.setText("Perfil");
+        toolbarTitle.setText(R.string.profile_user);
 
         SharedPreferences preferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
         String userId = preferences.getString("fb_id", null);

@@ -64,7 +64,7 @@ public class UserSettingsActivity extends UserMenuDrawerActivity {
         genres.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.w(TAG, "Ha clickeado en Editar Géneros");
+                //Log.w(TAG, "Ha clickeado en Editar Géneros");
                 Intent intent = new Intent(UserSettingsActivity.this, GenresSettingsActivity.class);
                 intent.putStringArrayListExtra("GENRES", selectedGenres);
                 startActivityForResult(intent, 1);
@@ -76,7 +76,7 @@ public class UserSettingsActivity extends UserMenuDrawerActivity {
         locations.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.w(TAG, "Ha clickeado en Editar Localidades");
+                //Log.w(TAG, "Ha clickeado en Editar Localidades");
 
                 Intent intent = new Intent(UserSettingsActivity.this, LocationsSettingsActivity.class);
                 intent.putStringArrayListExtra("LOCATIONS", selectedLocations);
@@ -90,7 +90,7 @@ public class UserSettingsActivity extends UserMenuDrawerActivity {
         savebutton.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Log.w(TAG, "Ha clickeado en guardar ajustes");
+            //Log.w(TAG, "Ha clickeado en guardar ajustes");
 
             persistentUserInfo.updateInfo(getApplicationContext(), nameView.getText().toString(), usernameView.getText().toString(), emailView.getText().toString(), biographyView.getText().toString(), birthdateView.getText().toString(), selectedLocations, selectedGenres);
 

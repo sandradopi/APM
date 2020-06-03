@@ -51,7 +51,7 @@ public class OrganizerEventInfoActivity extends AppCompatActivity implements OnM
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         TextView toolbarTitle = findViewById(R.id.toolbar_title);
-        toolbarTitle.setText("Información del evento");
+        toolbarTitle.setText(R.string.info_organizer);
 
 
         //Event
@@ -91,7 +91,7 @@ public class OrganizerEventInfoActivity extends AppCompatActivity implements OnM
         TextView category = findViewById(R.id.category);
 
         eventName.setText(event.getName());
-        eventMaxAttendees.setText(String.valueOf(event.getMaxAttendees())+" personas");
+        eventMaxAttendees.setText(String.valueOf(event.getMaxAttendees())+R.string.people);
         eventPrice.setText(String.valueOf(event.getPrice())+"€");
         Date dateF;
         dateF = event.getEventDate();
