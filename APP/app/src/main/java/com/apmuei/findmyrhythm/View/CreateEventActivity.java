@@ -94,8 +94,6 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
     private Address eventCompleteAddress;
 //    private GeoUtils geoUtils;
 
-    private int mYear, mMonth, mDay, mHour, mMinute;
-    private Uri imageUri;
     private String selectedGenre = "";
     private Photo photo;
     private String photoId = "";
@@ -190,8 +188,8 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             selectedGenre = eventSelect.getGenre();
 
             HashMap<String, Object> completeAddressDict = eventSelect.getCompleteAddress();
-            Double latitude = (Double) Objects.requireNonNull(completeAddressDict.get(getString(R.string.latitude)));
-            Double longitude = (Double) Objects.requireNonNull(completeAddressDict.get(getString(R.string.longitude)));
+            Double latitude = (Double) Objects.requireNonNull(completeAddressDict.get("latitude"));
+            Double longitude = (Double) Objects.requireNonNull(completeAddressDict.get("longitude"));
             new GeocoderAsyncTask(this, latitude, longitude).execute();
 
 
@@ -214,7 +212,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), SelectAddressOnMapActivity.class);
                 if (eventCompleteAddress != null) {
-                    intent.putExtra(getString(R.string.org_address), eventCompleteAddress);
+                    intent.putExtra("organizerAddress", eventCompleteAddress);
                 }
                 startActivityForResult(intent, SET_LOCATION);
             }
@@ -345,6 +343,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
     public void openDialogDate() {
 
         // Get Current Date
+        int mYear, mMonth, mDay;
         if(eventSelect==null) {
             final Calendar currentCalendar = Calendar.getInstance();
             mYear = currentCalendar.get(Calendar.YEAR);
@@ -382,6 +381,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
     public void openDialogTime() {
 
         // Get Current Time if new event
+        int mHour, mMinute;
         if(eventSelect==null) {
             final Calendar c = Calendar.getInstance();
             mHour = c.get(Calendar.HOUR_OF_DAY);
@@ -463,7 +463,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
                 addressTextView.setText(GeoUtils.getAddressString(eventCompleteAddress));
             } else if (requestCode == GET_IMG_FROM_GALLERY) {
                 if (data != null) {
-                    imageUri = data.getData();
+                    Uri imageUri = data.getData();
                     try {
                         imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
                         getRealPathFromURI(imageUri);
@@ -552,10 +552,10 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
 
         // Using a few dictionary Class methods
         // using put method
-        addressDict.put(getString(R.string.province), eventCompleteAddress.getSubAdminArea());
-        addressDict.put(getString(R.string.full_address), GeoUtils.getAddressString(eventCompleteAddress)); // Double
-        addressDict.put(getString(R.string.latitude), eventCompleteAddress.getLatitude());
-        addressDict.put(getString(R.string.longitude), eventCompleteAddress.getLongitude());
+        addressDict.put("province", eventCompleteAddress.getSubAdminArea());
+        addressDict.put("full_address", GeoUtils.getAddressString(eventCompleteAddress)); // Double
+        addressDict.put("latitude", eventCompleteAddress.getLatitude());
+        addressDict.put("longitude", eventCompleteAddress.getLongitude());
 
         Log.e(TAG, (new GeoLocation(eventCompleteAddress.getLatitude(), eventCompleteAddress.getLongitude())).toString());;
 

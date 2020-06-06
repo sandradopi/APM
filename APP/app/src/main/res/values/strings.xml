@@ -30,13 +30,8 @@
     <string name="explore_map">Explorar en el mapa</string>
     <string name="date_pattern">dd/MM/yy</string>
     <string name="hour_pattern">HH:mm</string>
-    <string name="latitude">latitude</string>
-    <string name="longitude">longitude</string>
-    <string name="province">province</string>
-    <string name="full_address">full_address</string>
-    <string name="org_address">organizerAddress</string>
     <string name="toast_fill">Por favor, rellene todos los campos.</string>
-    <string name="change_pic_mssg">Desea quitar la imagen seleccionada?</string>
+    <string name="change_pic_mssg">¿Desea quitar la imagen seleccionada?</string>
     <string name="hour1">0:0</string>
     <string name="hour2">0:</string>
     <string name="hour3">:0</string>
