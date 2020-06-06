@@ -203,11 +203,10 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
 
         } else {
             // Set organizer location as default location
-            SharedPreferences preferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
-            String organizerLocationName = preferences.getString("fb_id", null);
+            persistentOrganizerInfo = PersistentOrganizerInfo.getPersistentOrganizerInfo(getApplicationContext());
 
-            addressTextView.setText(organizerLocationName);
-            new GeocoderAsyncTask(this, organizerLocationName).execute();
+            addressTextView.setText(persistentOrganizerInfo.getLocation());
+            new GeocoderAsyncTask(this, persistentOrganizerInfo.getLocation()).execute();
         }
 
         exploreMapButton.setOnClickListener(new View.OnClickListener() {
