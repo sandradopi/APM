@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.apmuei.findmyrhythm.Model.Event;
 import com.apmuei.findmyrhythm.Model.EventService;
+import com.apmuei.findmyrhythm.Model.Exceptions.Assert;
 import com.apmuei.findmyrhythm.Model.SearchFilters;
 import com.apmuei.findmyrhythm.Model.Utils.GeoUtils;
 import com.apmuei.findmyrhythm.Model.Utils.PermissionUtils;
@@ -123,7 +124,7 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
-        assert mapFragment != null;
+        Assert.assertNotNull(mapFragment,"mapFragment is null");
         mapFragment.getMapAsync(this);
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -347,13 +348,13 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
                 DateFormat df = new SimpleDateFormat("dd/MM/yy", java.util.Locale.getDefault());
 
                 TextView snippet = v.findViewById(R.id.snippet);
-                assert event != null;
+                Assert.assertNotNull(event, TAG + ": Event is null");
                 snippet.setText(df.format(event.getEventDate()));
 
                 mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                     public void onInfoWindowClick(Marker marker) {
                         Event event = (Event) marker.getTag();
-                        assert event != null;
+                        Assert.assertNotNull(event, TAG + ": Event is null");
                         Log.d(TAG + " >>> ", event.getId());
 
                         Date currentDate = new Date();
@@ -395,7 +396,7 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
                     return;
                 }
 
-                Log.d("-------------","Listener 1");
+                Log.d(TAG,"Listener 1");
                 VisibleRegion visibleRegion = mMap.getProjection().getVisibleRegion();
                 LatLngBounds mapLatLngBounds = visibleRegion.latLngBounds;
 

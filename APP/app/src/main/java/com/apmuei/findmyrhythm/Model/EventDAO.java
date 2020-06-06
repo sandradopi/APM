@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.apmuei.findmyrhythm.Model.Exceptions.Assert;
 import com.apmuei.findmyrhythm.Model.Exceptions.DuplicatedInstanceException;
 import com.apmuei.findmyrhythm.Model.Exceptions.InstanceNotFoundException;
 import com.firebase.geofire.GeoFire;
@@ -203,7 +204,7 @@ public class EventDAO extends GenericDAO<Event> {
 
                     Event event = ds.getValue(Event.class);
 
-                    assert event != null : "Event is null";
+                    Assert.assertNotNull(event, TAG + ": Event is null");
 
                     Log.e(TAG, event.getName());
 

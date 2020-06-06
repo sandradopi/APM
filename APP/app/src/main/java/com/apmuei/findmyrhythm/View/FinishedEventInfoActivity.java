@@ -10,7 +10,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Base64;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -23,6 +22,7 @@ import android.widget.TextView;
 
 import com.apmuei.findmyrhythm.Model.Event;
 import com.apmuei.findmyrhythm.Model.EventService;
+import com.apmuei.findmyrhythm.Model.Exceptions.Assert;
 import com.apmuei.findmyrhythm.Model.Exceptions.InstanceNotFoundException;
 import com.apmuei.findmyrhythm.Model.PersistentOrganizerInfo;
 import com.apmuei.findmyrhythm.Model.PersistentUserInfo;
@@ -63,7 +63,7 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
 
         // ToolBar
         ActionBar actionBar = getSupportActionBar();
-        assert actionBar != null : "ActionBar is null";
+        Assert.assertNotNull(actionBar, "ActionBar not found");
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         actionBar.setCustomView(R.layout.layout_actionbar_empty);
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -77,7 +77,7 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
         SharedPreferences sharedPreferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
         accountType = sharedPreferences.getString("account_type", null);
 
-        assert accountType != null : "Invalid Account Type (null)";
+        Assert.assertNotNull(accountType, "Invalid Account Type (null)");
         if (accountType.equals("organizer")) {
 
             PersistentOrganizerInfo persistentInfo = PersistentOrganizerInfo.getPersistentOrganizerInfo(getApplicationContext());

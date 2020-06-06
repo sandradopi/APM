@@ -15,7 +15,7 @@
 
     <!-- Secondary -->
     <color name="secondary">#424242</color>
-    <color name="secondaryBackground">#0d1117</color>
+    <color name="secondaryBackground">#333333</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
 

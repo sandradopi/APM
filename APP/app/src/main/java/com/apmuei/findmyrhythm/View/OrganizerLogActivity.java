@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.apmuei.findmyrhythm.Model.Event;
+import com.apmuei.findmyrhythm.Model.Exceptions.Assert;
 import com.apmuei.findmyrhythm.Model.IOFiles;
 import com.apmuei.findmyrhythm.Model.OrganizerService;
 import com.apmuei.findmyrhythm.Model.PersistentOrganizerInfo;
@@ -33,10 +34,6 @@ import com.apmuei.findmyrhythm.Model.Utils.PermissionUtils;
 import com.apmuei.findmyrhythm.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -46,6 +43,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
 
 public class OrganizerLogActivity extends AppCompatActivity {
     private static final String TAG = "OrganizerLogActivity";
@@ -65,9 +63,11 @@ public class OrganizerLogActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_organizer_log);
 
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.layout_actionbar_empty);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        Assert.assertNotNull(actionBar,"ActionBar not found");
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        actionBar.setCustomView(R.layout.layout_actionbar_empty);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -182,7 +182,6 @@ public class OrganizerLogActivity extends AppCompatActivity {
                     }
                 });
     }
-
 
 
     public class GeocoderAsyncTask extends AsyncTask<String, Void, Address> {
