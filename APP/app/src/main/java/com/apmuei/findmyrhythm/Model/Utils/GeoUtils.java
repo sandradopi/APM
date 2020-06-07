@@ -39,6 +39,17 @@ public class GeoUtils {
         }
     }
 
+    public static Address getAddressFromLocationName(Geocoder geocoder, String locationName) {
+        Address address = new Address(Locale.getDefault());
+        try {
+            address =  geocoder.getFromLocationName(locationName, 1).get(0);
+            return address;
+        } catch (IOException exception) {
+            Log.w(TAG, exception.toString());
+            return address;
+        }
+    }
+
     public static void checkLocationEnabled(final Activity activity){
         LocationManager lm = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
         boolean gps_enabled = false;
