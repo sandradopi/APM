@@ -140,13 +140,6 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
 
         Toast.makeText(getApplicationContext(), getString(R.string.search_events_usage_info), Toast.LENGTH_LONG).show();
 
-        FloatingActionButton searchFiltersFAB = findViewById(R.id.search_filters);
-        searchFiltersFAB.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                searchFiltersDialogFragment.show(fragmentManager, "dialog");
-            }
-        });
-
     }
 
 
@@ -295,6 +288,8 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
                     Manifest.permission.ACCESS_FINE_LOCATION, true);
         }
 
+        mMap.getUiSettings().setMyLocationButtonEnabled(false);
+
         searchEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -425,6 +420,21 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
 
                 Log.d(TAG, eventMarkersSet.toString());
 
+            }
+        });
+
+
+        FloatingActionButton searchFiltersFAB = findViewById(R.id.search_filters);
+        searchFiltersFAB.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                searchFiltersDialogFragment.show(fragmentManager, "dialog");
+            }
+        });
+
+        FloatingActionButton setMyLocation = findViewById(R.id.center_on_my_location);
+        setMyLocation.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                getMyLastLocation();
             }
         });
 

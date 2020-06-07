@@ -82,29 +82,5 @@
         android:focusable="true" />
 
 
-    <!--    <ImageView-->
-    <!--        android:layout_width="35dp"-->
-    <!--        android:layout_height="35dp"-->
-    <!--        android:layout_below="@+id/search_bar"-->
-    <!--        android:layout_alignParentEnd="true"-->
-    <!--        android:layout_marginEnd="10dp"-->
-    <!--        android:layout_marginTop="10dp"-->
-    <!--        android:scaleType="centerInside"-->
-    <!--        android:background="@drawable/white_border"-->
-    <!--        android:id="@+id/iv_gps"-->
-    <!--        android:src="@drawable/ic_gps"/>-->
-
-    <!--    <ImageView-->
-    <!--        android:layout_width="35dp"-->
-    <!--        android:layout_height="35dp"-->
-    <!--        android:layout_below="@+id/iv_gps"-->
-    <!--        android:layout_alignParentEnd="true"-->
-    <!--        android:layout_marginEnd="10dp"-->
-    <!--        android:layout_marginTop="10dp"-->
-    <!--        android:scaleType="centerInside"-->
-    <!--        android:background="@drawable/white_border"-->
-    <!--        android:id="@+id/iv_add_location"-->
-    <!--        android:src="@drawable/ic_add_location"/>-->
-
 
 </RelativeLayout>
