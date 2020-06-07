@@ -91,7 +91,7 @@ public class OrganizerEventInfoActivity extends AppCompatActivity implements OnM
         TextView category = findViewById(R.id.category);
 
         eventName.setText(event.getName());
-        eventMaxAttendees.setText(String.valueOf(event.getMaxAttendees())+R.string.people);
+        eventMaxAttendees.setText(String.valueOf(event.getMaxAttendees()) + " " + OrganizerEventInfoActivity.this.getResources().getString(R.string.people));
         eventPrice.setText(String.valueOf(event.getPrice())+"€");
         Date dateF;
         dateF = event.getEventDate();
