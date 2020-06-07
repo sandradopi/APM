@@ -345,6 +345,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             super.onPostExecute(aVoid);
 
             Intent intent = new Intent(LoginActivity.this, UserProfileActivity.class);
+            // Flags for start a new activity and clear all stack
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
     }
@@ -388,6 +390,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             super.onPostExecute(aVoid);
 
             Intent intent = new Intent(LoginActivity.this, OrganizerProfileActivity.class);
+            // Flags for start a new activity and clear all stack
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
     }

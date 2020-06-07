@@ -121,6 +121,8 @@ public class SplashActivity extends AppCompatActivity {
                         throw new IllegalArgumentException("Unknown user type.");
                     }
 
+                    // Flags for start a new activity and clear all stack
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
 
                 }
@@ -131,8 +133,9 @@ public class SplashActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                    // Flags for start a new activity and clear all stack
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
-                    finish();
                 }
             }, 1000);
         }
