@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.apmuei.findmyrhythm.Model.Exceptions.Assert;
 import com.apmuei.findmyrhythm.Model.Utils.GeoUtils;
 import com.apmuei.findmyrhythm.Model.Utils.PermissionUtils;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -50,12 +51,12 @@ public class SelectAddressOnMapActivity extends FragmentActivity implements OnMa
     private StringBuilder mResult;
     private EditText searchText;
     private ListView mSearchResult;
-    Address selectedAddress;
-    Geocoder geocoder;
-    Marker marker;
-    Button myLocation;
-    Button submit_location;
-    String provider;
+    private Address selectedAddress;
+    private Geocoder geocoder;
+    private Marker marker;
+    private Button myLocation;
+    private Button submit_location;
+    private String provider;
     private LatLng myLocationLatLng;
     private FusedLocationProviderClient fusedLocationClient;
     private static final int LOCATION_PERMISSION_CODE = 7346;
@@ -76,6 +77,7 @@ public class SelectAddressOnMapActivity extends FragmentActivity implements OnMa
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
+        Assert.assertNotNull(mapFragment, TAG+": SupportMapFragment not found");
         mapFragment.getMapAsync(this);
 
         // Get the organizer's location

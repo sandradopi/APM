@@ -3,6 +3,7 @@ package com.apmuei.findmyrhythm.View;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -34,6 +35,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.gson.Gson;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -45,6 +47,7 @@ public class EventInfoActivity extends AppCompatActivity {
     private static final String TAG = "EventInfoActivity";
 
     private TextView name, date, description, location, genre, time, eventMaxAttendees, eventPrice;
+    private Button viewOnMap;
 
     private Boolean isSignedUp = false;
     private Event eventSelect;
@@ -77,6 +80,7 @@ public class EventInfoActivity extends AppCompatActivity {
         description = findViewById(R.id.eventDescContent);
     //    description.setMovementMethod(new ScrollingMovementMethod());
         location = findViewById(R.id.eventLocationContent);
+        viewOnMap = findViewById(R.id.view_on_map);
 
         //Event
         //Gson gson = new Gson();
@@ -88,7 +92,7 @@ public class EventInfoActivity extends AppCompatActivity {
         recommended = extras.getBoolean("RECOMMENDED");
         eventSelectId = getIntent().getStringExtra("EVENT");
 
-        if(recommended) {
+        if (recommended) {
             new getEvent().execute(eventSelectId);
         } else {
              eventSelect = persistentUserInfo.getEvent(eventSelectId);
@@ -139,7 +143,7 @@ public class EventInfoActivity extends AppCompatActivity {
     }
 
 
-    private void setEventInfo(Event event) {
+    private void setEventInfo(final Event event) {
         Date dateF = event.getEventDate();
         DateFormat df = new SimpleDateFormat(getString(R.string.date_pattern), java.util.Locale.getDefault());
         DateFormat df2 = new SimpleDateFormat(getString(R.string.hour_pattern), java.util.Locale.getDefault());
@@ -152,6 +156,15 @@ public class EventInfoActivity extends AppCompatActivity {
         genre.setText(event.getGenre());
         eventMaxAttendees.setText(event.getMaxAttendees()+ " " + getString(R.string.people));
         eventPrice.setText(event.getPrice() + getString(R.string.euro));
+
+        viewOnMap.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(EventInfoActivity.this, EventOnMapActivity.class);
+                String eventJson = (new Gson()).toJson(event);
+                intent.putExtra("EVENT", eventJson);
+                startActivity(intent);
+            }
+        });
     }
 
 

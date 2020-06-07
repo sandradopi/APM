@@ -52,6 +52,11 @@
             android:label="@string/title_activity_search_events"/>
 
         <activity
+            android:name="com.apmuei.findmyrhythm.View.EventOnMapActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/title_activity_event_location"/>
+
+        <activity
             android:name="com.apmuei.findmyrhythm.View.SelectAddressOnMapActivity"
             android:label="@string/title_activity_search_events"
             android:theme="@style/AppTheme.SearchEvents"/>
