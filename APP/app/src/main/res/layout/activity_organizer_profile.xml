@@ -114,6 +114,7 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
+            app:tabBackground="@drawable/tab_color_selector"
             android:layout_height="40dp"
             android:background="@color/secondary" />
 

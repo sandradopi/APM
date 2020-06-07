@@ -13,6 +13,9 @@
 
     <color name="textColorPrimary">#000000</color>
 
+    <color name="darkGrayBackground">#1C1C1C</color>
+    <color name="mediumGrayBackground">#515151</color>
+
     <!-- Secondary -->
     <color name="secondary">#424242</color>
     <color name="secondaryBackground">#333333</color>
