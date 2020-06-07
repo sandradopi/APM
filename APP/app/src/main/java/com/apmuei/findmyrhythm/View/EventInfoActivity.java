@@ -154,8 +154,10 @@ public class EventInfoActivity extends AppCompatActivity {
         description.setText(event.getDescription());
         location.setText(event.getLocation());
         genre.setText(event.getGenre());
-        eventMaxAttendees.setText(event.getMaxAttendees()+ " " + getString(R.string.people));
-        eventPrice.setText(event.getPrice() + getString(R.string.euro));
+        eventMaxAttendees.setText(String.valueOf(event.getMaxAttendees()) + " " + EventInfoActivity.this.getResources().getString(R.string.people));
+        eventPrice.setText(String.valueOf(event.getPrice())+ getString(R.string.euro));
+    }
+
 
         viewOnMap.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

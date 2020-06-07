@@ -80,9 +80,13 @@ public class EndlessService extends Service {
         wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "EndlessService::NotificationLock");
         wakeLock.acquire(10000);
 
-        EventService service = new EventService();
-        service.subscribeEventNotificationListener(this, FirebaseAuth.getInstance().getCurrentUser().getUid());
-
+        try {
+            EventService service = new EventService();
+            service.subscribeEventNotificationListener(this, FirebaseAuth.getInstance().getCurrentUser().getUid());
+        } catch (NullPointerException exception) {
+            // This may happen if the user has closed his/her session. In this case, there is no event service running.
+            isServiceStarted = false;
+        }
     }
 
     private void stopService() {

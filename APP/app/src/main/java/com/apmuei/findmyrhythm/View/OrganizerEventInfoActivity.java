@@ -93,8 +93,8 @@ public class OrganizerEventInfoActivity extends AppCompatActivity {
         TextView category = findViewById(R.id.category);
 
         eventName.setText(event.getName());
-        eventMaxAttendees.setText(event.getMaxAttendees()+R.string.people);
-        eventPrice.setText(event.getPrice() +"€");
+        eventMaxAttendees.setText(String.valueOf(event.getMaxAttendees()) + " " + OrganizerEventInfoActivity.this.getResources().getString(R.string.people));
+        eventPrice.setText(String.valueOf(event.getPrice())+"€");
         Date dateF;
         dateF = event.getEventDate();
         DateFormat df = new SimpleDateFormat("dd/MM/yy", java.util.Locale.getDefault());
