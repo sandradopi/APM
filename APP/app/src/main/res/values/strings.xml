@@ -15,10 +15,13 @@
 
     <!--  SearchEventsActivity  -->
     <string name="search_events_usage_info">Haz click en los marcadores para ver el título del evento, y en este si quieres ver toda su información.</string>
-    <string name="search">Buscar...</string>
+    <string name="search">Buscar…</string>
 
     <!--  EventOnMapActivity  -->
     <string name="event_on_map_usage_info">Haz click en el marcador para acceder a las opciones de Google Maps.</string>
+
+    <!--  UserLogActivity  -->
+    <string name="cover_fields">Por favor, cubre todos los campos antes de continuar.</string>
 
     <!--  CreateEventActivity  -->
     <string name="create_event">Crear evento</string>
@@ -94,7 +97,6 @@
     <string name="info_organizer">Información del evento</string>
 
     <!-- OrganizerLogActivity -->
-    <string name="fields_complete">Por favor rellene todos los campos</string>
     <string name="email_format">Formato de email inválido</string>
     <string name="map_exlore">Explorar en el mapa</string>
 
@@ -103,7 +105,7 @@
 
     <!-- RecommendedEventsActivity -->
     <string name="recommended">Recomendados</string>
-    <string name="spinner">Estamos buscando los mejores eventos para ti...</string>
+    <string name="spinner">Estamos buscando los mejores eventos para ti…</string>
 
     <!-- ScroreEventDialog -->
     <string name="edit_valoration">Editar valoración del evento </string>
@@ -218,7 +220,7 @@
     <string name="classic">Clásica</string>
     <string name="reggae">Reggae</string>
     <string name="trap">Trap</string>
-    <string name="log1">Ya queda poco...</string>
+    <string name="log1">Ya queda poco…</string>
     <string name="log2">Cuéntanos más sobre ti</string>
     <string name="localName">Nombre del local</string>
     <string name="email1">Correo</string>

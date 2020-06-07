@@ -16,9 +16,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.apmuei.findmyrhythm.Model.Exceptions.Assert;
@@ -49,16 +47,11 @@ import java.util.Locale;
 public class SelectAddressOnMapActivity extends FragmentActivity implements OnMapReadyCallback {
     final String TAG = "SearchEventActivity";
     private GoogleMap mMap;
-    private StringBuilder mResult;
     private EditText searchText;
-    private ListView mSearchResult;
     private Address selectedAddress;
-    private Geocoder geocoder;
     private Marker marker;
     private FloatingActionButton myLocation;
     private FloatingActionButton submit_location;
-    private String provider;
-    private LatLng myLocationLatLng;
     private FusedLocationProviderClient fusedLocationClient;
     private static final int LOCATION_PERMISSION_CODE = 7346;
 
@@ -70,9 +63,6 @@ public class SelectAddressOnMapActivity extends FragmentActivity implements OnMa
         searchText = findViewById(R.id.input_search);
         myLocation = findViewById(R.id.my_location);
         submit_location = findViewById(R.id.submit_location);
-
-        Locale locale = Locale.getDefault(); // new Locale("es", "ES");
-        geocoder = new Geocoder(this, locale);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -202,6 +192,9 @@ public class SelectAddressOnMapActivity extends FragmentActivity implements OnMa
     }
 
 
+    //================================================================================
+    // AsyncTasks
+    //================================================================================
 
     public class GeocoderAsyncTask extends AsyncTask<String, Void, Address> {
         Double latitude = null;

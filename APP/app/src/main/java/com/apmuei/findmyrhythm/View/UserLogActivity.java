@@ -64,17 +64,14 @@ public class UserLogActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View view) {
 
-        /*TODO: Check if every field are covered.
-           If not ask for the user to cover them.
-           Insert the new user in the DataBase as USER With all the important information
-           Create the intent to go to the next Activity
-         */
-
+        // Check if every field is covered
         if (isEmpty(name) || isEmpty(nickname) || isEmpty(email) || isEmpty(biography) || isEmpty(birthDate)) {
-           Toast.makeText(this, "Please cover every field shown in the screen", Toast.LENGTH_LONG).show();
-           return;
+            // If not ask for the user to cover them
+            Toast.makeText(this, getString(R.string.cover_fields), Toast.LENGTH_LONG).show();
+            return;
         }
 
+        // Insert the new user in the DataBase as USER With all the important information
 
         SharedPreferences sharedpreferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -110,6 +107,8 @@ public class UserLogActivity extends AppCompatActivity implements View.OnClickLi
 
         Toast.makeText(UserLogActivity.this, getString(R.string.notiCreation),  Toast.LENGTH_SHORT).show();
 
+        // Create the intent to go to the next Activity
+
         Intent intent = new Intent(this, UserProfileActivity.class);
         // Flags for start a new activity and clear all stack
         // This prevents users from going back once they have registered
@@ -119,7 +118,6 @@ public class UserLogActivity extends AppCompatActivity implements View.OnClickLi
 
 
     private boolean isEmpty(EditText text) {
-
         return text.getText().toString().equals("");
     }
 
@@ -130,17 +128,14 @@ public class UserLogActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed() { }
 
-    }
+
+    //================================================================================
+    // AsyncTasks
+    //================================================================================
 
     private class CreateUserTask extends AsyncTask<Void,Void,Void> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-        }
 
         @Override
         protected Void doInBackground(Void... voids) {

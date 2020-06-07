@@ -127,7 +127,7 @@ public class OrganizerLogActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // Check if every field are covered. If not ask for the user to cover them.
                 if (GenericUtils.isEmpty(name) || GenericUtils.isEmpty(nickname) || GenericUtils.isEmpty(email) || GenericUtils.isEmpty(biography) || (organizerAddressesList.isEmpty())) {
-                    Toast.makeText(OrganizerLogActivity.this, R.string.fields_complete, Toast.LENGTH_LONG).show();
+                    Toast.makeText(OrganizerLogActivity.this, getString(R.string.cover_fields), Toast.LENGTH_LONG).show();
                     return;
                 }
 

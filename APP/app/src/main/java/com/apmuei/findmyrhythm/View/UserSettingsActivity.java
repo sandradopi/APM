@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.apmuei.findmyrhythm.Model.Exceptions.Assert;
 import com.apmuei.findmyrhythm.Model.PersistentUserInfo;
 import com.apmuei.findmyrhythm.Model.User;
 import com.apmuei.findmyrhythm.Model.UserService;
@@ -22,11 +23,16 @@ import java.util.ArrayList;
 
 public class UserSettingsActivity extends UserMenuDrawerActivity {
     private static final String TAG = "Ajustes Usuario";
-    ArrayList<String> selectedGenres = new ArrayList<String>();
-    ArrayList<String> selectedLocations = new ArrayList<String>();
+
+    private static final int GENRES_RC = 1;
+    private static final int LOCATIONS_RC = 2;
+
+    ArrayList<String> selectedGenres = new ArrayList<>();
+    ArrayList<String> selectedLocations = new ArrayList<>();
     PersistentUserInfo persistentUserInfo;
     UserService userService = new UserService();
     User user = new User();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +63,6 @@ public class UserSettingsActivity extends UserMenuDrawerActivity {
         birthdateView.setText(persistentUserInfo.getBirthdate());
 
 
-
-
         Button genres = findViewById(R.id.genres);
         genres.setClickable(true);
         genres.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +71,7 @@ public class UserSettingsActivity extends UserMenuDrawerActivity {
                 //Log.w(TAG, "Ha clickeado en Editar Géneros");
                 Intent intent = new Intent(UserSettingsActivity.this, GenresSettingsActivity.class);
                 intent.putStringArrayListExtra("GENRES", selectedGenres);
-                startActivityForResult(intent, 1);
+                startActivityForResult(intent, GENRES_RC);
             }
         });
 
@@ -80,7 +84,7 @@ public class UserSettingsActivity extends UserMenuDrawerActivity {
 
                 Intent intent = new Intent(UserSettingsActivity.this, LocationsSettingsActivity.class);
                 intent.putStringArrayListExtra("LOCATIONS", selectedLocations);
-                startActivityForResult(intent, 2);
+                startActivityForResult(intent, LOCATIONS_RC);
             }
         });
 
@@ -92,7 +96,10 @@ public class UserSettingsActivity extends UserMenuDrawerActivity {
         public void onClick(View view) {
             //Log.w(TAG, "Ha clickeado en guardar ajustes");
 
-            persistentUserInfo.updateInfo(getApplicationContext(), nameView.getText().toString(), usernameView.getText().toString(), emailView.getText().toString(), biographyView.getText().toString(), birthdateView.getText().toString(), selectedLocations, selectedGenres);
+            persistentUserInfo.updateInfo(getApplicationContext(), nameView.getText().toString(),
+                    usernameView.getText().toString(), emailView.getText().toString(),
+                    biographyView.getText().toString(), birthdateView.getText().toString(),
+                    selectedLocations, selectedGenres);
 
             user.setName(nameView.getText().toString());
             user.setUsername(usernameView.getText().toString());
@@ -109,7 +116,7 @@ public class UserSettingsActivity extends UserMenuDrawerActivity {
             editor.putString("name", nameView.getText().toString());
             editor.putString("email", emailView.getText().toString());
             editor.putString("nickname", usernameView.getText().toString());
-            editor.commit();
+            editor.apply();
 
             Toast.makeText(UserSettingsActivity.this, getString(R.string.guardar),  Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(UserSettingsActivity.this, UserProfileActivity.class);
@@ -118,8 +125,8 @@ public class UserSettingsActivity extends UserMenuDrawerActivity {
         });
 
 
-
     }
+
 
     @Override
     protected void onResume() {
@@ -127,46 +134,40 @@ public class UserSettingsActivity extends UserMenuDrawerActivity {
         setMenuItemChecked(R.id.nav_settings);
     }
 
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 1) {
+        if (requestCode == GENRES_RC) {
 
             if (resultCode == RESULT_OK) {
                 selectedGenres = data.getStringArrayListExtra("GENRES");
             }
 
-        }
-        if (requestCode == 2) {
+        } else if (requestCode == LOCATIONS_RC) {
             if (resultCode == RESULT_OK) {
                 selectedLocations = data.getStringArrayListExtra("LOCATIONS");
             }
         }
     }
 
-    private class UpdateInfo extends AsyncTask<Void, Void, Void> {
-        final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
+    //================================================================================
+    // AsyncTasks
+    //================================================================================
+
+    private class UpdateInfo extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected Void doInBackground(Void... voids) {
+            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+            Assert.assertNotNull(currentUser, "No FirebaseUser found");
             user.setId(currentUser.getUid());
             userService.updateUser(user);
             return null;
         }
 
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-
-        }
     }
-
-
 
 
 }
