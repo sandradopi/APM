@@ -153,10 +153,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onStart() {
         super.onStart();
 
-        // TODO: delete. Test lines (2)
-        //FirebaseAuth.getInstance().signOut();
-        //googleSignOut();
-
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
@@ -305,17 +301,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private class RecoverUserTask extends AsyncTask<User, Void, Void> {
 
-        ArrayList<Event> events;
-        ArrayList<String> ratedEvents;
-
         @Override
         protected Void doInBackground(User... user) {
 
             AttendeeService attendeeService = new AttendeeService();
-            events = attendeeService.getEventsByUser(user[0].getId());
+            ArrayList<Event> events = attendeeService.getEventsByUser(user[0].getId());
 
             RatingService ratingService = new RatingService();
-            ratedEvents = ratingService.getRatingsByUser(user[0].getId());
+            ArrayList<String> ratedEvents = ratingService.getRatingsByUser(user[0].getId());
 
 
             PersistentUserInfo persistentUserInfo = new PersistentUserInfo(user[0].getId(),user[0].getName(),
@@ -335,7 +328,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             editor.putString("nickname", persistentUserInfo.getUsername());
             editor.putString("account_type", "user");
 
-            editor.commit(); // or apply
+            editor.apply(); // or apply
 
             return null;
         }
@@ -352,13 +345,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private class RecoverOrganizerTask extends AsyncTask<Organizer, Void, Void> {
 
-        ArrayList<Event> events;
-
         @Override
         protected Void doInBackground(Organizer... organizer) {
 
             EventService organizerService = new EventService();
-            events = organizerService.findEventByOrganicer(organizer[0].getId());
+            ArrayList<Event> events = organizerService.findEventByOrganicer(organizer[0].getId());
 
             PersistentOrganizerInfo persistentOrganizerInfo = new PersistentOrganizerInfo(organizer[0].getId(),
                     organizer[0].getName(), organizer[0].getUsername(), organizer[0].getEmail(),
@@ -378,7 +369,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             editor.putString("location", persistentOrganizerInfo.getLocation());
             editor.putString("account_type", "organizer");
 
-            editor.commit(); // or apply
+            editor.apply();
 
             return null;
         }
@@ -438,10 +429,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        if(noaccount.equals("organizer")){
+                        if (noaccount.equals("organizer")) {
                             Intent intent = new Intent(LoginActivity.this, OrganizerLogActivity.class);
                             startActivity(intent);
-                        }else{
+                        } else {
                             Intent intent = new Intent(LoginActivity.this, SetLocationActivity.class);
                             startActivity(intent);
                         }

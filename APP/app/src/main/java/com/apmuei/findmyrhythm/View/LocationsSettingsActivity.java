@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.apmuei.findmyrhythm.Model.Exceptions.Assert;
 import com.apmuei.findmyrhythm.Model.PersistentUserInfo;
 import com.apmuei.findmyrhythm.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -35,23 +36,28 @@ public class LocationsSettingsActivity extends AppCompatActivity implements Adap
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_locations_settings);
 
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.layout_actionbar_empty);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        // Toolbar
+        ActionBar actionBar = getSupportActionBar();
+        Assert.assertNotNull(actionBar, "ActionBar not found");
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        actionBar.setCustomView(R.layout.layout_actionbar_empty);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
-        locations = (GridLayout) findViewById(R.id.locations);
+        locations = findViewById(R.id.locations);
 
-        Bundle b = getIntent().getExtras();
-        //if (b.getStringArrayList("GENRES") != null)
-        selectedProvinces = b.getStringArrayList("LOCATIONS");
+        Bundle bundle = getIntent().getExtras();
+        Assert.assertNotNull(bundle, "No extras found");
+        //if (bundle.getStringArrayList("GENRES") != null)
+        selectedProvinces = bundle.getStringArrayList("LOCATIONS");
+        Assert.assertNotNull(selectedProvinces, "No selectedProvinces found");
         for (String i : selectedProvinces) {
             addProvince(i);
         }
 
-        save = (FloatingActionButton) findViewById(R.id.save);
+        save = findViewById(R.id.save);
         save.setOnClickListener(this);
 
-        provinces = (AutoCompleteTextView) findViewById(R.id.auto_province);
+        provinces = findViewById(R.id.auto_province);
         String selflocation = getResources().getString(R.string.selfLocation);
         String[] countries = getResources().getStringArray(R.array.provinces_array);
         CustomAutoCompleteAdapater adapter = new CustomAutoCompleteAdapater(this, android.R.layout.simple_list_item_1, countries);

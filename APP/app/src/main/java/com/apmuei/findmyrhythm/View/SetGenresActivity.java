@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.apmuei.findmyrhythm.Model.Exceptions.Assert;
 import com.apmuei.findmyrhythm.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -26,34 +27,37 @@ public class SetGenresActivity extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_genres);
 
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.layout_actionbar_empty);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        Assert.assertNotNull(actionBar, "ActionBar not found");
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        actionBar.setCustomView(R.layout.layout_actionbar_empty);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
-        pop = (CardView) findViewById(R.id.pop);
+        pop = findViewById(R.id.pop);
         pop.setOnClickListener(this);
-        rock = (CardView) findViewById(R.id.rock);
+        rock = findViewById(R.id.rock);
         rock.setOnClickListener(this);
-        hiphop = (CardView) findViewById(R.id.hiphop);
+        hiphop = findViewById(R.id.hiphop);
         hiphop.setOnClickListener(this);
-        latin = (CardView) findViewById(R.id.latin);
+        latin = findViewById(R.id.latin);
         latin.setOnClickListener(this);
-        dance = (CardView) findViewById(R.id.dance);
+        dance = findViewById(R.id.dance);
         dance.setOnClickListener(this);
-        indie = (CardView) findViewById(R.id.indie);
+        indie = findViewById(R.id.indie);
         indie.setOnClickListener(this);
-        classic = (CardView) findViewById(R.id.classic);
+        classic = findViewById(R.id.classic);
         classic.setOnClickListener(this);
-        reggae = (CardView) findViewById(R.id.reggae);
+        reggae = findViewById(R.id.reggae);
         reggae.setOnClickListener(this);
-        trap = (CardView) findViewById(R.id.trap);
+        trap = findViewById(R.id.trap);
         trap.setOnClickListener(this);
-        next = (FloatingActionButton) findViewById(R.id.next);
+        next = findViewById(R.id.next);
         next.setOnClickListener(this);
 
         //Get Locations Selected
-        Bundle b = getIntent().getExtras();
-        selectedLocations = b.getStringArrayList(getString(R.string.locationsListID));
+        Bundle bundle = getIntent().getExtras();
+        Assert.assertNotNull(bundle, "No extras found");
+        selectedLocations = bundle.getStringArrayList(getString(R.string.locationsListID));
     }
 
     @Override

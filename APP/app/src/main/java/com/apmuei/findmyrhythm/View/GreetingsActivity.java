@@ -19,10 +19,10 @@ public class GreetingsActivity extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_greetings);
 
-        orgLogin = (Button) findViewById(R.id.orgLogin);
+        orgLogin = findViewById(R.id.orgLogin);
         orgLogin.setOnClickListener(this);
 
-        userLogin = (Button) findViewById(R.id.userLogin);
+        userLogin = findViewById(R.id.userLogin);
         userLogin.setOnClickListener(this);
 
     }

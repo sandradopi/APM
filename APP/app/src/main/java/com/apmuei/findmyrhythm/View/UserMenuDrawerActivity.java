@@ -1,5 +1,6 @@
 package com.apmuei.findmyrhythm.View;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.view.MenuItem;
 
@@ -9,6 +10,7 @@ import androidx.core.view.GravityCompat;
 import com.apmuei.findmyrhythm.R;
 import com.google.android.material.navigation.NavigationView;
 
+@SuppressLint("Registered")
 public class UserMenuDrawerActivity extends MenuDrawerActivity {
 
     @Override

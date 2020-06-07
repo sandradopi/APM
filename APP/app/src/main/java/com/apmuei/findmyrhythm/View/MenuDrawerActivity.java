@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.apmuei.findmyrhythm.Model.Exceptions.Assert;
 import com.apmuei.findmyrhythm.Model.IOFiles;
 import com.apmuei.findmyrhythm.R;
 import com.facebook.login.LoginManager;
@@ -37,8 +38,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import java.io.FileNotFoundException;
 
 
-public abstract class MenuDrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
-        DrawerLayout.DrawerListener {
+public abstract class MenuDrawerActivity extends AppCompatActivity implements
+        NavigationView.OnNavigationItemSelectedListener, DrawerLayout.DrawerListener {
 
     protected DrawerLayout fullLayout;
     protected LinearLayout actContent;
@@ -46,19 +47,17 @@ public abstract class MenuDrawerActivity extends AppCompatActivity implements Na
     protected int menuItemID, prevMenuItemID;
     private Menu menu;
     NavigationView navigationView;
-    private FirebaseAuth mAuth;
-    FirebaseUser currentUser;
     private GoogleSignInClient mGoogleSignInClient;
     private GoogleSignInOptions gso;
     private String provider = null;
 
     @Override
     public void setContentView(final int layoutResID) {
-        // Your base layout here
+        // Base layout
         fullLayout = (DrawerLayout) getLayoutInflater().inflate(R.layout.activity_menu, null);
         actContent = (LinearLayout) fullLayout.findViewById(R.id.home_content);
 
-        // Setting the content of layout your provided to the act_content frame
+        // Setting the content of layout provided to the act_content frame
         getLayoutInflater().inflate(layoutResID, actContent, true);
         super.setContentView(fullLayout);
 
@@ -93,7 +92,9 @@ public abstract class MenuDrawerActivity extends AppCompatActivity implements Na
         });
 
 
-        for (UserInfo user: FirebaseAuth.getInstance().getCurrentUser().getProviderData()) {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        Assert.assertNotNull(currentUser, "No FirebaseUser found");
+        for (UserInfo user: currentUser.getProviderData()) {
             provider = user.getProviderId();
             if (provider.equals("google.com")) {
                 gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

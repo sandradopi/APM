@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.apmuei.findmyrhythm.Model.Event;
+import com.apmuei.findmyrhythm.Model.Exceptions.Assert;
 import com.apmuei.findmyrhythm.Model.PersistentOrganizerInfo;
 import com.apmuei.findmyrhythm.Model.PersistentUserInfo;
 import com.apmuei.findmyrhythm.Model.Photo;
@@ -35,7 +36,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class OrganizerEventInfoActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class OrganizerEventInfoActivity extends AppCompatActivity {
 
     Photo photoEvent;
     PhotoService photoService= new PhotoService();
@@ -46,13 +47,14 @@ public class OrganizerEventInfoActivity extends AppCompatActivity implements OnM
         super.onCreate(savedInstanceState);
 
         //Toolbar
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.layout_actionbar_empty);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        Assert.assertNotNull(actionBar, "ActionBar not found");
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        actionBar.setCustomView(R.layout.layout_actionbar_empty);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         TextView toolbarTitle = findViewById(R.id.toolbar_title);
         toolbarTitle.setText(R.string.info_organizer);
-
 
         //Event
         Gson gson = new Gson();
@@ -91,8 +93,8 @@ public class OrganizerEventInfoActivity extends AppCompatActivity implements OnM
         TextView category = findViewById(R.id.category);
 
         eventName.setText(event.getName());
-        eventMaxAttendees.setText(String.valueOf(event.getMaxAttendees())+R.string.people);
-        eventPrice.setText(String.valueOf(event.getPrice())+"€");
+        eventMaxAttendees.setText(event.getMaxAttendees()+R.string.people);
+        eventPrice.setText(event.getPrice() +"€");
         Date dateF;
         dateF = event.getEventDate();
         DateFormat df = new SimpleDateFormat("dd/MM/yy", java.util.Locale.getDefault());
@@ -106,20 +108,15 @@ public class OrganizerEventInfoActivity extends AppCompatActivity implements OnM
 
 
     @Override
-    public void onMapReady(GoogleMap map) {
-        LatLng latLong = new LatLng(43.3713500, -8.3960000);
-        map.addMarker(new MarkerOptions()
-                .position(latLong)
-                .title(""));
-        map.animateCamera(CameraUpdateFactory.newLatLng(latLong));
-    }
-
-    @Override
     public boolean onSupportNavigateUp() {
         finish();
         return true;
     }
 
+
+    //================================================================================
+    // AsyncTasks
+    //================================================================================
 
     private class getPhoto extends AsyncTask<Void, Void, Void> {
 
@@ -132,7 +129,6 @@ public class OrganizerEventInfoActivity extends AppCompatActivity implements OnM
 
             eventSelect = persistentUserInfo.getEvent(eventSelectId);
 
-
             photoEvent = photoService.getPhoto(eventSelect.getEventImage());
             return null;
         }
@@ -143,12 +139,12 @@ public class OrganizerEventInfoActivity extends AppCompatActivity implements OnM
             byte[] decodedString = Base64.decode(photoEvent.getEventImage(),Base64.NO_WRAP);
             InputStream inputStream  = new ByteArrayInputStream(decodedString);
             Bitmap bitmap  = BitmapFactory.decodeStream(inputStream);
-            Bitmap imagenFinal = Bitmap.createScaledBitmap(bitmap,242,152,false);
+            Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap,242,152,false);
             final ImageView imageEvent =  findViewById(R.id.imageEvent);
-            imageEvent.setImageBitmap(imagenFinal);
-
+            imageEvent.setImageBitmap(scaledBitmap);
 
         }
+
     }
 
 }

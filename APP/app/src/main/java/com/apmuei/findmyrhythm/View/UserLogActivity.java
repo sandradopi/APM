@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.apmuei.findmyrhythm.Model.Event;
 import com.apmuei.findmyrhythm.Model.EventService;
+import com.apmuei.findmyrhythm.Model.Exceptions.Assert;
 import com.apmuei.findmyrhythm.Model.IOFiles;
 import com.apmuei.findmyrhythm.Model.PersistentUserInfo;
 import com.apmuei.findmyrhythm.Model.UserService;
@@ -27,6 +28,7 @@ import java.util.ArrayList;
 
 public class UserLogActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "Creación Usuario";
+
     EditText name, nickname, email, biography, birthDate;
     FloatingActionButton next;
     FirebaseUser currentUser;
@@ -36,21 +38,24 @@ public class UserLogActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_log);
 
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.layout_actionbar_empty);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        Assert.assertNotNull(actionBar, "No ActionBar found");
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        actionBar.setCustomView(R.layout.layout_actionbar_empty);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
-        name = (EditText) findViewById(R.id.userName);
-        nickname = (EditText) findViewById(R.id.userNickname);
-        email = (EditText) findViewById(R.id.userEmail);
-        biography = (EditText) findViewById(R.id.userBiography);
-        birthDate = (EditText) findViewById(R.id.userBirthdate);
+        name = findViewById(R.id.userName);
+        nickname = findViewById(R.id.userNickname);
+        email = findViewById(R.id.userEmail);
+        biography = findViewById(R.id.userBiography);
+        birthDate = findViewById(R.id.userBirthdate);
 
-        next = (FloatingActionButton) findViewById(R.id.next);
+        next = findViewById(R.id.next);
         next.setOnClickListener(this);
 
-        //GET THE USER.
+        // Get the user
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        Assert.assertNotNull(currentUser, "No user found");
         name.setText(currentUser.getDisplayName());
         email.setText(currentUser.getEmail());
 
@@ -83,13 +88,14 @@ public class UserLogActivity extends AppCompatActivity implements View.OnClickLi
         editor.putString("nickname", nickname.getText().toString());
         editor.putString("account_type", "user");
 
-        editor.commit(); // or apply
+        editor.apply(); // or apply
 
 
         ArrayList<String> genres, locations;
-        Bundle b = getIntent().getExtras();
-        locations = b.getStringArrayList(getString(R.string.locationsListID));
-        genres = b.getStringArrayList(getString(R.string.genresListID));
+        Bundle bundle = getIntent().getExtras();
+        Assert.assertNotNull(bundle, "No extras found");
+        locations = bundle.getStringArrayList(getString(R.string.locationsListID));
+        genres = bundle.getStringArrayList(getString(R.string.genresListID));
 
         PersistentUserInfo persistentUserInfo = new PersistentUserInfo(currentUser.getUid(),name.getText().toString(),
                 nickname.getText().toString(),email.getText().toString(), biography.getText().toString(),
@@ -97,14 +103,11 @@ public class UserLogActivity extends AppCompatActivity implements View.OnClickLi
 
         PersistentUserInfo.setPersistentUserInfo(getApplicationContext(), persistentUserInfo);
 
-        //TODO: Introduce into database by getting the value of every field. Check Android Service.
         new CreateUserTask().execute();
 
         EventService service = new EventService();
         service.subscribeEventNotificationListener(this, currentUser.getUid());
 
-        //TODO: Intent to new Activity
-        //Log.w(TAG, "Creación de la cuenta del usuario");
         Toast.makeText(UserLogActivity.this, getString(R.string.notiCreation),  Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent(this, UserProfileActivity.class);
@@ -143,10 +146,10 @@ public class UserLogActivity extends AppCompatActivity implements View.OnClickLi
         protected Void doInBackground(Void... voids) {
 
             ArrayList<String> genres, locations;
-
-            Bundle b = getIntent().getExtras();
-            locations = b.getStringArrayList(getString(R.string.locationsListID));
-            genres = b.getStringArrayList(getString(R.string.genresListID));
+            Bundle bundle = getIntent().getExtras();
+            Assert.assertNotNull(bundle, "No extras found");
+            locations = bundle.getStringArrayList(getString(R.string.locationsListID));
+            genres = bundle.getStringArrayList(getString(R.string.genresListID));
 
             UserService userService = new UserService();
             userService.createUser(currentUser.getUid(), name.getText().toString(), nickname.getText().toString(),
