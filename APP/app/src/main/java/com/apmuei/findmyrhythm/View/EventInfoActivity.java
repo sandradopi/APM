@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.apmuei.findmyrhythm.Model.AttendeeService;
 import com.apmuei.findmyrhythm.Model.Event;
 import com.apmuei.findmyrhythm.Model.EventService;
+import com.apmuei.findmyrhythm.Model.Exceptions.Assert;
 import com.apmuei.findmyrhythm.Model.Exceptions.InstanceNotFoundException;
 import com.apmuei.findmyrhythm.Model.PersistentUserInfo;
 import com.apmuei.findmyrhythm.Model.Photo;
@@ -40,29 +41,33 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCallback {
-    String signedUpText;
-    String toSignUpText;
-    TextView name, date, description, location, genre, time, eventMaxAttendees, eventPrice;
-    Boolean isSignedUp = false;
-    Event eventSelect;
-    EventService eventService = new EventService();
-    User user;
+public class EventInfoActivity extends AppCompatActivity {
+    private static final String TAG = "EventInfoActivity";
+
+    private TextView name, date, description, location, genre, time, eventMaxAttendees, eventPrice;
+
+    private Boolean isSignedUp = false;
+    private Event eventSelect;
+    private String eventSelectId;
+    private boolean recommended;
+
+    private PersistentUserInfo persistentUserInfo;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Toolbar
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.layout_actionbar_empty);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        // Toolbar
+        ActionBar actionBar = getSupportActionBar();
+        Assert.assertNotNull(actionBar, "ActionBar not found");
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        actionBar.setCustomView(R.layout.layout_actionbar_empty);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
-        //Vista
+        // Layout
         setContentView(R.layout.activity_event_info);
 
-        signedUpText = getString(R.string.signed_up);
-        toSignUpText = getString(R.string.to_sign_up);
         eventMaxAttendees = findViewById(R.id.eventCapacity);
         eventPrice = findViewById(R.id.eventCost);
         name = findViewById(R.id.eventName);
@@ -76,10 +81,12 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
         //Event
         //Gson gson = new Gson();
         //final Event eventSelect = gson.fromJson(getIntent().getStringExtra("EVENT"), Event.class);
-        final PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
+        persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
 
-        final boolean recommended = getIntent().getExtras().getBoolean("RECOMMENDED");
-        final String eventSelectId = getIntent().getStringExtra("EVENT");
+        Bundle extras = getIntent().getExtras();
+        Assert.assertNotNull(extras, TAG+": No extras found");
+        recommended = extras.getBoolean("RECOMMENDED");
+        eventSelectId = getIntent().getStringExtra("EVENT");
 
         if(recommended) {
             new getEvent().execute(eventSelectId);
@@ -100,8 +107,11 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
 
     private void configureJoinButton(Event event) {
         final PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
-        final Button joinButton = (Button) findViewById(R.id.joinBtn);
-        //If is a atendee of the event
+        final Button joinButton = findViewById(R.id.joinBtn);
+        final String signedUpText = getString(R.string.signed_up);
+        final String toSignUpText = getString(R.string.to_sign_up);
+
+        //If is an attendee of the event
         if (persistentUserInfo.getEvents().contains(event)) {
             joinButton.setText(signedUpText);
             joinButton.setBackgroundColor(getResources().getColor(R.color.primary700));
@@ -113,12 +123,12 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
             @Override
             public void onClick(View v) {
 
-                if(isSignedUp){
+                // If the user is signed up to the event
+                if (isSignedUp) {
                     new unSubscribe().execute();
                     joinButton.setText(toSignUpText);
                     joinButton.setBackgroundColor(getResources().getColor(R.color.primaryBackgroundDarker2));
-
-                }else{
+                } else {
                     new Subscribe().execute();
                     joinButton.setText(signedUpText);
                     joinButton.setBackgroundColor(getResources().getColor(R.color.primary700));
@@ -140,24 +150,10 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
         description.setText(event.getDescription());
         location.setText(event.getLocation());
         genre.setText(event.getGenre());
-        eventMaxAttendees.setText(String.valueOf(event.getMaxAttendees())+ " " + getString(R.string.people));
-        eventPrice.setText(String.valueOf(event.getPrice())+ getString(R.string.euro));
+        eventMaxAttendees.setText(event.getMaxAttendees()+ " " + getString(R.string.people));
+        eventPrice.setText(event.getPrice() + getString(R.string.euro));
     }
 
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void onMapReady(GoogleMap map) {
-        LatLng latLong = new LatLng(43.3713500, -8.3960000);
-        map.addMarker(new MarkerOptions()
-                .position(latLong)
-                .title(""));
-        map.animateCamera(CameraUpdateFactory.newLatLng(latLong));
-    }
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -165,11 +161,14 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
         return true;
     }
 
+
     @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
+    public void onPointerCaptureChanged(boolean hasCapture) { }
 
-    }
 
+    //================================================================================
+    // AsyncTasks
+    //================================================================================
 
     private class getEvent extends AsyncTask<String, Void, Event> {
 
@@ -193,27 +192,17 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
 
     private class getPhoto extends AsyncTask<Void, Void, Photo> {
 
-        final String eventSelectId = getIntent().getStringExtra("EVENT");
-        final PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
         @Override
         protected Photo doInBackground(Void... voids) {
+            EventService eventService = new EventService();
             Event eventSelect;
-            final boolean recommended = getIntent().getExtras().getBoolean("RECOMMENDED");
             if(!recommended) {
                 eventSelect = eventService.getEvent(eventSelectId);
-
             } else{
                 eventSelect = persistentUserInfo.getEvent(eventSelectId);
             }
 
             if (eventSelect == null) {
-
                 eventSelect = eventService.getEvent(eventSelectId);
             }
             PhotoService photoService = new PhotoService();
@@ -235,43 +224,27 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
     }
 
 
-
-
     private class unSubscribe extends AsyncTask<Void, Void, Void> {
-        final PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
 
         @Override
         protected Void doInBackground(Void... voids) {
-
             AttendeeService attendeeService = new AttendeeService();
-            UserService userService = new UserService();
             attendeeService.deleteAttendeeByEvent(eventSelect.getId());
             persistentUserInfo.deleteEvent(getApplicationContext(),eventSelect);
-
-            try {
-                SharedPreferences preferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
-                user = userService.getUser(preferences.getString("fb_id", null));
-
-            } catch (InstanceNotFoundException e) {
-                Log.e("DEBUG", "InstanceNotFoundException");
-            }
-
-
-
             isSignedUp = false;
+
             return null;
         }
 
     }
 
-    private class Subscribe extends AsyncTask<Void, Void, Void> {
-        final PersistentUserInfo persistentUserInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
-        final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
+    private class Subscribe extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected Void doInBackground(Void... voids) {
-
+            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+            Assert.assertNotNull(currentUser, TAG+": FirebaseUser not found");
             AttendeeService attendeeService = new AttendeeService();
             attendeeService.createAttendee(currentUser.getUid(), eventSelect.getId());
             persistentUserInfo.addEvent(getApplicationContext(),eventSelect);
@@ -281,5 +254,6 @@ public class EventInfoActivity extends AppCompatActivity implements OnMapReadyCa
         }
 
     }
+
 }
 
