@@ -75,8 +75,6 @@ public class NextEventsFragmentOrg extends Fragment {
                 intent.putExtra("EVENT", nextEventsFiltered.get((int)id).getId());
                 intent.putExtra("RECOMMENDED", false);
                 getActivity().startActivity(intent);
-
-
             }
         });
 

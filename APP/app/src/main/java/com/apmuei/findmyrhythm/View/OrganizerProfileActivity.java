@@ -115,9 +115,5 @@ public class OrganizerProfileActivity extends OrganizerMenuDrawerActivity {
     protected void onResume() {
         super.onResume();
         setMenuItemChecked(R.id.nav_profile);
-        ViewPager viewPager = findViewById(R.id.view_pager);
-        SectionsPagerAdapterOrg sectionsPagerAdapter = new SectionsPagerAdapterOrg(this, getSupportFragmentManager());
-        viewPager.setAdapter(sectionsPagerAdapter);
-
     }
 }
