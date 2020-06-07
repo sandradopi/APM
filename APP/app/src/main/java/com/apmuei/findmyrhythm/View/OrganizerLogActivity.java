@@ -54,9 +54,10 @@ public class OrganizerLogActivity extends AppCompatActivity {
     private List<Address> organizerAddressesList;
     private FloatingActionButton next;
     private FirebaseUser currentUser;
-    Geocoder geocoder;
+    private Geocoder geocoder;
     private static final int LOCATION_PERMISSION_CODE = 7346;
     private FusedLocationProviderClient mFusedLocationClient;
+    private boolean canAccessLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +92,8 @@ public class OrganizerLogActivity extends AppCompatActivity {
 
         GeoUtils.checkLocationEnabled(OrganizerLogActivity.this);
 
+        canAccessLocation = GeoUtils.canAccessLocation(OrganizerLogActivity.this);
+
         if (ContextCompat.checkSelfPermission(OrganizerLogActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             getMyLastLocation();
@@ -105,16 +108,14 @@ public class OrganizerLogActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 try {
-                    Address organizerAddress;
-                    // Pass organizer's address in bundle. If it does not exist, initialize an address at (0,0).
-                    if (organizerAddressesList.isEmpty()) {
-                        organizerAddress = new Address(locale);
-                        organizerAddress.setLatitude(0.0);
-                        organizerAddress.setLongitude(0.0);
-                    } else {
-                        organizerAddress = organizerAddressesList.get(0);
+                    Intent intent = new Intent(getApplicationContext(), SelectAddressOnMapActivity.class);
+
+                    // Pass organizer's address in bundle if it exists
+                    if (! organizerAddressesList.isEmpty()) {
+                        Address organizerAddress = organizerAddressesList.get(0);
+                        intent.putExtra("organizerAddress", organizerAddress);
                     }
-                    startActivityForResult(new Intent(getApplicationContext(), SelectAddressOnMapActivity.class).putExtra("organizerAddress", organizerAddress), 1);
+                    startActivityForResult(intent, 1);
                 } catch (Exception e) {
                     Log.w(TAG, e.toString());
                 }

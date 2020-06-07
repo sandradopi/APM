@@ -48,44 +48,61 @@
 
     </RelativeLayout>
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/searchResult"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_below="@id/search_bar"
-        android:background="@color/white"
-        android:textColor="@color/black" />
+<!--    <ListView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/searchResult"-->
+<!--        android:layout_marginStart="20dp"-->
+<!--        android:layout_marginEnd="20dp"-->
+<!--        android:layout_below="@id/search_bar"-->
+<!--        android:background="@color/white"-->
+<!--        android:textColor="@color/black" />-->
 
-    <Button
-        android:id="@+id/submit_location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="21dp"
-        android:background="@drawable/primary_button"
-        android:text="@string/submit"
-        android:textColor="@color/white" />
+<!--    <Button-->
+<!--        android:id="@+id/submit_location"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentEnd="true"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_marginStart="15dp"-->
+<!--        android:layout_marginEnd="20dp"-->
+<!--        android:layout_marginBottom="20dp"-->
+<!--        android:background="@drawable/primary_button"-->
+<!--        android:text="@string/submit"-->
+<!--        android:textColor="@color/white" />-->
 
 
-    <Button
-        android:id="@+id/my_location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="21dp"
-        android:background="@drawable/secondary_button"
-        android:text="Mi ubicación"
-        android:textColor="@color/white" />
+<!--    <Button-->
+<!--        android:id="@+id/my_location"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:paddingStart="10dp"-->
+<!--        android:paddingEnd="10dp"-->
+<!--        android:layout_alignParentStart="true"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_marginStart="15dp"-->
+<!--        android:layout_marginEnd="20dp"-->
+<!--        android:layout_marginBottom="21dp"-->
+<!--        android:background="@drawable/secondary_button"-->
+<!--        android:text="Mi ubicación"-->
+<!--        android:textColor="@color/white" />-->
+
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/my_location"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="25dp"-->
+<!--        android:layout_marginBottom="20dp"-->
+<!--        android:backgroundTint="@color/highLightGrayBackground"-->
+<!--        android:layout_centerHorizontal="true"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:elevation="3dp"-->
+<!--        android:scaleType="center"-->
+<!--        app:borderWidth="0dp"-->
+<!--        app:fabSize="normal"-->
+<!--        android:clickable="true"-->
+<!--        android:src="@drawable/ic_my_location_black_18dp"-->
+<!--        android:focusable="true" />-->
 
     <!--    <ImageView-->
     <!--        android:layout_width="35dp"-->
@@ -110,6 +127,41 @@
     <!--        android:background="@drawable/white_border"-->
     <!--        android:id="@+id/iv_add_location"-->
     <!--        android:src="@drawable/ic_add_location"/>-->
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/submit_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:backgroundTint="@color/primary"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="end|bottom"
+        android:elevation="3dp"
+        app:borderWidth="0dp"
+        android:clickable="true"
+        android:src="@drawable/ic_check_white_18dp"
+        android:focusable="true" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/my_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="20dp"
+        android:layout_toStartOf="@+id/submit_location"
+        android:backgroundTint="@color/highLightGrayBackground"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="end|bottom"
+        android:elevation="3dp"
+        android:scaleType="center"
+        app:borderWidth="0dp"
+        app:fabSize="mini"
+        android:clickable="true"
+        android:src="@drawable/ic_my_location_black_18dp"
+        android:focusable="true" />
 
 
 </RelativeLayout>

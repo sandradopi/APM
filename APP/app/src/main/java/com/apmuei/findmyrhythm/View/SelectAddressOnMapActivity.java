@@ -36,6 +36,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.apmuei.findmyrhythm.R;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import android.location.Geocoder;
 
@@ -54,8 +55,8 @@ public class SelectAddressOnMapActivity extends FragmentActivity implements OnMa
     private Address selectedAddress;
     private Geocoder geocoder;
     private Marker marker;
-    private Button myLocation;
-    private Button submit_location;
+    private FloatingActionButton myLocation;
+    private FloatingActionButton submit_location;
     private String provider;
     private LatLng myLocationLatLng;
     private FusedLocationProviderClient fusedLocationClient;
@@ -99,6 +100,8 @@ public class SelectAddressOnMapActivity extends FragmentActivity implements OnMa
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
+        mMap.getUiSettings().setZoomControlsEnabled(true);
 
         // Check if there is a selected location and put the marker there.
         if (selectedAddress != null) {

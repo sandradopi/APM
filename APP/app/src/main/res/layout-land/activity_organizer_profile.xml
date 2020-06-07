@@ -101,7 +101,7 @@
                     android:id="@+id/floatingActionButton4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:backgroundTint="#AD86E0"
+                    app:backgroundTint="@color/primaryBackgroundDarker"
                     app:srcCompat="@drawable/ic_add"
                     tools:ignore="VectorDrawableCompat"
                     android:layout_gravity="end|bottom" />
