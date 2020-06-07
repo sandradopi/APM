@@ -172,12 +172,18 @@ public abstract class MenuDrawerActivity extends AppCompatActivity implements Na
                                     new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
-                                            startActivity(new Intent(MenuDrawerActivity.this, LoginActivity.class));
+                                            // Flags for start a new activity and clear all stack
+                                            Intent intent = new Intent(MenuDrawerActivity.this, LoginActivity.class);
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                            startActivity(intent);
                                         }
                                     });
                         } else if (finalProvider.equals("facebook.com")) {
                             LoginManager.getInstance().logOut();
-                            startActivity(new Intent(MenuDrawerActivity.this, LoginActivity.class));
+                            Intent intent = new Intent(MenuDrawerActivity.this, LoginActivity.class);
+                            // Flags for start a new activity and clear all stack
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
                         }
 
                     }
