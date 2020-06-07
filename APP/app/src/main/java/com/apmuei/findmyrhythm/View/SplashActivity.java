@@ -11,6 +11,7 @@ import android.os.Handler;
 import com.apmuei.findmyrhythm.Model.AttendeeService;
 import com.apmuei.findmyrhythm.Model.Event;
 import com.apmuei.findmyrhythm.Model.EventService;
+import com.apmuei.findmyrhythm.Model.Exceptions.Assert;
 import com.apmuei.findmyrhythm.Model.IOFiles;
 import com.apmuei.findmyrhythm.Model.PersistentOrganizerInfo;
 import com.apmuei.findmyrhythm.Model.PersistentUserInfo;
@@ -38,11 +39,8 @@ public class SplashActivity extends AppCompatActivity {
         if (currentUser != null) {
             (new Thread() {
                 public void run() {
-                    String name = currentUser.getDisplayName();
-                    String email = currentUser.getEmail();
-                    String userId = currentUser.getUid();
-                    ArrayList<String> eventsToAttendIds = new ArrayList<String>();
-                    ArrayList<Event> eventscreated = new ArrayList<Event>();
+                    ArrayList<String> eventsToAttendIds;
+                    ArrayList<Event> eventsCreated;
 
 
                     SharedPreferences sharedPreferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
@@ -57,10 +55,10 @@ public class SplashActivity extends AppCompatActivity {
 
                     if (account_type.equals("organizer")) {
                         PersistentOrganizerInfo persistentOrganizerInfo = PersistentOrganizerInfo.getPersistentOrganizerInfo(getApplicationContext());
-                        eventscreated = eventService.findEventByOrganicer(currentUser.getUid());
-                        System.out.println("ORGANIZADOR"+eventscreated);
+                        eventsCreated = eventService.findEventByOrganicer(currentUser.getUid());
+                        System.out.println("ORGANIZADOR"+eventsCreated);
 
-                        for (Event event : eventscreated) {
+                        for (Event event : eventsCreated) {
                             persistentOrganizerInfo.addEvent(getApplicationContext(),event);
                         }
 
@@ -79,12 +77,10 @@ public class SplashActivity extends AppCompatActivity {
                         /*EventService service = new EventService();
                         service.subscribeEventNotificationListener(SplashActivity.this, currentUser.getUid());*/
 
-
                         for (String idEvent : eventsToAttendIds) {
                             Event event = eventService.getEvent(idEvent);
                             persistentUserInfo.addEvent(getApplicationContext(),event);
                         }
-
 
                     }
 
@@ -100,10 +96,12 @@ public class SplashActivity extends AppCompatActivity {
                             photoUrl = Uri.parse("https://graph.facebook.com/" + facebookUserId + "/picture?height=500");
 
                         } else if (profile.getProviderId().equals("google.com")) {
+                            Assert.assertNotNull(photoUrl, "Photo URL is null");
                             photoUrl = Uri.parse(photoUrl.toString().replace("s96-c", "s700-c"));
                         }
                     }
 
+                    Assert.assertNotNull(photoUrl, "Photo URL is null");
                     IOFiles.downloadSaveBmp(photoUrl, getApplicationContext());
 
 
@@ -111,6 +109,7 @@ public class SplashActivity extends AppCompatActivity {
                     String accountType = preferences.getString("account_type", null);
 
                     Intent intent;
+                    Assert.assertNotNull(accountType, "Account type is null");
                     if (accountType.equals("organizer")) {
 
                         intent = new Intent(SplashActivity.this, OrganizerProfileActivity.class);

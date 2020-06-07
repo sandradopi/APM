@@ -54,10 +54,9 @@ public class OrganizerLogActivity extends AppCompatActivity {
     private List<Address> organizerAddressesList;
     private FloatingActionButton next;
     private FirebaseUser currentUser;
-    private Geocoder geocoder;
     private static final int LOCATION_PERMISSION_CODE = 7346;
     private FusedLocationProviderClient mFusedLocationClient;
-    private boolean canAccessLocation;
+    // private boolean canAccessLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,15 +83,15 @@ public class OrganizerLogActivity extends AppCompatActivity {
         next = findViewById(R.id.next);
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        Assert.assertNotNull(currentUser, "No FirebaseUser found");
         name.setText(currentUser.getDisplayName());
         email.setText(currentUser.getEmail());
 
         final Locale locale = Locale.getDefault(); // new Locale("es", "ES");
-        geocoder = new Geocoder(this, locale);
 
         GeoUtils.checkLocationEnabled(OrganizerLogActivity.this);
 
-        canAccessLocation = GeoUtils.canAccessLocation(OrganizerLogActivity.this);
+        // canAccessLocation = GeoUtils.canAccessLocation(OrganizerLogActivity.this);
 
         if (ContextCompat.checkSelfPermission(OrganizerLogActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -185,41 +184,6 @@ public class OrganizerLogActivity extends AppCompatActivity {
     }
 
 
-    public class GeocoderAsyncTask extends AsyncTask<String, Void, Address> {
-        Double latitude = null;
-        Double longitude = null;
-        Activity activity;
-
-        GeocoderAsyncTask(Activity activity, double latitude, double longitude) {
-            this.activity = activity;
-            this. latitude = latitude;
-            this.longitude = longitude;
-        }
-
-        @Override
-        protected Address doInBackground(String... params) {
-            List<Address> addresses;
-            Address result = null;
-
-            Geocoder geocoder = new Geocoder(activity, Locale.getDefault());
-            try {
-                addresses = geocoder.getFromLocation(latitude, longitude, 1);
-                Log.e("Addresses", "-->" + addresses);
-                result = addresses.get(0);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return result;
-        }
-
-        @Override
-        protected void onPostExecute(Address result) {
-            organizerAddressesList.add(result);
-            selectedAddressView.setText(GeoUtils.getAddressString(result));
-        }
-    }
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -269,6 +233,45 @@ public class OrganizerLogActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         finish();
         return true;
+    }
+
+
+    //================================================================================
+    // AsyncTasks
+    //================================================================================
+
+    public class GeocoderAsyncTask extends AsyncTask<String, Void, Address> {
+        Double latitude;
+        Double longitude;
+        Activity activity;
+
+        GeocoderAsyncTask(Activity activity, double latitude, double longitude) {
+            this.activity = activity;
+            this. latitude = latitude;
+            this.longitude = longitude;
+        }
+
+        @Override
+        protected Address doInBackground(String... params) {
+            List<Address> addresses;
+            Address result = null;
+
+            Geocoder geocoder = new Geocoder(activity, Locale.getDefault());
+            try {
+                addresses = geocoder.getFromLocation(latitude, longitude, 1);
+                Log.e("Addresses", "-->" + addresses);
+                result = addresses.get(0);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(Address result) {
+            organizerAddressesList.add(result);
+            selectedAddressView.setText(GeoUtils.getAddressString(result));
+        }
     }
 
 
