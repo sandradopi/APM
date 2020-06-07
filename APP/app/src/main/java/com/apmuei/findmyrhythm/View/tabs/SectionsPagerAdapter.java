@@ -1,6 +1,7 @@
 package com.apmuei.findmyrhythm.View.tabs;
 
 import android.content.Context;
+import android.os.Parcelable;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -59,4 +60,8 @@ public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
         return 2;
     }
 
+    @Override
+    public void restoreState(@Nullable Parcelable state, @Nullable ClassLoader loader) {
+        super.restoreState(state, loader);
+    }
 }
