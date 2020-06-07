@@ -115,5 +115,16 @@ public class OrganizerProfileActivity extends OrganizerMenuDrawerActivity {
     protected void onResume() {
         super.onResume();
         setMenuItemChecked(R.id.nav_profile);
+        // Retrieve the current adapter
+        ViewPager viewPager = findViewById(R.id.view_pager);
+        SectionsPagerAdapterOrg sectionsPagerAdapter = (SectionsPagerAdapterOrg) viewPager.getAdapter();
+        // If it exists, then update event tabs content. This way it maintains its previous state.
+        if (sectionsPagerAdapter != null) {
+            sectionsPagerAdapter.notifyDataSetChanged();
+        } else {
+            // If it does not exist, then create a new adapter with the updated content.
+            SectionsPagerAdapterOrg newSectionsPagerAdapter = new SectionsPagerAdapterOrg(this, getSupportFragmentManager());
+            viewPager.setAdapter(newSectionsPagerAdapter);
+        }
     }
 }

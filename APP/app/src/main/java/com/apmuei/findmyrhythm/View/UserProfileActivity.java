@@ -80,6 +80,18 @@ public class UserProfileActivity extends UserMenuDrawerActivity {
         super.onResume();
 
         setMenuItemChecked(R.id.nav_profile);
+        // Retrieve the current adapter
+        ViewPager viewPager = findViewById(R.id.view_pager);
+        SectionsPagerAdapter sectionsPagerAdapter = (SectionsPagerAdapter) viewPager.getAdapter();
+        // If it exists, then update event tabs content. This way it maintains its previous state.
+        if (sectionsPagerAdapter != null) {
+            sectionsPagerAdapter.notifyDataSetChanged();
+        } else {
+            // If it does not exist, then create a new adapter with the updated content.
+            SectionsPagerAdapter newSectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
+            viewPager.setAdapter(newSectionsPagerAdapter);
+        }
+
         Service endlessService = new EndlessService();
         Intent intent = new Intent(this, EndlessService.class);
 
