@@ -1,32 +1,11 @@
 package com.apmuei.findmyrhythm.View;
 
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
-import android.Manifest;
-import android.app.Activity;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Location;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.apmuei.findmyrhythm.Model.Event;
 import com.apmuei.findmyrhythm.Model.Exceptions.Assert;
-import com.apmuei.findmyrhythm.Model.Utils.GeoUtils;
-import com.apmuei.findmyrhythm.Model.Utils.PermissionUtils;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -36,16 +15,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.apmuei.findmyrhythm.R;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.gson.Gson;
 
-import android.location.Geocoder;
-
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 
 
@@ -91,14 +63,21 @@ public class EventOnMapActivity extends FragmentActivity implements OnMapReadyCa
 
 
     void addEventToMap(Event event, GoogleMap map) {
-            HashMap address = event.getCompleteAddress();
-            LatLng latLng = new LatLng((Double) Objects.requireNonNull(address.get("latitude")),
-                    (Double) Objects.requireNonNull(address.get("longitude")));
-            Marker marker = map.addMarker(new MarkerOptions().position(latLng).title(event.getName()));
-            marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
-            marker.setTag(event);
-            marker.showInfoWindow();
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 11));
+        // Get event address to put the marker on the map
+        HashMap address = event.getCompleteAddress();
+        LatLng latLng = new LatLng((Double) Objects.requireNonNull(address.get("latitude")),
+                (Double) Objects.requireNonNull(address.get("longitude")));
+        Marker marker = map.addMarker(new MarkerOptions().position(latLng).title(event.getName()));
+        marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
+        marker.setTag(event);
+        marker.showInfoWindow();
+        // Center view on Event location
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 11));
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }

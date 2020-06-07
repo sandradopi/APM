@@ -15,6 +15,7 @@
 
     <color name="darkGrayBackground">#1C1C1C</color>
     <color name="mediumGrayBackground">#515151</color>
+    <color name="highLightGrayBackground">#ECECEC</color>
 
     <!-- Secondary -->
     <color name="secondary">#424242</color>

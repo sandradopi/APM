@@ -46,16 +46,6 @@
 
     </RelativeLayout>
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/searchResult"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_below="@id/search_bar"
-        android:background="@color/white"
-        android:textColor="@color/black" />
-
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/search_filters"
@@ -71,6 +61,24 @@
         app:borderWidth="0dp"
         android:clickable="true"
         android:src="@drawable/ic_filter_list_white_18dp"
+        android:focusable="true" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/center_on_my_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="20dp"
+        android:layout_toStartOf="@+id/search_filters"
+        android:backgroundTint="@color/highLightGrayBackground"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="end|bottom"
+        android:elevation="3dp"
+        android:scaleType="center"
+        app:borderWidth="0dp"
+        app:fabSize="mini"
+        android:clickable="true"
+        android:src="@drawable/ic_my_location_black_18dp"
         android:focusable="true" />
 
 
