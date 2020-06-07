@@ -17,6 +17,9 @@
     <string name="search_events_usage_info">Haz click en los marcadores para ver el título del evento, y en este si quieres ver toda su información.</string>
     <string name="search">Buscar...</string>
 
+    <!--  EventOnMapActivity  -->
+    <string name="event_on_map_usage_info">Haz click en el marcador para acceder a las opciones de Google Maps.</string>
+
     <!--  CreateEventActivity  -->
     <string name="create_event">Crear evento</string>
     <string name="edit_event">Editar evento</string>

@@ -3,6 +3,7 @@ package com.apmuei.findmyrhythm.View;
 import androidx.fragment.app.FragmentActivity;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.apmuei.findmyrhythm.Model.Event;
 import com.apmuei.findmyrhythm.Model.Exceptions.Assert;
@@ -42,6 +43,8 @@ public class EventOnMapActivity extends FragmentActivity implements OnMapReadyCa
         Gson gson = new Gson();
         eventSelect = gson.fromJson(getIntent().getStringExtra("EVENT"), Event.class);
 
+        Toast.makeText(getApplicationContext(), getString(R.string.event_on_map_usage_info), Toast.LENGTH_LONG).show();
+
     }
 
     /**
@@ -58,6 +61,8 @@ public class EventOnMapActivity extends FragmentActivity implements OnMapReadyCa
 
         // Check if there is a selected location and put the marker there.
         addEventToMap(eventSelect, googleMap);
+
+        googleMap.getUiSettings().setZoomControlsEnabled(true);
 
     }
 
