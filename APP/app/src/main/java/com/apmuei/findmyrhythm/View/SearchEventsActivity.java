@@ -317,7 +317,6 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
                         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                     }
 
-
                     String searchText = getSearchText();
 
                     currentSearchFilters.setSearchText(searchText);
@@ -363,7 +362,7 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
                 Assert.assertNotNull(event, TAG + ": Event is null");
                 snippet.setText(df.format(event.getEventDate()));
 
-                if (eventMarker.isOverlapping(eventMarkersSet)) {
+                if (eventMarker.isOverlappingWithMarkers(eventMarkersSet)) {
                     ImageView imageView = v.findViewById(R.id.overlapping);
                     imageView.setVisibility(View.VISIBLE);
                 }
@@ -765,11 +764,11 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
         }
 
 
-        private boolean isOverlapping(HashSet<EventMarker> eventMarkersSet) {
+        private boolean isOverlappingWithMarkers(HashSet<EventMarker> eventMarkersSet) {
             float[] metersDistance = new float[1];
             for (EventMarker eventMarker : eventMarkersSet) {
                 if (! this.equals(eventMarker) && eventMarker.originalPosition != null) {
-                    if (this.marker.isVisible()) {
+                    if (eventMarker.marker.isVisible()) {
                         Location.distanceBetween(
                                 this.originalPosition.latitude,
                                 this.originalPosition.longitude,
