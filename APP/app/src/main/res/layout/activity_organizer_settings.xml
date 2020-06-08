@@ -105,14 +105,25 @@
                 android:textStyle="bold">
             </TextView>
 
-            <EditText
-                android:id="@+id/userLocation"
+
+            <TextView
+                android:id="@+id/selected_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColorHint="@color/secondary"
+                android:layout_margin="20dp"
+                android:text="@string/orglocation"
                 android:textColor="@color/textColorSecondary"
-                android:hint="@string/add_location"
-                android:textSize="14sp"/>
+                android:textSize="16sp"></TextView>
+
+
+            <Button
+                android:id="@+id/exploreMap"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/alt_button"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
