@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,8 +54,12 @@ public class OrganizerSettingsActivity extends OrganizerMenuDrawerActivity {
         biographyView.setText(biography);
 
         final String location = persistentOrgInfo.getLocation();
-        final TextView locationView = findViewById(R.id.userLocation);
-        locationView.setText(location);
+        final TextView selectedAddressView = findViewById(R.id.selected_address);
+        selectedAddressView.setText(location);
+
+        final Button exploreMapButton = findViewById(R.id.exploreMap);
+        exploreMapButton.setText(R.string.map_exlore);
+
 
         FloatingActionButton savebutton = findViewById(R.id.save);
         savebutton.setClickable(true);
@@ -64,13 +69,13 @@ public class OrganizerSettingsActivity extends OrganizerMenuDrawerActivity {
             public void onClick(View view) {
                 //Log.w(TAG, "Ha clickeado en guardar ajustes");
 
-                persistentOrgInfo.updateInfo(getApplicationContext(), nameView.getText().toString(), usernameView.getText().toString(), emailView.getText().toString(), biographyView.getText().toString(), locationView.getText().toString());
+                persistentOrgInfo.updateInfo(getApplicationContext(), nameView.getText().toString(), usernameView.getText().toString(), emailView.getText().toString(), biographyView.getText().toString(), selectedAddressView.getText().toString());
 
                 organizer.setName(nameView.getText().toString());
                 organizer.setUsername(usernameView.getText().toString());
                 organizer.setEmail(emailView.getText().toString());
                 organizer.setBiography(biographyView.getText().toString());
-                organizer.setLocation(locationView.getText().toString());
+                organizer.setLocation(selectedAddressView.getText().toString());
                 organizer.setRating(rating);
 
                 SharedPreferences preferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
