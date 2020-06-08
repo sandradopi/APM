@@ -236,7 +236,7 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
 
         if (! currentSearchFilters.equals(searchFilters)) {
             if (! searchFilters.getSearchText().isEmpty()) {
-                mMap.clear();
+                hideMarkersFromMap();
                 currentSearchFilters = searchFilters;
                 new getEventsByTitle().execute(searchFilters);
             } else {
@@ -671,10 +671,10 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
                 // At this point, there are no markers in map and the results are already filtered
                 EventMarker eventMarker = new EventMarker(event.getId(), event);
 
-                if (!eventMarkersSet.contains(eventMarker)) {
-                    eventMarkersSet.add(eventMarker);
-                } else {
+                if (eventMarkersSet.contains(eventMarker)) {
                     eventMarker = eventMarker.getIfPresent(eventMarker, eventMarkersSet);
+                } else {
+                    eventMarkersSet.add(eventMarker);
                 }
                 eventMarker.addToMap(mMap);
                 builder.include(eventMarker.marker.getPosition());
