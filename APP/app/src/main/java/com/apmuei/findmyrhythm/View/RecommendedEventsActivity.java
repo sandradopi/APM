@@ -5,11 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -24,6 +28,8 @@ import com.apmuei.findmyrhythm.Model.UserService;
 import com.apmuei.findmyrhythm.R;
 import com.apmuei.findmyrhythm.View.tabs.ListAdapterNext;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -39,7 +45,7 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
     TextView eventDescContent;
     TextView eventLocationContent;
     TextView eventCapacity;
-    TextView eventGenre, eventCost;
+    TextView eventGenre, eventCost, eventTime;
     Photo photoEvent;
     PhotoService photoService= new PhotoService();
 
@@ -53,6 +59,7 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
         mListView = findViewById(R.id.eventslist2);
         eventName = findViewById(R.id.eventName);
         eventDate = findViewById(R.id.eventDate);
+        eventTime = findViewById(R.id.eventTime);
         eventDescContent = findViewById(R.id.eventDescContent);
         eventLocationContent = findViewById(R.id.eventLocationContent);
         eventCapacity = findViewById(R.id.eventCapacity);
@@ -137,12 +144,17 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
                 if(!nextEventsFiltered.isEmpty()){
                     Event e = nextEventsFiltered.get(0);
                     eventName.setText(e.getName());
-                    eventDate.setText(e.getEventDate().toString());
+                    Date dateF = e.getEventDate();
+                    DateFormat df = new SimpleDateFormat(getString(R.string.date_pattern), java.util.Locale.getDefault());
+                    DateFormat df2 = new SimpleDateFormat(getString(R.string.hour_pattern), java.util.Locale.getDefault());
+                    eventDate.setText(df.format(dateF));
+                    eventTime.setText(df2.format(dateF));
                     eventDescContent.setText(e.getDescription());
                     eventLocationContent.setText(e.getLocation());
                     eventCapacity.setText(e.getMaxAttendees());
                     eventCost.setText(e.getPrice());
                     eventGenre.setText(e.getGenre());
+                    new getPhoto().execute(e);
                 }
 
 
@@ -158,12 +170,17 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
                     if(orientation == Configuration.ORIENTATION_LANDSCAPE || isTablet(getApplicationContext())){
                         Event e = nextEventsFiltered.get((int) id);
                         eventName.setText(e.getName());
-                        eventDate.setText(e.getEventDate().toString());
+                        Date dateF = e.getEventDate();
+                        DateFormat df = new SimpleDateFormat(getString(R.string.date_pattern), java.util.Locale.getDefault());
+                        DateFormat df2 = new SimpleDateFormat(getString(R.string.hour_pattern), java.util.Locale.getDefault());
+                        eventDate.setText(df.format(dateF));
+                        eventTime.setText(df2.format(dateF));
                         eventDescContent.setText(e.getDescription());
                         eventLocationContent.setText(e.getLocation());
                         eventCapacity.setText(e.getMaxAttendees());
                         eventCost.setText(e.getPrice());
                         eventGenre.setText(e.getGenre());
+                        new getPhoto().execute(e);
 
                     }
 
@@ -186,6 +203,29 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
                     >= Configuration.SCREENLAYOUT_SIZE_LARGE;
         }
 
+    }
+
+    private class getPhoto extends AsyncTask<Event, Void, Photo> {
+
+        @Override
+        protected Photo doInBackground(Event... events) {
+            Event e = events[0];
+            PhotoService photoService= new PhotoService();
+            Photo eventPhoto = photoService.getPhoto(e.getEventImage());
+            return eventPhoto;
+        }
+
+        @Override
+        protected void onPostExecute(Photo eventPhoto) {
+
+            byte[] decodedString = Base64.decode(eventPhoto.getEventImage(),Base64.NO_WRAP);
+            InputStream inputStream  = new ByteArrayInputStream(decodedString);
+            Bitmap bitmap  = BitmapFactory.decodeStream(inputStream);
+            Bitmap imagenFinal = Bitmap.createScaledBitmap(bitmap,242,152,false);
+            final ImageView imageEvent =  findViewById(R.id.imageEvent);
+            imageEvent.setImageBitmap(imagenFinal);
+
+        }
     }
 
 }

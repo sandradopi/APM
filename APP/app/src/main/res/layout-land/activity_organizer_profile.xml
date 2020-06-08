@@ -125,6 +125,7 @@
             android:id="@+id/tabs"
             app:tabBackground="@drawable/tab_color_selector"
             android:layout_width="match_parent"
+            app:tabTextColor="@color/white"
             android:layout_height="wrap_content"
             android:background="@color/secondary" />
 
