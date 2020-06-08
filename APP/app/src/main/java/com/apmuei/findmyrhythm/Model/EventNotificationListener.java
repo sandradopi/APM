@@ -80,6 +80,7 @@ public class EventNotificationListener implements ValueEventListener {
     private void sendNotification(Event event) {
 
        OrganizerService service = new OrganizerService();
+
        try {
            Organizer organizer = service.getOrganizer(event.getOrganizerId());
 
@@ -94,11 +95,10 @@ public class EventNotificationListener implements ValueEventListener {
                    .setSmallIcon(R.drawable.status_bar_icon)
                    .setContentTitle(event.getName())
                    .setDefaults(NotificationCompat.DEFAULT_ALL)
-                   .setContentText("- Evento de " + organizer.getName())
                    .setColor(Color.argb(0, 179, 86, 168))
                    .setContentIntent(pendingIntent)
                    .setGroup(NOTIFICATION_GROUP)
-                   .setStyle(new NotificationCompat.BigTextStyle().bigText(organizer.getName() + R.string.notificacion).setSummaryText("Evento Recomendado"))
+                   .setStyle(new NotificationCompat.BigTextStyle().bigText(organizer.getName() + " " + mContext.getResources().getString(R.string.notificacion)).setSummaryText(mContext.getResources().getString(R.string.summary)))
                    .setAutoCancel(true);
 
            NotificationCompat.Builder groupBuilder = new NotificationCompat.Builder(mContext, "myChannel")
