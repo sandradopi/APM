@@ -93,7 +93,7 @@ public class OrganizerEventInfoActivity extends AppCompatActivity {
         TextView category = findViewById(R.id.category);
 
         eventName.setText(event.getName());
-        eventMaxAttendees.setText(event.getMaxAttendees()+getString(R.string.people));
+        eventMaxAttendees.setText(event.getMaxAttendees()+ " " + getString(R.string.people));
         eventPrice.setText(event.getPrice() +"€");
         Date dateF;
         dateF = event.getEventDate();
