@@ -60,7 +60,7 @@
         android:elevation="3dp"
         app:borderWidth="0dp"
         android:clickable="true"
-        android:src="@drawable/ic_filter_list_white_18dp"
+        android:src="@drawable/ic_tune_white_18dp"
         android:focusable="true" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
