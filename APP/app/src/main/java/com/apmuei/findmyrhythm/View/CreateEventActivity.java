@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -608,6 +609,13 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
 
     private class AddEventTask extends AsyncTask<Void, Void, Event> {
 
+        ProgressDialog progress;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progress=ProgressDialog.show(CreateEventActivity.this,"",getString(R.string.spinnerEvento),false);
+        }
+
         @Override
         protected Event doInBackground(Void... voids) {
             // Get the id of the organizer
@@ -646,6 +654,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
         @Override
         protected void onPostExecute(Event event) {
             super.onPostExecute(event);
+            progress.dismiss();
             Toast.makeText(getApplicationContext(), getString(R.string.toast_created), Toast.LENGTH_LONG).show();
             String eventJson = (new Gson()).toJson(event);
             // Start the activity to show the event info

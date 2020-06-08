@@ -107,7 +107,7 @@
     <!-- RecommendedEventsActivity -->
     <string name="recommended">Recomendados</string>
     <string name="spinner">Estamos buscando los mejores eventos para ti…</string>
-
+    <string name="spinnerEvento">Creando evento…</string>
     <!-- ScroreEventDialog -->
     <string name="edit_valoration">Editar valoración del evento </string>
     <string name="valoration_success">Evento valorado con éxito</string>

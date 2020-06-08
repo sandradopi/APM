@@ -9,6 +9,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:orientation="vertical"
+            android:background="@color/primaryBackgroundDarker"
             android:layout_height="match_parent">
 
                 <ListView
