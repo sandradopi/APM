@@ -14,6 +14,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.Location;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Looper;
@@ -23,6 +24,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,6 +68,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.Random;
 
 
 public class SearchEventsActivity extends FragmentActivity implements FiltersDialogInterface,
@@ -290,6 +293,8 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
 
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
 
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+
         searchEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -339,17 +344,25 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
                 TextView title = v.findViewById(R.id.title);
                 title.setText(args.getTitle());
 
-                Event event = (Event) args.getTag();
+                EventMarker eventMarker = (EventMarker) args.getTag();
+                Assert.assertNotNull(eventMarker, "EventMarker is null");
+                Event event = eventMarker.event;
                 DateFormat df = new SimpleDateFormat("dd/MM/yy", java.util.Locale.getDefault());
 
                 TextView snippet = v.findViewById(R.id.snippet);
                 Assert.assertNotNull(event, TAG + ": Event is null");
                 snippet.setText(df.format(event.getEventDate()));
 
+                if (eventMarker.isOverlapping(eventMarkersSet)) {
+                    ImageView imageView = v.findViewById(R.id.overlapping);
+                    imageView.setVisibility(View.VISIBLE);
+                }
+
                 mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                     public void onInfoWindowClick(Marker marker) {
-                        Event event = (Event) marker.getTag();
-                        Assert.assertNotNull(event, TAG + ": Event is null");
+                        EventMarker eventMarker = (EventMarker) marker.getTag();
+                        Assert.assertNotNull(eventMarker, "EventMarker is null");
+                        Event event = eventMarker.event;
                         Log.d(TAG + " >>> ", event.getId());
 
                         Date currentDate = new Date();
@@ -670,6 +683,7 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
         String id;
         Event event;
         Marker marker;
+        LatLng originalPosition = null;
 
         EventMarker(String id, Event event) {
             this.id = id;
@@ -689,15 +703,45 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
         void addToMap(GoogleMap map) {
             if (marker == null) {
                 HashMap address = this.event.getCompleteAddress();
-                LatLng latLng = new LatLng((Double) Objects.requireNonNull(address.get("latitude")),
-                        (Double) Objects.requireNonNull(address.get("longitude")));
+                double latitude = (double) Objects.requireNonNull(address.get("latitude"));
+                double longitude = (double) (Double) Objects.requireNonNull(address.get("longitude"));
+                this.originalPosition = new LatLng(latitude, longitude);
+
+//                Random r = new Random();
+//                double maxDisp = 0.00001;
+//                double randAddLat = -maxDisp + (maxDisp - -maxDisp) * r.nextDouble();
+//                double randAddLon = -maxDisp + (maxDisp - -maxDisp) * r.nextDouble();
+//                LatLng latLng = new LatLng(latitude + randAddLat, longitude + randAddLon);
+                LatLng latLng = this.originalPosition;
+
                 Marker marker = map.addMarker(new MarkerOptions().position(latLng).title(this.event.getName()));
                 marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
-                marker.setTag(this.event);
+                marker.setTag(this);
                 this.marker = marker;
             } else {
                 this.marker.setVisible(true);
             }
+        }
+
+
+        private boolean isOverlapping(HashSet<EventMarker> eventMarkersSet) {
+            float[] metersDistance = new float[1];
+            for (EventMarker eventMarker : eventMarkersSet) {
+                if (! this.equals(eventMarker) && eventMarker.originalPosition != null) {
+                    Location.distanceBetween(
+                            this.originalPosition.latitude,
+                            this.originalPosition.longitude,
+                            eventMarker.originalPosition.latitude,
+                            eventMarker.originalPosition.longitude,
+                            metersDistance);
+                    if (metersDistance[0] < 20.0f) {
+                        return true;
+                    }
+//                if (this.originalPosition.equals(eventMarker.originalPosition))
+//                    return true;
+                }
+            }
+            return false;
         }
 
         @NonNull
