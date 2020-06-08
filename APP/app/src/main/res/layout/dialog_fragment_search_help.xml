@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <LinearLayout
+        android:id="@+id/search_filters_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:text="Ayuda"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textStyle="bold|italic"
+            android:text="Búsqueda por título"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="Para buscar eventos por título, escribe el mismo (o parte de él) en la barra de búsqueda."/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:layout_marginTop="20dp"
+            android:textStyle="bold|italic"
+            android:text="Filtros de búsqueda"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="Para aplicar distintos filtros de búsqueda, selecciona el botón circular morado situado en la parte inferior de la pantalla."/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:layout_marginTop="20dp"
+            android:textStyle="bold|italic"
+            android:text="Ir a mi ubicación"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="Para ir a tu ubicación, selecciona el botón situado a la izquierda del botón para aplicar filtros."/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:layout_marginTop="20dp"
+            android:textStyle="bold|italic"
+            android:text="Marcadores"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="Cuando haya múltiples eventos en un mismo lugar, aparecerá en la parte inferior del cuadro de texto un icono con tres rayas de tamaño decreciente."/>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/ok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/primary_button"
+                android:padding="0dp"
+                android:foreground="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:elevation="3dp"
+                android:minHeight="30dp"
+                android:text="OK"
+                android:textColor="@color/white"
+                android:focusable="true" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

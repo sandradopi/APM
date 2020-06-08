@@ -1,7 +1,9 @@
 package com.apmuei.findmyrhythm.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
@@ -14,15 +16,18 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.Location;
-import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -68,7 +73,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Objects;
-import java.util.Random;
 
 
 public class SearchEventsActivity extends FragmentActivity implements FiltersDialogInterface,
@@ -100,6 +104,10 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
     FragmentManager fragmentManager;
     SearchFiltersDialogFragment searchFiltersDialogFragment;
     SearchFilters currentSearchFilters;
+
+    // Help dialog fragment:
+    HelpDialogFragment helpDialogFragment;
+
 
     // Event sets:
     private HashSet<EventMarker> eventMarkersSet = new HashSet<>();
@@ -140,6 +148,8 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
         searchFiltersDialogFragment = new SearchFiltersDialogFragment(this);
         searchFiltersDialogFragment.setInterface(this);
         currentSearchFilters = SearchFiltersDialogFragment.getDefaultFilters(this);
+
+        helpDialogFragment = new HelpDialogFragment();
 
         Toast.makeText(getApplicationContext(), getString(R.string.search_events_usage_info), Toast.LENGTH_LONG).show();
 
@@ -451,6 +461,13 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
             }
         });
 
+        FloatingActionButton help = findViewById(R.id.help);
+        help.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                helpDialogFragment.show(fragmentManager, "dialog");
+            }
+        });
+
     }
 
 
@@ -678,6 +695,35 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
     //================================================================================
     // Private Classes
     //================================================================================
+
+
+    public static class HelpDialogFragment extends DialogFragment {
+
+        /** The system calls this to get the DialogFragment's layout, regardless
+         of whether it's being displayed as a dialog or an embedded fragment. */
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            // Inflate the layout to use as dialog or embedded fragment
+            return inflater.inflate(R.layout.dialog_fragment_search_help, container, false);
+        }
+
+
+        @Override
+        public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+            super.onViewCreated(view, savedInstanceState);
+
+            Button applyFiltersButton = view.findViewById(R.id.ok);
+            applyFiltersButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    dismiss();
+                }
+            });
+
+        }
+
+    }
+
 
     private class EventMarker {
         String id;
