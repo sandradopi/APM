@@ -244,6 +244,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             Log.d(TAG, "GeocoderAsyncTask.doInBackground");
             //Log.d(TAG, locationName);
 
+
             Geocoder geocoder = new Geocoder(activity, Locale.getDefault());
             try {
                 if (locationName != null) {
