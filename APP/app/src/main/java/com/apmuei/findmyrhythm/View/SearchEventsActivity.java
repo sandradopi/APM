@@ -753,11 +753,6 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
                 double longitude = (double) (Double) Objects.requireNonNull(address.get("longitude"));
                 this.originalPosition = new LatLng(latitude, longitude);
 
-//                Random r = new Random();
-//                double maxDisp = 0.00001;
-//                double randAddLat = -maxDisp + (maxDisp - -maxDisp) * r.nextDouble();
-//                double randAddLon = -maxDisp + (maxDisp - -maxDisp) * r.nextDouble();
-//                LatLng latLng = new LatLng(latitude + randAddLat, longitude + randAddLon);
                 LatLng latLng = this.originalPosition;
 
                 Marker marker = map.addMarker(new MarkerOptions().position(latLng).title(this.event.getName()));
@@ -774,14 +769,16 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
             float[] metersDistance = new float[1];
             for (EventMarker eventMarker : eventMarkersSet) {
                 if (! this.equals(eventMarker) && eventMarker.originalPosition != null) {
-                    Location.distanceBetween(
-                            this.originalPosition.latitude,
-                            this.originalPosition.longitude,
-                            eventMarker.originalPosition.latitude,
-                            eventMarker.originalPosition.longitude,
-                            metersDistance);
-                    if (metersDistance[0] < 20.0f) {
-                        return true;
+                    if (this.marker.isVisible()) {
+                        Location.distanceBetween(
+                                this.originalPosition.latitude,
+                                this.originalPosition.longitude,
+                                eventMarker.originalPosition.latitude,
+                                eventMarker.originalPosition.longitude,
+                                metersDistance);
+                        if (metersDistance[0] < 20.0f) {
+                            return true;
+                        }
                     }
 //                if (this.originalPosition.equals(eventMarker.originalPosition))
 //                    return true;
