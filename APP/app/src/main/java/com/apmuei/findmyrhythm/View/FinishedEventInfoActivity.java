@@ -70,6 +70,8 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
 
         RatingBar bar=(RatingBar)findViewById(R.id.pastEventScore);
 
+        bar.setIsIndicator(true);
+
         rateButton = findViewById(R.id.rateButton);
 
         // Event
@@ -84,7 +86,7 @@ public class FinishedEventInfoActivity extends AppCompatActivity implements Scor
             eventSelect = persistentInfo.getEvent(eventSelectId);
 
             rateButton.setVisibility(View.GONE);
-            bar.setIsIndicator(true);
+
 
         } else {
             PersistentUserInfo persistentInfo = PersistentUserInfo.getPersistentUserInfo(getApplicationContext());
