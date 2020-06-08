@@ -317,7 +317,6 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
                         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                     }
 
-
                     String searchText = getSearchText();
 
                     currentSearchFilters.setSearchText(searchText);
@@ -363,7 +362,7 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
                 Assert.assertNotNull(event, TAG + ": Event is null");
                 snippet.setText(df.format(event.getEventDate()));
 
-                if (eventMarker.isOverlapping(eventMarkersSet)) {
+                if (eventMarker.isOverlappingWithMarkers(eventMarkersSet)) {
                     ImageView imageView = v.findViewById(R.id.overlapping);
                     imageView.setVisibility(View.VISIBLE);
                 }
@@ -669,10 +668,13 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
                 // At this point, there are no markers in map and the results are already filtered
                 EventMarker eventMarker = new EventMarker(event.getId(), event);
 
+                if (!eventMarkersSet.contains(eventMarker)) {
+                    eventMarkersSet.add(eventMarker);
+                } else {
+                    eventMarker = eventMarker.getIfPresent(eventMarker, eventMarkersSet);
+                }
                 eventMarker.addToMap(mMap);
                 builder.include(eventMarker.marker.getPosition());
-                eventMarkersSet.add(eventMarker);
-
             }
 
             try {
@@ -765,11 +767,11 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
         }
 
 
-        private boolean isOverlapping(HashSet<EventMarker> eventMarkersSet) {
+        private boolean isOverlappingWithMarkers(HashSet<EventMarker> eventMarkersSet) {
             float[] metersDistance = new float[1];
             for (EventMarker eventMarker : eventMarkersSet) {
                 if (! this.equals(eventMarker) && eventMarker.originalPosition != null) {
-                    if (this.marker.isVisible()) {
+                    if (eventMarker.marker.isVisible()) {
                         Location.distanceBetween(
                                 this.originalPosition.latitude,
                                 this.originalPosition.longitude,
@@ -785,6 +787,17 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
                 }
             }
             return false;
+        }
+
+        public EventMarker getIfPresent(EventMarker sourceEventMarker, HashSet<EventMarker> set) {
+            if (set.contains(sourceEventMarker)) {
+                for (EventMarker eventMarker : set) {
+                    if (eventMarker.equals(sourceEventMarker))
+                        return eventMarker;
+                }
+            }
+
+            return null;
         }
 
         @NonNull
