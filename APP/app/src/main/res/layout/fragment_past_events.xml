@@ -5,6 +5,7 @@
 
     <ListView
         android:id="@+id/eventlist"
+        android:nestedScrollingEnabled="true"
         android:layout_width="match_parent"
         android:layout_height="330dp"
         android:layout_below="@+id/tabs">
