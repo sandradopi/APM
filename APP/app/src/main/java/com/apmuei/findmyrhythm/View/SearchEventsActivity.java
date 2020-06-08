@@ -668,10 +668,13 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
                 // At this point, there are no markers in map and the results are already filtered
                 EventMarker eventMarker = new EventMarker(event.getId(), event);
 
+                if (!eventMarkersSet.contains(eventMarker)) {
+                    eventMarkersSet.add(eventMarker);
+                } else {
+                    eventMarker = eventMarker.getIfPresent(eventMarker, eventMarkersSet);
+                }
                 eventMarker.addToMap(mMap);
                 builder.include(eventMarker.marker.getPosition());
-                eventMarkersSet.add(eventMarker);
-
             }
 
             try {
@@ -784,6 +787,17 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
                 }
             }
             return false;
+        }
+
+        public EventMarker getIfPresent(EventMarker sourceEventMarker, HashSet<EventMarker> set) {
+            if (set.contains(sourceEventMarker)) {
+                for (EventMarker eventMarker : set) {
+                    if (eventMarker.equals(sourceEventMarker))
+                        return eventMarker;
+                }
+            }
+
+            return null;
         }
 
         @NonNull
