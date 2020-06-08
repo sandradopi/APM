@@ -67,7 +67,7 @@ public class ScoreEventDialog extends DialogFragment {
             bar.setRating(score);
             commentView.setText(comment);
 
-            builder.setTitle(R.string.edit_valoration + eventName)
+            builder.setTitle(getString(R.string.edit_valoration) + " " + eventName)
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             rate = bar.getRating();

@@ -78,38 +78,37 @@ import java.util.Objects;
 public class SearchEventsActivity extends FragmentActivity implements FiltersDialogInterface,
         OnMapReadyCallback, GoogleMap.OnMarkerClickListener, SensorEventListener {
 
-    // Constants:
+    // Constants
     private final static String TAG = "SearchEventsA";
     private static final int LOCATION_PERMISSION_CODE = 7346;
 
-    // Sensors:
+    // Sensors
     private SensorManager sensorManager;
     private Sensor light;
     private int numLightSensorChanges = 0;
 
-    // GUI:
+    // GUI
     private EditText searchEditText;
 
     // Map style
     boolean isMapStyleDark = false;
 
-    // Map and location:
+    // Map and location
     private LocationRequest locationRequest;
     private LocationCallback locationCallback;
     private FusedLocationProviderClient fusedLocationClient;
     private GoogleMap mMap;
     private GeoFire geoFire;
 
-    // Filters dialog fragment:
+    // Filters dialog fragment
     FragmentManager fragmentManager;
     SearchFiltersDialogFragment searchFiltersDialogFragment;
     SearchFilters currentSearchFilters;
 
-    // Help dialog fragment:
+    // Help dialog fragment
     HelpDialogFragment helpDialogFragment;
 
-
-    // Event sets:
+    // Event sets
     private HashSet<EventMarker> eventMarkersSet = new HashSet<>();
     private HashSet<EventMarker> newEventMarkersSet = new HashSet<>();
 
@@ -151,7 +150,8 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
 
         helpDialogFragment = new HelpDialogFragment();
 
-        Toast.makeText(getApplicationContext(), getString(R.string.search_events_usage_info), Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), getString(R.string.search_events_usage_info),
+                Toast.LENGTH_LONG).show();
 
     }
 
@@ -289,11 +289,10 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-
         GeoUtils.checkLocationEnabled(SearchEventsActivity.this);
 
-        if (ContextCompat.checkSelfPermission(SearchEventsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(SearchEventsActivity.this,
+                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             getMyLastLocation();
         } else {
             // Permission to access the location is missing. Show rationale and request permission
@@ -487,7 +486,8 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
                 EventMarker eventMarker = new EventMarker(key);
                 if (! newEventMarkersSet.contains(eventMarker) && ! eventMarkersSet.contains(eventMarker)) {
                     newEventMarkersSet.add(eventMarker);
-                    Log.d(TAG, String.format("Key %s entered the search area at [%f,%f]", key, location.latitude, location.longitude));
+                    Log.d(TAG, String.format("Key %s entered the search area at [%f,%f]", key,
+                            location.latitude, location.longitude));
                 }
             }
 
@@ -498,7 +498,8 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
 
             @Override
             public void onKeyMoved(String key, GeoLocation location) {
-                Log.d(TAG, String.format("Key %s moved within the search area to [%f,%f]", key, location.latitude, location.longitude));
+                Log.d(TAG, String.format("Key %s moved within the search area to [%f,%f]", key,
+                        location.latitude, location.longitude));
             }
 
             @Override
@@ -604,12 +605,14 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
     //================================================================================
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         if (requestCode != LOCATION_PERMISSION_CODE) {
             return;
         }
 
-        if (PermissionUtils.isPermissionGranted(permissions, grantResults, Manifest.permission.ACCESS_FINE_LOCATION)) {
+        if (PermissionUtils.isPermissionGranted(permissions, grantResults,
+                Manifest.permission.ACCESS_FINE_LOCATION)) {
             // Enable the my location layer if the permission has been granted.
             getMyLastLocation();
         } else {
