@@ -37,6 +37,7 @@
     <string name="date_pattern">dd/MM/yy</string>
     <string name="hour_pattern">HH:mm</string>
     <string name="toast_fill">Por favor, rellene todos los campos.</string>
+    <string name="toast_eventDate">Por favor, seleccione una fecha actual o posterior.</string>
     <string name="change_pic_mssg">¿Desea quitar la imagen seleccionada?</string>
     <string name="hour1">0:0</string>
     <string name="hour2">0:</string>

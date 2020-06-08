@@ -285,12 +285,19 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             boolean isAnyFiledEmpty = GenericUtils.isEmpty(name) || GenericUtils.isEmpty(date) || GenericUtils.isEmpty(hour)
                     || GenericUtils.isEmpty(maxAttendees) || GenericUtils.isEmpty(price) || GenericUtils.isEmpty(description)
                     || GenericUtils.isEmpty(addressTextView) || selectedGenre.equals("")
-                    || (eventDate.compareTo(currentCalendar.getTime()) < 0);
+                    || (eventDate ==  null);
+
+            if(eventDate.compareTo(currentCalendar.getTime()) < 0){
+                Toast.makeText(this, getString(R.string.toast_eventDate), Toast.LENGTH_LONG).show();
+                return;
+            }
 
             if (isAnyFiledEmpty) {
                 Toast.makeText(this, getString(R.string.toast_fill), Toast.LENGTH_LONG).show();
                 return;
             }
+
+
 
             if (modifyEvent) {
                 new ModifyEventTask().execute();
