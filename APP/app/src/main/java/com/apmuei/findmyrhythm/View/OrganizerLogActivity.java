@@ -258,11 +258,8 @@ public class OrganizerLogActivity extends AppCompatActivity {
 
             Geocoder geocoder = new Geocoder(activity, Locale.getDefault());
             try {
-                // First step: get an estimated address from API location coordinates.
-                Address estimatedAddress =geocoder.getFromLocation(latitude, longitude, 1).get(0);
-                String locality = estimatedAddress.getLocality();
-                // Second step: get a more accurated address using a normalized search by location name.
-                addresses = geocoder.getFromLocationName(locality, 1);
+                // Get an address from API location coordinates.
+                addresses = geocoder.getFromLocation(latitude, longitude, 1);
                 Log.e("Addresses", "-->" + addresses);
                 result = addresses.get(0);
             } catch (IOException e) {

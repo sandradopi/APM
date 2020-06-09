@@ -122,11 +122,8 @@ public class SetLocationActivity extends AppCompatActivity implements AdapterVie
                     public void onSuccess(Location location) {
                         // Got last known location. In some rare situations this can be null.
                         if (location != null) {
-                            // First step: get an estimated address from API location coordinates.
-                            Address estimatedAddress = GeoUtils.getAddressFromLocation(geocoder, location);
-                            String locality = estimatedAddress.getLocality();
-                            // Second step: get a more accurated address using a normalized search by location name.
-                            Address address = GeoUtils.getAddressFromLocationName(geocoder, locality);
+                            // Get address from API location coordinates.
+                            Address address = GeoUtils.getAddressFromLocation(geocoder, location);
                             String userLocation = address.getSubAdminArea();
                             addProvince(userLocation);
                             // User's location is the first one by default and it will be shown in his/her profile
