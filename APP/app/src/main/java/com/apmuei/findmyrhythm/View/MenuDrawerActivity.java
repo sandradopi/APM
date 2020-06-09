@@ -187,6 +187,14 @@ public abstract class MenuDrawerActivity extends AppCompatActivity implements
                             startActivity(intent);
                         }
 
+                        SharedPreferences sharedpreferences = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+
+                        editor.putString("account_type", null);
+
+                        editor.apply();
+
+
                     }
                 });
         alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No",
