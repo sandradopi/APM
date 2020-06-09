@@ -1,5 +1,6 @@
 package com.apmuei.findmyrhythm.View;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,9 +21,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
-public class UserSettingsActivity extends UserMenuDrawerActivity {
+public class UserSettingsActivity extends UserMenuDrawerActivity implements View.OnClickListener{
     private static final String TAG = "Ajustes Usuario";
 
     private static final int GENRES_RC = 1;
@@ -32,6 +39,8 @@ public class UserSettingsActivity extends UserMenuDrawerActivity {
     PersistentUserInfo persistentUserInfo;
     UserService userService = new UserService();
     User user = new User();
+    TextView birthdateView, nameView, usernameView, emailView, biographyView;
+    Calendar calendar;
 
 
     @Override
@@ -39,11 +48,11 @@ public class UserSettingsActivity extends UserMenuDrawerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_settings);
 
-        final TextView nameView = findViewById(R.id.userFullName);
-        final TextView usernameView = findViewById(R.id.userNickname);
-        final TextView emailView = findViewById(R.id.userEmail);
-        final TextView biographyView = findViewById(R.id.userBiography);
-        final TextView birthdateView = findViewById(R.id.userBirthdate);
+        nameView = findViewById(R.id.userFullName);
+        usernameView = findViewById(R.id.userNickname);
+        emailView = findViewById(R.id.userEmail);
+        biographyView = findViewById(R.id.userBiography);
+        birthdateView = findViewById(R.id.userBirthdate);
 
 
         setMenuItemChecked(R.id.nav_settings);
@@ -61,6 +70,8 @@ public class UserSettingsActivity extends UserMenuDrawerActivity {
         emailView.setText(persistentUserInfo.getEmail());
         biographyView.setText(persistentUserInfo.getBiography());
         birthdateView.setText(persistentUserInfo.getBirthdate());
+        birthdateView.setOnClickListener(this);
+
 
 
         Button genres = findViewById(R.id.genres);
@@ -149,6 +160,60 @@ public class UserSettingsActivity extends UserMenuDrawerActivity {
                 selectedLocations = data.getStringArrayListExtra("LOCATIONS");
             }
         }
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view == birthdateView) {
+            try {
+                openDialogDate();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void openDialogDate() throws ParseException {
+        int mYear, mMonth, mDay;
+        calendar = Calendar.getInstance();
+
+        if(birthdateView==null) {
+            mYear = calendar.get(Calendar.YEAR);
+            mMonth = calendar.get(Calendar.MONTH);
+            mDay = calendar.get(Calendar.DAY_OF_MONTH);
+
+        }
+        else{
+            DateFormat dateFormat=new SimpleDateFormat(getString(R.string.date_pattern));
+            Date date = dateFormat.parse(birthdateView.getText().toString());
+            calendar.setTime(date);
+            mYear = calendar.get(Calendar.YEAR);
+            mMonth = calendar.get(Calendar.MONTH);
+            mDay = calendar.get(Calendar.DAY_OF_MONTH);
+        }
+
+
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                new DatePickerDialog.OnDateSetListener() {
+
+                    @Override
+                    public void onDateSet(DatePicker view, int year,
+                                          int monthOfYear, int dayOfMonth) {
+
+
+                        Date fecha = new Date(year, monthOfYear, dayOfMonth);
+                        DateFormat df = new SimpleDateFormat(getString(R.string.date_pattern), java.util.Locale.getDefault());
+                        birthdateView.setText(df.format(fecha));
+                        calendar.set(Calendar.YEAR, year);
+                        calendar.set(Calendar.MONTH, monthOfYear);
+                        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+
+                    }
+                }, mYear, mMonth, mDay);
+        datePickerDialog.getDatePicker().setMinDate(mYear - 100);
+        datePickerDialog.show();
     }
 
 

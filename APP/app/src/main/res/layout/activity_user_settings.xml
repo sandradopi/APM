@@ -110,6 +110,7 @@
                 android:textColorHint="@color/secondary"
                 android:textColor="@color/textColorSecondary"
                 android:hint="@string/add_birthdate"
+                android:focusable="false"
                 android:textSize="14sp"/>
 
                 <LinearLayout
