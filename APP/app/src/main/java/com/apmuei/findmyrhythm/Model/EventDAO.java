@@ -123,22 +123,57 @@ public class EventDAO extends GenericDAO<Event> {
 
         // TODO: Descomentar estas partes después de hacer las pruebas
         for (final String location : user.getSubscribedLocations()) {
-            table.orderByChild("completeAddress/province").equalTo(location).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                        Log.e(TAG, "element");
-                        locationEvents.add(ds.getValue(Event.class));
+            if (location.trim().toLowerCase().contains("coruña")) {
+                table.orderByChild("completeAddress/province").equalTo("La Coruña").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            Log.e(TAG, "element");
+                            locationEvents.add(ds.getValue(Event.class));
+                        }
+                        lock.countDown();
                     }
-                    lock.countDown();
-                }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    lock.countDown();
-                }
-            });
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        lock.countDown();
+                    }
+                });
 
+                table.orderByChild("completeAddress/province").equalTo("A Coruña").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            Log.e(TAG, "element");
+                            locationEvents.add(ds.getValue(Event.class));
+                        }
+                        lock.countDown();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        lock.countDown();
+                    }
+                });
+            } else {
+                table.orderByChild("completeAddress/province").equalTo(location).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            Log.e(TAG, "element");
+                            locationEvents.add(ds.getValue(Event.class));
+                        }
+                        lock.countDown();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        lock.countDown();
+                    }
+                });
+            }
+            // If the location is not used, the for each loop won't pass from first element.
+            Log.i(TAG, location);
         }
 
 

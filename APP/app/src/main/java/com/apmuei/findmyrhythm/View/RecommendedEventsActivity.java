@@ -61,7 +61,6 @@ public class RecommendedEventsActivity extends UserMenuDrawerActivity {
 
         TextView toolbarTitle = findViewById(R.id.toolbar_title);
         toolbarTitle.setText(R.string.recommended);
-//        toolbarTitle.setGravity(Gravity.CENTER_HORIZONTAL);
 
         new getEvents().execute();
 
