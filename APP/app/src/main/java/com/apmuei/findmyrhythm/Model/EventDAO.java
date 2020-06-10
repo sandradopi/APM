@@ -119,7 +119,13 @@ public class EventDAO extends GenericDAO<Event> {
         //final Calendar currentCalendar = Calendar.getInstance();
         AttendeeDAO attendeeDAO = new AttendeeDAO();
 
-        final CountDownLatch lock = new CountDownLatch(user.getSubscribedLocations().size());
+        final CountDownLatch lock;
+        if (user.getSubscribedLocations().toString().trim().toLowerCase().contains("la coruña") || user.getSubscribedLocations().toString().trim().toLowerCase().contains("a coruña")) {
+            lock = new CountDownLatch(user.getSubscribedLocations().size() + 1);
+        } else {
+            lock = new CountDownLatch(user.getSubscribedLocations().size());
+        }
+
 
         // TODO: Descomentar estas partes después de hacer las pruebas
         for (final String location : user.getSubscribedLocations()) {
