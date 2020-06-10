@@ -2,6 +2,8 @@ package com.apmuei.findmyrhythm.View;
 
 import android.app.ActivityManager;
 import android.app.Service;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import com.apmuei.findmyrhythm.Model.EndlessService;
 
 import com.apmuei.findmyrhythm.Model.IOFiles;
+import com.apmuei.findmyrhythm.Model.ListenerJob;
 import com.apmuei.findmyrhythm.Model.PersistentUserInfo;
 import com.apmuei.findmyrhythm.R;
 import com.google.android.material.tabs.TabLayout;
@@ -92,11 +95,33 @@ public class UserProfileActivity extends UserMenuDrawerActivity {
             viewPager.setAdapter(newSectionsPagerAdapter);
         }
 
-        Service endlessService = new EndlessService();
+        /*Service endlessService = new EndlessService();
         Intent intent = new Intent(this, EndlessService.class);
 
         if (!isMyServiceRunning(endlessService.getClass()))
-            startService(intent);
+            startService(intent);*/
+        JobScheduler scheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
+        for ( JobInfo jobInfo : scheduler.getAllPendingJobs() ) {
+            if ( jobInfo.getId() == 123 ) {
+                Log.d(TAG, "Job is scheduled!");
+                break ;
+            }
+        }
+        if (!isJobServiceOn())
+            ListenerJob.scheduleJob(getApplicationContext());
+    }
+
+    public boolean isJobServiceOn() {
+        JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE ) ;
+
+        for ( JobInfo jobInfo : scheduler.getAllPendingJobs() ) {
+            if ( jobInfo.getId() == 123 ) {
+                Log.d(TAG, "Job is scheduled!");
+                return true;
+            }
+        }
+        Log.d(TAG, "Job is scheduled!");
+        return false;
     }
 
     private boolean isMyServiceRunning(Class<?> serviceClass) {
@@ -114,7 +139,7 @@ public class UserProfileActivity extends UserMenuDrawerActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Intent intent = new Intent(this, EndlessService.class);
+        /*Intent intent = new Intent(this, EndlessService.class);
         stopService(intent);
         /*EventService service = new EventService();
         service.unSubscribeEventNotificationListener();*/
