@@ -85,9 +85,10 @@ public class EventNotificationListener implements ValueEventListener {
            Organizer organizer = service.getOrganizer(event.getOrganizerId());
 
            Intent resultIntent = new Intent(mContext, EventInfoActivity.class);
+           //resultIntent.setAction("actionstring" + System.currentTimeMillis());
            resultIntent.putExtra("EVENT", event.getId());
            resultIntent.putExtra("RECOMMENDED", true);
-           PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 1902, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+           PendingIntent pendingIntent = PendingIntent.getActivity(mContext, i, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_ONE_SHOT);
 
            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(mContext);
 
@@ -95,6 +96,7 @@ public class EventNotificationListener implements ValueEventListener {
                    .setSmallIcon(R.drawable.status_bar_icon)
                    .setContentTitle(event.getName())
                    .setDefaults(NotificationCompat.DEFAULT_ALL)
+                   .setContentText(mContext.getResources().getString(R.string.summary_text) + organizer.getName())
                    .setColor(Color.argb(0, 179, 86, 168))
                    .setContentIntent(pendingIntent)
                    .setGroup(NOTIFICATION_GROUP)
@@ -102,7 +104,7 @@ public class EventNotificationListener implements ValueEventListener {
                    .setAutoCancel(true);
 
            NotificationCompat.Builder groupBuilder = new NotificationCompat.Builder(mContext, "myChannel")
-                   .setContentTitle("Resumen")
+                   .setContentTitle(mContext.getResources().getString(R.string.summary_title))
                    .setContentText("Content Text")
                    .setSmallIcon(R.drawable.status_bar_icon)
                    .setStyle(new NotificationCompat.InboxStyle())
@@ -137,7 +139,10 @@ public class EventNotificationListener implements ValueEventListener {
         while (location == null)
             location =  event.getCompleteAddress().get("province").toString();
 
-        return  (user.getSubscribedLocations().contains(location) && user.getSubscribedGenres().contains(event.getGenre()) && !lastEventId.equals(event.getId()));
+        if (location.trim().toLowerCase().contains("coruña"))
+            return ((user.getSubscribedLocations().contains("A Coruña") || user.getSubscribedLocations().contains("La Coruña")) && user.getSubscribedGenres().contains(event.getGenre()) && !lastEventId.equals(event.getId()));
+        else
+            return  (user.getSubscribedLocations().contains(location) && user.getSubscribedGenres().contains(event.getGenre()) && !lastEventId.equals(event.getId()));
     }
 
     @Override

@@ -60,9 +60,11 @@
 
 
     <!--  Notification  -->
-    <string name="notificacion">ha creado un evento que te puede interesar!</string>
-    <string name="summary">"Evento Recomendado"</string>
-    <string name="summary_title">"Resumen"</string>
+    <string name="notificacion">ha creado un evento que
+        te puede interesar!</string>
+    <string name="summary">Evento Recomendado</string>
+    <string name="summary_title">Resumen</string>
+    <string name="summary_text"> - Evento de </string>
 
 
     <!--  Login  -->

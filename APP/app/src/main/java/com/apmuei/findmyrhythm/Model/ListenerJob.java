@@ -14,7 +14,6 @@ public class ListenerJob {
         JobInfo jobInfo = new JobInfo.Builder(123, componentName)
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
                 .setPersisted(true)
-                //.setPeriodic(15*60*1000)
                 .setMinimumLatency(1000)
                 .setOverrideDeadline(1500)
                 .build();

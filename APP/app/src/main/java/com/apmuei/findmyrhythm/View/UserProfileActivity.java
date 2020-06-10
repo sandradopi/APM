@@ -1,22 +1,17 @@
 package com.apmuei.findmyrhythm.View;
 
 import android.app.ActivityManager;
-import android.app.Service;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
-import com.apmuei.findmyrhythm.Model.EndlessService;
 
 import com.apmuei.findmyrhythm.Model.IOFiles;
 import com.apmuei.findmyrhythm.Model.ListenerJob;
@@ -95,18 +90,6 @@ public class UserProfileActivity extends UserMenuDrawerActivity {
             viewPager.setAdapter(newSectionsPagerAdapter);
         }
 
-        /*Service endlessService = new EndlessService();
-        Intent intent = new Intent(this, EndlessService.class);
-
-        if (!isMyServiceRunning(endlessService.getClass()))
-            startService(intent);*/
-        JobScheduler scheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
-        for ( JobInfo jobInfo : scheduler.getAllPendingJobs() ) {
-            if ( jobInfo.getId() == 123 ) {
-                Log.d(TAG, "Job is scheduled!");
-                break ;
-            }
-        }
         if (!isJobServiceOn())
             ListenerJob.scheduleJob(getApplicationContext());
     }
@@ -120,28 +103,12 @@ public class UserProfileActivity extends UserMenuDrawerActivity {
                 return true;
             }
         }
-        Log.d(TAG, "Job is scheduled!");
-        return false;
-    }
-
-    private boolean isMyServiceRunning(Class<?> serviceClass) {
-        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (serviceClass.getName().equals(service.service.getClassName())) {
-                Log.i ("isMyServiceRunning?", true+"");
-                return true;
-            }
-        }
-        Log.i ("isMyServiceRunning?", false+"");
+        Log.d(TAG, "Job is not scheduled!");
         return false;
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        /*Intent intent = new Intent(this, EndlessService.class);
-        stopService(intent);
-        /*EventService service = new EventService();
-        service.unSubscribeEventNotificationListener();*/
     }
 }
