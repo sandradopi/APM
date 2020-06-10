@@ -150,8 +150,8 @@ public class SearchEventsActivity extends FragmentActivity implements FiltersDia
 
         helpDialogFragment = new HelpDialogFragment();
 
-        Toast.makeText(getApplicationContext(), getString(R.string.search_events_usage_info),
-                Toast.LENGTH_LONG).show();
+        // Toast.makeText(getApplicationContext(), getString(R.string.search_events_usage_info),
+        //        Toast.LENGTH_LONG).show();
 
     }
 

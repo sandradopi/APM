@@ -3,6 +3,7 @@ package com.apmuei.findmyrhythm.View;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -10,7 +11,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.apmuei.findmyrhythm.Model.Event;
@@ -24,14 +27,21 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class UserLogActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "Creación Usuario";
 
-    EditText name, nickname, email, biography, birthDate;
+    EditText name, nickname, email, biography;
+    TextView  birthDate;
     FloatingActionButton next;
     FirebaseUser currentUser;
+    Calendar calendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +59,7 @@ public class UserLogActivity extends AppCompatActivity implements View.OnClickLi
         email = findViewById(R.id.userEmail);
         biography = findViewById(R.id.userBiography);
         birthDate = findViewById(R.id.userBirthdate);
+        birthDate.setOnClickListener(this);
 
         next = findViewById(R.id.next);
         next.setOnClickListener(this);
@@ -61,11 +72,61 @@ public class UserLogActivity extends AppCompatActivity implements View.OnClickLi
 
     }
 
+    public void openDialogDate() throws ParseException {
+        int mYear, mMonth, mDay;
+        calendar = Calendar.getInstance();
+
+        if(birthDate.getText().toString().equals("")) {
+            mYear = calendar.get(Calendar.YEAR);
+            mMonth = calendar.get(Calendar.MONTH);
+            mDay = calendar.get(Calendar.DAY_OF_MONTH);
+
+        }
+        else{
+            DateFormat dateFormat=new SimpleDateFormat(getString(R.string.date_pattern));
+            Date date = dateFormat.parse(birthDate.getText().toString());
+            calendar.setTime(date);
+            mYear = calendar.get(Calendar.YEAR);
+            mMonth = calendar.get(Calendar.MONTH);
+            mDay = calendar.get(Calendar.DAY_OF_MONTH);
+        }
+
+
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                new DatePickerDialog.OnDateSetListener() {
+
+                    @Override
+                    public void onDateSet(DatePicker view, int year,
+                                          int monthOfYear, int dayOfMonth) {
+
+
+                        Date fecha = new Date(year, monthOfYear, dayOfMonth);
+                        DateFormat df = new SimpleDateFormat(getString(R.string.date_pattern), java.util.Locale.getDefault());
+                        birthDate.setText(df.format(fecha));
+                        calendar.set(Calendar.YEAR, year);
+                        calendar.set(Calendar.MONTH, monthOfYear);
+                        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+
+                    }
+                }, mYear, mMonth, mDay);
+        datePickerDialog.getDatePicker().setMinDate(mYear - 100);
+        datePickerDialog.show();
+    }
+
     @Override
     public void onClick(View view) {
+        if (view == birthDate) {
+            try {
+                openDialogDate();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        } else  {
 
         // Check if every field is covered
-        if (isEmpty(name) || isEmpty(nickname) || isEmpty(email) || isEmpty(biography) || isEmpty(birthDate)) {
+        if (isEmpty(name) || isEmpty(nickname) || isEmpty(email) || isEmpty(biography) || birthDate == null) {
             // If not ask for the user to cover them
             Toast.makeText(this, getString(R.string.cover_fields), Toast.LENGTH_LONG).show();
             return;
@@ -114,6 +175,7 @@ public class UserLogActivity extends AppCompatActivity implements View.OnClickLi
         // This prevents users from going back once they have registered
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
+        }
     }
 
 
